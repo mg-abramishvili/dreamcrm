@@ -12,7 +12,7 @@
                 </h1>
             </div>
             <div class="col-12 col-lg-6 text-end">
-                <router-link :to="{name: 'ElementCreate'}" class="btn btn-primary">Добавить</router-link>
+                <router-link :to="{name: 'ElementCreate', params: {category: category.id}}" class="btn btn-primary">Добавить</router-link>
             </div>
         </div>
 

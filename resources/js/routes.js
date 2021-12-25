@@ -24,7 +24,7 @@ export const routes = [
         component: CategoryElements
     },
     {
-        path: '/catalog/:category/create',
+        path: '/catalog/:category?/create',
         name: 'ElementCreate',
         component: ElementCreate
     },
