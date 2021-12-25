@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Box extends Model
 {
     use HasFactory;
+
+    public function elements()
+    {
+        return $this->belongsToMany(Element::class);
+    }
 }

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('elements', [ElementController::class, 'index']);
 Route::get('element/{id}', [ElementController::class, 'element']);
+Route::post('elements', [ElementController::class, 'store']);
 
 Route::get('boxes', [BoxController::class, 'index']);
 Route::get('box/{id}', [BoxController::class, 'box']);

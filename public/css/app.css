@@ -105,6 +105,7 @@ body {
     font-weight: 500;
     color: #495057;
     text-decoration: none;
+    height: 74px;
 }
 .catalog-page .card a:hover,
 .catalog-page .card a:focus {
@@ -117,8 +118,13 @@ body {
     color: #3f80ea;
 }
 
+.catalog-page .card a span {
+    width: calc(100% - 24px);
+}
+
 .catalog-page .card .table tr td a {
     font-weight: 400;
+    height: auto;
 }
 
 .catalog-page-search-icon {

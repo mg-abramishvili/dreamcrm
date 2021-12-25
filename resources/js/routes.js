@@ -7,6 +7,8 @@ import ElementEdit from './components/catalog/ElementEdit.vue';
 import Boxes from './components/catalog/Boxes.vue';
 import CatalogSearch from './components/catalog/CatalogSearch.vue';
 
+import CalculationCreate from './components/calculations/CalculationCreate.vue';
+
 export const routes = [
     {
         path: '/',
@@ -42,5 +44,10 @@ export const routes = [
         path: '/catalog/search',
         name: 'CatalogSearch',
         component: CatalogSearch
+    },
+    {
+        path: '/calculations/create',
+        name: 'CalculationCreate',
+        component: CalculationCreate
     },
 ];

@@ -18,6 +18,14 @@
 
         <div class="card">
             <div class="card-body">
+                <div v-if="errors && errors.length > 0" class="alert alert-danger">
+                    <div class="alert-message">
+                        <strong v-for="(error, index) in errors" :key="'error_' + index" class="d-block">
+                            {{ error }}
+                        </strong>
+                    </div>
+                </div>
+
                 <label id="name_label">Название</label>
                 <input v-model="name" id="name_input" type="text" class="form-control mb-3">
 
@@ -70,8 +78,8 @@
         data() {
             return {
                 name: '',
-                pre_rub: '',
-                pre_usd: '',
+                pre_rub: 0,
+                pre_usd: 0,
                 selectedCategory: '',
                 selectedBoxes: [],
                 
@@ -80,6 +88,8 @@
 
                 usdKurs: '',
                 usdKursDate: '',
+
+                errors: [],
 
                 moment: moment,
             }
@@ -131,45 +141,45 @@
                 this.selectedBoxes = this.boxes.map(box => box.id)
             },
             saveElement() {
-                for (var i = 0; i < document.querySelectorAll('label').length; i++) {
-                    if(document.querySelectorAll('label')[i].classList.contains('text-danger') === true) {
-                        document.querySelectorAll('label')[i].classList.remove('text-danger')
-                    }
+                this.errors = []
+
+                if (!this.name) {
+                    this.errors.push('Укажите название');
                 }
-                for (var i = 0; i < document.querySelectorAll('input').length; i++) {
-                    if(document.querySelectorAll('input')[i].classList.contains('border-danger') === true) {
-                        document.querySelectorAll('input')[i].classList.remove('border-danger')
-                    }
+                if (!this.price) {
+                    this.errors.push('Укажите цену');
                 }
-                for (var i = 0; i < document.querySelectorAll('select').length; i++) {
-                    if(document.querySelectorAll('select')[i].classList.contains('border-danger') === true) {
-                        document.querySelectorAll('select')[i].classList.remove('border-danger')
-                    }
+                if (!this.selectedCategory) {
+                    this.errors.push('Укажите категорию');
                 }
-                axios
-                .post('/api/elements', {
+                if (!this.selectedBoxes.length) {
+                    this.errors.push('Укажите совместимость');
+                }
+
+                if(this.errors && this.errors.length > 0) {
+                    return
+                }
+
+                axios.post('/api/elements',
+                {
                     name: this.name,
                     pre_rub: this.pre_rub,
                     pre_usd: this.pre_usd,
                     price: this.price,
-                    categories: this.selectedCategory,
+                    category: this.selectedCategory,
                     boxes: this.selectedBoxes,
                 })
                 .then(response => (
-                    this.$router.push({path: `/category/${this.selectedCategory}/elements/`}) 
+                    this.$router.push({path: `/catalog/${this.selectedCategory}/elements/`}) 
                 ))
                 .catch((error) => {
                     if(error.response) {
                         for(var key in error.response.data.errors){
                             console.log(key)
-                            document.getElementById(key + '_label').classList.add('text-danger')
-                            document.getElementById(key + '_input').classList.add('border-danger')
                         }
                     }
-                });
+                })
             },
         },
-        components: {
-        }
     }
 </script>
