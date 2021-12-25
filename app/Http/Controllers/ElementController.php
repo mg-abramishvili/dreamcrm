@@ -11,4 +11,9 @@ class ElementController extends Controller
     {
         return Element::all();
     }
+
+    public function element($id)
+    {
+        return Element::where('id', $id)->first();
+    }
 }

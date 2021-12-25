@@ -121,6 +121,24 @@ body {
     font-weight: 400;
 }
 
+.catalog-page-search-icon {
+    margin-right: 20px;
+    opacity: 0.75;
+}
+.catalog-page-search-icon:hover,
+.catalog-page-search-icon:focus {
+    opacity: 1;
+}
+.catalog-page-search-icon svg {
+    color: #495057;
+    width: 24px;
+    height: 24px;
+}
+.catalog-page-search-icon:hover svg,
+.catalog-page-search-icon:focus  svg{
+    color: #3f80ea;
+}
+
 
 /* TABLE */
 .table {
