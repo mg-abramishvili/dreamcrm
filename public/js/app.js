@@ -2343,14 +2343,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       elements: [],
       boxes: [],
       categories: [],
-      inputLines: {}
+      inputLines: {},
+      currentCategory: ''
     };
   },
   created: function created() {
@@ -2368,6 +2368,7 @@ __webpack_require__.r(__webpack_exports__);
 
           _this.addLine(category.slug);
         });
+        _this.currentCategory = response.data[0].id;
       });
     },
     addLine: function addLine(slug) {
@@ -2382,6 +2383,13 @@ __webpack_require__.r(__webpack_exports__);
       this.inputLines[slug].push({
         value: null
       });
+    },
+    nextCategory: function nextCategory(category) {
+      var index = this.categories.indexOf(category);
+
+      if (index >= 0 && index < this.categories.length - 1) {
+        this.currentCategory = this.categories[index + 1].id;
+      }
     }
   }
 });
@@ -26085,72 +26093,101 @@ var render = function () {
     "div",
     [
       _c("h1", { staticClass: "h3 m-0" }, [_vm._v("Новый расчет")]),
-      _vm._v("\n\n    " + _vm._s(_vm.inputLines) + "\n\n    "),
+      _vm._v(" "),
       _vm._l(_vm.categories, function (category) {
-        return _c(
-          "div",
-          { key: "category_" + category.id },
-          [
-            _vm._v("\n        " + _vm._s(category.name) + "\n        "),
-            _c(
-              "button",
-              {
-                on: {
-                  click: function ($event) {
-                    return _vm.addLine(category.slug)
-                  },
+        return _c("div", { key: "category_" + category.id }, [
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.currentCategory == category.id,
+                  expression: "currentCategory == category.id",
                 },
-              },
-              [_vm._v("+")]
-            ),
-            _vm._v(" "),
-            _vm._l(_vm.inputLines[category.slug], function (line, index) {
-              return _c("div", { key: index }, [
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: line.value,
-                        expression: "line.value",
-                      },
-                    ],
-                    staticClass: "form-select",
-                    on: {
-                      change: function ($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function (o) {
-                            return o.selected
-                          })
-                          .map(function (o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          line,
-                          "value",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      },
+              ],
+            },
+            [
+              _vm._v(
+                "\n            " + _vm._s(category.name) + "\n            "
+              ),
+              _c(
+                "button",
+                {
+                  on: {
+                    click: function ($event) {
+                      return _vm.addLine(category.slug)
                     },
                   },
-                  [
-                    _c("option", { attrs: { value: "1" } }, [_vm._v("1")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "2" } }, [_vm._v("2")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "3" } }, [_vm._v("3")]),
-                  ]
-                ),
-              ])
-            }),
-          ],
-          2
-        )
+                },
+                [_vm._v("+")]
+              ),
+              _vm._v(" "),
+              _vm._l(_vm.inputLines[category.slug], function (line, index) {
+                return _c("div", { key: index }, [
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: line.value,
+                          expression: "line.value",
+                        },
+                      ],
+                      staticClass: "form-select",
+                      on: {
+                        change: function ($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function (o) {
+                              return o.selected
+                            })
+                            .map(function (o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            line,
+                            "value",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        },
+                      },
+                    },
+                    _vm._l(category.elements, function (element) {
+                      return _c(
+                        "option",
+                        {
+                          key: "element_" + element.id,
+                          domProps: { value: element.id },
+                        },
+                        [_vm._v(_vm._s(element.name))]
+                      )
+                    }),
+                    0
+                  ),
+                ])
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  on: {
+                    click: function ($event) {
+                      return _vm.nextCategory(category)
+                    },
+                  },
+                },
+                [_vm._v("Далее")]
+              ),
+            ],
+            2
+          ),
+        ])
       }),
     ],
     2
@@ -26347,7 +26384,7 @@ var render = function () {
               staticClass: "btn btn-primary",
               attrs: { to: { name: "ElementCreate" } },
             },
-            [_vm._v("Новый компонент")]
+            [_vm._v("Добавить")]
           ),
         ],
         1
