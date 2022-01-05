@@ -49,6 +49,8 @@
                             <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽</div>
                         </div>
                     </div>
+
+                    <button @click="openDeliveryModal()">Delivery</button>
                     
                 </div>
             </div>
@@ -90,10 +92,13 @@
             </div>
         </div>
         
+        <DeliveryModal v-if="deliveryModal" v-bind:box="inputBox"></DeliveryModal>
     </div>
 </template>
 
 <script>
+    import DeliveryModal from './CalculationDelivery.vue'
+
     export default {
         data() {
             return {
@@ -108,6 +113,8 @@
                 windowCategories: false,
 
                 currentCategory: '',
+
+                deliveryModal: false,
             }
         },
         created() {
@@ -248,6 +255,16 @@
                     }
                 }
             },
+            openDeliveryModal() {
+                this.deliveryModal = true
+            },
+            closeDeliveryModal() {
+                this.deliveryModal = false
+                document.body.classList.remove('modal-open')
+            }
         },
+        components: {
+            DeliveryModal
+        }
     }
 </script>

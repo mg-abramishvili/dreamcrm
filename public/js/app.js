@@ -2323,6 +2323,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _CalculationDelivery_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CalculationDelivery.vue */ "./resources/js/components/calculations/CalculationDelivery.vue");
 //
 //
 //
@@ -2418,6 +2419,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2428,7 +2433,8 @@ __webpack_require__.r(__webpack_exports__);
       inputElements: {},
       windowBoxes: true,
       windowCategories: false,
-      currentCategory: ''
+      currentCategory: '',
+      deliveryModal: false
     };
   },
   created: function created() {
@@ -2597,6 +2603,171 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
       }
+    },
+    openDeliveryModal: function openDeliveryModal() {
+      this.deliveryModal = true;
+    },
+    closeDeliveryModal: function closeDeliveryModal() {
+      this.deliveryModal = false;
+      document.body.classList.remove('modal-open');
+    }
+  },
+  components: {
+    DeliveryModal: _CalculationDelivery_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/calculations/CalculationDelivery.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/calculations/CalculationDelivery.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['box'],
+  data: function data() {
+    return {
+      pek_cities_data: {},
+      pek_cities: {},
+      pek_city_selected: '',
+      pek_cities_sub: {},
+      pek_city_sub_selected: '',
+      pek_response: '',
+      pek_price: 0,
+      pek_loading: false
+    };
+  },
+  created: function created() {
+    this.loadTowns();
+  },
+  mounted: function mounted() {
+    document.body.classList.add('modal-open');
+  },
+  methods: {
+    loadTowns: function loadTowns() {
+      var _this = this;
+
+      axios //.get('http://www.pecom.ru/ru/calc/towns.php')
+      .get('/towns.php').then(function (response) {
+        _this.pek_cities_data = response.data;
+        var data = _this.pek_cities_data;
+        var pek_cities = [];
+
+        for (var i in data) {
+          pek_cities.push(i);
+        }
+
+        _this.pek_cities = pek_cities.sort();
+      });
+    },
+    onCityChange: function onCityChange() {
+      this.pek_response = '';
+      var data = this.pek_cities_data;
+      var pek_cities_sub = [];
+
+      for (var i in data) {
+        if (i === this.pek_city_selected) {
+          for (var _i = 0, _Object$entries = Object.entries(data[i]); _i < _Object$entries.length; _i++) {
+            var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
+                key = _Object$entries$_i[0],
+                value = _Object$entries$_i[1];
+
+            pek_cities_sub.push({
+              id: "".concat(key),
+              name: "".concat(value)
+            });
+          }
+        }
+      }
+
+      this.pek_cities_sub = pek_cities_sub.sort(function (a, b) {
+        return a.name > b.name ? 1 : -1;
+      });
+    },
+    calcDelivery: function calcDelivery() {
+      var width = parseInt(this.box.width);
+      var height = parseInt(this.box.height);
+      var length = parseInt(this.box.length);
+      var weight = parseInt(this.box.weight);
+      this.pek_loading = true;
+      axios.get('http://calc.pecom.ru/bitrix/components/pecom/calc/ajax.php', {
+        params: {
+          'places[0]': ["".concat(width), "".concat(length), "".concat(height), "".concat((width * height * length).toFixed(2)), "".concat(weight), 0, 1],
+          'take[town]': '-463',
+          'deliver[town]': "".concat(this.pek_city_sub_selected)
+        }
+      }).then(function (response) {
+        return (// this.pek_response = response.data,
+          // this.pek_price = parseInt(response.data.auto[2]) + parseInt(response.data.ADD[1]),
+          // this.pek_loading = false,
+          console.log(response.data)
+        );
+      });
     }
   }
 });
@@ -3236,6 +3407,106 @@ var routes = [{
   name: 'CalculationCreate',
   component: _components_calculations_CalculationCreate_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
 }];
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/calculations/CalculationDelivery.vue?vue&type=style&index=0&id=4274b743&scoped=true&lang=css&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/calculations/CalculationDelivery.vue?vue&type=style&index=0&id=4274b743&scoped=true&lang=css& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n#DeliveryModal[data-v-4274b743] {\n    display: block !important;\n}\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/runtime/api.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/css-loader/dist/runtime/api.js ***!
+  \*****************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+// eslint-disable-next-line func-names
+module.exports = function (cssWithMappingToString) {
+  var list = []; // return the list of modules as css string
+
+  list.toString = function toString() {
+    return this.map(function (item) {
+      var content = cssWithMappingToString(item);
+
+      if (item[2]) {
+        return "@media ".concat(item[2], " {").concat(content, "}");
+      }
+
+      return content;
+    }).join("");
+  }; // import a list of modules into the list
+  // eslint-disable-next-line func-names
+
+
+  list.i = function (modules, mediaQuery, dedupe) {
+    if (typeof modules === "string") {
+      // eslint-disable-next-line no-param-reassign
+      modules = [[null, modules, ""]];
+    }
+
+    var alreadyImportedModules = {};
+
+    if (dedupe) {
+      for (var i = 0; i < this.length; i++) {
+        // eslint-disable-next-line prefer-destructuring
+        var id = this[i][0];
+
+        if (id != null) {
+          alreadyImportedModules[id] = true;
+        }
+      }
+    }
+
+    for (var _i = 0; _i < modules.length; _i++) {
+      var item = [].concat(modules[_i]);
+
+      if (dedupe && alreadyImportedModules[item[0]]) {
+        // eslint-disable-next-line no-continue
+        continue;
+      }
+
+      if (mediaQuery) {
+        if (!item[2]) {
+          item[2] = mediaQuery;
+        } else {
+          item[2] = "".concat(mediaQuery, " and ").concat(item[2]);
+        }
+      }
+
+      list.push(item);
+    }
+  };
+
+  return list;
+};
 
 /***/ }),
 
@@ -24880,6 +25151,315 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/calculations/CalculationDelivery.vue?vue&type=style&index=0&id=4274b743&scoped=true&lang=css&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/calculations/CalculationDelivery.vue?vue&type=style&index=0&id=4274b743&scoped=true&lang=css& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CalculationDelivery_vue_vue_type_style_index_0_id_4274b743_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CalculationDelivery.vue?vue&type=style&index=0&id=4274b743&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/calculations/CalculationDelivery.vue?vue&type=style&index=0&id=4274b743&scoped=true&lang=css&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CalculationDelivery_vue_vue_type_style_index_0_id_4274b743_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CalculationDelivery_vue_vue_type_style_index_0_id_4274b743_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js ***!
+  \****************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var isOldIE = function isOldIE() {
+  var memo;
+  return function memorize() {
+    if (typeof memo === 'undefined') {
+      // Test for IE <= 9 as proposed by Browserhacks
+      // @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
+      // Tests for existence of standard globals is to allow style-loader
+      // to operate correctly into non-standard environments
+      // @see https://github.com/webpack-contrib/style-loader/issues/177
+      memo = Boolean(window && document && document.all && !window.atob);
+    }
+
+    return memo;
+  };
+}();
+
+var getTarget = function getTarget() {
+  var memo = {};
+  return function memorize(target) {
+    if (typeof memo[target] === 'undefined') {
+      var styleTarget = document.querySelector(target); // Special case to return head of iframe instead of iframe itself
+
+      if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
+        try {
+          // This will throw an exception if access to iframe is blocked
+          // due to cross-origin restrictions
+          styleTarget = styleTarget.contentDocument.head;
+        } catch (e) {
+          // istanbul ignore next
+          styleTarget = null;
+        }
+      }
+
+      memo[target] = styleTarget;
+    }
+
+    return memo[target];
+  };
+}();
+
+var stylesInDom = [];
+
+function getIndexByIdentifier(identifier) {
+  var result = -1;
+
+  for (var i = 0; i < stylesInDom.length; i++) {
+    if (stylesInDom[i].identifier === identifier) {
+      result = i;
+      break;
+    }
+  }
+
+  return result;
+}
+
+function modulesToDom(list, options) {
+  var idCountMap = {};
+  var identifiers = [];
+
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i];
+    var id = options.base ? item[0] + options.base : item[0];
+    var count = idCountMap[id] || 0;
+    var identifier = "".concat(id, " ").concat(count);
+    idCountMap[id] = count + 1;
+    var index = getIndexByIdentifier(identifier);
+    var obj = {
+      css: item[1],
+      media: item[2],
+      sourceMap: item[3]
+    };
+
+    if (index !== -1) {
+      stylesInDom[index].references++;
+      stylesInDom[index].updater(obj);
+    } else {
+      stylesInDom.push({
+        identifier: identifier,
+        updater: addStyle(obj, options),
+        references: 1
+      });
+    }
+
+    identifiers.push(identifier);
+  }
+
+  return identifiers;
+}
+
+function insertStyleElement(options) {
+  var style = document.createElement('style');
+  var attributes = options.attributes || {};
+
+  if (typeof attributes.nonce === 'undefined') {
+    var nonce =  true ? __webpack_require__.nc : 0;
+
+    if (nonce) {
+      attributes.nonce = nonce;
+    }
+  }
+
+  Object.keys(attributes).forEach(function (key) {
+    style.setAttribute(key, attributes[key]);
+  });
+
+  if (typeof options.insert === 'function') {
+    options.insert(style);
+  } else {
+    var target = getTarget(options.insert || 'head');
+
+    if (!target) {
+      throw new Error("Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid.");
+    }
+
+    target.appendChild(style);
+  }
+
+  return style;
+}
+
+function removeStyleElement(style) {
+  // istanbul ignore if
+  if (style.parentNode === null) {
+    return false;
+  }
+
+  style.parentNode.removeChild(style);
+}
+/* istanbul ignore next  */
+
+
+var replaceText = function replaceText() {
+  var textStore = [];
+  return function replace(index, replacement) {
+    textStore[index] = replacement;
+    return textStore.filter(Boolean).join('\n');
+  };
+}();
+
+function applyToSingletonTag(style, index, remove, obj) {
+  var css = remove ? '' : obj.media ? "@media ".concat(obj.media, " {").concat(obj.css, "}") : obj.css; // For old IE
+
+  /* istanbul ignore if  */
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = replaceText(index, css);
+  } else {
+    var cssNode = document.createTextNode(css);
+    var childNodes = style.childNodes;
+
+    if (childNodes[index]) {
+      style.removeChild(childNodes[index]);
+    }
+
+    if (childNodes.length) {
+      style.insertBefore(cssNode, childNodes[index]);
+    } else {
+      style.appendChild(cssNode);
+    }
+  }
+}
+
+function applyToTag(style, options, obj) {
+  var css = obj.css;
+  var media = obj.media;
+  var sourceMap = obj.sourceMap;
+
+  if (media) {
+    style.setAttribute('media', media);
+  } else {
+    style.removeAttribute('media');
+  }
+
+  if (sourceMap && typeof btoa !== 'undefined') {
+    css += "\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), " */");
+  } // For old IE
+
+  /* istanbul ignore if  */
+
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = css;
+  } else {
+    while (style.firstChild) {
+      style.removeChild(style.firstChild);
+    }
+
+    style.appendChild(document.createTextNode(css));
+  }
+}
+
+var singleton = null;
+var singletonCounter = 0;
+
+function addStyle(obj, options) {
+  var style;
+  var update;
+  var remove;
+
+  if (options.singleton) {
+    var styleIndex = singletonCounter++;
+    style = singleton || (singleton = insertStyleElement(options));
+    update = applyToSingletonTag.bind(null, style, styleIndex, false);
+    remove = applyToSingletonTag.bind(null, style, styleIndex, true);
+  } else {
+    style = insertStyleElement(options);
+    update = applyToTag.bind(null, style, options);
+
+    remove = function remove() {
+      removeStyleElement(style);
+    };
+  }
+
+  update(obj);
+  return function updateStyle(newObj) {
+    if (newObj) {
+      if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap) {
+        return;
+      }
+
+      update(obj = newObj);
+    } else {
+      remove();
+    }
+  };
+}
+
+module.exports = function (list, options) {
+  options = options || {}; // Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+  // tags it will allow on a page
+
+  if (!options.singleton && typeof options.singleton !== 'boolean') {
+    options.singleton = isOldIE();
+  }
+
+  list = list || [];
+  var lastIdentifiers = modulesToDom(list, options);
+  return function update(newList) {
+    newList = newList || [];
+
+    if (Object.prototype.toString.call(newList) !== '[object Array]') {
+      return;
+    }
+
+    for (var i = 0; i < lastIdentifiers.length; i++) {
+      var identifier = lastIdentifiers[i];
+      var index = getIndexByIdentifier(identifier);
+      stylesInDom[index].references--;
+    }
+
+    var newLastIdentifiers = modulesToDom(newList, options);
+
+    for (var _i = 0; _i < lastIdentifiers.length; _i++) {
+      var _identifier = lastIdentifiers[_i];
+
+      var _index = getIndexByIdentifier(_identifier);
+
+      if (stylesInDom[_index].references === 0) {
+        stylesInDom[_index].updater();
+
+        stylesInDom.splice(_index, 1);
+      }
+    }
+
+    lastIdentifiers = newLastIdentifiers;
+  };
+};
+
+/***/ }),
+
 /***/ "./resources/js/App.vue":
 /*!******************************!*\
   !*** ./resources/js/App.vue ***!
@@ -25030,6 +25610,47 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 /* hot reload */
 if (false) { var api; }
 component.options.__file = "resources/js/components/calculations/CalculationCreate.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/calculations/CalculationDelivery.vue":
+/*!**********************************************************************!*\
+  !*** ./resources/js/components/calculations/CalculationDelivery.vue ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _CalculationDelivery_vue_vue_type_template_id_4274b743_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CalculationDelivery.vue?vue&type=template&id=4274b743&scoped=true& */ "./resources/js/components/calculations/CalculationDelivery.vue?vue&type=template&id=4274b743&scoped=true&");
+/* harmony import */ var _CalculationDelivery_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CalculationDelivery.vue?vue&type=script&lang=js& */ "./resources/js/components/calculations/CalculationDelivery.vue?vue&type=script&lang=js&");
+/* harmony import */ var _CalculationDelivery_vue_vue_type_style_index_0_id_4274b743_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CalculationDelivery.vue?vue&type=style&index=0&id=4274b743&scoped=true&lang=css& */ "./resources/js/components/calculations/CalculationDelivery.vue?vue&type=style&index=0&id=4274b743&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+;
+
+
+/* normalize component */
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _CalculationDelivery_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CalculationDelivery_vue_vue_type_template_id_4274b743_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _CalculationDelivery_vue_vue_type_template_id_4274b743_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "4274b743",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/calculations/CalculationDelivery.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -25311,6 +25932,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/calculations/CalculationDelivery.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/calculations/CalculationDelivery.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CalculationDelivery_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CalculationDelivery.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/calculations/CalculationDelivery.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CalculationDelivery_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/catalog/Boxes.vue?vue&type=script&lang=js&":
 /*!****************************************************************************!*\
   !*** ./resources/js/components/catalog/Boxes.vue?vue&type=script&lang=js& ***!
@@ -25391,6 +26028,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/calculations/CalculationDelivery.vue?vue&type=style&index=0&id=4274b743&scoped=true&lang=css&":
+/*!*******************************************************************************************************************************!*\
+  !*** ./resources/js/components/calculations/CalculationDelivery.vue?vue&type=style&index=0&id=4274b743&scoped=true&lang=css& ***!
+  \*******************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CalculationDelivery_vue_vue_type_style_index_0_id_4274b743_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CalculationDelivery.vue?vue&type=style&index=0&id=4274b743&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/calculations/CalculationDelivery.vue?vue&type=style&index=0&id=4274b743&scoped=true&lang=css&");
+
+
+/***/ }),
+
 /***/ "./resources/js/App.vue?vue&type=template&id=f348271a&":
 /*!*************************************************************!*\
   !*** ./resources/js/App.vue?vue&type=template&id=f348271a& ***!
@@ -25455,6 +26105,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CalculationCreate_vue_vue_type_template_id_162aba0b___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CalculationCreate_vue_vue_type_template_id_162aba0b___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CalculationCreate.vue?vue&type=template&id=162aba0b& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/calculations/CalculationCreate.vue?vue&type=template&id=162aba0b&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/calculations/CalculationDelivery.vue?vue&type=template&id=4274b743&scoped=true&":
+/*!*****************************************************************************************************************!*\
+  !*** ./resources/js/components/calculations/CalculationDelivery.vue?vue&type=template&id=4274b743&scoped=true& ***!
+  \*****************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CalculationDelivery_vue_vue_type_template_id_4274b743_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CalculationDelivery_vue_vue_type_template_id_4274b743_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CalculationDelivery_vue_vue_type_template_id_4274b743_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CalculationDelivery.vue?vue&type=template&id=4274b743&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/calculations/CalculationDelivery.vue?vue&type=template&id=4274b743&scoped=true&");
 
 
 /***/ }),
@@ -26296,436 +26963,465 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h1", { staticClass: "h3 m-0 mb-4" }, [_vm._v("Новый расчет")]),
-    _vm._v(" "),
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-12 col-lg-5" }, [
-        _c(
-          "div",
-          {
-            staticClass: "calculation-input bg-white px-4 py-4",
-            staticStyle: { position: "sticky", top: "20px" },
-          },
-          [
-            _vm.windowBoxes
-              ? _c("div", { staticClass: "mb-4" }, [
-                  _vm._m(0),
-                  _vm._v(" "),
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.inputBox,
-                          expression: "inputBox",
-                        },
-                      ],
-                      staticClass: "form-select form-select-lg mt-2 mb-3",
-                      on: {
-                        change: [
-                          function ($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function (o) {
-                                return o.selected
-                              })
-                              .map(function (o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.inputBox = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          },
-                          function ($event) {
-                            return _vm.changeInputBox()
+  return _c(
+    "div",
+    [
+      _c("h1", { staticClass: "h3 m-0 mb-4" }, [_vm._v("Новый расчет")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-12 col-lg-5" }, [
+          _c(
+            "div",
+            {
+              staticClass: "calculation-input bg-white px-4 py-4",
+              staticStyle: { position: "sticky", top: "20px" },
+            },
+            [
+              _vm.windowBoxes
+                ? _c("div", { staticClass: "mb-4" }, [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.inputBox,
+                            expression: "inputBox",
                           },
                         ],
-                      },
-                    },
-                    _vm._l(_vm.boxes, function (box) {
-                      return _c(
-                        "option",
-                        { key: "box_" + box.id, domProps: { value: box } },
-                        [
-                          _vm._v(
-                            _vm._s(box.name) +
-                              " — " +
-                              _vm._s(
-                                box.price
-                                  .toString()
-                                  .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-                              ) +
-                              " ₽"
-                          ),
-                        ]
-                      )
-                    }),
-                    0
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "mt-4" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-outline-primary",
+                        staticClass: "form-select form-select-lg mt-2 mb-3",
                         on: {
-                          click: function ($event) {
-                            return _vm.activateWindowsCategories()
-                          },
-                        },
-                      },
-                      [_vm._v("Далее")]
-                    ),
-                  ]),
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.windowCategories
-              ? _c(
-                  "div",
-                  { staticClass: "mb-4" },
-                  _vm._l(_vm.categories, function (category) {
-                    return _c("div", { key: "category_" + category.id }, [
-                      _c(
-                        "div",
-                        {
-                          directives: [
-                            {
-                              name: "show",
-                              rawName: "v-show",
-                              value: _vm.currentCategory == category.id,
-                              expression: "currentCategory == category.id",
+                          change: [
+                            function ($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function (o) {
+                                  return o.selected
+                                })
+                                .map(function (o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.inputBox = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            },
+                            function ($event) {
+                              return _vm.changeInputBox()
                             },
                           ],
                         },
-                        [
-                          _c("label", [
-                            _c("strong", [_vm._v(_vm._s(category.name))]),
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-sm btn-outline-danger",
-                              on: {
-                                click: function ($event) {
-                                  return _vm.addElement(category.slug)
-                                },
-                              },
-                            },
-                            [_vm._v("+")]
-                          ),
-                          _vm._v(" "),
-                          _vm._l(
-                            _vm.inputElements[category.slug],
-                            function (element, index) {
-                              return _c(
-                                "div",
-                                {
-                                  key: index,
-                                  staticStyle: { position: "relative" },
-                                },
-                                [
-                                  _c(
-                                    "select",
-                                    {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: element.id,
-                                          expression: "element.id",
-                                        },
-                                      ],
-                                      staticClass:
-                                        "form-select form-select-lg mt-2 mb-3",
-                                      on: {
-                                        change: function ($event) {
-                                          var $$selectedVal =
-                                            Array.prototype.filter
-                                              .call(
-                                                $event.target.options,
-                                                function (o) {
-                                                  return o.selected
-                                                }
-                                              )
-                                              .map(function (o) {
-                                                var val =
-                                                  "_value" in o
-                                                    ? o._value
-                                                    : o.value
-                                                return val
-                                              })
-                                          _vm.$set(
-                                            element,
-                                            "id",
-                                            $event.target.multiple
-                                              ? $$selectedVal
-                                              : $$selectedVal[0]
-                                          )
-                                        },
-                                      },
-                                    },
-                                    [
-                                      _vm._l(
-                                        _vm.elementsFiltered,
-                                        function (element) {
-                                          return [
-                                            element.category_id == category.id
-                                              ? _c(
-                                                  "option",
-                                                  {
-                                                    domProps: {
-                                                      value: element.id,
-                                                    },
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      "\n                                            " +
-                                                        _vm._s(element.name) +
-                                                        " "
-                                                    ),
-                                                    element.price > 0
-                                                      ? [
-                                                          _vm._v(
-                                                            "— " +
-                                                              _vm._s(
-                                                                element.price
-                                                                  .toString()
-                                                                  .replace(
-                                                                    /\B(?=(\d{3})+(?!\d))/g,
-                                                                    " "
-                                                                  )
-                                                              ) +
-                                                              " ₽"
-                                                          ),
-                                                        ]
-                                                      : _vm._e(),
-                                                  ],
-                                                  2
-                                                )
-                                              : _vm._e(),
-                                          ]
-                                        }
-                                      ),
-                                    ],
-                                    2
-                                  ),
-                                  _vm._v(" "),
-                                  index > 0 &&
-                                  _vm.inputElements[category.slug].length > 1
-                                    ? _c(
-                                        "button",
-                                        {
-                                          staticClass:
-                                            "btn btn-sm btn-outline-danger",
-                                          staticStyle: {
-                                            position: "absolute",
-                                            right: "0",
-                                            top: "50%",
-                                            transform: "translateY(-50%)",
-                                            padding: "0",
-                                            width: "20px",
-                                            "margin-right": "-21px",
-                                          },
-                                          on: {
-                                            click: function ($event) {
-                                              return _vm.deleteElement(
-                                                element.id,
-                                                category.slug
-                                              )
-                                            },
-                                          },
-                                        },
-                                        [_vm._v("–")]
-                                      )
-                                    : _vm._e(),
-                                ]
-                              )
-                            }
-                          ),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "mt-4" }, [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-outline-primary",
-                                on: {
-                                  click: function ($event) {
-                                    return _vm.prevCategory(category)
-                                  },
-                                },
-                              },
-                              [_vm._v("Назад")]
+                      },
+                      _vm._l(_vm.boxes, function (box) {
+                        return _c(
+                          "option",
+                          { key: "box_" + box.id, domProps: { value: box } },
+                          [
+                            _vm._v(
+                              _vm._s(box.name) +
+                                " — " +
+                                _vm._s(
+                                  box.price
+                                    .toString()
+                                    .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                                ) +
+                                " ₽"
                             ),
+                          ]
+                        )
+                      }),
+                      0
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "mt-4" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-outline-primary",
+                          on: {
+                            click: function ($event) {
+                              return _vm.activateWindowsCategories()
+                            },
+                          },
+                        },
+                        [_vm._v("Далее")]
+                      ),
+                    ]),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.windowCategories
+                ? _c(
+                    "div",
+                    { staticClass: "mb-4" },
+                    _vm._l(_vm.categories, function (category) {
+                      return _c("div", { key: "category_" + category.id }, [
+                        _c(
+                          "div",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.currentCategory == category.id,
+                                expression: "currentCategory == category.id",
+                              },
+                            ],
+                          },
+                          [
+                            _c("label", [
+                              _c("strong", [_vm._v(_vm._s(category.name))]),
+                            ]),
                             _vm._v(" "),
                             _c(
                               "button",
                               {
-                                staticClass: "btn btn-outline-primary",
+                                staticClass: "btn btn-sm btn-outline-danger",
                                 on: {
                                   click: function ($event) {
-                                    return _vm.nextCategory(category)
+                                    return _vm.addElement(category.slug)
                                   },
                                 },
                               },
-                              [_vm._v("Далее")]
+                              [_vm._v("+")]
                             ),
-                          ]),
-                        ],
-                        2
+                            _vm._v(" "),
+                            _vm._l(
+                              _vm.inputElements[category.slug],
+                              function (element, index) {
+                                return _c(
+                                  "div",
+                                  {
+                                    key: index,
+                                    staticStyle: { position: "relative" },
+                                  },
+                                  [
+                                    _c(
+                                      "select",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: element.id,
+                                            expression: "element.id",
+                                          },
+                                        ],
+                                        staticClass:
+                                          "form-select form-select-lg mt-2 mb-3",
+                                        on: {
+                                          change: function ($event) {
+                                            var $$selectedVal =
+                                              Array.prototype.filter
+                                                .call(
+                                                  $event.target.options,
+                                                  function (o) {
+                                                    return o.selected
+                                                  }
+                                                )
+                                                .map(function (o) {
+                                                  var val =
+                                                    "_value" in o
+                                                      ? o._value
+                                                      : o.value
+                                                  return val
+                                                })
+                                            _vm.$set(
+                                              element,
+                                              "id",
+                                              $event.target.multiple
+                                                ? $$selectedVal
+                                                : $$selectedVal[0]
+                                            )
+                                          },
+                                        },
+                                      },
+                                      [
+                                        _vm._l(
+                                          _vm.elementsFiltered,
+                                          function (element) {
+                                            return [
+                                              element.category_id == category.id
+                                                ? _c(
+                                                    "option",
+                                                    {
+                                                      domProps: {
+                                                        value: element.id,
+                                                      },
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                            " +
+                                                          _vm._s(element.name) +
+                                                          " "
+                                                      ),
+                                                      element.price > 0
+                                                        ? [
+                                                            _vm._v(
+                                                              "— " +
+                                                                _vm._s(
+                                                                  element.price
+                                                                    .toString()
+                                                                    .replace(
+                                                                      /\B(?=(\d{3})+(?!\d))/g,
+                                                                      " "
+                                                                    )
+                                                                ) +
+                                                                " ₽"
+                                                            ),
+                                                          ]
+                                                        : _vm._e(),
+                                                    ],
+                                                    2
+                                                  )
+                                                : _vm._e(),
+                                            ]
+                                          }
+                                        ),
+                                      ],
+                                      2
+                                    ),
+                                    _vm._v(" "),
+                                    index > 0 &&
+                                    _vm.inputElements[category.slug].length > 1
+                                      ? _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "btn btn-sm btn-outline-danger",
+                                            staticStyle: {
+                                              position: "absolute",
+                                              right: "0",
+                                              top: "50%",
+                                              transform: "translateY(-50%)",
+                                              padding: "0",
+                                              width: "20px",
+                                              "margin-right": "-21px",
+                                            },
+                                            on: {
+                                              click: function ($event) {
+                                                return _vm.deleteElement(
+                                                  element.id,
+                                                  category.slug
+                                                )
+                                              },
+                                            },
+                                          },
+                                          [_vm._v("–")]
+                                        )
+                                      : _vm._e(),
+                                  ]
+                                )
+                              }
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "mt-4" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-outline-primary",
+                                  on: {
+                                    click: function ($event) {
+                                      return _vm.prevCategory(category)
+                                    },
+                                  },
+                                },
+                                [_vm._v("Назад")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-outline-primary",
+                                  on: {
+                                    click: function ($event) {
+                                      return _vm.nextCategory(category)
+                                    },
+                                  },
+                                },
+                                [_vm._v("Далее")]
+                              ),
+                            ]),
+                          ],
+                          2
+                        ),
+                      ])
+                    }),
+                    0
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _c("div", { staticClass: "total" }, [
+                _vm.price && _vm.price > 0
+                  ? _c("div", { staticClass: "row align-items-center" }, [
+                      _c("div", { staticClass: "col-6" }, [
+                        _vm._v("Цена за 1 ед:"),
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "col-6 text-end text-primary",
+                          staticStyle: {
+                            "font-size": "26px",
+                            "font-weight": "bold",
+                          },
+                        },
+                        [
+                          _vm._v(
+                            _vm._s(
+                              _vm.price
+                                .toString()
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                            ) + " ₽"
+                          ),
+                        ]
                       ),
                     ])
-                  }),
-                  0
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _c("div", { staticClass: "total" }, [
-              _vm.price && _vm.price > 0
+                  : _vm._e(),
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  on: {
+                    click: function ($event) {
+                      return _vm.openDeliveryModal()
+                    },
+                  },
+                },
+                [_vm._v("Delivery")]
+              ),
+            ]
+          ),
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "col-12 col-lg-7" },
+          [
+            _c("div", { staticClass: "mb-3 bg-white px-3 py-3" }, [
+              _c("small", { staticStyle: { color: "rgb(136, 136, 136)" } }, [
+                _vm._v("Корпус"),
+              ]),
+              _vm._v(" "),
+              _vm.inputBox && _vm.inputBox.id > 0
                 ? _c("div", { staticClass: "row align-items-center" }, [
-                    _c("div", { staticClass: "col-6" }, [
-                      _vm._v("Цена за 1 ед:"),
+                    _c("div", { staticClass: "col-8" }, [
+                      _c("strong", { staticClass: "d-block" }, [
+                        _vm._v(_vm._s(_vm.inputBox.name)),
+                      ]),
                     ]),
                     _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "col-6 text-end text-primary",
-                        staticStyle: {
-                          "font-size": "26px",
-                          "font-weight": "bold",
-                        },
-                      },
-                      [
+                    _c("div", { staticClass: "col-4 text-end" }, [
+                      _c("strong", { staticClass: "text-primary" }, [
                         _vm._v(
                           _vm._s(
-                            _vm.price
+                            _vm.inputBox.price
                               .toString()
                               .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                           ) + " ₽"
                         ),
-                      ]
-                    ),
+                      ]),
+                    ]),
                   ])
                 : _vm._e(),
             ]),
-          ]
+            _vm._v(" "),
+            _vm._l(_vm.categories, function (category) {
+              return _c(
+                "div",
+                {
+                  key: "category_" + category.id,
+                  staticClass: "mb-3 bg-white px-3 py-3",
+                },
+                [
+                  _c(
+                    "small",
+                    { staticStyle: { color: "rgb(136, 136, 136)" } },
+                    [_vm._v(_vm._s(category.name))]
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.elementsFiltered, function (element) {
+                    return [
+                      element.category_id == category.id
+                        ? [
+                            _vm._l(_vm.inputElements, function (inEl) {
+                              return [
+                                _vm._l(inEl, function (inElEl) {
+                                  return [
+                                    element.id == inElEl.id
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "row align-items-center",
+                                          },
+                                          [
+                                            _c(
+                                              "div",
+                                              { staticClass: "col-8" },
+                                              [
+                                                _c(
+                                                  "strong",
+                                                  { staticClass: "d-block" },
+                                                  [_vm._v(_vm._s(element.name))]
+                                                ),
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              { staticClass: "col-4 text-end" },
+                                              [
+                                                _c(
+                                                  "strong",
+                                                  {
+                                                    staticClass: "text-primary",
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        element.price
+                                                          .toString()
+                                                          .replace(
+                                                            /\B(?=(\d{3})+(?!\d))/g,
+                                                            " "
+                                                          )
+                                                      ) + " ₽"
+                                                    ),
+                                                  ]
+                                                ),
+                                              ]
+                                            ),
+                                          ]
+                                        )
+                                      : _vm._e(),
+                                  ]
+                                }),
+                              ]
+                            }),
+                          ]
+                        : _vm._e(),
+                    ]
+                  }),
+                ],
+                2
+              )
+            }),
+          ],
+          2
         ),
       ]),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-12 col-lg-7" },
-        [
-          _c("div", { staticClass: "mb-3 bg-white px-3 py-3" }, [
-            _c("small", { staticStyle: { color: "rgb(136, 136, 136)" } }, [
-              _vm._v("Корпус"),
-            ]),
-            _vm._v(" "),
-            _vm.inputBox && _vm.inputBox.id > 0
-              ? _c("div", { staticClass: "row align-items-center" }, [
-                  _c("div", { staticClass: "col-8" }, [
-                    _c("strong", { staticClass: "d-block" }, [
-                      _vm._v(_vm._s(_vm.inputBox.name)),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-4 text-end" }, [
-                    _c("strong", { staticClass: "text-primary" }, [
-                      _vm._v(
-                        _vm._s(
-                          _vm.inputBox.price
-                            .toString()
-                            .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-                        ) + " ₽"
-                      ),
-                    ]),
-                  ]),
-                ])
-              : _vm._e(),
-          ]),
-          _vm._v(" "),
-          _vm._l(_vm.categories, function (category) {
-            return _c(
-              "div",
-              {
-                key: "category_" + category.id,
-                staticClass: "mb-3 bg-white px-3 py-3",
-              },
-              [
-                _c("small", { staticStyle: { color: "rgb(136, 136, 136)" } }, [
-                  _vm._v(_vm._s(category.name)),
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.elementsFiltered, function (element) {
-                  return [
-                    element.category_id == category.id
-                      ? [
-                          _vm._l(_vm.inputElements, function (inEl) {
-                            return [
-                              _vm._l(inEl, function (inElEl) {
-                                return [
-                                  element.id == inElEl.id
-                                    ? _c(
-                                        "div",
-                                        {
-                                          staticClass: "row align-items-center",
-                                        },
-                                        [
-                                          _c("div", { staticClass: "col-8" }, [
-                                            _c(
-                                              "strong",
-                                              { staticClass: "d-block" },
-                                              [_vm._v(_vm._s(element.name))]
-                                            ),
-                                          ]),
-                                          _vm._v(" "),
-                                          _c(
-                                            "div",
-                                            { staticClass: "col-4 text-end" },
-                                            [
-                                              _c(
-                                                "strong",
-                                                { staticClass: "text-primary" },
-                                                [
-                                                  _vm._v(
-                                                    _vm._s(
-                                                      element.price
-                                                        .toString()
-                                                        .replace(
-                                                          /\B(?=(\d{3})+(?!\d))/g,
-                                                          " "
-                                                        )
-                                                    ) + " ₽"
-                                                  ),
-                                                ]
-                                              ),
-                                            ]
-                                          ),
-                                        ]
-                                      )
-                                    : _vm._e(),
-                                ]
-                              }),
-                            ]
-                          }),
-                        ]
-                      : _vm._e(),
-                  ]
-                }),
-              ],
-              2
-            )
-          }),
-        ],
-        2
-      ),
-    ]),
-  ])
+      _vm.deliveryModal
+        ? _c("DeliveryModal", { attrs: { box: _vm.inputBox } })
+        : _vm._e(),
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function () {
@@ -26735,6 +27431,214 @@ var staticRenderFns = [
     return _c("label", [_c("strong", [_vm._v("Корпус")])])
   },
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/calculations/CalculationDelivery.vue?vue&type=template&id=4274b743&scoped=true&":
+/*!********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/calculations/CalculationDelivery.vue?vue&type=template&id=4274b743&scoped=true& ***!
+  \********************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "div",
+      {
+        staticClass: "modal fade show",
+        attrs: { id: "DeliveryModal", tabindex: "-1" },
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c("h5", { staticClass: "modal-title" }, [
+                  _vm._v("ПЭК доставка"),
+                ]),
+                _vm._v(" "),
+                _c("button", {
+                  staticClass: "btn-close",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function ($event) {
+                      return _vm.$parent.closeDeliveryModal()
+                    },
+                  },
+                }),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body m-3" }, [
+                _c(
+                  "div",
+                  { staticClass: "delivery mt-4", attrs: { id: "delivery" } },
+                  [
+                    _c(
+                      "div",
+                      { staticClass: "alert alert-primary alert-outline" },
+                      [
+                        _c("div"),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "alert-message" }, [
+                          _c("h6", { staticClass: "alert-heading" }, [
+                            _vm._v("Город доставки (ПЭК):"),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "row" }, [
+                            _c("div", { staticClass: "col-12 col-md-6" }, [
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.pek_city_selected,
+                                      expression: "pek_city_selected",
+                                    },
+                                  ],
+                                  staticClass: "form-select",
+                                  on: {
+                                    change: [
+                                      function ($event) {
+                                        var $$selectedVal =
+                                          Array.prototype.filter
+                                            .call(
+                                              $event.target.options,
+                                              function (o) {
+                                                return o.selected
+                                              }
+                                            )
+                                            .map(function (o) {
+                                              var val =
+                                                "_value" in o
+                                                  ? o._value
+                                                  : o.value
+                                              return val
+                                            })
+                                        _vm.pek_city_selected = $event.target
+                                          .multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      },
+                                      function ($event) {
+                                        return _vm.onCityChange()
+                                      },
+                                    ],
+                                  },
+                                },
+                                _vm._l(_vm.pek_cities, function (pek_city) {
+                                  return _c(
+                                    "option",
+                                    { domProps: { value: pek_city } },
+                                    [_vm._v(_vm._s(pek_city))]
+                                  )
+                                }),
+                                0
+                              ),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-12 col-md-6" }, [
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.pek_city_sub_selected,
+                                      expression: "pek_city_sub_selected",
+                                    },
+                                  ],
+                                  staticClass: "form-select",
+                                  on: {
+                                    change: [
+                                      function ($event) {
+                                        var $$selectedVal =
+                                          Array.prototype.filter
+                                            .call(
+                                              $event.target.options,
+                                              function (o) {
+                                                return o.selected
+                                              }
+                                            )
+                                            .map(function (o) {
+                                              var val =
+                                                "_value" in o
+                                                  ? o._value
+                                                  : o.value
+                                              return val
+                                            })
+                                        _vm.pek_city_sub_selected = $event
+                                          .target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      },
+                                      function ($event) {
+                                        return _vm.calcDelivery()
+                                      },
+                                    ],
+                                  },
+                                },
+                                _vm._l(
+                                  _vm.pek_cities_sub,
+                                  function (pek_city_sub) {
+                                    return _c(
+                                      "option",
+                                      { domProps: { value: pek_city_sub.id } },
+                                      [_vm._v(_vm._s(pek_city_sub.name))]
+                                    )
+                                  }
+                                ),
+                                0
+                              ),
+                            ]),
+                          ]),
+                          _vm._v(" "),
+                          _vm.pek_loading
+                            ? _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "spinner-border text-primary mt-4",
+                                },
+                                [
+                                  _c("span", { staticClass: "sr-only" }, [
+                                    _vm._v("Загрузка..."),
+                                  ]),
+                                ]
+                              )
+                            : _vm._e(),
+                        ]),
+                      ]
+                    ),
+                  ]
+                ),
+              ]),
+            ]),
+          ]
+        ),
+      ]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "modal-backdrop fade show" }),
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
