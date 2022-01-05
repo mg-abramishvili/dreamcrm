@@ -128,7 +128,7 @@
                 }))
             },
             addElement(categorySlug) {
-                let checkEmpty = this.inputElements[categorySlug].filter(element => element.element === null)
+                let checkEmpty = this.inputElements[categorySlug].filter(element => element.id === null)
                 if (checkEmpty.length >= 1 && this.inputElements[categorySlug].length > 0) {
                     return
                 }

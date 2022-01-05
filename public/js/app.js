@@ -2457,7 +2457,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     addElement: function addElement(categorySlug) {
       var checkEmpty = this.inputElements[categorySlug].filter(function (element) {
-        return element.element === null;
+        return element.id === null;
       });
 
       if (checkEmpty.length >= 1 && this.inputElements[categorySlug].length > 0) {
