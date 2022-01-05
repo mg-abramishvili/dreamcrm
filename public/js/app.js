@@ -2367,6 +2367,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2425,6 +2449,23 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         return this.elements;
       }
+    },
+    price: function price() {
+      var price = [];
+
+      for (var _i2 = 0, _Object$entries2 = Object.entries(this.inputElements); _i2 < _Object$entries2.length; _i2++) {
+        var category = _Object$entries2[_i2];
+
+        if (category[1] && category[1].length > 0) {
+          category[1].forEach(function (el) {
+            price.push(el.price);
+          });
+        }
+      }
+
+      return price.reduce(function (a, b) {
+        return a + b;
+      }, 0);
     }
   },
   methods: {
@@ -2468,6 +2509,12 @@ __webpack_require__.r(__webpack_exports__);
         id: null,
         price: 0
       });
+    },
+    deleteElement: function deleteElement(ElementID, categorySlug) {
+      var index = this.inputElements[categorySlug].map(function (element) {
+        return element.id;
+      }).indexOf(ElementID);
+      this.inputElements[categorySlug].splice(index, 1);
     },
     prevCategory: function prevCategory(category) {
       var index = this.categories.indexOf(category);
@@ -26193,196 +26240,277 @@ var render = function () {
     _c("h1", { staticClass: "h3 m-0" }, [_vm._v("Новый расчет")]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
-      _c(
-        "div",
-        { staticClass: "col-12 col-lg-4" },
-        [
-          _c("div", { staticClass: "mb-4" }, [
-            _vm._v("\n                Корпус\n                "),
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.inputBox,
-                    expression: "inputBox",
-                  },
-                ],
-                staticClass: "form-select",
-                on: {
-                  change: function ($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function (o) {
-                        return o.selected
-                      })
-                      .map(function (o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.inputBox = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  },
-                },
-              },
-              _vm._l(_vm.boxes, function (box) {
-                return _c(
-                  "option",
-                  { key: "box_" + box.id, domProps: { value: box.id } },
-                  [_vm._v(_vm._s(box.name))]
-                )
-              }),
-              0
-            ),
-          ]),
-          _vm._v(" "),
-          _vm._l(_vm.categories, function (category) {
-            return _c("div", { key: "category_" + category.id }, [
+      _c("div", { staticClass: "col-12 col-lg-4" }, [
+        _c(
+          "div",
+          {
+            staticClass: "calculation-input",
+            staticStyle: { position: "sticky", top: "20px" },
+          },
+          [
+            _c("div", { staticClass: "mb-4" }, [
+              _vm._v("\n                    Корпус\n                    "),
               _c(
-                "div",
+                "select",
                 {
                   directives: [
                     {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.currentCategory == category.id,
-                      expression: "currentCategory == category.id",
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.inputBox,
+                      expression: "inputBox",
                     },
                   ],
+                  staticClass: "form-select",
+                  on: {
+                    change: function ($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function (o) {
+                          return o.selected
+                        })
+                        .map(function (o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.inputBox = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    },
+                  },
                 },
-                [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(category.name) +
-                      "\n\n                    "
-                  ),
-                  _c(
-                    "button",
-                    {
-                      on: {
-                        click: function ($event) {
-                          return _vm.addElement(category.slug)
+                _vm._l(_vm.boxes, function (box) {
+                  return _c(
+                    "option",
+                    { key: "box_" + box.id, domProps: { value: box.id } },
+                    [_vm._v(_vm._s(box.name))]
+                  )
+                }),
+                0
+              ),
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.categories, function (category) {
+              return _c("div", { key: "category_" + category.id }, [
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.currentCategory == category.id,
+                        expression: "currentCategory == category.id",
+                      },
+                    ],
+                  },
+                  [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(category.name) +
+                        "\n\n                        "
+                    ),
+                    _c(
+                      "button",
+                      {
+                        on: {
+                          click: function ($event) {
+                            return _vm.addElement(category.slug)
+                          },
                         },
                       },
-                    },
-                    [_vm._v("+")]
-                  ),
-                  _vm._v(" "),
-                  _vm._l(
-                    _vm.inputElements[category.slug],
-                    function (element, index) {
-                      return _c("div", { key: index }, [
-                        _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: element.id,
-                                expression: "element.id",
-                              },
-                            ],
-                            staticClass: "form-select",
-                            on: {
-                              change: function ($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function (o) {
-                                    return o.selected
-                                  })
-                                  .map(function (o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  element,
-                                  "id",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
+                      [_vm._v("+")]
+                    ),
+                    _vm._v(" "),
+                    _vm._l(
+                      _vm.inputElements[category.slug],
+                      function (element, index) {
+                        return _c("div", { key: index }, [
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: element.id,
+                                  expression: "element.id",
+                                },
+                              ],
+                              staticClass: "form-select",
+                              on: {
+                                change: function ($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function (o) {
+                                      return o.selected
+                                    })
+                                    .map(function (o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    element,
+                                    "id",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                },
                               },
                             },
+                            [
+                              _vm._l(_vm.elementsFiltered, function (element) {
+                                return [
+                                  element.category_id == category.id
+                                    ? _c(
+                                        "option",
+                                        { domProps: { value: element.id } },
+                                        [
+                                          _vm._v(
+                                            "\n                                        " +
+                                              _vm._s(element.name) +
+                                              " "
+                                          ),
+                                          element.price > 0
+                                            ? [
+                                                _vm._v(
+                                                  "- " + _vm._s(element.price)
+                                                ),
+                                              ]
+                                            : _vm._e(),
+                                        ],
+                                        2
+                                      )
+                                    : _vm._e(),
+                                ]
+                              }),
+                            ],
+                            2
+                          ),
+                          _vm._v(" "),
+                          index > 0 &&
+                          _vm.inputElements[category.slug].length > 1
+                            ? _c(
+                                "button",
+                                {
+                                  on: {
+                                    click: function ($event) {
+                                      return _vm.deleteElement(
+                                        element.id,
+                                        category.slug
+                                      )
+                                    },
+                                  },
+                                },
+                                [_vm._v("-")]
+                              )
+                            : _vm._e(),
+                        ])
+                      }
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        on: {
+                          click: function ($event) {
+                            return _vm.prevCategory(category)
                           },
-                          [
-                            _vm._l(_vm.elementsFiltered, function (element) {
+                        },
+                      },
+                      [_vm._v("Назад")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        on: {
+                          click: function ($event) {
+                            return _vm.nextCategory(category)
+                          },
+                        },
+                      },
+                      [_vm._v("Далее")]
+                    ),
+                  ],
+                  2
+                ),
+              ])
+            }),
+            _vm._v(
+              "\n                \n                " +
+                _vm._s(_vm.price) +
+                "\n            "
+            ),
+          ],
+          2
+        ),
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "col-12 col-lg-8" },
+        _vm._l(_vm.categories, function (category) {
+          return _c(
+            "div",
+            {
+              key: "category_" + category.id,
+              staticClass: "mb-3 bg-white px-3 py-3",
+            },
+            [
+              _c("small", { staticStyle: { color: "rgb(136, 136, 136)" } }, [
+                _vm._v(_vm._s(category.name)),
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.elementsFiltered, function (element) {
+                return [
+                  element.category_id == category.id
+                    ? [
+                        _vm._l(_vm.inputElements, function (inEl) {
+                          return [
+                            _vm._l(inEl, function (inElEl) {
                               return [
-                                element.category_id == category.id
+                                element.id == inElEl.id
                                   ? _c(
-                                      "option",
-                                      { domProps: { value: element.id } },
+                                      "div",
+                                      { staticClass: "row align-items-center" },
                                       [
-                                        _vm._v(
-                                          "\n                                    " +
-                                            _vm._s(element.name) +
-                                            " "
+                                        _c("div", { staticClass: "col-8" }, [
+                                          _c(
+                                            "strong",
+                                            { staticClass: "d-block" },
+                                            [_vm._v(_vm._s(element.name))]
+                                          ),
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          { staticClass: "col-4 text-end" },
+                                          [
+                                            _c(
+                                              "strong",
+                                              { staticClass: "text-primary" },
+                                              [_vm._v(_vm._s(element.price))]
+                                            ),
+                                          ]
                                         ),
-                                        element.price > 0
-                                          ? [
-                                              _vm._v(
-                                                "- " + _vm._s(element.price)
-                                              ),
-                                            ]
-                                          : _vm._e(),
-                                      ],
-                                      2
+                                      ]
                                     )
                                   : _vm._e(),
                               ]
                             }),
-                          ],
-                          2
-                        ),
-                      ])
-                    }
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      on: {
-                        click: function ($event) {
-                          return _vm.prevCategory(category)
-                        },
-                      },
-                    },
-                    [_vm._v("Назад")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      on: {
-                        click: function ($event) {
-                          return _vm.nextCategory(category)
-                        },
-                      },
-                    },
-                    [_vm._v("Далее")]
-                  ),
-                ],
-                2
-              ),
-            ])
-          }),
-        ],
-        2
+                          ]
+                        }),
+                      ]
+                    : _vm._e(),
+                ]
+              }),
+            ],
+            2
+          )
+        }),
+        0
       ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-12 col-lg-8" }, [
-        _c(
-          "ul",
-          _vm._l(_vm.inputElements, function (element, categorySlug) {
-            return _c("li", { key: categorySlug }, [
-              _c("strong", [_vm._v(_vm._s(categorySlug) + ":")]),
-              _vm._v(" " + _vm._s(element)),
-            ])
-          }),
-          0
-        ),
-      ]),
     ]),
   ])
 }
