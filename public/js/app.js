@@ -2451,12 +2451,12 @@ __webpack_require__.r(__webpack_exports__);
     elementsFiltered: function elementsFiltered() {
       var _this2 = this;
 
-      if (this.inputBox && this.inputBox > 0) {
+      if (this.inputBox && this.inputBox.id > 0) {
         var array = [];
         this.elements.forEach(function (element) {
           if (element.boxes && element.boxes.length > 0) {
             element.boxes.forEach(function (box) {
-              if (box.id == _this2.inputBox) {
+              if (box.id == _this2.inputBox.id) {
                 array.push(element);
               }
             });
@@ -2480,7 +2480,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
 
-      return price.reduce(function (a, b) {
+      return parseInt(this.inputBox.price) + price.reduce(function (a, b) {
         return a + b;
       }, 0);
     }
@@ -2516,7 +2516,7 @@ __webpack_require__.r(__webpack_exports__);
     activateWindowsCategories: function activateWindowsCategories() {
       var _this6 = this;
 
-      if (this.inputBox && this.inputBox > 0) {
+      if (this.inputBox && this.inputBox.id > 0) {
         this.windowBoxes = false;
         this.windowCategories = true;
         this.currentCategory = this.categories[0].id;
@@ -26336,8 +26336,8 @@ var render = function () {
                     _vm._l(_vm.boxes, function (box) {
                       return _c(
                         "option",
-                        { key: "box_" + box.id, domProps: { value: box.id } },
-                        [_vm._v(_vm._s(box.name))]
+                        { key: "box_" + box.id, domProps: { value: box } },
+                        [_vm._v(_vm._s(box.name) + " — " + _vm._s(box.price))]
                       )
                     }),
                     0
@@ -26468,10 +26468,16 @@ var render = function () {
                                                     element.price > 0
                                                       ? [
                                                           _vm._v(
-                                                            "- " +
+                                                            "— " +
                                                               _vm._s(
                                                                 element.price
-                                                              )
+                                                                  .toString()
+                                                                  .replace(
+                                                                    /\B(?=(\d{3})+(?!\d))/g,
+                                                                    " "
+                                                                  )
+                                                              ) +
+                                                              " ₽"
                                                           ),
                                                         ]
                                                       : _vm._e(),
@@ -26556,18 +26562,33 @@ var render = function () {
               : _vm._e(),
             _vm._v(" "),
             _c("div", { staticClass: "total" }, [
-              _c("div", { staticClass: "row align-items-center" }, [
-                _c("div", { staticClass: "col-6" }, [_vm._v("Цена за 1 ед:")]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "col-6 text-end text-primary",
-                    staticStyle: { "font-size": "26px", "font-weight": "bold" },
-                  },
-                  [_vm._v(_vm._s(_vm.price) + " ₽")]
-                ),
-              ]),
+              _vm.price && _vm.price > 0
+                ? _c("div", { staticClass: "row align-items-center" }, [
+                    _c("div", { staticClass: "col-6" }, [
+                      _vm._v("Цена за 1 ед:"),
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "col-6 text-end text-primary",
+                        staticStyle: {
+                          "font-size": "26px",
+                          "font-weight": "bold",
+                        },
+                      },
+                      [
+                        _vm._v(
+                          _vm._s(
+                            _vm.price
+                              .toString()
+                              .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                          ) + " ₽"
+                        ),
+                      ]
+                    ),
+                  ])
+                : _vm._e(),
             ]),
           ]
         ),
@@ -26616,7 +26637,18 @@ var render = function () {
                                             _c(
                                               "strong",
                                               { staticClass: "text-primary" },
-                                              [_vm._v(_vm._s(element.price))]
+                                              [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    element.price
+                                                      .toString()
+                                                      .replace(
+                                                        /\B(?=(\d{3})+(?!\d))/g,
+                                                        " "
+                                                      )
+                                                  ) + " ₽"
+                                                ),
+                                              ]
                                             ),
                                           ]
                                         ),

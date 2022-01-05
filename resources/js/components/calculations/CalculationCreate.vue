@@ -9,7 +9,7 @@
                         <label><strong>Корпус</strong></label>
 
                         <select @change="changeInputBox()" v-model="inputBox" class="form-select form-select-lg mt-2 mb-3">
-                            <option v-for="box in boxes" :key="'box_' + box.id" :value="box.id">{{ box.name }}</option>
+                            <option v-for="box in boxes" :key="'box_' + box.id" :value="box">{{ box.name }} &mdash; {{ box.price }}</option>
                         </select>
 
                         <div class="mt-4">
@@ -28,7 +28,7 @@
                                     <select v-model="element.id" class="form-select form-select-lg mt-2 mb-3">
                                         <template v-for="element in elementsFiltered">
                                             <option v-if="element.category_id == category.id" :value="element.id">
-                                                {{ element.name }} <template v-if="element.price > 0">- {{ element.price}}</template>
+                                                {{ element.name }} <template v-if="element.price > 0">&mdash; {{ element.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽</template>
                                             </option>
                                         </template>
                                     </select>
@@ -44,9 +44,9 @@
                     </div>
                     
                     <div class="total">
-                        <div class="row align-items-center">
+                        <div v-if="price && price > 0" class="row align-items-center">
                             <div class="col-6">Цена за 1 ед:</div>
-                            <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ price }} ₽</div>
+                            <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽</div>
                         </div>
                     </div>
                     
@@ -67,7 +67,7 @@
                                             <strong class="d-block">{{ element.name }}</strong>
                                         </div>
                                         <div class="col-4 text-end">
-                                            <strong class="text-primary">{{ element.price }}</strong>
+                                            <strong class="text-primary">{{ element.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽</strong>
                                         </div>
                                     </div>
                                 </template>
@@ -123,12 +123,12 @@
         },
         computed: {
             elementsFiltered() {
-                if(this.inputBox && this.inputBox > 0) {
+                if(this.inputBox && this.inputBox.id > 0) {
                     var array = []
                     this.elements.forEach((element) => {
                         if(element.boxes && element.boxes.length > 0) {
                             element.boxes.forEach((box) => {
-                                if(box.id == this.inputBox) {
+                                if(box.id == this.inputBox.id) {
                                     array.push(element)
                                 }
                             })
@@ -148,7 +148,7 @@
                         })
                     }
                 }
-                return price.reduce((a, b) => a + b, 0)
+                return parseInt(this.inputBox.price) + price.reduce((a, b) => a + b, 0)
             },
         },
         methods: {
@@ -181,7 +181,7 @@
                 }))
             },
             activateWindowsCategories() {
-                if(this.inputBox && this.inputBox > 0) {
+                if(this.inputBox && this.inputBox.id > 0) {
                     this.windowBoxes = false
                     this.windowCategories = true
 
