@@ -9,7 +9,7 @@ class ElementController extends Controller
 {
     public function index()
     {
-        return Element::all();
+        return Element::with('boxes')->orderBy('price', 'asc')->get();
     }
 
     public function element($id)

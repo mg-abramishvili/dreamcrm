@@ -2346,32 +2346,79 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      elements: [],
       boxes: [],
       categories: [],
+      elements: [],
+      inputBox: {},
       inputLines: {},
       currentCategory: ''
     };
   },
   created: function created() {
+    this.loadBoxes();
     this.loadCategories();
+    this.loadElements();
   },
   mounted: function mounted() {},
-  methods: {
-    loadCategories: function loadCategories() {
+  computed: {
+    elementsFiltered: function elementsFiltered() {
       var _this = this;
 
-      axios.get('/api/categories').then(function (response) {
-        _this.categories = response.data;
-        response.data.forEach(function (category) {
-          _this.$set(_this.inputLines, category.slug, []);
-
-          _this.addLine(category.slug);
+      if (this.inputBox && this.inputBox > 0) {
+        var array = [];
+        this.elements.forEach(function (element) {
+          if (element.boxes && element.boxes.length > 0) {
+            element.boxes.forEach(function (box) {
+              if (box.id == _this.inputBox) {
+                array.push(element);
+              }
+            });
+          }
         });
-        _this.currentCategory = response.data[0].id;
+        return array;
+      } else {
+        return this.elements;
+      }
+    }
+  },
+  methods: {
+    loadBoxes: function loadBoxes() {
+      var _this2 = this;
+
+      axios.get('/api/boxes').then(function (response) {
+        _this2.boxes = response.data;
+      });
+    },
+    loadCategories: function loadCategories() {
+      var _this3 = this;
+
+      axios.get('/api/categories').then(function (response) {
+        _this3.categories = response.data;
+        response.data.forEach(function (category) {
+          _this3.$set(_this3.inputLines, category.slug, []);
+
+          _this3.addLine(category.slug);
+        });
+        _this3.currentCategory = response.data[0].id;
+      });
+    },
+    loadElements: function loadElements() {
+      var _this4 = this;
+
+      axios.get('/api/elements').then(function (response) {
+        _this4.elements = response.data;
       });
     },
     addLine: function addLine(slug) {
@@ -2395,13 +2442,17 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     nextCategory: function nextCategory(category) {
+      var _this5 = this;
+
       var index = this.categories.indexOf(category);
 
       if (index >= 0 && index < this.categories.length - 1) {
         this.currentCategory = this.categories[index + 1].id;
 
         if (this.categories[index + 1].elements && this.categories[index + 1].elements.length > 0) {
-          this.inputLines[this.categories[index + 1].slug][0].value = this.categories[index + 1].elements[0].id;
+          this.inputLines[this.categories[index + 1].slug][0].value = this.elementsFiltered.filter(function (element) {
+            return element.category_id == _this5.categories[index + 1].id;
+          })[0].id;
         }
       }
     }
@@ -26107,7 +26158,48 @@ var render = function () {
     "div",
     [
       _c("h1", { staticClass: "h3 m-0" }, [_vm._v("Новый расчет")]),
-      _vm._v("\n\n    " + _vm._s(_vm.inputLines) + "\n\n    "),
+      _vm._v(" "),
+      _c("div", { staticClass: "mb-4" }, [
+        _vm._v("\n        Корпус\n        "),
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.inputBox,
+                expression: "inputBox",
+              },
+            ],
+            staticClass: "form-select",
+            on: {
+              change: function ($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function (o) {
+                    return o.selected
+                  })
+                  .map(function (o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.inputBox = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              },
+            },
+          },
+          _vm._l(_vm.boxes, function (box) {
+            return _c(
+              "option",
+              { key: "box_" + box.id, domProps: { value: box.id } },
+              [_vm._v(_vm._s(box.name))]
+            )
+          }),
+          0
+        ),
+      ]),
+      _vm._v(" "),
       _vm._l(_vm.categories, function (category) {
         return _c("div", { key: "category_" + category.id }, [
           _c(
@@ -26172,17 +26264,30 @@ var render = function () {
                         },
                       },
                     },
-                    _vm._l(category.elements, function (element) {
-                      return _c(
-                        "option",
-                        {
-                          key: "element_" + element.id,
-                          domProps: { value: element.id },
-                        },
-                        [_vm._v(_vm._s(element.name))]
-                      )
-                    }),
-                    0
+                    [
+                      _vm._l(_vm.elementsFiltered, function (element) {
+                        return [
+                          element.category_id == category.id
+                            ? _c(
+                                "option",
+                                { domProps: { value: element.id } },
+                                [
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(element.name) +
+                                      " "
+                                  ),
+                                  element.price > 0
+                                    ? [_vm._v("- " + _vm._s(element.price))]
+                                    : _vm._e(),
+                                ],
+                                2
+                              )
+                            : _vm._e(),
+                        ]
+                      }),
+                    ],
+                    2
                   ),
                 ])
               }),
