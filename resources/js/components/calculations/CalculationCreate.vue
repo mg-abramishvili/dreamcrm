@@ -56,6 +56,18 @@
                 <!-- <ul>
                     <li v-for="(element, categorySlug) in inputElements" :key="categorySlug"><strong>{{ categorySlug }}:</strong> {{ element }}</li>
                 </ul> -->
+                <div class="mb-3 bg-white px-3 py-3">
+                    <small style="color: rgb(136, 136, 136);">Корпус</small>
+                    <div v-if="inputBox && inputBox.id > 0" class="row align-items-center">
+                        <div class="col-8">
+                            <strong class="d-block">{{ inputBox.name }}</strong>
+                        </div>
+                        <div class="col-4 text-end">
+                            <strong class="text-primary">{{ inputBox.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽</strong>
+                        </div>
+                    </div>
+                </div>
+
                 <div v-for="category in categories" :key="'category_' + category.id" class="mb-3 bg-white px-3 py-3">
                     <small style="color: rgb(136, 136, 136);">{{ category.name }}</small>
                     <template v-for="element in elementsFiltered">

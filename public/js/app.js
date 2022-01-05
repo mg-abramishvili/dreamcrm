@@ -2406,6 +2406,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -26608,77 +26620,109 @@ var render = function () {
       _c(
         "div",
         { staticClass: "col-12 col-lg-7" },
-        _vm._l(_vm.categories, function (category) {
-          return _c(
-            "div",
-            {
-              key: "category_" + category.id,
-              staticClass: "mb-3 bg-white px-3 py-3",
-            },
-            [
-              _c("small", { staticStyle: { color: "rgb(136, 136, 136)" } }, [
-                _vm._v(_vm._s(category.name)),
-              ]),
-              _vm._v(" "),
-              _vm._l(_vm.elementsFiltered, function (element) {
-                return [
-                  element.category_id == category.id
-                    ? [
-                        _vm._l(_vm.inputElements, function (inEl) {
-                          return [
-                            _vm._l(inEl, function (inElEl) {
-                              return [
-                                element.id == inElEl.id
-                                  ? _c(
-                                      "div",
-                                      { staticClass: "row align-items-center" },
-                                      [
-                                        _c("div", { staticClass: "col-8" }, [
-                                          _c(
-                                            "strong",
-                                            { staticClass: "d-block" },
-                                            [_vm._v(_vm._s(element.name))]
-                                          ),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c(
-                                          "div",
-                                          { staticClass: "col-4 text-end" },
-                                          [
+        [
+          _c("div", { staticClass: "mb-3 bg-white px-3 py-3" }, [
+            _c("small", { staticStyle: { color: "rgb(136, 136, 136)" } }, [
+              _vm._v("Корпус"),
+            ]),
+            _vm._v(" "),
+            _vm.inputBox && _vm.inputBox.id > 0
+              ? _c("div", { staticClass: "row align-items-center" }, [
+                  _c("div", { staticClass: "col-8" }, [
+                    _c("strong", { staticClass: "d-block" }, [
+                      _vm._v(_vm._s(_vm.inputBox.name)),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-4 text-end" }, [
+                    _c("strong", { staticClass: "text-primary" }, [
+                      _vm._v(
+                        _vm._s(
+                          _vm.inputBox.price
+                            .toString()
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                        ) + " ₽"
+                      ),
+                    ]),
+                  ]),
+                ])
+              : _vm._e(),
+          ]),
+          _vm._v(" "),
+          _vm._l(_vm.categories, function (category) {
+            return _c(
+              "div",
+              {
+                key: "category_" + category.id,
+                staticClass: "mb-3 bg-white px-3 py-3",
+              },
+              [
+                _c("small", { staticStyle: { color: "rgb(136, 136, 136)" } }, [
+                  _vm._v(_vm._s(category.name)),
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.elementsFiltered, function (element) {
+                  return [
+                    element.category_id == category.id
+                      ? [
+                          _vm._l(_vm.inputElements, function (inEl) {
+                            return [
+                              _vm._l(inEl, function (inElEl) {
+                                return [
+                                  element.id == inElEl.id
+                                    ? _c(
+                                        "div",
+                                        {
+                                          staticClass: "row align-items-center",
+                                        },
+                                        [
+                                          _c("div", { staticClass: "col-8" }, [
                                             _c(
                                               "strong",
-                                              { staticClass: "text-primary" },
-                                              [
-                                                _vm._v(
-                                                  _vm._s(
-                                                    element.price
-                                                      .toString()
-                                                      .replace(
-                                                        /\B(?=(\d{3})+(?!\d))/g,
-                                                        " "
-                                                      )
-                                                  ) + " ₽"
-                                                ),
-                                              ]
+                                              { staticClass: "d-block" },
+                                              [_vm._v(_vm._s(element.name))]
                                             ),
-                                          ]
-                                        ),
-                                      ]
-                                    )
-                                  : _vm._e(),
-                              ]
-                            }),
-                          ]
-                        }),
-                      ]
-                    : _vm._e(),
-                ]
-              }),
-            ],
-            2
-          )
-        }),
-        0
+                                          ]),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            { staticClass: "col-4 text-end" },
+                                            [
+                                              _c(
+                                                "strong",
+                                                { staticClass: "text-primary" },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      element.price
+                                                        .toString()
+                                                        .replace(
+                                                          /\B(?=(\d{3})+(?!\d))/g,
+                                                          " "
+                                                        )
+                                                    ) + " ₽"
+                                                  ),
+                                                ]
+                                              ),
+                                            ]
+                                          ),
+                                        ]
+                                      )
+                                    : _vm._e(),
+                                ]
+                              }),
+                            ]
+                          }),
+                        ]
+                      : _vm._e(),
+                  ]
+                }),
+              ],
+              2
+            )
+          }),
+        ],
+        2
       ),
     ]),
   ])
