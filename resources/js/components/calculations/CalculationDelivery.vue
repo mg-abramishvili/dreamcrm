@@ -15,7 +15,7 @@
                                 <div class="alert-message">
                                     <h6 class="alert-heading">Город доставки (ПЭК):</h6>
                                     
-                                    <div class="row">
+                                    <div class="row mb-3">
                                         <div class="col-12 col-md-6">
                                             <select class="form-select" v-model="pek_city_selected" @change="onCityChange()">
                                                 <option v-for="pek_city in pek_cities" :value="pek_city">{{ pek_city }}</option>
@@ -27,6 +27,8 @@
                                             </select>
                                         </div>
                                     </div>
+
+                                    <p>{{ pek_price }}</p>
 
                                     <div v-if="pek_loading" class="spinner-border text-primary mt-4">
                                         <span class="sr-only">Загрузка...</span>
@@ -95,9 +97,9 @@
                 this.pek_cities_sub = pek_cities_sub.sort((a, b) => (a.name > b.name) ? 1 : -1)
             },
             calcDelivery() {
-                var width = parseInt(this.box.width)
-                var height = parseInt(this.box.height)
-                var length = parseInt(this.box.length)
+                var width = parseInt(this.box.width) * 0.001
+                var height = parseInt(this.box.height) * 0.001
+                var length = parseInt(this.box.length) * 0.001
                 var weight = parseInt(this.box.weight)
                 this.pek_loading = true
                 axios
@@ -109,9 +111,10 @@
                         }
                     })
                     .then(response => (
-                        // this.pek_response = response.data,
+                        this.pek_response = response.data,
                         // this.pek_price = parseInt(response.data.auto[2]) + parseInt(response.data.ADD[1]),
-                        // this.pek_loading = false,
+                        this.pek_price = response.data.auto[2],
+                        this.pek_loading = false,
                         console.log(response.data)
                     ));
             },

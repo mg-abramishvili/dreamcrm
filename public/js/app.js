@@ -2688,6 +2688,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['box'],
   data: function data() {
@@ -2750,9 +2752,11 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       });
     },
     calcDelivery: function calcDelivery() {
-      var width = parseInt(this.box.width);
-      var height = parseInt(this.box.height);
-      var length = parseInt(this.box.length);
+      var _this2 = this;
+
+      var width = parseInt(this.box.width) * 0.001;
+      var height = parseInt(this.box.height) * 0.001;
+      var length = parseInt(this.box.length) * 0.001;
       var weight = parseInt(this.box.weight);
       this.pek_loading = true;
       axios.get('http://calc.pecom.ru/bitrix/components/pecom/calc/ajax.php', {
@@ -2762,11 +2766,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
           'deliver[town]': "".concat(this.pek_city_sub_selected)
         }
       }).then(function (response) {
-        return (// this.pek_response = response.data,
-          // this.pek_price = parseInt(response.data.auto[2]) + parseInt(response.data.ADD[1]),
-          // this.pek_loading = false,
-          console.log(response.data)
-        );
+        return _this2.pek_response = response.data, // this.pek_price = parseInt(response.data.auto[2]) + parseInt(response.data.ADD[1]),
+        _this2.pek_price = response.data.auto[2], _this2.pek_loading = false, console.log(response.data);
       });
     }
   }
@@ -27498,7 +27499,7 @@ var render = function () {
                             _vm._v("Город доставки (ПЭК):"),
                           ]),
                           _vm._v(" "),
-                          _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "row mb-3" }, [
                             _c("div", { staticClass: "col-12 col-md-6" }, [
                               _c(
                                 "select",
@@ -27608,6 +27609,8 @@ var render = function () {
                               ),
                             ]),
                           ]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.pek_price))]),
                           _vm._v(" "),
                           _vm.pek_loading
                             ? _c(
