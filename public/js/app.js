@@ -2391,6 +2391,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2399,6 +2414,8 @@ __webpack_require__.r(__webpack_exports__);
       elements: [],
       inputBox: {},
       inputElements: {},
+      windowBoxes: true,
+      windowCategories: false,
       currentCategory: ''
     };
   },
@@ -2496,6 +2513,23 @@ __webpack_require__.r(__webpack_exports__);
         _this5.elements = response.data;
       });
     },
+    activateWindowsCategories: function activateWindowsCategories() {
+      var _this6 = this;
+
+      if (this.inputBox && this.inputBox > 0) {
+        this.windowBoxes = false;
+        this.windowCategories = true;
+        this.currentCategory = this.categories[0].id;
+
+        if (this.categories[0].elements && this.categories[0].elements.length > 0) {
+          this.inputElements[this.categories[0].slug][0].id = this.elementsFiltered.filter(function (element) {
+            return element.category_id == _this6.categories[0].id;
+          })[0].id;
+        }
+      } else {
+        alert('Выберите корпус!');
+      }
+    },
     addElement: function addElement(categorySlug) {
       var checkEmpty = this.inputElements[categorySlug].filter(function (element) {
         return element.id === null;
@@ -2521,10 +2555,13 @@ __webpack_require__.r(__webpack_exports__);
 
       if (index > 0 && index < this.categories.length + 1) {
         this.currentCategory = this.categories[index - 1].id;
+      } else {
+        this.windowBoxes = true;
+        this.windowCategories = false;
       }
     },
     nextCategory: function nextCategory(category) {
-      var _this6 = this;
+      var _this7 = this;
 
       var index = this.categories.indexOf(category);
 
@@ -2533,8 +2570,19 @@ __webpack_require__.r(__webpack_exports__);
 
         if (this.categories[index + 1].elements && this.categories[index + 1].elements.length > 0) {
           this.inputElements[this.categories[index + 1].slug][0].id = this.elementsFiltered.filter(function (element) {
-            return element.category_id == _this6.categories[index + 1].id;
+            return element.category_id == _this7.categories[index + 1].id;
           })[0].id;
+        }
+      }
+    },
+    changeInputBox: function changeInputBox() {
+      for (var _i3 = 0, _Object$entries3 = Object.entries(this.inputElements); _i3 < _Object$entries3.length; _i3++) {
+        var category = _Object$entries3[_i3];
+
+        if (category[1] && category[1].length > 0) {
+          category[1].forEach(function (el) {
+            el.id = null, el.price = 0;
+          });
         }
       }
     }
@@ -26237,219 +26285,297 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("h1", { staticClass: "h3 m-0" }, [_vm._v("Новый расчет")]),
+    _c("h1", { staticClass: "h3 m-0 mb-4" }, [_vm._v("Новый расчет")]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-12 col-lg-4" }, [
+      _c("div", { staticClass: "col-12 col-lg-5" }, [
         _c(
           "div",
           {
-            staticClass: "calculation-input",
+            staticClass: "calculation-input bg-white px-4 py-4",
             staticStyle: { position: "sticky", top: "20px" },
           },
           [
-            _c("div", { staticClass: "mb-4" }, [
-              _vm._v("\n                    Корпус\n                    "),
-              _c(
-                "select",
-                {
-                  directives: [
+            _vm.windowBoxes
+              ? _c("div", { staticClass: "mb-4" }, [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c(
+                    "select",
                     {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.inputBox,
-                      expression: "inputBox",
-                    },
-                  ],
-                  staticClass: "form-select",
-                  on: {
-                    change: function ($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function (o) {
-                          return o.selected
-                        })
-                        .map(function (o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.inputBox = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    },
-                  },
-                },
-                _vm._l(_vm.boxes, function (box) {
-                  return _c(
-                    "option",
-                    { key: "box_" + box.id, domProps: { value: box.id } },
-                    [_vm._v(_vm._s(box.name))]
-                  )
-                }),
-                0
-              ),
-            ]),
-            _vm._v(" "),
-            _vm._l(_vm.categories, function (category) {
-              return _c("div", { key: "category_" + category.id }, [
-                _c(
-                  "div",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.currentCategory == category.id,
-                        expression: "currentCategory == category.id",
-                      },
-                    ],
-                  },
-                  [
-                    _vm._v(
-                      "\n                        " +
-                        _vm._s(category.name) +
-                        "\n\n                        "
-                    ),
-                    _c(
-                      "button",
-                      {
-                        on: {
-                          click: function ($event) {
-                            return _vm.addElement(category.slug)
-                          },
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.inputBox,
+                          expression: "inputBox",
                         },
-                      },
-                      [_vm._v("+")]
-                    ),
-                    _vm._v(" "),
-                    _vm._l(
-                      _vm.inputElements[category.slug],
-                      function (element, index) {
-                        return _c("div", { key: index }, [
-                          _c(
-                            "select",
-                            {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: element.id,
-                                  expression: "element.id",
-                                },
-                              ],
-                              staticClass: "form-select",
-                              on: {
-                                change: function ($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function (o) {
-                                      return o.selected
-                                    })
-                                    .map(function (o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.$set(
-                                    element,
-                                    "id",
-                                    $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  )
-                                },
-                              },
-                            },
-                            [
-                              _vm._l(_vm.elementsFiltered, function (element) {
-                                return [
-                                  element.category_id == category.id
-                                    ? _c(
-                                        "option",
-                                        { domProps: { value: element.id } },
-                                        [
-                                          _vm._v(
-                                            "\n                                        " +
-                                              _vm._s(element.name) +
-                                              " "
-                                          ),
-                                          element.price > 0
-                                            ? [
-                                                _vm._v(
-                                                  "- " + _vm._s(element.price)
-                                                ),
-                                              ]
-                                            : _vm._e(),
-                                        ],
-                                        2
-                                      )
-                                    : _vm._e(),
-                                ]
-                              }),
-                            ],
-                            2
-                          ),
-                          _vm._v(" "),
-                          index > 0 &&
-                          _vm.inputElements[category.slug].length > 1
-                            ? _c(
-                                "button",
-                                {
-                                  on: {
-                                    click: function ($event) {
-                                      return _vm.deleteElement(
-                                        element.id,
-                                        category.slug
-                                      )
-                                    },
-                                  },
-                                },
-                                [_vm._v("-")]
-                              )
-                            : _vm._e(),
-                        ])
-                      }
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        on: {
-                          click: function ($event) {
-                            return _vm.prevCategory(category)
+                      ],
+                      staticClass: "form-select form-select-lg mt-2 mb-3",
+                      on: {
+                        change: [
+                          function ($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function (o) {
+                                return o.selected
+                              })
+                              .map(function (o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.inputBox = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
                           },
-                        },
+                          function ($event) {
+                            return _vm.changeInputBox()
+                          },
+                        ],
                       },
-                      [_vm._v("Назад")]
-                    ),
-                    _vm._v(" "),
+                    },
+                    _vm._l(_vm.boxes, function (box) {
+                      return _c(
+                        "option",
+                        { key: "box_" + box.id, domProps: { value: box.id } },
+                        [_vm._v(_vm._s(box.name))]
+                      )
+                    }),
+                    0
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "mt-4" }, [
                     _c(
                       "button",
                       {
+                        staticClass: "btn btn-outline-primary",
                         on: {
                           click: function ($event) {
-                            return _vm.nextCategory(category)
+                            return _vm.activateWindowsCategories()
                           },
                         },
                       },
                       [_vm._v("Далее")]
                     ),
-                  ],
-                  2
+                  ]),
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.windowCategories
+              ? _c(
+                  "div",
+                  { staticClass: "mb-4" },
+                  _vm._l(_vm.categories, function (category) {
+                    return _c("div", { key: "category_" + category.id }, [
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.currentCategory == category.id,
+                              expression: "currentCategory == category.id",
+                            },
+                          ],
+                        },
+                        [
+                          _c("label", [
+                            _c("strong", [_vm._v(_vm._s(category.name))]),
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-sm btn-outline-danger",
+                              on: {
+                                click: function ($event) {
+                                  return _vm.addElement(category.slug)
+                                },
+                              },
+                            },
+                            [_vm._v("+")]
+                          ),
+                          _vm._v(" "),
+                          _vm._l(
+                            _vm.inputElements[category.slug],
+                            function (element, index) {
+                              return _c(
+                                "div",
+                                {
+                                  key: index,
+                                  staticStyle: { position: "relative" },
+                                },
+                                [
+                                  _c(
+                                    "select",
+                                    {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: element.id,
+                                          expression: "element.id",
+                                        },
+                                      ],
+                                      staticClass:
+                                        "form-select form-select-lg mt-2 mb-3",
+                                      on: {
+                                        change: function ($event) {
+                                          var $$selectedVal =
+                                            Array.prototype.filter
+                                              .call(
+                                                $event.target.options,
+                                                function (o) {
+                                                  return o.selected
+                                                }
+                                              )
+                                              .map(function (o) {
+                                                var val =
+                                                  "_value" in o
+                                                    ? o._value
+                                                    : o.value
+                                                return val
+                                              })
+                                          _vm.$set(
+                                            element,
+                                            "id",
+                                            $event.target.multiple
+                                              ? $$selectedVal
+                                              : $$selectedVal[0]
+                                          )
+                                        },
+                                      },
+                                    },
+                                    [
+                                      _vm._l(
+                                        _vm.elementsFiltered,
+                                        function (element) {
+                                          return [
+                                            element.category_id == category.id
+                                              ? _c(
+                                                  "option",
+                                                  {
+                                                    domProps: {
+                                                      value: element.id,
+                                                    },
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                            " +
+                                                        _vm._s(element.name) +
+                                                        " "
+                                                    ),
+                                                    element.price > 0
+                                                      ? [
+                                                          _vm._v(
+                                                            "- " +
+                                                              _vm._s(
+                                                                element.price
+                                                              )
+                                                          ),
+                                                        ]
+                                                      : _vm._e(),
+                                                  ],
+                                                  2
+                                                )
+                                              : _vm._e(),
+                                          ]
+                                        }
+                                      ),
+                                    ],
+                                    2
+                                  ),
+                                  _vm._v(" "),
+                                  index > 0 &&
+                                  _vm.inputElements[category.slug].length > 1
+                                    ? _c(
+                                        "button",
+                                        {
+                                          staticClass:
+                                            "btn btn-sm btn-outline-danger",
+                                          staticStyle: {
+                                            position: "absolute",
+                                            right: "0",
+                                            top: "50%",
+                                            transform: "translateY(-50%)",
+                                            padding: "0",
+                                            width: "20px",
+                                            "margin-right": "-21px",
+                                          },
+                                          on: {
+                                            click: function ($event) {
+                                              return _vm.deleteElement(
+                                                element.id,
+                                                category.slug
+                                              )
+                                            },
+                                          },
+                                        },
+                                        [_vm._v("–")]
+                                      )
+                                    : _vm._e(),
+                                ]
+                              )
+                            }
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "mt-4" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-outline-primary",
+                                on: {
+                                  click: function ($event) {
+                                    return _vm.prevCategory(category)
+                                  },
+                                },
+                              },
+                              [_vm._v("Назад")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-outline-primary",
+                                on: {
+                                  click: function ($event) {
+                                    return _vm.nextCategory(category)
+                                  },
+                                },
+                              },
+                              [_vm._v("Далее")]
+                            ),
+                          ]),
+                        ],
+                        2
+                      ),
+                    ])
+                  }),
+                  0
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _c("div", { staticClass: "total" }, [
+              _c("div", { staticClass: "row align-items-center" }, [
+                _c("div", { staticClass: "col-6" }, [_vm._v("Цена за 1 ед:")]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "col-6 text-end text-primary",
+                    staticStyle: { "font-size": "26px", "font-weight": "bold" },
+                  },
+                  [_vm._v(_vm._s(_vm.price) + " ₽")]
                 ),
-              ])
-            }),
-            _vm._v(
-              "\n                \n                " +
-                _vm._s(_vm.price) +
-                "\n            "
-            ),
-          ],
-          2
+              ]),
+            ]),
+          ]
         ),
       ]),
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "col-12 col-lg-8" },
+        { staticClass: "col-12 col-lg-7" },
         _vm._l(_vm.categories, function (category) {
           return _c(
             "div",
@@ -26514,7 +26640,14 @@ var render = function () {
     ]),
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", [_c("strong", [_vm._v("Корпус")])])
+  },
+]
 render._withStripped = true
 
 
