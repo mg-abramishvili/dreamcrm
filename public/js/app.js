@@ -2355,6 +2355,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2362,7 +2374,7 @@ __webpack_require__.r(__webpack_exports__);
       categories: [],
       elements: [],
       inputBox: {},
-      inputLines: {},
+      inputElements: {},
       currentCategory: ''
     };
   },
@@ -2372,16 +2384,38 @@ __webpack_require__.r(__webpack_exports__);
     this.loadElements();
   },
   mounted: function mounted() {},
+  watch: {
+    inputElements: {
+      deep: true,
+      handler: function handler() {
+        var _this = this;
+
+        for (var _i = 0, _Object$entries = Object.entries(this.inputElements); _i < _Object$entries.length; _i++) {
+          var category = _Object$entries[_i];
+
+          if (category[1] && category[1].length > 0) {
+            category[1].forEach(function (el) {
+              if (el.id != null) {
+                el.price = parseInt(_this.elements.filter(function (element) {
+                  return element.id == el.id;
+                })[0].price);
+              }
+            });
+          }
+        }
+      }
+    }
+  },
   computed: {
     elementsFiltered: function elementsFiltered() {
-      var _this = this;
+      var _this2 = this;
 
       if (this.inputBox && this.inputBox > 0) {
         var array = [];
         this.elements.forEach(function (element) {
           if (element.boxes && element.boxes.length > 0) {
             element.boxes.forEach(function (box) {
-              if (box.id == _this.inputBox) {
+              if (box.id == _this2.inputBox) {
                 array.push(element);
               }
             });
@@ -2395,43 +2429,44 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     loadBoxes: function loadBoxes() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.get('/api/boxes').then(function (response) {
-        _this2.boxes = response.data;
+        _this3.boxes = response.data;
       });
     },
     loadCategories: function loadCategories() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.get('/api/categories').then(function (response) {
-        _this3.categories = response.data;
+        _this4.categories = response.data;
         response.data.forEach(function (category) {
-          _this3.$set(_this3.inputLines, category.slug, []);
+          _this4.$set(_this4.inputElements, category.slug, []);
 
-          _this3.addLine(category.slug);
+          _this4.addElement(category.slug);
         });
-        _this3.currentCategory = response.data[0].id;
+        _this4.currentCategory = response.data[0].id;
       });
     },
     loadElements: function loadElements() {
-      var _this4 = this;
+      var _this5 = this;
 
       axios.get('/api/elements').then(function (response) {
-        _this4.elements = response.data;
+        _this5.elements = response.data;
       });
     },
-    addLine: function addLine(slug) {
-      var checkEmptyLines = this.inputLines[slug].filter(function (line) {
-        return line.value === null;
+    addElement: function addElement(categorySlug) {
+      var checkEmpty = this.inputElements[categorySlug].filter(function (element) {
+        return element.element === null;
       });
 
-      if (checkEmptyLines.length >= 1 && this.inputLines[slug].length > 0) {
+      if (checkEmpty.length >= 1 && this.inputElements[categorySlug].length > 0) {
         return;
       }
 
-      this.inputLines[slug].push({
-        value: null
+      this.inputElements[categorySlug].push({
+        id: null,
+        price: 0
       });
     },
     prevCategory: function prevCategory(category) {
@@ -2442,7 +2477,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     nextCategory: function nextCategory(category) {
-      var _this5 = this;
+      var _this6 = this;
 
       var index = this.categories.indexOf(category);
 
@@ -2450,8 +2485,8 @@ __webpack_require__.r(__webpack_exports__);
         this.currentCategory = this.categories[index + 1].id;
 
         if (this.categories[index + 1].elements && this.categories[index + 1].elements.length > 0) {
-          this.inputLines[this.categories[index + 1].slug][0].value = this.elementsFiltered.filter(function (element) {
-            return element.category_id == _this5.categories[index + 1].id;
+          this.inputElements[this.categories[index + 1].slug][0].id = this.elementsFiltered.filter(function (element) {
+            return element.category_id == _this6.categories[index + 1].id;
           })[0].id;
         }
       }
@@ -26154,175 +26189,202 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("h1", { staticClass: "h3 m-0" }, [_vm._v("Новый расчет")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "mb-4" }, [
-        _vm._v("\n        Корпус\n        "),
-        _c(
-          "select",
-          {
-            directives: [
+  return _c("div", [
+    _c("h1", { staticClass: "h3 m-0" }, [_vm._v("Новый расчет")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "col-12 col-lg-4" },
+        [
+          _c("div", { staticClass: "mb-4" }, [
+            _vm._v("\n                Корпус\n                "),
+            _c(
+              "select",
               {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.inputBox,
-                expression: "inputBox",
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.inputBox,
+                    expression: "inputBox",
+                  },
+                ],
+                staticClass: "form-select",
+                on: {
+                  change: function ($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function (o) {
+                        return o.selected
+                      })
+                      .map(function (o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.inputBox = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  },
+                },
               },
-            ],
-            staticClass: "form-select",
-            on: {
-              change: function ($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function (o) {
-                    return o.selected
-                  })
-                  .map(function (o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.inputBox = $event.target.multiple
-                  ? $$selectedVal
-                  : $$selectedVal[0]
-              },
-            },
-          },
-          _vm._l(_vm.boxes, function (box) {
-            return _c(
-              "option",
-              { key: "box_" + box.id, domProps: { value: box.id } },
-              [_vm._v(_vm._s(box.name))]
-            )
+              _vm._l(_vm.boxes, function (box) {
+                return _c(
+                  "option",
+                  { key: "box_" + box.id, domProps: { value: box.id } },
+                  [_vm._v(_vm._s(box.name))]
+                )
+              }),
+              0
+            ),
+          ]),
+          _vm._v(" "),
+          _vm._l(_vm.categories, function (category) {
+            return _c("div", { key: "category_" + category.id }, [
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.currentCategory == category.id,
+                      expression: "currentCategory == category.id",
+                    },
+                  ],
+                },
+                [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(category.name) +
+                      "\n\n                    "
+                  ),
+                  _c(
+                    "button",
+                    {
+                      on: {
+                        click: function ($event) {
+                          return _vm.addElement(category.slug)
+                        },
+                      },
+                    },
+                    [_vm._v("+")]
+                  ),
+                  _vm._v(" "),
+                  _vm._l(
+                    _vm.inputElements[category.slug],
+                    function (element, index) {
+                      return _c("div", { key: index }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: element.id,
+                                expression: "element.id",
+                              },
+                            ],
+                            staticClass: "form-select",
+                            on: {
+                              change: function ($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function (o) {
+                                    return o.selected
+                                  })
+                                  .map(function (o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  element,
+                                  "id",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              },
+                            },
+                          },
+                          [
+                            _vm._l(_vm.elementsFiltered, function (element) {
+                              return [
+                                element.category_id == category.id
+                                  ? _c(
+                                      "option",
+                                      { domProps: { value: element.id } },
+                                      [
+                                        _vm._v(
+                                          "\n                                    " +
+                                            _vm._s(element.name) +
+                                            " "
+                                        ),
+                                        element.price > 0
+                                          ? [
+                                              _vm._v(
+                                                "- " + _vm._s(element.price)
+                                              ),
+                                            ]
+                                          : _vm._e(),
+                                      ],
+                                      2
+                                    )
+                                  : _vm._e(),
+                              ]
+                            }),
+                          ],
+                          2
+                        ),
+                      ])
+                    }
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      on: {
+                        click: function ($event) {
+                          return _vm.prevCategory(category)
+                        },
+                      },
+                    },
+                    [_vm._v("Назад")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      on: {
+                        click: function ($event) {
+                          return _vm.nextCategory(category)
+                        },
+                      },
+                    },
+                    [_vm._v("Далее")]
+                  ),
+                ],
+                2
+              ),
+            ])
+          }),
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-12 col-lg-8" }, [
+        _c(
+          "ul",
+          _vm._l(_vm.inputElements, function (element, categorySlug) {
+            return _c("li", { key: categorySlug }, [
+              _c("strong", [_vm._v(_vm._s(categorySlug) + ":")]),
+              _vm._v(" " + _vm._s(element)),
+            ])
           }),
           0
         ),
       ]),
-      _vm._v(" "),
-      _vm._l(_vm.categories, function (category) {
-        return _c("div", { key: "category_" + category.id }, [
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.currentCategory == category.id,
-                  expression: "currentCategory == category.id",
-                },
-              ],
-            },
-            [
-              _vm._v(
-                "\n            " + _vm._s(category.name) + "\n            "
-              ),
-              _c(
-                "button",
-                {
-                  on: {
-                    click: function ($event) {
-                      return _vm.addLine(category.slug)
-                    },
-                  },
-                },
-                [_vm._v("+")]
-              ),
-              _vm._v(" "),
-              _vm._l(_vm.inputLines[category.slug], function (line, index) {
-                return _c("div", { key: index }, [
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: line.value,
-                          expression: "line.value",
-                        },
-                      ],
-                      staticClass: "form-select",
-                      on: {
-                        change: function ($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function (o) {
-                              return o.selected
-                            })
-                            .map(function (o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.$set(
-                            line,
-                            "value",
-                            $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          )
-                        },
-                      },
-                    },
-                    [
-                      _vm._l(_vm.elementsFiltered, function (element) {
-                        return [
-                          element.category_id == category.id
-                            ? _c(
-                                "option",
-                                { domProps: { value: element.id } },
-                                [
-                                  _vm._v(
-                                    "\n                            " +
-                                      _vm._s(element.name) +
-                                      " "
-                                  ),
-                                  element.price > 0
-                                    ? [_vm._v("- " + _vm._s(element.price))]
-                                    : _vm._e(),
-                                ],
-                                2
-                              )
-                            : _vm._e(),
-                        ]
-                      }),
-                    ],
-                    2
-                  ),
-                ])
-              }),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  on: {
-                    click: function ($event) {
-                      return _vm.prevCategory(category)
-                    },
-                  },
-                },
-                [_vm._v("Назад")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  on: {
-                    click: function ($event) {
-                      return _vm.nextCategory(category)
-                    },
-                  },
-                },
-                [_vm._v("Далее")]
-              ),
-            ],
-            2
-          ),
-        ])
-      }),
-    ],
-    2
-  )
+    ]),
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

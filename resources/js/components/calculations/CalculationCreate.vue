@@ -2,28 +2,40 @@
     <div>
         <h1 class="h3 m-0">Новый расчет</h1>
         
-        <div class="mb-4">
-            Корпус
-            <select v-model="inputBox" class="form-select">
-                <option v-for="box in boxes" :key="'box_' + box.id" :value="box.id">{{ box.name }}</option>
-            </select>
-        </div>
-
-        <div v-for="category in categories" :key="'category_' + category.id">
-            <div v-show="currentCategory == category.id">
-                {{ category.name }}
-                <button @click="addLine(category.slug)">+</button>
-                <div v-for="(line, index) in inputLines[category.slug]" :key="index">
-                    <select v-model="line.value" class="form-select">
-                        <template v-for="element in elementsFiltered">
-                            <option v-if="element.category_id == category.id" :value="element.id">
-                                {{ element.name }} <template v-if="element.price > 0">- {{ element.price}}</template>
-                            </option>
-                        </template>
+        <div class="row">
+            <div class="col-12 col-lg-4">
+                <div class="mb-4">
+                    Корпус
+                    <select v-model="inputBox" class="form-select">
+                        <option v-for="box in boxes" :key="'box_' + box.id" :value="box.id">{{ box.name }}</option>
                     </select>
                 </div>
-                <button @click="prevCategory(category)">Назад</button>
-                <button @click="nextCategory(category)">Далее</button>
+
+                <div v-for="category in categories" :key="'category_' + category.id">
+                    <div v-show="currentCategory == category.id">
+                        {{ category.name }}
+
+                        <button @click="addElement(category.slug)">+</button>
+                        
+                        <div v-for="(element, index) in inputElements[category.slug]" :key="index">
+                            <select v-model="element.id" class="form-select">
+                                <template v-for="element in elementsFiltered">
+                                    <option v-if="element.category_id == category.id" :value="element.id">
+                                        {{ element.name }} <template v-if="element.price > 0">- {{ element.price}}</template>
+                                    </option>
+                                </template>
+                            </select>
+                        </div>
+
+                        <button @click="prevCategory(category)">Назад</button>
+                        <button @click="nextCategory(category)">Далее</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-8">
+                <ul>
+                    <li v-for="(element, categorySlug) in inputElements" :key="categorySlug"><strong>{{ categorySlug }}:</strong> {{ element }}</li>
+                </ul>
             </div>
         </div>
         
@@ -39,7 +51,7 @@
                 elements: [],
 
                 inputBox: {},
-                inputLines: {},
+                inputElements: {},
 
                 currentCategory: '',
             }
@@ -50,6 +62,22 @@
             this.loadElements()
         },
         mounted () {
+        },
+        watch: {
+            inputElements: {
+                deep: true,
+                handler() {
+                    for (const category of Object.entries(this.inputElements)) {
+                        if(category[1] && category[1].length > 0) {
+                            category[1].forEach((el) => {
+                                if(el.id != null) {
+                                    el.price = parseInt(this.elements.filter(element => element.id == el.id)[0].price)
+                                }
+                            })
+                        }
+                    }
+                }
+            }
         },
         computed: {
             elementsFiltered() {
@@ -85,8 +113,8 @@
                     this.categories = response.data
 
                     response.data.forEach(category => {
-                        this.$set(this.inputLines, category.slug, [])
-                        this.addLine(category.slug)
+                        this.$set(this.inputElements, category.slug, [])
+                        this.addElement(category.slug)
                     })
 
                     this.currentCategory = response.data[0].id
@@ -99,14 +127,12 @@
                     this.elements = response.data
                 }))
             },
-            addLine(slug) {
-                let checkEmptyLines = this.inputLines[slug].filter(line => line.value === null)
-                if (checkEmptyLines.length >= 1 && this.inputLines[slug].length > 0) {
+            addElement(categorySlug) {
+                let checkEmpty = this.inputElements[categorySlug].filter(element => element.element === null)
+                if (checkEmpty.length >= 1 && this.inputElements[categorySlug].length > 0) {
                     return
                 }
-                this.inputLines[slug].push({
-                    value: null
-                })
+                this.inputElements[categorySlug].push({id: null, price: 0})
             },
             prevCategory(category) {
                 var index = this.categories.indexOf(category)
@@ -120,7 +146,7 @@
                     this.currentCategory = this.categories[index + 1].id
 
                     if(this.categories[index + 1].elements && this.categories[index + 1].elements.length > 0) {
-                        this.inputLines[this.categories[index + 1].slug][0].value = this.elementsFiltered.filter(element => element.category_id == this.categories[index + 1].id)[0].id
+                        this.inputElements[this.categories[index + 1].slug][0].id = this.elementsFiltered.filter(element => element.category_id == this.categories[index + 1].id)[0].id
                     }
                 }
             },
