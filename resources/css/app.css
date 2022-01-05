@@ -30,6 +30,11 @@ body {
 }
 
 /* SIDEBAR */
+.sidebar {
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+}
 .sidebar-brand a img {
     width: 30px;
     display: inline-block;
@@ -107,6 +112,10 @@ body {
 .catalog-page-search-icon:hover svg,
 .catalog-page-search-icon:focus  svg{
     color: #3f80ea;
+}
+
+.main {
+    margin-left: 260px;
 }
 
 
