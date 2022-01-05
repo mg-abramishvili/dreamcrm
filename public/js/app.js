@@ -26337,7 +26337,18 @@ var render = function () {
                       return _c(
                         "option",
                         { key: "box_" + box.id, domProps: { value: box } },
-                        [_vm._v(_vm._s(box.name) + " — " + _vm._s(box.price))]
+                        [
+                          _vm._v(
+                            _vm._s(box.name) +
+                              " — " +
+                              _vm._s(
+                                box.price
+                                  .toString()
+                                  .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                              ) +
+                              " ₽"
+                          ),
+                        ]
                       )
                     }),
                     0

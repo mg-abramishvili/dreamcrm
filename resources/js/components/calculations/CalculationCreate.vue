@@ -9,7 +9,7 @@
                         <label><strong>Корпус</strong></label>
 
                         <select @change="changeInputBox()" v-model="inputBox" class="form-select form-select-lg mt-2 mb-3">
-                            <option v-for="box in boxes" :key="'box_' + box.id" :value="box">{{ box.name }} &mdash; {{ box.price }}</option>
+                            <option v-for="box in boxes" :key="'box_' + box.id" :value="box">{{ box.name }} &mdash; {{ box.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽</option>
                         </select>
 
                         <div class="mt-4">
