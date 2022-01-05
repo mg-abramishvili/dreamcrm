@@ -2345,6 +2345,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2386,12 +2387,22 @@ __webpack_require__.r(__webpack_exports__);
         value: null
       });
     },
+    prevCategory: function prevCategory(category) {
+      var index = this.categories.indexOf(category);
+
+      if (index > 0 && index < this.categories.length + 1) {
+        this.currentCategory = this.categories[index - 1].id;
+      }
+    },
     nextCategory: function nextCategory(category) {
       var index = this.categories.indexOf(category);
 
       if (index >= 0 && index < this.categories.length - 1) {
         this.currentCategory = this.categories[index + 1].id;
-        this.inputLines[this.categories[index + 1].slug][0].value = this.categories[index + 1].elements[0].id;
+
+        if (this.categories[index + 1].elements && this.categories[index + 1].elements.length > 0) {
+          this.inputLines[this.categories[index + 1].slug][0].value = this.categories[index + 1].elements[0].id;
+        }
       }
     }
   }
@@ -26175,6 +26186,18 @@ var render = function () {
                   ),
                 ])
               }),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  on: {
+                    click: function ($event) {
+                      return _vm.prevCategory(category)
+                    },
+                  },
+                },
+                [_vm._v("Назад")]
+              ),
               _vm._v(" "),
               _c(
                 "button",

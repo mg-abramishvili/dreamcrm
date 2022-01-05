@@ -13,6 +13,7 @@
                         <option v-for="element in category.elements" :key="'element_' + element.id" :value="element.id">{{ element.name }}</option>
                     </select>
                 </div>
+                <button @click="prevCategory(category)">Назад</button>
                 <button @click="nextCategory(category)">Далее</button>
             </div>
         </div>
@@ -62,11 +63,20 @@
                     value: null
                 })
             },
+            prevCategory(category) {
+                var index = this.categories.indexOf(category)
+                if(index > 0 && index < this.categories.length + 1) {
+                    this.currentCategory = this.categories[index - 1].id
+                }
+            },
             nextCategory(category) {
                 var index = this.categories.indexOf(category)
                 if(index >= 0 && index < this.categories.length - 1) {
                     this.currentCategory = this.categories[index + 1].id
-                    this.inputLines[this.categories[index + 1].slug][0].value = this.categories[index + 1].elements[0].id
+
+                    if(this.categories[index + 1].elements && this.categories[index + 1].elements.length > 0) {
+                        this.inputLines[this.categories[index + 1].slug][0].value = this.categories[index + 1].elements[0].id
+                    }
                 }
             },
         },
