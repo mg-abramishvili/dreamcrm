@@ -2343,6 +2343,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2389,6 +2391,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (index >= 0 && index < this.categories.length - 1) {
         this.currentCategory = this.categories[index + 1].id;
+        this.inputLines[this.categories[index + 1].slug][0].value = this.categories[index + 1].elements[0].id;
       }
     }
   }
@@ -26093,7 +26096,7 @@ var render = function () {
     "div",
     [
       _c("h1", { staticClass: "h3 m-0" }, [_vm._v("Новый расчет")]),
-      _vm._v(" "),
+      _vm._v("\n\n    " + _vm._s(_vm.inputLines) + "\n\n    "),
       _vm._l(_vm.categories, function (category) {
         return _c("div", { key: "category_" + category.id }, [
           _c(

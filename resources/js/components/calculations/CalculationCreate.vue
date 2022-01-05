@@ -2,6 +2,8 @@
     <div>
         <h1 class="h3 m-0">Новый расчет</h1>
 
+        {{ inputLines }}
+
         <div v-for="category in categories" :key="'category_' + category.id">
             <div v-show="currentCategory == category.id">
                 {{ category.name }}
@@ -64,9 +66,8 @@
                 var index = this.categories.indexOf(category)
                 if(index >= 0 && index < this.categories.length - 1) {
                     this.currentCategory = this.categories[index + 1].id
+                    this.inputLines[this.categories[index + 1].slug][0].value = this.categories[index + 1].elements[0].id
                 }
-
-                
             },
         },
     }
