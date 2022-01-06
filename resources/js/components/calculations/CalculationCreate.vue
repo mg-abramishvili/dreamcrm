@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div style="position: relative;">
         <h1 class="h3 m-0 mb-4">Новый расчет</h1>
         
-        <div class="row">
+        <div v-if="elementsFiltered && elementsFiltered.length > 0" class="row">
             <div class="col-12 col-lg-5">
                 <div class="calculation-input bg-white px-4 py-4" style="position: sticky; top: 20px;">
                     <div v-if="windowBoxes" class="mb-4">
@@ -47,12 +47,15 @@
                     <div class="total">
                         <div v-if="price && price > 0" class="row align-items-center mb-3">
                             <div class="col-6"><strong>Цена за 1 ед:</strong></div>
-                            <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽</div>
+                            <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">
+                                {{ price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽
+                                <small style="display:block; line-height: 1; font-size: 15px; font-weight: 400; color: #777;">{{ price_pre_rub.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽ / {{ price_pre_usd.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} $</small>
+                            </div>
                         </div>
                         <div v-if="windowQty" class="row align-items-center mb-3">
                             <div class="col-6">
                                 <strong>Кол-во</strong>
-                                <input v-model="quantity" type="number" class="form-control form-control-sm" style="font-size: 12px; display:inline-block; width: 70px;">
+                                <input @change="resetDelivery()" v-model="quantity" type="number" class="form-control form-control-sm" style="font-size: 12px; display:inline-block; width: 70px;">
                             </div>
                             <div v-if="priceWithQuantity && priceWithQuantity > 0" class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ priceWithQuantity.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽</div>
                         </div>
@@ -113,6 +116,11 @@
                 </div>
             </div>
         </div>
+        <div v-else style="position: absolute; left: 0; right: 0; top: 0; bottom: 0; background-color: rgba(255,255,255,0.8); z-index: 10;">
+            <div class="spinner-border text-primary me-2" role="status" style="position: absolute; left: 50%; top: 30px;">
+                <span class="sr-only">Загрузка...</span>
+            </div>
+        </div>
         
         <DeliveryModal v-if="deliveryModal" v-bind:box="inputBox"></DeliveryModal>
     </div>
@@ -146,6 +154,8 @@
                 deliveryPrice: 0,
                 deliveryDirection: '',
                 deliveryDays: 0,
+
+                loading: false,
             }
         },
         created() {
@@ -164,6 +174,8 @@
                             category[1].forEach((el) => {
                                 if(el.id != null) {
                                     el.price = parseInt(this.elements.filter(element => element.id == el.id)[0].price)
+                                    el.pre_rub = parseInt(this.elements.filter(element => element.id == el.id)[0].pre_rub)
+                                    el.pre_usd = parseInt(this.elements.filter(element => element.id == el.id)[0].pre_usd)
                                 }
                             })
                         }
@@ -184,10 +196,33 @@
                             })
                         }
                     })
+                    
                     return array
                 } else {
                     return this.elements
                 }
+            },
+            price_pre_rub() {
+                var price = []
+                for (const category of Object.entries(this.inputElements)) {
+                    if(category[1] && category[1].length > 0) {
+                        category[1].forEach((el) => {
+                            price.push(el.pre_rub)
+                        })
+                    }
+                }
+                return parseInt(this.inputBox.pre_rub) + parseInt(this.inputBox.sborka) + parseInt(this.inputBox.marzha) + price.reduce((a, b) => a + b, 0)
+            },
+            price_pre_usd() {
+                var price = []
+                for (const category of Object.entries(this.inputElements)) {
+                    if(category[1] && category[1].length > 0) {
+                        category[1].forEach((el) => {
+                            price.push(el.pre_usd)
+                        })
+                    }
+                }
+                return parseInt(this.inputBox.pre_usd) + price.reduce((a, b) => a + b, 0)
             },
             price() {
                 var price = []
@@ -237,15 +272,11 @@
                 }))
             },
             activateWindowsCategories() {
-                if(this.inputBox && this.inputBox.id > 0) {
+                if(this.inputBox && this.inputBox.id > 0 && this.elementsFiltered.length > 0) {
                     this.windowBoxes = false
                     this.windowCategories = true
 
-                    this.currentCategory = this.categories[0].id
-
-                    if(this.categories[0].elements && this.categories[0].elements.length > 0) {
-                        this.inputElements[this.categories[0].slug][0].id = this.elementsFiltered.filter(element => element.category_id == this.categories[0].id)[0].id
-                    }
+                    this.inputElements[this.categories[0].slug][0].id = this.elementsFiltered.filter(element => element.category_id == this.categories[0].id)[0].id
                 } else {
                     alert('Выберите корпус!')
                 }
@@ -255,7 +286,7 @@
                 if (checkEmpty.length >= 1 && this.inputElements[categorySlug].length > 0) {
                     return
                 }
-                this.inputElements[categorySlug].push({id: null, price: 0})
+                this.inputElements[categorySlug].push({id: null, price: 0, pre_rub: 0, pre_usd: 0})
             },
             deleteElement(ElementID, categorySlug) {
                 var index = this.inputElements[categorySlug].map(element => {
@@ -286,9 +317,7 @@
                     if(this.deliveryID && this.deliveryID > 0) {
 
                     } else {
-                        this.deliveryID = 1
-                        this.deliveryName = 'Самовывоз'
-                        this.deliveryPrice = 0
+                        this.resetDelivery()
                     }
                 }
             },
@@ -297,7 +326,9 @@
                     if(category[1] && category[1].length > 0) {
                         category[1].forEach((el) => {
                             el.id = null,
-                            el.price = 0
+                            el.price = 0,
+                            el.pre_rub = 0,
+                            el.pre_usd = 0
                         })
                     }
                 }
@@ -308,7 +339,14 @@
             closeDeliveryModal() {
                 this.deliveryModal = false
                 document.body.classList.remove('modal-open')
-            }
+            },
+            resetDelivery() {
+                this.deliveryID = 1
+                this.deliveryName = 'Самовывоз'
+                this.deliveryPrice = 0
+                this.deliveryDirection = ''
+                this.deliveryDays = 0
+            },
         },
         components: {
             DeliveryModal

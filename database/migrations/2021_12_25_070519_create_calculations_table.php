@@ -10,7 +10,6 @@ class CreateCalculationsTable extends Migration
     {
         Schema::create('calculations', function (Blueprint $table) {
             $table->id();
-            $table->string('comment')->nullable();
             $table->decimal('price');
             $table->integer('quantity');
             $table->integer('production_days');

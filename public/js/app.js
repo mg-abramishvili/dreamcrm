@@ -2444,6 +2444,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -2463,7 +2471,8 @@ __webpack_require__.r(__webpack_exports__);
       deliveryName: '',
       deliveryPrice: 0,
       deliveryDirection: '',
-      deliveryDays: 0
+      deliveryDays: 0,
+      loading: false
     };
   },
   created: function created() {
@@ -2487,6 +2496,12 @@ __webpack_require__.r(__webpack_exports__);
                 el.price = parseInt(_this.elements.filter(function (element) {
                   return element.id == el.id;
                 })[0].price);
+                el.pre_rub = parseInt(_this.elements.filter(function (element) {
+                  return element.id == el.id;
+                })[0].pre_rub);
+                el.pre_usd = parseInt(_this.elements.filter(function (element) {
+                  return element.id == el.id;
+                })[0].pre_usd);
               }
             });
           }
@@ -2514,11 +2529,45 @@ __webpack_require__.r(__webpack_exports__);
         return this.elements;
       }
     },
-    price: function price() {
+    price_pre_rub: function price_pre_rub() {
       var price = [];
 
       for (var _i2 = 0, _Object$entries2 = Object.entries(this.inputElements); _i2 < _Object$entries2.length; _i2++) {
         var category = _Object$entries2[_i2];
+
+        if (category[1] && category[1].length > 0) {
+          category[1].forEach(function (el) {
+            price.push(el.pre_rub);
+          });
+        }
+      }
+
+      return parseInt(this.inputBox.pre_rub) + parseInt(this.inputBox.sborka) + parseInt(this.inputBox.marzha) + price.reduce(function (a, b) {
+        return a + b;
+      }, 0);
+    },
+    price_pre_usd: function price_pre_usd() {
+      var price = [];
+
+      for (var _i3 = 0, _Object$entries3 = Object.entries(this.inputElements); _i3 < _Object$entries3.length; _i3++) {
+        var category = _Object$entries3[_i3];
+
+        if (category[1] && category[1].length > 0) {
+          category[1].forEach(function (el) {
+            price.push(el.pre_usd);
+          });
+        }
+      }
+
+      return parseInt(this.inputBox.pre_usd) + price.reduce(function (a, b) {
+        return a + b;
+      }, 0);
+    },
+    price: function price() {
+      var price = [];
+
+      for (var _i4 = 0, _Object$entries4 = Object.entries(this.inputElements); _i4 < _Object$entries4.length; _i4++) {
+        var category = _Object$entries4[_i4];
 
         if (category[1] && category[1].length > 0) {
           category[1].forEach(function (el) {
@@ -2569,16 +2618,12 @@ __webpack_require__.r(__webpack_exports__);
     activateWindowsCategories: function activateWindowsCategories() {
       var _this6 = this;
 
-      if (this.inputBox && this.inputBox.id > 0) {
+      if (this.inputBox && this.inputBox.id > 0 && this.elementsFiltered.length > 0) {
         this.windowBoxes = false;
         this.windowCategories = true;
-        this.currentCategory = this.categories[0].id;
-
-        if (this.categories[0].elements && this.categories[0].elements.length > 0) {
-          this.inputElements[this.categories[0].slug][0].id = this.elementsFiltered.filter(function (element) {
-            return element.category_id == _this6.categories[0].id;
-          })[0].id;
-        }
+        this.inputElements[this.categories[0].slug][0].id = this.elementsFiltered.filter(function (element) {
+          return element.category_id == _this6.categories[0].id;
+        })[0].id;
       } else {
         alert('Выберите корпус!');
       }
@@ -2594,7 +2639,9 @@ __webpack_require__.r(__webpack_exports__);
 
       this.inputElements[categorySlug].push({
         id: null,
-        price: 0
+        price: 0,
+        pre_rub: 0,
+        pre_usd: 0
       });
     },
     deleteElement: function deleteElement(ElementID, categorySlug) {
@@ -2630,19 +2677,17 @@ __webpack_require__.r(__webpack_exports__);
         this.windowQty = true;
 
         if (this.deliveryID && this.deliveryID > 0) {} else {
-          this.deliveryID = 1;
-          this.deliveryName = 'Самовывоз';
-          this.deliveryPrice = 0;
+          this.resetDelivery();
         }
       }
     },
     changeInputBox: function changeInputBox() {
-      for (var _i3 = 0, _Object$entries3 = Object.entries(this.inputElements); _i3 < _Object$entries3.length; _i3++) {
-        var category = _Object$entries3[_i3];
+      for (var _i5 = 0, _Object$entries5 = Object.entries(this.inputElements); _i5 < _Object$entries5.length; _i5++) {
+        var category = _Object$entries5[_i5];
 
         if (category[1] && category[1].length > 0) {
           category[1].forEach(function (el) {
-            el.id = null, el.price = 0;
+            el.id = null, el.price = 0, el.pre_rub = 0, el.pre_usd = 0;
           });
         }
       }
@@ -2653,6 +2698,13 @@ __webpack_require__.r(__webpack_exports__);
     closeDeliveryModal: function closeDeliveryModal() {
       this.deliveryModal = false;
       document.body.classList.remove('modal-open');
+    },
+    resetDelivery: function resetDelivery() {
+      this.deliveryID = 1;
+      this.deliveryName = 'Самовывоз';
+      this.deliveryPrice = 0;
+      this.deliveryDirection = '';
+      this.deliveryDays = 0;
     }
   },
   components: {
@@ -27066,365 +27118,523 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { staticStyle: { position: "relative" } },
     [
       _c("h1", { staticClass: "h3 m-0 mb-4" }, [_vm._v("Новый расчет")]),
       _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-12 col-lg-5" }, [
-          _c(
-            "div",
-            {
-              staticClass: "calculation-input bg-white px-4 py-4",
-              staticStyle: { position: "sticky", top: "20px" },
-            },
-            [
-              _vm.windowBoxes
-                ? _c("div", { staticClass: "mb-4" }, [
-                    _vm._m(0),
-                    _vm._v(" "),
-                    _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.inputBox,
-                            expression: "inputBox",
-                          },
-                        ],
-                        staticClass: "form-select form-select-lg mt-2 mb-3",
-                        on: {
-                          change: [
-                            function ($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function (o) {
-                                  return o.selected
-                                })
-                                .map(function (o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.inputBox = $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            },
-                            function ($event) {
-                              return _vm.changeInputBox()
-                            },
-                          ],
-                        },
-                      },
-                      _vm._l(_vm.boxes, function (box) {
-                        return _c(
-                          "option",
-                          { key: "box_" + box.id, domProps: { value: box } },
-                          [
-                            _vm._v(
-                              _vm._s(box.name) +
-                                " — " +
-                                _vm._s(
-                                  box.price
-                                    .toString()
-                                    .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-                                ) +
-                                " ₽"
-                            ),
-                          ]
-                        )
-                      }),
-                      0
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "mt-4" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-outline-primary",
-                          attrs: { disabled: "" },
-                        },
-                        [_vm._v("Назад")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-outline-primary",
-                          on: {
-                            click: function ($event) {
-                              return _vm.activateWindowsCategories()
-                            },
-                          },
-                        },
-                        [_vm._v("Далее")]
-                      ),
-                    ]),
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.windowCategories
-                ? _c(
-                    "div",
-                    { staticClass: "mb-4" },
-                    _vm._l(_vm.categories, function (category) {
-                      return _c("div", { key: "category_" + category.id }, [
+      _vm.elementsFiltered && _vm.elementsFiltered.length > 0
+        ? _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-12 col-lg-5" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "calculation-input bg-white px-4 py-4",
+                  staticStyle: { position: "sticky", top: "20px" },
+                },
+                [
+                  _vm.windowBoxes
+                    ? _c("div", { staticClass: "mb-4" }, [
+                        _vm._m(0),
+                        _vm._v(" "),
                         _c(
-                          "div",
+                          "select",
                           {
                             directives: [
                               {
-                                name: "show",
-                                rawName: "v-show",
-                                value: _vm.currentCategory == category.id,
-                                expression: "currentCategory == category.id",
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.inputBox,
+                                expression: "inputBox",
                               },
                             ],
+                            staticClass: "form-select form-select-lg mt-2 mb-3",
+                            on: {
+                              change: [
+                                function ($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function (o) {
+                                      return o.selected
+                                    })
+                                    .map(function (o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.inputBox = $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                },
+                                function ($event) {
+                                  return _vm.changeInputBox()
+                                },
+                              ],
+                            },
                           },
-                          [
-                            _c("label", [
-                              _c("strong", [_vm._v(_vm._s(category.name))]),
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "button",
+                          _vm._l(_vm.boxes, function (box) {
+                            return _c(
+                              "option",
                               {
-                                staticClass: "btn btn-sm btn-outline-danger",
-                                on: {
-                                  click: function ($event) {
-                                    return _vm.addElement(category.slug)
-                                  },
+                                key: "box_" + box.id,
+                                domProps: { value: box },
+                              },
+                              [
+                                _vm._v(
+                                  _vm._s(box.name) +
+                                    " — " +
+                                    _vm._s(
+                                      box.price
+                                        .toString()
+                                        .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                                    ) +
+                                    " ₽"
+                                ),
+                              ]
+                            )
+                          }),
+                          0
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "mt-4" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-outline-primary",
+                              attrs: { disabled: "" },
+                            },
+                            [_vm._v("Назад")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-outline-primary",
+                              on: {
+                                click: function ($event) {
+                                  return _vm.activateWindowsCategories()
                                 },
                               },
-                              [_vm._v("+")]
-                            ),
-                            _vm._v(" "),
-                            _vm._l(
-                              _vm.inputElements[category.slug],
-                              function (element, index) {
-                                return _c(
-                                  "div",
+                            },
+                            [_vm._v("Далее")]
+                          ),
+                        ]),
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.windowCategories
+                    ? _c(
+                        "div",
+                        { staticClass: "mb-4" },
+                        _vm._l(_vm.categories, function (category) {
+                          return _c("div", { key: "category_" + category.id }, [
+                            _c(
+                              "div",
+                              {
+                                directives: [
                                   {
-                                    key: index,
-                                    staticStyle: { position: "relative" },
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: _vm.currentCategory == category.id,
+                                    expression:
+                                      "currentCategory == category.id",
                                   },
-                                  [
-                                    _c(
-                                      "select",
+                                ],
+                              },
+                              [
+                                _c("label", [
+                                  _c("strong", [_vm._v(_vm._s(category.name))]),
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "btn btn-sm btn-outline-danger",
+                                    on: {
+                                      click: function ($event) {
+                                        return _vm.addElement(category.slug)
+                                      },
+                                    },
+                                  },
+                                  [_vm._v("+")]
+                                ),
+                                _vm._v(" "),
+                                _vm._l(
+                                  _vm.inputElements[category.slug],
+                                  function (element, index) {
+                                    return _c(
+                                      "div",
                                       {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: element.id,
-                                            expression: "element.id",
-                                          },
-                                        ],
-                                        staticClass:
-                                          "form-select form-select-lg mt-2 mb-3",
-                                        on: {
-                                          change: function ($event) {
-                                            var $$selectedVal =
-                                              Array.prototype.filter
-                                                .call(
-                                                  $event.target.options,
-                                                  function (o) {
-                                                    return o.selected
-                                                  }
-                                                )
-                                                .map(function (o) {
-                                                  var val =
-                                                    "_value" in o
-                                                      ? o._value
-                                                      : o.value
-                                                  return val
-                                                })
-                                            _vm.$set(
-                                              element,
-                                              "id",
-                                              $event.target.multiple
-                                                ? $$selectedVal
-                                                : $$selectedVal[0]
-                                            )
-                                          },
-                                        },
+                                        key: index,
+                                        staticStyle: { position: "relative" },
                                       },
                                       [
-                                        _vm._l(
-                                          _vm.elementsFiltered,
-                                          function (element) {
-                                            return [
-                                              element.category_id == category.id
-                                                ? _c(
-                                                    "option",
-                                                    {
-                                                      domProps: {
-                                                        value: element.id,
-                                                      },
-                                                    },
-                                                    [
-                                                      _vm._v(
-                                                        "\n                                            " +
-                                                          _vm._s(element.name) +
-                                                          " "
-                                                      ),
-                                                      element.price > 0
-                                                        ? [
-                                                            _vm._v(
-                                                              "— " +
-                                                                _vm._s(
-                                                                  element.price
-                                                                    .toString()
-                                                                    .replace(
-                                                                      /\B(?=(\d{3})+(?!\d))/g,
-                                                                      " "
-                                                                    )
-                                                                ) +
-                                                                " ₽"
-                                                            ),
-                                                          ]
-                                                        : _vm._e(),
-                                                    ],
-                                                    2
-                                                  )
-                                                : _vm._e(),
-                                            ]
-                                          }
-                                        ),
-                                      ],
-                                      2
-                                    ),
-                                    _vm._v(" "),
-                                    index > 0 &&
-                                    _vm.inputElements[category.slug].length > 1
-                                      ? _c(
-                                          "button",
+                                        _c(
+                                          "select",
                                           {
+                                            directives: [
+                                              {
+                                                name: "model",
+                                                rawName: "v-model",
+                                                value: element.id,
+                                                expression: "element.id",
+                                              },
+                                            ],
                                             staticClass:
-                                              "btn btn-sm btn-outline-danger",
-                                            staticStyle: {
-                                              position: "absolute",
-                                              right: "0",
-                                              top: "50%",
-                                              transform: "translateY(-50%)",
-                                              padding: "0",
-                                              width: "20px",
-                                              "margin-right": "-21px",
-                                            },
+                                              "form-select form-select-lg mt-2 mb-3",
                                             on: {
-                                              click: function ($event) {
-                                                return _vm.deleteElement(
-                                                  element.id,
-                                                  category.slug
+                                              change: function ($event) {
+                                                var $$selectedVal =
+                                                  Array.prototype.filter
+                                                    .call(
+                                                      $event.target.options,
+                                                      function (o) {
+                                                        return o.selected
+                                                      }
+                                                    )
+                                                    .map(function (o) {
+                                                      var val =
+                                                        "_value" in o
+                                                          ? o._value
+                                                          : o.value
+                                                      return val
+                                                    })
+                                                _vm.$set(
+                                                  element,
+                                                  "id",
+                                                  $event.target.multiple
+                                                    ? $$selectedVal
+                                                    : $$selectedVal[0]
                                                 )
                                               },
                                             },
                                           },
-                                          [_vm._v("–")]
-                                        )
-                                      : _vm._e(),
+                                          [
+                                            _vm._l(
+                                              _vm.elementsFiltered,
+                                              function (element) {
+                                                return [
+                                                  element.category_id ==
+                                                  category.id
+                                                    ? _c(
+                                                        "option",
+                                                        {
+                                                          domProps: {
+                                                            value: element.id,
+                                                          },
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            "\n                                            " +
+                                                              _vm._s(
+                                                                element.name
+                                                              ) +
+                                                              " "
+                                                          ),
+                                                          element.price > 0
+                                                            ? [
+                                                                _vm._v(
+                                                                  "— " +
+                                                                    _vm._s(
+                                                                      element.price
+                                                                        .toString()
+                                                                        .replace(
+                                                                          /\B(?=(\d{3})+(?!\d))/g,
+                                                                          " "
+                                                                        )
+                                                                    ) +
+                                                                    " ₽"
+                                                                ),
+                                                              ]
+                                                            : _vm._e(),
+                                                        ],
+                                                        2
+                                                      )
+                                                    : _vm._e(),
+                                                ]
+                                              }
+                                            ),
+                                          ],
+                                          2
+                                        ),
+                                        _vm._v(" "),
+                                        index > 0 &&
+                                        _vm.inputElements[category.slug]
+                                          .length > 1
+                                          ? _c(
+                                              "button",
+                                              {
+                                                staticClass:
+                                                  "btn btn-sm btn-outline-danger",
+                                                staticStyle: {
+                                                  position: "absolute",
+                                                  right: "0",
+                                                  top: "50%",
+                                                  transform: "translateY(-50%)",
+                                                  padding: "0",
+                                                  width: "20px",
+                                                  "margin-right": "-21px",
+                                                },
+                                                on: {
+                                                  click: function ($event) {
+                                                    return _vm.deleteElement(
+                                                      element.id,
+                                                      category.slug
+                                                    )
+                                                  },
+                                                },
+                                              },
+                                              [_vm._v("–")]
+                                            )
+                                          : _vm._e(),
+                                      ]
+                                    )
+                                  }
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "mt-4" }, [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-outline-primary",
+                                      on: {
+                                        click: function ($event) {
+                                          return _vm.prevCategory(category)
+                                        },
+                                      },
+                                    },
+                                    [_vm._v("Назад")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-outline-primary",
+                                      on: {
+                                        click: function ($event) {
+                                          return _vm.nextCategory(category)
+                                        },
+                                      },
+                                    },
+                                    [_vm._v("Далее")]
+                                  ),
+                                ]),
+                              ],
+                              2
+                            ),
+                          ])
+                        }),
+                        0
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "total" }, [
+                    _vm.price && _vm.price > 0
+                      ? _c(
+                          "div",
+                          { staticClass: "row align-items-center mb-3" },
+                          [
+                            _vm._m(1),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "col-6 text-end text-primary",
+                                staticStyle: {
+                                  "font-size": "26px",
+                                  "font-weight": "bold",
+                                },
+                              },
+                              [
+                                _vm._v(
+                                  "\n                            " +
+                                    _vm._s(
+                                      _vm.price
+                                        .toString()
+                                        .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                                    ) +
+                                    " ₽\n                            "
+                                ),
+                                _c(
+                                  "small",
+                                  {
+                                    staticStyle: {
+                                      display: "block",
+                                      "line-height": "1",
+                                      "font-size": "15px",
+                                      "font-weight": "400",
+                                      color: "#777",
+                                    },
+                                  },
+                                  [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.price_pre_rub
+                                          .toString()
+                                          .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                                      ) +
+                                        " ₽ / " +
+                                        _vm._s(
+                                          _vm.price_pre_usd
+                                            .toString()
+                                            .replace(
+                                              /\B(?=(\d{3})+(?!\d))/g,
+                                              " "
+                                            )
+                                        ) +
+                                        " $"
+                                    ),
+                                  ]
+                                ),
+                              ]
+                            ),
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.windowQty
+                      ? _c(
+                          "div",
+                          { staticClass: "row align-items-center mb-3" },
+                          [
+                            _c("div", { staticClass: "col-6" }, [
+                              _c("strong", [_vm._v("Кол-во")]),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.quantity,
+                                    expression: "quantity",
+                                  },
+                                ],
+                                staticClass: "form-control form-control-sm",
+                                staticStyle: {
+                                  "font-size": "12px",
+                                  display: "inline-block",
+                                  width: "70px",
+                                },
+                                attrs: { type: "number" },
+                                domProps: { value: _vm.quantity },
+                                on: {
+                                  change: function ($event) {
+                                    return _vm.resetDelivery()
+                                  },
+                                  input: function ($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.quantity = $event.target.value
+                                  },
+                                },
+                              }),
+                            ]),
+                            _vm._v(" "),
+                            _vm.priceWithQuantity && _vm.priceWithQuantity > 0
+                              ? _c(
+                                  "div",
+                                  {
+                                    staticClass: "col-6 text-end text-primary",
+                                    staticStyle: {
+                                      "font-size": "26px",
+                                      "font-weight": "bold",
+                                    },
+                                  },
+                                  [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.priceWithQuantity
+                                          .toString()
+                                          .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                                      ) + " ₽"
+                                    ),
                                   ]
                                 )
-                              }
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "mt-4" }, [
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-outline-primary",
-                                  on: {
-                                    click: function ($event) {
-                                      return _vm.prevCategory(category)
-                                    },
-                                  },
-                                },
-                                [_vm._v("Назад")]
-                              ),
+                              : _vm._e(),
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.deliveryID && _vm.deliveryID > 0
+                      ? _c(
+                          "div",
+                          { staticClass: "row align-items-center mb-3" },
+                          [
+                            _c("div", { staticClass: "col-6" }, [
+                              _c("strong", [_vm._v("Доставка")]),
+                              _vm._v(" "),
+                              _c("br"),
                               _vm._v(" "),
                               _c(
-                                "button",
+                                "small",
                                 {
-                                  staticClass: "btn btn-outline-primary",
+                                  staticStyle: {
+                                    "line-height": "1.3",
+                                    display: "block",
+                                    cursor: "pointer",
+                                  },
                                   on: {
                                     click: function ($event) {
-                                      return _vm.nextCategory(category)
+                                      return _vm.openDeliveryModal()
                                     },
                                   },
                                 },
-                                [_vm._v("Далее")]
+                                [
+                                  _vm._v(
+                                    "\n                                " +
+                                      _vm._s(_vm.deliveryName) +
+                                      " "
+                                  ),
+                                  _c("br"),
+                                  _vm._v(" "),
+                                  _vm.deliveryDirection &&
+                                  _vm.deliveryDirection.length > 0
+                                    ? [
+                                        _vm._v(
+                                          "(" +
+                                            _vm._s(_vm.deliveryDirection) +
+                                            ", " +
+                                            _vm._s(_vm.deliveryDays) +
+                                            " дн.)"
+                                        ),
+                                      ]
+                                    : _vm._e(),
+                                ],
+                                2
                               ),
                             ]),
-                          ],
-                          2
-                        ),
-                      ])
-                    }),
-                    0
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _c("div", { staticClass: "total" }, [
-                _vm.price && _vm.price > 0
-                  ? _c("div", { staticClass: "row align-items-center mb-3" }, [
-                      _vm._m(1),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "col-6 text-end text-primary",
-                          staticStyle: {
-                            "font-size": "26px",
-                            "font-weight": "bold",
-                          },
-                        },
-                        [
-                          _vm._v(
-                            _vm._s(
-                              _vm.price
-                                .toString()
-                                .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-                            ) + " ₽"
-                          ),
-                        ]
-                      ),
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.windowQty
-                  ? _c("div", { staticClass: "row align-items-center mb-3" }, [
-                      _c("div", { staticClass: "col-6" }, [
-                        _c("strong", [_vm._v("Кол-во")]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.quantity,
-                              expression: "quantity",
-                            },
-                          ],
-                          staticClass: "form-control form-control-sm",
-                          staticStyle: {
-                            "font-size": "12px",
-                            display: "inline-block",
-                            width: "70px",
-                          },
-                          attrs: { type: "number" },
-                          domProps: { value: _vm.quantity },
-                          on: {
-                            input: function ($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.quantity = $event.target.value
-                            },
-                          },
-                        }),
-                      ]),
-                      _vm._v(" "),
-                      _vm.priceWithQuantity && _vm.priceWithQuantity > 0
-                        ? _c(
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "col-6 text-end text-primary",
+                                staticStyle: {
+                                  "font-size": "26px",
+                                  "font-weight": "bold",
+                                },
+                              },
+                              [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.deliveryPrice
+                                      .toString()
+                                      .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                                  ) + " ₽"
+                                ),
+                              ]
+                            ),
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.deliveryName &&
+                    _vm.deliveryName.length > 0 &&
+                    _vm.priceWithDelivery &&
+                    _vm.priceWithDelivery > 0
+                      ? _c("div", { staticClass: "row align-items-center" }, [
+                          _vm._m(2),
+                          _vm._v(" "),
+                          _c(
                             "div",
                             {
                               staticClass: "col-6 text-end text-primary",
@@ -27436,235 +27646,164 @@ var render = function () {
                             [
                               _vm._v(
                                 _vm._s(
-                                  _vm.priceWithQuantity
+                                  _vm.priceWithDelivery
                                     .toString()
                                     .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                                 ) + " ₽"
                               ),
                             ]
-                          )
-                        : _vm._e(),
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.deliveryID && _vm.deliveryID > 0
-                  ? _c("div", { staticClass: "row align-items-center mb-3" }, [
-                      _c("div", { staticClass: "col-6" }, [
-                        _c("strong", [_vm._v("Доставка")]),
-                        _vm._v(" "),
-                        _c("br"),
-                        _vm._v(" "),
-                        _c(
-                          "small",
-                          {
-                            staticStyle: {
-                              "line-height": "1.3",
-                              display: "block",
-                              cursor: "pointer",
-                            },
-                            on: {
-                              click: function ($event) {
-                                return _vm.openDeliveryModal()
-                              },
-                            },
-                          },
-                          [
-                            _vm._v(
-                              "\n                                " +
-                                _vm._s(_vm.deliveryName) +
-                                " "
-                            ),
-                            _c("br"),
-                            _vm._v(" "),
-                            _vm.deliveryDirection &&
-                            _vm.deliveryDirection.length > 0
-                              ? [
-                                  _vm._v(
-                                    "(" +
-                                      _vm._s(_vm.deliveryDirection) +
-                                      ", " +
-                                      _vm._s(_vm.deliveryDays) +
-                                      " дн.)"
-                                  ),
-                                ]
-                              : _vm._e(),
-                          ],
-                          2
-                        ),
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "col-6 text-end text-primary",
-                          staticStyle: {
-                            "font-size": "26px",
-                            "font-weight": "bold",
-                          },
-                        },
-                        [
-                          _vm._v(
-                            _vm._s(
-                              _vm.deliveryPrice
-                                .toString()
-                                .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-                            ) + " ₽"
                           ),
-                        ]
-                      ),
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.deliveryName &&
-                _vm.deliveryName.length > 0 &&
-                _vm.priceWithDelivery &&
-                _vm.priceWithDelivery > 0
-                  ? _c("div", { staticClass: "row align-items-center" }, [
-                      _vm._m(2),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "col-6 text-end text-primary",
-                          staticStyle: {
-                            "font-size": "26px",
-                            "font-weight": "bold",
-                          },
-                        },
-                        [
-                          _vm._v(
-                            _vm._s(
-                              _vm.priceWithDelivery
-                                .toString()
-                                .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-                            ) + " ₽"
-                          ),
-                        ]
-                      ),
-                    ])
-                  : _vm._e(),
-              ]),
-            ]
-          ),
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "col-12 col-lg-7" },
-          [
-            _c("div", { staticClass: "mb-3 bg-white px-3 py-3" }, [
-              _c("small", { staticStyle: { color: "rgb(136, 136, 136)" } }, [
-                _vm._v("Корпус"),
-              ]),
-              _vm._v(" "),
-              _vm.inputBox && _vm.inputBox.id > 0
-                ? _c("div", { staticClass: "row align-items-center" }, [
-                    _c("div", { staticClass: "col-8" }, [
-                      _c("strong", { staticClass: "d-block" }, [
-                        _vm._v(_vm._s(_vm.inputBox.name)),
-                      ]),
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-4 text-end" }, [
-                      _c("strong", { staticClass: "text-primary" }, [
-                        _vm._v(
-                          _vm._s(
-                            _vm.inputBox.price
-                              .toString()
-                              .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-                          ) + " ₽"
-                        ),
-                      ]),
-                    ]),
-                  ])
-                : _vm._e(),
+                        ])
+                      : _vm._e(),
+                  ]),
+                ]
+              ),
             ]),
             _vm._v(" "),
-            _vm._l(_vm.categories, function (category) {
-              return _c(
-                "div",
-                {
-                  key: "category_" + category.id,
-                  staticClass: "mb-3 bg-white px-3 py-3",
-                },
-                [
+            _c(
+              "div",
+              { staticClass: "col-12 col-lg-7" },
+              [
+                _c("div", { staticClass: "mb-3 bg-white px-3 py-3" }, [
                   _c(
                     "small",
                     { staticStyle: { color: "rgb(136, 136, 136)" } },
-                    [_vm._v(_vm._s(category.name))]
+                    [_vm._v("Корпус")]
                   ),
                   _vm._v(" "),
-                  _vm._l(_vm.elementsFiltered, function (element) {
-                    return [
-                      element.category_id == category.id
-                        ? [
-                            _vm._l(_vm.inputElements, function (inEl) {
-                              return [
-                                _vm._l(inEl, function (inElEl) {
+                  _vm.inputBox && _vm.inputBox.id > 0
+                    ? _c("div", { staticClass: "row align-items-center" }, [
+                        _c("div", { staticClass: "col-8" }, [
+                          _c("strong", { staticClass: "d-block" }, [
+                            _vm._v(_vm._s(_vm.inputBox.name)),
+                          ]),
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-4 text-end" }, [
+                          _c("strong", { staticClass: "text-primary" }, [
+                            _vm._v(
+                              _vm._s(
+                                _vm.inputBox.price
+                                  .toString()
+                                  .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                              ) + " ₽"
+                            ),
+                          ]),
+                        ]),
+                      ])
+                    : _vm._e(),
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.categories, function (category) {
+                  return _c(
+                    "div",
+                    {
+                      key: "category_" + category.id,
+                      staticClass: "mb-3 bg-white px-3 py-3",
+                    },
+                    [
+                      _c(
+                        "small",
+                        { staticStyle: { color: "rgb(136, 136, 136)" } },
+                        [_vm._v(_vm._s(category.name))]
+                      ),
+                      _vm._v(" "),
+                      _vm._l(_vm.elementsFiltered, function (element) {
+                        return [
+                          element.category_id == category.id
+                            ? [
+                                _vm._l(_vm.inputElements, function (inEl) {
                                   return [
-                                    element.id == inElEl.id
-                                      ? _c(
-                                          "div",
-                                          {
-                                            staticClass:
-                                              "row align-items-center",
-                                          },
-                                          [
-                                            _c(
+                                    _vm._l(inEl, function (inElEl) {
+                                      return [
+                                        element.id == inElEl.id
+                                          ? _c(
                                               "div",
-                                              { staticClass: "col-8" },
+                                              {
+                                                staticClass:
+                                                  "row align-items-center",
+                                              },
                                               [
                                                 _c(
-                                                  "strong",
-                                                  { staticClass: "d-block" },
-                                                  [_vm._v(_vm._s(element.name))]
+                                                  "div",
+                                                  { staticClass: "col-8" },
+                                                  [
+                                                    _c(
+                                                      "strong",
+                                                      {
+                                                        staticClass: "d-block",
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          _vm._s(element.name)
+                                                        ),
+                                                      ]
+                                                    ),
+                                                  ]
                                                 ),
-                                              ]
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "div",
-                                              { staticClass: "col-4 text-end" },
-                                              [
+                                                _vm._v(" "),
                                                 _c(
-                                                  "strong",
+                                                  "div",
                                                   {
-                                                    staticClass: "text-primary",
+                                                    staticClass:
+                                                      "col-4 text-end",
                                                   },
                                                   [
-                                                    _vm._v(
-                                                      _vm._s(
-                                                        element.price
-                                                          .toString()
-                                                          .replace(
-                                                            /\B(?=(\d{3})+(?!\d))/g,
-                                                            " "
-                                                          )
-                                                      ) + " ₽"
+                                                    _c(
+                                                      "strong",
+                                                      {
+                                                        staticClass:
+                                                          "text-primary",
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          _vm._s(
+                                                            element.price
+                                                              .toString()
+                                                              .replace(
+                                                                /\B(?=(\d{3})+(?!\d))/g,
+                                                                " "
+                                                              )
+                                                          ) + " ₽"
+                                                        ),
+                                                      ]
                                                     ),
                                                   ]
                                                 ),
                                               ]
-                                            ),
-                                          ]
-                                        )
-                                      : _vm._e(),
+                                            )
+                                          : _vm._e(),
+                                      ]
+                                    }),
                                   ]
                                 }),
                               ]
-                            }),
-                          ]
-                        : _vm._e(),
-                    ]
-                  }),
-                ],
-                2
-              )
-            }),
-          ],
-          2
-        ),
-      ]),
+                            : _vm._e(),
+                        ]
+                      }),
+                    ],
+                    2
+                  )
+                }),
+              ],
+              2
+            ),
+          ])
+        : _c(
+            "div",
+            {
+              staticStyle: {
+                position: "absolute",
+                left: "0",
+                right: "0",
+                top: "0",
+                bottom: "0",
+                "background-color": "rgba(255,255,255,0.8)",
+                "z-index": "10",
+              },
+            },
+            [_vm._m(3)]
+          ),
       _vm._v(" "),
       _vm.deliveryModal
         ? _c("DeliveryModal", { attrs: { box: _vm.inputBox } })
@@ -27695,6 +27834,20 @@ var staticRenderFns = [
     return _c("div", { staticClass: "col-6" }, [
       _c("strong", [_vm._v("Итого")]),
     ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "spinner-border text-primary me-2",
+        staticStyle: { position: "absolute", left: "50%", top: "30px" },
+        attrs: { role: "status" },
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Загрузка...")])]
+    )
   },
 ]
 render._withStripped = true
