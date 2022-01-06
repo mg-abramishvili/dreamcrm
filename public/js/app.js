@@ -2473,6 +2473,7 @@ __webpack_require__.r(__webpack_exports__);
         categories: false,
         category_current: '',
         quantity: false,
+        delivery: false,
         modals: {
           delivery: false
         }
@@ -2518,17 +2519,11 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       if (this.selected.box && this.selected.box.id > 0) {
-        var array = [];
-        this.elements.forEach(function (element) {
-          if (element.boxes && element.boxes.length > 0) {
-            element.boxes.forEach(function (box) {
-              if (box.id == _this2.selected.box.id) {
-                array.push(element);
-              }
-            });
-          }
+        return this.elements.filter(function (element) {
+          return element.boxes.some(function (box) {
+            return box.id === _this2.selected.box.id;
+          });
         });
-        return array;
       } else {
         return this.elements;
       }
@@ -2619,7 +2614,7 @@ __webpack_require__.r(__webpack_exports__);
         _this5.elements = response.data;
       });
     },
-    activateWindowsCategories: function activateWindowsCategories() {
+    activateViewsCategories: function activateViewsCategories() {
       var _this6 = this;
 
       if (this.selected.box && this.selected.box.id > 0 && this.elementsFiltered.length > 0) {
@@ -2665,22 +2660,19 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     nextCategory: function nextCategory(category) {
-      var _this7 = this;
-
       var index = this.categories.indexOf(category);
+      var nextCategory = this.categories[index + 1];
 
-      if (index >= 0 && index < this.categories.length - 1) {
-        this.views.category_current = this.categories[index + 1].id;
-
-        if (this.categories[index + 1].elements && this.categories[index + 1].elements.length > 0) {
-          this.selected.elements[this.categories[index + 1].slug][0].id = this.elementsFiltered.filter(function (element) {
-            return element.category_id == _this7.categories[index + 1].id;
-          })[0].id;
-        }
+      if (index >= 0 && index < this.categories.length - 1 && nextCategory.elements && nextCategory.elements.length > 0) {
+        this.views.category_current = nextCategory.id;
+        this.selected.elements[nextCategory.slug][0].id = this.elementsFiltered.filter(function (element) {
+          return element.category_id == nextCategory.id;
+        })[0].id;
       } else {
         this.views.quantity = true;
+        this.views.delivery = true;
 
-        if (this.delivery.id && this.delivery.id > 0) {} else {
+        if (!this.delivery.id > 0) {
           this.resetDelivery();
         }
       }
@@ -2695,6 +2687,8 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
       }
+
+      this.resetDelivery();
     },
     openDeliveryModal: function openDeliveryModal() {
       this.views.modals.delivery = true;
@@ -2704,11 +2698,16 @@ __webpack_require__.r(__webpack_exports__);
       document.body.classList.remove('modal-open');
     },
     resetDelivery: function resetDelivery() {
-      this.delivery.id = 1;
+      this.delivery.id = 0;
       this.delivery.name = 'Самовывоз';
       this.delivery.price = 0;
       this.delivery.direction = '';
       this.delivery.days = 0;
+    }
+  },
+  filters: {
+    currency: function currency(value) {
+      return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     }
   },
   components: {
@@ -27189,11 +27188,7 @@ var render = function () {
                                 _vm._v(
                                   _vm._s(box.name) +
                                     " — " +
-                                    _vm._s(
-                                      box.price
-                                        .toString()
-                                        .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-                                    ) +
+                                    _vm._s(_vm._f("currency")(box.price)) +
                                     " ₽"
                                 ),
                               ]
@@ -27218,7 +27213,7 @@ var render = function () {
                               staticClass: "btn btn-outline-primary",
                               on: {
                                 click: function ($event) {
-                                  return _vm.activateWindowsCategories()
+                                  return _vm.activateViewsCategories()
                                 },
                               },
                             },
@@ -27344,12 +27339,11 @@ var render = function () {
                                                                 _vm._v(
                                                                   "— " +
                                                                     _vm._s(
-                                                                      element.price
-                                                                        .toString()
-                                                                        .replace(
-                                                                          /\B(?=(\d{3})+(?!\d))/g,
-                                                                          " "
-                                                                        )
+                                                                      _vm._f(
+                                                                        "currency"
+                                                                      )(
+                                                                        element.price
+                                                                      )
                                                                     ) +
                                                                     " ₽"
                                                                 ),
@@ -27456,11 +27450,7 @@ var render = function () {
                               [
                                 _vm._v(
                                   "\n                            " +
-                                    _vm._s(
-                                      _vm.price
-                                        .toString()
-                                        .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-                                    ) +
+                                    _vm._s(_vm._f("currency")(_vm.price)) +
                                     " ₽\n                            "
                                 ),
                                 _c(
@@ -27477,18 +27467,11 @@ var render = function () {
                                   [
                                     _vm._v(
                                       _vm._s(
-                                        _vm.price_pre_rub
-                                          .toString()
-                                          .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                                        _vm._f("currency")(_vm.price_pre_rub)
                                       ) +
                                         " ₽ / " +
                                         _vm._s(
-                                          _vm.price_pre_usd
-                                            .toString()
-                                            .replace(
-                                              /\B(?=(\d{3})+(?!\d))/g,
-                                              " "
-                                            )
+                                          _vm._f("currency")(_vm.price_pre_usd)
                                         ) +
                                         " $"
                                     ),
@@ -27552,9 +27535,9 @@ var render = function () {
                                   [
                                     _vm._v(
                                       _vm._s(
-                                        _vm.priceWithQuantity
-                                          .toString()
-                                          .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                                        _vm._f("currency")(
+                                          _vm.priceWithQuantity
+                                        )
                                       ) + " ₽"
                                     ),
                                   ]
@@ -27564,7 +27547,7 @@ var render = function () {
                         )
                       : _vm._e(),
                     _vm._v(" "),
-                    _vm.delivery.id && _vm.delivery.id > 0
+                    _vm.views.delivery
                       ? _c(
                           "div",
                           { staticClass: "row align-items-center mb-3" },
@@ -27625,9 +27608,7 @@ var render = function () {
                               [
                                 _vm._v(
                                   _vm._s(
-                                    _vm.delivery.price
-                                      .toString()
-                                      .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                                    _vm._f("currency")(_vm.delivery.price)
                                   ) + " ₽"
                                 ),
                               ]
@@ -27655,9 +27636,7 @@ var render = function () {
                             [
                               _vm._v(
                                 _vm._s(
-                                  _vm.priceWithDelivery
-                                    .toString()
-                                    .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                                  _vm._f("currency")(_vm.priceWithDelivery)
                                 ) + " ₽"
                               ),
                             ]
@@ -27692,9 +27671,7 @@ var render = function () {
                           _c("strong", { staticClass: "text-primary" }, [
                             _vm._v(
                               _vm._s(
-                                _vm.selected.box.price
-                                  .toString()
-                                  .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                                _vm._f("currency")(_vm.selected.box.price)
                               ) + " ₽"
                             ),
                           ]),
@@ -27767,12 +27744,9 @@ var render = function () {
                                                       [
                                                         _vm._v(
                                                           _vm._s(
-                                                            element.price
-                                                              .toString()
-                                                              .replace(
-                                                                /\B(?=(\d{3})+(?!\d))/g,
-                                                                " "
-                                                              )
+                                                            _vm._f("currency")(
+                                                              element.price
+                                                            )
                                                           ) + " ₽"
                                                         ),
                                                       ]

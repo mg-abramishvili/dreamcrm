@@ -9,12 +9,12 @@
                         <label><strong>Корпус</strong></label>
 
                         <select @change="changeBox()" v-model="selected.box" class="form-select form-select-lg mt-2 mb-3">
-                            <option v-for="box in boxes" :key="'box_' + box.id" :value="box">{{ box.name }} &mdash; {{ box.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽</option>
+                            <option v-for="box in boxes" :key="'box_' + box.id" :value="box">{{ box.name }} &mdash; {{ box.price | currency }} ₽</option>
                         </select>
 
                         <div class="mt-4">
                             <button class="btn btn-outline-primary" disabled>Назад</button>
-                            <button @click="activateWindowsCategories()" class="btn btn-outline-primary">Далее</button>
+                            <button @click="activateViewsCategories()" class="btn btn-outline-primary">Далее</button>
                         </div>
                     </div>
 
@@ -29,7 +29,7 @@
                                     <select v-model="element.id" class="form-select form-select-lg mt-2 mb-3">
                                         <template v-for="element in elementsFiltered">
                                             <option v-if="element.category_id == category.id" :value="element.id">
-                                                {{ element.name }} <template v-if="element.price > 0">&mdash; {{ element.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽</template>
+                                                {{ element.name }} <template v-if="element.price > 0">&mdash; {{ element.price | currency }} ₽</template>
                                             </option>
                                         </template>
                                     </select>
@@ -48,8 +48,8 @@
                         <div v-if="price && price > 0" class="row align-items-center mb-3">
                             <div class="col-6"><strong>Цена за 1 ед:</strong></div>
                             <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">
-                                {{ price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽
-                                <small style="display:block; line-height: 1; font-size: 15px; font-weight: 400; color: #777;">{{ price_pre_rub.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽ / {{ price_pre_usd.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} $</small>
+                                {{ price | currency }} ₽
+                                <small style="display:block; line-height: 1; font-size: 15px; font-weight: 400; color: #777;">{{ price_pre_rub | currency }} ₽ / {{ price_pre_usd | currency }} $</small>
                             </div>
                         </div>
                         <div v-if="views.quantity" class="row align-items-center mb-3">
@@ -57,9 +57,9 @@
                                 <strong>Кол-во</strong>
                                 <input @change="resetDelivery()" v-model="quantity" type="number" class="form-control form-control-sm" style="font-size: 12px; display:inline-block; width: 70px;">
                             </div>
-                            <div v-if="priceWithQuantity && priceWithQuantity > 0" class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ priceWithQuantity.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽</div>
+                            <div v-if="priceWithQuantity && priceWithQuantity > 0" class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ priceWithQuantity | currency }} ₽</div>
                         </div>
-                        <div v-if="delivery.id && delivery.id > 0" class="row align-items-center mb-3">
+                        <div v-if="views.delivery" class="row align-items-center mb-3">
                             <div class="col-6">
                                 <strong>Доставка</strong> <br>
                                 <small @click="openDeliveryModal()" style="line-height: 1.3; display: block; cursor: pointer;">
@@ -67,11 +67,11 @@
                                     <template v-if="delivery.direction && delivery.direction.length > 0">({{ delivery.direction }}, {{ delivery.days }} дн.)</template>
                                 </small>
                             </div>
-                            <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ delivery.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽</div>
+                            <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ delivery.price | currency }} ₽</div>
                         </div>
                         <div v-if="delivery.name && delivery.name.length > 0 && priceWithDelivery && priceWithDelivery > 0" class="row align-items-center">
                             <div class="col-6"><strong>Итого</strong></div>
-                            <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ priceWithDelivery.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽</div>
+                            <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ priceWithDelivery | currency }} ₽</div>
                         </div>
                     </div>                    
                 </div>
@@ -87,7 +87,7 @@
                             <strong class="d-block">{{ selected.box.name }}</strong>
                         </div>
                         <div class="col-4 text-end">
-                            <strong class="text-primary">{{ selected.box.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽</strong>
+                            <strong class="text-primary">{{ selected.box.price | currency }} ₽</strong>
                         </div>
                     </div>
                 </div>
@@ -103,7 +103,7 @@
                                             <strong class="d-block">{{ element.name }}</strong>
                                         </div>
                                         <div class="col-4 text-end">
-                                            <strong class="text-primary">{{ element.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽</strong>
+                                            <strong class="text-primary">{{ element.price | currency }} ₽</strong>
                                         </div>
                                     </div>
                                 </template>
@@ -153,6 +153,7 @@
                     categories: false,
                     category_current: '',
                     quantity: false,
+                    delivery: false,
 
                     modals: {
                         delivery: false,
@@ -188,18 +189,7 @@
         computed: {
             elementsFiltered() {
                 if(this.selected.box && this.selected.box.id > 0) {
-                    var array = []
-                    this.elements.forEach((element) => {
-                        if(element.boxes && element.boxes.length > 0) {
-                            element.boxes.forEach((box) => {
-                                if(box.id == this.selected.box.id) {
-                                    array.push(element)
-                                }
-                            })
-                        }
-                    })
-                    
-                    return array
+                    return this.elements.filter(element => element.boxes.some(box => box.id === this.selected.box.id))
                 } else {
                     return this.elements
                 }
@@ -273,7 +263,7 @@
                     this.elements = response.data
                 }))
             },
-            activateWindowsCategories() {
+            activateViewsCategories() {
                 if(this.selected.box && this.selected.box.id > 0 && this.elementsFiltered.length > 0) {
                     this.views.boxes = false
                     this.views.categories = true
@@ -288,12 +278,15 @@
                 if (checkEmpty.length >= 1 && this.selected.elements[categorySlug].length > 0) {
                     return
                 }
-                this.selected.elements[categorySlug].push({id: null, price: 0, pre_rub: 0, pre_usd: 0})
+                this.selected.elements[categorySlug].push({
+                    id: null,
+                    price: 0,
+                    pre_rub: 0,
+                    pre_usd: 0
+                })
             },
             deleteElement(ElementID, categorySlug) {
-                var index = this.selected.elements[categorySlug].map(element => {
-                    return element.id;
-                }).indexOf(ElementID);
+                var index = this.selected.elements[categorySlug].map(element => { return element.id }).indexOf(ElementID)
                 this.selected.elements[categorySlug].splice(index, 1)
             },
             prevCategory(category) {
@@ -307,18 +300,15 @@
             },
             nextCategory(category) {
                 var index = this.categories.indexOf(category)
-                if(index >= 0 && index < this.categories.length - 1) {
-                    this.views.category_current = this.categories[index + 1].id
+                var nextCategory = this.categories[index + 1]
 
-                    if(this.categories[index + 1].elements && this.categories[index + 1].elements.length > 0) {
-                        this.selected.elements[this.categories[index + 1].slug][0].id = this.elementsFiltered.filter(element => element.category_id == this.categories[index + 1].id)[0].id
-                    }
+                if(index >= 0 && index < this.categories.length - 1 && nextCategory.elements && nextCategory.elements.length > 0) {
+                    this.views.category_current = nextCategory.id
+                    this.selected.elements[nextCategory.slug][0].id = this.elementsFiltered.filter(element => element.category_id == nextCategory.id)[0].id
                 } else {
                     this.views.quantity = true
-
-                    if(this.delivery.id && this.delivery.id > 0) {
-
-                    } else {
+                    this.views.delivery = true
+                    if(!this.delivery.id > 0) {
                         this.resetDelivery()
                     }
                 }
@@ -334,6 +324,7 @@
                         })
                     }
                 }
+                this.resetDelivery()
             },
             openDeliveryModal() {
                 this.views.modals.delivery = true
@@ -343,12 +334,17 @@
                 document.body.classList.remove('modal-open')
             },
             resetDelivery() {
-                this.delivery.id = 1
+                this.delivery.id = 0
                 this.delivery.name = 'Самовывоз'
                 this.delivery.price = 0
                 this.delivery.direction = ''
                 this.delivery.days = 0
             },
+        },
+        filters: {
+            currency(value) {
+                return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") 
+            }
         },
         components: {
             DeliveryModal
