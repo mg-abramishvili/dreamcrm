@@ -13,6 +13,7 @@
                         </select>
 
                         <div class="mt-4">
+                            <button class="btn btn-outline-primary" disabled>Назад</button>
                             <button @click="activateWindowsCategories()" class="btn btn-outline-primary">Далее</button>
                         </div>
                     </div>
@@ -44,19 +45,29 @@
                     </div>
                     
                     <div class="total">
-                        <div v-if="price && price > 0" class="row align-items-center">
-                            <div class="col-6">Цена за 1 ед:</div>
+                        <div v-if="price && price > 0" class="row align-items-center mb-3">
+                            <div class="col-6"><strong>Цена за 1 ед:</strong></div>
                             <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽</div>
                         </div>
-                        <div v-if="deliveryID && deliveryID > 0" class="row align-items-center">
+                        <div v-if="windowQty" class="row align-items-center mb-3">
                             <div class="col-6">
-                                Доставка <br><small @click="openDeliveryModal()" style="line-height: 1.3; display: block; cursor: pointer;">{{ deliveryName }}</small>
-                                <template v-if="deliveryDirection && deliveryDirection.length > 0 && deliveryDays && deliveryDays > 0">({{ deliveryDirection }}, {{ deliveryDays }} дн.)</template>
+                                <strong>Кол-во</strong>
+                                <input v-model="quantity" type="number" class="form-control form-control-sm" style="font-size: 12px; display:inline-block; width: 70px;">
+                            </div>
+                            <div v-if="priceWithQuantity && priceWithQuantity > 0" class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ priceWithQuantity.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽</div>
+                        </div>
+                        <div v-if="deliveryID && deliveryID > 0" class="row align-items-center mb-3">
+                            <div class="col-6">
+                                <strong>Доставка</strong> <br>
+                                <small @click="openDeliveryModal()" style="line-height: 1.3; display: block; cursor: pointer;">
+                                    {{ deliveryName }} <br>
+                                    <template v-if="deliveryDirection && deliveryDirection.length > 0">({{ deliveryDirection }}, {{ deliveryDays }} дн.)</template>
+                                </small>
                             </div>
                             <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ deliveryPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽</div>
                         </div>
                         <div v-if="deliveryName && deliveryName.length > 0 && priceWithDelivery && priceWithDelivery > 0" class="row align-items-center">
-                            <div class="col-6">Итого</div>
+                            <div class="col-6"><strong>Итого</strong></div>
                             <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ priceWithDelivery.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽</div>
                         </div>
                     </div>
@@ -125,6 +136,9 @@
 
                 currentCategory: '',
 
+                quantity: 1,
+                windowQty: false,
+
                 deliveryModal: false,
 
                 deliveryID: 0,
@@ -186,8 +200,11 @@
                 }
                 return parseInt(this.inputBox.price) + price.reduce((a, b) => a + b, 0)
             },
+            priceWithQuantity() {
+                return this.price * this.quantity
+            },
             priceWithDelivery() {
-                return this.price + parseInt(this.deliveryPrice)
+                return this.priceWithQuantity + parseInt(this.deliveryPrice)
             },
         },
         methods: {
@@ -264,7 +281,15 @@
                         this.inputElements[this.categories[index + 1].slug][0].id = this.elementsFiltered.filter(element => element.category_id == this.categories[index + 1].id)[0].id
                     }
                 } else {
-                    this.openDeliveryModal()
+                    this.windowQty = true
+
+                    if(this.deliveryID && this.deliveryID > 0) {
+
+                    } else {
+                        this.deliveryID = 1
+                        this.deliveryName = 'Самовывоз'
+                        this.deliveryPrice = 0
+                    }
                 }
             },
             changeInputBox() {

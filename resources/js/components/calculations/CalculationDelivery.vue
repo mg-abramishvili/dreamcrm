@@ -136,20 +136,27 @@
                 var length = parseInt(this.box.length) * 0.001
                 var weight = parseInt(this.box.weight)
                 this.pek_loading = true
+
+                var qty_array = Array.from(Array(parseInt(this.$parent.quantity)).keys())
+
+                var ax_params = { places: [], take: [], deliver: [] }
+
+                qty_array.forEach((qt) => {
+                    ax_params[`places[${qt}]`] = [ `${width}`, `${length}`, `${height}`, `${(width * height * length).toFixed(2)}`, `${weight}`, 0, 1 ]
+                })
+                
+                ax_params['take[town]'] = '-463'
+                ax_params['deliver[town]'] = `${this.pek_city_sub_selected}`
+
                 axios
                     .get('http://calc.pecom.ru/bitrix/components/pecom/calc/ajax.php', {
-                        params: {
-                            'places[0]': [ `${width}`, `${length}`, `${height}`, `${(width * height * length).toFixed(2)}`, `${weight}`, 0, 1 ],
-                            'take[town]': '-463',
-                            'deliver[town]': `${this.pek_city_sub_selected}`
-                        }
+                        params: ax_params
                     })
                     .then(response => (
+                        console.log(response.data),
                         this.pek_response = response.data,
-                        // this.pek_price = parseInt(response.data.auto[2]) + parseInt(response.data.ADD[1]),
                         this.pek_price = response.data.auto[2],
-                        this.pek_loading = false,
-                        console.log(response.data)
+                        this.pek_loading = false
                     ));
             },
             saveDelivery() {

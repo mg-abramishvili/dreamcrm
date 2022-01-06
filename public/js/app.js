@@ -2433,6 +2433,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -2445,6 +2456,8 @@ __webpack_require__.r(__webpack_exports__);
       windowBoxes: true,
       windowCategories: false,
       currentCategory: '',
+      quantity: 1,
+      windowQty: false,
       deliveryModal: false,
       deliveryID: 0,
       deliveryName: '',
@@ -2518,8 +2531,11 @@ __webpack_require__.r(__webpack_exports__);
         return a + b;
       }, 0);
     },
+    priceWithQuantity: function priceWithQuantity() {
+      return this.price * this.quantity;
+    },
     priceWithDelivery: function priceWithDelivery() {
-      return this.price + parseInt(this.deliveryPrice);
+      return this.priceWithQuantity + parseInt(this.deliveryPrice);
     }
   },
   methods: {
@@ -2611,7 +2627,13 @@ __webpack_require__.r(__webpack_exports__);
           })[0].id;
         }
       } else {
-        this.openDeliveryModal();
+        this.windowQty = true;
+
+        if (this.deliveryID && this.deliveryID > 0) {} else {
+          this.deliveryID = 1;
+          this.deliveryName = 'Самовывоз';
+          this.deliveryPrice = 0;
+        }
       }
     },
     changeInputBox: function changeInputBox() {
@@ -2811,15 +2833,21 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       var length = parseInt(this.box.length) * 0.001;
       var weight = parseInt(this.box.weight);
       this.pek_loading = true;
+      var qty_array = Array.from(Array(parseInt(this.$parent.quantity)).keys());
+      var ax_params = {
+        places: [],
+        take: [],
+        deliver: []
+      };
+      qty_array.forEach(function (qt) {
+        ax_params["places[".concat(qt, "]")] = ["".concat(width), "".concat(length), "".concat(height), "".concat((width * height * length).toFixed(2)), "".concat(weight), 0, 1];
+      });
+      ax_params['take[town]'] = '-463';
+      ax_params['deliver[town]'] = "".concat(this.pek_city_sub_selected);
       axios.get('http://calc.pecom.ru/bitrix/components/pecom/calc/ajax.php', {
-        params: {
-          'places[0]': ["".concat(width), "".concat(length), "".concat(height), "".concat((width * height * length).toFixed(2)), "".concat(weight), 0, 1],
-          'take[town]': '-463',
-          'deliver[town]': "".concat(this.pek_city_sub_selected)
-        }
+        params: ax_params
       }).then(function (response) {
-        return _this3.pek_response = response.data, // this.pek_price = parseInt(response.data.auto[2]) + parseInt(response.data.ADD[1]),
-        _this3.pek_price = response.data.auto[2], _this3.pek_loading = false, console.log(response.data);
+        return console.log(response.data), _this3.pek_response = response.data, _this3.pek_price = response.data.auto[2], _this3.pek_loading = false;
       });
     },
     saveDelivery: function saveDelivery() {
@@ -27113,6 +27141,15 @@ var render = function () {
                         "button",
                         {
                           staticClass: "btn btn-outline-primary",
+                          attrs: { disabled: "" },
+                        },
+                        [_vm._v("Назад")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-outline-primary",
                           on: {
                             click: function ($event) {
                               return _vm.activateWindowsCategories()
@@ -27328,10 +27365,8 @@ var render = function () {
               _vm._v(" "),
               _c("div", { staticClass: "total" }, [
                 _vm.price && _vm.price > 0
-                  ? _c("div", { staticClass: "row align-items-center" }, [
-                      _c("div", { staticClass: "col-6" }, [
-                        _vm._v("Цена за 1 ед:"),
-                      ]),
+                  ? _c("div", { staticClass: "row align-items-center mb-3" }, [
+                      _vm._m(1),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -27355,48 +27390,108 @@ var render = function () {
                     ])
                   : _vm._e(),
                 _vm._v(" "),
-                _vm.deliveryID && _vm.deliveryID > 0
-                  ? _c("div", { staticClass: "row align-items-center" }, [
-                      _c(
-                        "div",
-                        { staticClass: "col-6" },
-                        [
-                          _vm._v("\n                            Доставка "),
-                          _c("br"),
-                          _c(
-                            "small",
+                _vm.windowQty
+                  ? _c("div", { staticClass: "row align-items-center mb-3" }, [
+                      _c("div", { staticClass: "col-6" }, [
+                        _c("strong", [_vm._v("Кол-во")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
                             {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.quantity,
+                              expression: "quantity",
+                            },
+                          ],
+                          staticClass: "form-control form-control-sm",
+                          staticStyle: {
+                            "font-size": "12px",
+                            display: "inline-block",
+                            width: "70px",
+                          },
+                          attrs: { type: "number" },
+                          domProps: { value: _vm.quantity },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.quantity = $event.target.value
+                            },
+                          },
+                        }),
+                      ]),
+                      _vm._v(" "),
+                      _vm.priceWithQuantity && _vm.priceWithQuantity > 0
+                        ? _c(
+                            "div",
+                            {
+                              staticClass: "col-6 text-end text-primary",
                               staticStyle: {
-                                "line-height": "1.3",
-                                display: "block",
-                                cursor: "pointer",
-                              },
-                              on: {
-                                click: function ($event) {
-                                  return _vm.openDeliveryModal()
-                                },
+                                "font-size": "26px",
+                                "font-weight": "bold",
                               },
                             },
-                            [_vm._v(_vm._s(_vm.deliveryName))]
-                          ),
-                          _vm._v(" "),
-                          _vm.deliveryDirection &&
-                          _vm.deliveryDirection.length > 0 &&
-                          _vm.deliveryDays &&
-                          _vm.deliveryDays > 0
-                            ? [
-                                _vm._v(
-                                  "(" +
-                                    _vm._s(_vm.deliveryDirection) +
-                                    ", " +
-                                    _vm._s(_vm.deliveryDays) +
-                                    " дн.)"
-                                ),
-                              ]
-                            : _vm._e(),
-                        ],
-                        2
-                      ),
+                            [
+                              _vm._v(
+                                _vm._s(
+                                  _vm.priceWithQuantity
+                                    .toString()
+                                    .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                                ) + " ₽"
+                              ),
+                            ]
+                          )
+                        : _vm._e(),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.deliveryID && _vm.deliveryID > 0
+                  ? _c("div", { staticClass: "row align-items-center mb-3" }, [
+                      _c("div", { staticClass: "col-6" }, [
+                        _c("strong", [_vm._v("Доставка")]),
+                        _vm._v(" "),
+                        _c("br"),
+                        _vm._v(" "),
+                        _c(
+                          "small",
+                          {
+                            staticStyle: {
+                              "line-height": "1.3",
+                              display: "block",
+                              cursor: "pointer",
+                            },
+                            on: {
+                              click: function ($event) {
+                                return _vm.openDeliveryModal()
+                              },
+                            },
+                          },
+                          [
+                            _vm._v(
+                              "\n                                " +
+                                _vm._s(_vm.deliveryName) +
+                                " "
+                            ),
+                            _c("br"),
+                            _vm._v(" "),
+                            _vm.deliveryDirection &&
+                            _vm.deliveryDirection.length > 0
+                              ? [
+                                  _vm._v(
+                                    "(" +
+                                      _vm._s(_vm.deliveryDirection) +
+                                      ", " +
+                                      _vm._s(_vm.deliveryDays) +
+                                      " дн.)"
+                                  ),
+                                ]
+                              : _vm._e(),
+                          ],
+                          2
+                        ),
+                      ]),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -27425,7 +27520,7 @@ var render = function () {
                 _vm.priceWithDelivery &&
                 _vm.priceWithDelivery > 0
                   ? _c("div", { staticClass: "row align-items-center" }, [
-                      _c("div", { staticClass: "col-6" }, [_vm._v("Итого")]),
+                      _vm._m(2),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -27584,6 +27679,22 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("label", [_c("strong", [_vm._v("Корпус")])])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-6" }, [
+      _c("strong", [_vm._v("Цена за 1 ед:")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-6" }, [
+      _c("strong", [_vm._v("Итого")]),
+    ])
   },
 ]
 render._withStripped = true
