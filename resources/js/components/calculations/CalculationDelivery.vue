@@ -166,14 +166,14 @@
                             alert('Ошибка')
                             return
                         } else {
-                            this.$parent.deliveryDirection = this.pek_response.region_from.BranchName + ' - ' + this.pek_response.region_to.BranchName
-                            this.$parent.deliveryDays = this.pek_response.periods_days
+                            this.$parent.delivery.direction = this.pek_response.region_from.BranchName + ' - ' + this.pek_response.region_to.BranchName
+                            this.$parent.delivery.days = this.pek_response.periods_days
                         }
                     }
                     
-                    this.$parent.deliveryID = this.inputDelivery.id
-                    this.$parent.deliveryName = this.inputDelivery.name
-                    this.$parent.deliveryPrice = parseInt(this.priceDelivery).toFixed(0)
+                    this.$parent.delivery.id = this.inputDelivery.id
+                    this.$parent.delivery.name = this.inputDelivery.name
+                    this.$parent.delivery.price = parseInt(this.priceDelivery).toFixed(0)
 
                     this.$parent.closeDeliveryModal()
 

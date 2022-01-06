@@ -2449,9 +2449,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -2459,20 +2456,27 @@ __webpack_require__.r(__webpack_exports__);
       boxes: [],
       categories: [],
       elements: [],
-      inputBox: {},
-      inputElements: {},
-      windowBoxes: true,
-      windowCategories: false,
-      currentCategory: '',
+      selected: {
+        box: {},
+        elements: {}
+      },
       quantity: 1,
-      windowQty: false,
-      deliveryModal: false,
-      deliveryID: 0,
-      deliveryName: '',
-      deliveryPrice: 0,
-      deliveryDirection: '',
-      deliveryDays: 0,
-      loading: false
+      delivery: {
+        id: 0,
+        name: '',
+        price: 0,
+        direction: '',
+        days: 0
+      },
+      views: {
+        boxes: true,
+        categories: false,
+        category_current: '',
+        quantity: false,
+        modals: {
+          delivery: false
+        }
+      }
     };
   },
   created: function created() {
@@ -2482,12 +2486,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {},
   watch: {
-    inputElements: {
+    selected: {
       deep: true,
       handler: function handler() {
         var _this = this;
 
-        for (var _i = 0, _Object$entries = Object.entries(this.inputElements); _i < _Object$entries.length; _i++) {
+        for (var _i = 0, _Object$entries = Object.entries(this.selected.elements); _i < _Object$entries.length; _i++) {
           var category = _Object$entries[_i];
 
           if (category[1] && category[1].length > 0) {
@@ -2513,12 +2517,12 @@ __webpack_require__.r(__webpack_exports__);
     elementsFiltered: function elementsFiltered() {
       var _this2 = this;
 
-      if (this.inputBox && this.inputBox.id > 0) {
+      if (this.selected.box && this.selected.box.id > 0) {
         var array = [];
         this.elements.forEach(function (element) {
           if (element.boxes && element.boxes.length > 0) {
             element.boxes.forEach(function (box) {
-              if (box.id == _this2.inputBox.id) {
+              if (box.id == _this2.selected.box.id) {
                 array.push(element);
               }
             });
@@ -2532,7 +2536,7 @@ __webpack_require__.r(__webpack_exports__);
     price_pre_rub: function price_pre_rub() {
       var price = [];
 
-      for (var _i2 = 0, _Object$entries2 = Object.entries(this.inputElements); _i2 < _Object$entries2.length; _i2++) {
+      for (var _i2 = 0, _Object$entries2 = Object.entries(this.selected.elements); _i2 < _Object$entries2.length; _i2++) {
         var category = _Object$entries2[_i2];
 
         if (category[1] && category[1].length > 0) {
@@ -2542,14 +2546,14 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
 
-      return parseInt(this.inputBox.pre_rub) + parseInt(this.inputBox.sborka) + parseInt(this.inputBox.marzha) + price.reduce(function (a, b) {
+      return parseInt(this.selected.box.pre_rub) + parseInt(this.selected.box.sborka) + parseInt(this.selected.box.marzha) + price.reduce(function (a, b) {
         return a + b;
       }, 0);
     },
     price_pre_usd: function price_pre_usd() {
       var price = [];
 
-      for (var _i3 = 0, _Object$entries3 = Object.entries(this.inputElements); _i3 < _Object$entries3.length; _i3++) {
+      for (var _i3 = 0, _Object$entries3 = Object.entries(this.selected.elements); _i3 < _Object$entries3.length; _i3++) {
         var category = _Object$entries3[_i3];
 
         if (category[1] && category[1].length > 0) {
@@ -2559,14 +2563,14 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
 
-      return parseInt(this.inputBox.pre_usd) + price.reduce(function (a, b) {
+      return parseInt(this.selected.box.pre_usd) + price.reduce(function (a, b) {
         return a + b;
       }, 0);
     },
     price: function price() {
       var price = [];
 
-      for (var _i4 = 0, _Object$entries4 = Object.entries(this.inputElements); _i4 < _Object$entries4.length; _i4++) {
+      for (var _i4 = 0, _Object$entries4 = Object.entries(this.selected.elements); _i4 < _Object$entries4.length; _i4++) {
         var category = _Object$entries4[_i4];
 
         if (category[1] && category[1].length > 0) {
@@ -2576,7 +2580,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
 
-      return parseInt(this.inputBox.price) + price.reduce(function (a, b) {
+      return parseInt(this.selected.box.price) + price.reduce(function (a, b) {
         return a + b;
       }, 0);
     },
@@ -2584,7 +2588,7 @@ __webpack_require__.r(__webpack_exports__);
       return this.price * this.quantity;
     },
     priceWithDelivery: function priceWithDelivery() {
-      return this.priceWithQuantity + parseInt(this.deliveryPrice);
+      return this.priceWithQuantity + parseInt(this.delivery.price);
     }
   },
   methods: {
@@ -2601,11 +2605,11 @@ __webpack_require__.r(__webpack_exports__);
       axios.get('/api/categories').then(function (response) {
         _this4.categories = response.data;
         response.data.forEach(function (category) {
-          _this4.$set(_this4.inputElements, category.slug, []);
+          _this4.$set(_this4.selected.elements, category.slug, []);
 
           _this4.addElement(category.slug);
         });
-        _this4.currentCategory = response.data[0].id;
+        _this4.views.category_current = response.data[0].id;
       });
     },
     loadElements: function loadElements() {
@@ -2618,10 +2622,10 @@ __webpack_require__.r(__webpack_exports__);
     activateWindowsCategories: function activateWindowsCategories() {
       var _this6 = this;
 
-      if (this.inputBox && this.inputBox.id > 0 && this.elementsFiltered.length > 0) {
-        this.windowBoxes = false;
-        this.windowCategories = true;
-        this.inputElements[this.categories[0].slug][0].id = this.elementsFiltered.filter(function (element) {
+      if (this.selected.box && this.selected.box.id > 0 && this.elementsFiltered.length > 0) {
+        this.views.boxes = false;
+        this.views.categories = true;
+        this.selected.elements[this.categories[0].slug][0].id = this.elementsFiltered.filter(function (element) {
           return element.category_id == _this6.categories[0].id;
         })[0].id;
       } else {
@@ -2629,15 +2633,15 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     addElement: function addElement(categorySlug) {
-      var checkEmpty = this.inputElements[categorySlug].filter(function (element) {
+      var checkEmpty = this.selected.elements[categorySlug].filter(function (element) {
         return element.id === null;
       });
 
-      if (checkEmpty.length >= 1 && this.inputElements[categorySlug].length > 0) {
+      if (checkEmpty.length >= 1 && this.selected.elements[categorySlug].length > 0) {
         return;
       }
 
-      this.inputElements[categorySlug].push({
+      this.selected.elements[categorySlug].push({
         id: null,
         price: 0,
         pre_rub: 0,
@@ -2645,19 +2649,19 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     deleteElement: function deleteElement(ElementID, categorySlug) {
-      var index = this.inputElements[categorySlug].map(function (element) {
+      var index = this.selected.elements[categorySlug].map(function (element) {
         return element.id;
       }).indexOf(ElementID);
-      this.inputElements[categorySlug].splice(index, 1);
+      this.selected.elements[categorySlug].splice(index, 1);
     },
     prevCategory: function prevCategory(category) {
       var index = this.categories.indexOf(category);
 
       if (index > 0 && index < this.categories.length + 1) {
-        this.currentCategory = this.categories[index - 1].id;
+        this.views.category_current = this.categories[index - 1].id;
       } else {
-        this.windowBoxes = true;
-        this.windowCategories = false;
+        this.views.boxes = true;
+        this.views.categories = false;
       }
     },
     nextCategory: function nextCategory(category) {
@@ -2666,23 +2670,23 @@ __webpack_require__.r(__webpack_exports__);
       var index = this.categories.indexOf(category);
 
       if (index >= 0 && index < this.categories.length - 1) {
-        this.currentCategory = this.categories[index + 1].id;
+        this.views.category_current = this.categories[index + 1].id;
 
         if (this.categories[index + 1].elements && this.categories[index + 1].elements.length > 0) {
-          this.inputElements[this.categories[index + 1].slug][0].id = this.elementsFiltered.filter(function (element) {
+          this.selected.elements[this.categories[index + 1].slug][0].id = this.elementsFiltered.filter(function (element) {
             return element.category_id == _this7.categories[index + 1].id;
           })[0].id;
         }
       } else {
-        this.windowQty = true;
+        this.views.quantity = true;
 
-        if (this.deliveryID && this.deliveryID > 0) {} else {
+        if (this.delivery.id && this.delivery.id > 0) {} else {
           this.resetDelivery();
         }
       }
     },
-    changeInputBox: function changeInputBox() {
-      for (var _i5 = 0, _Object$entries5 = Object.entries(this.inputElements); _i5 < _Object$entries5.length; _i5++) {
+    changeBox: function changeBox() {
+      for (var _i5 = 0, _Object$entries5 = Object.entries(this.selected.elements); _i5 < _Object$entries5.length; _i5++) {
         var category = _Object$entries5[_i5];
 
         if (category[1] && category[1].length > 0) {
@@ -2693,18 +2697,18 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     openDeliveryModal: function openDeliveryModal() {
-      this.deliveryModal = true;
+      this.views.modals.delivery = true;
     },
     closeDeliveryModal: function closeDeliveryModal() {
-      this.deliveryModal = false;
+      this.views.modals.delivery = false;
       document.body.classList.remove('modal-open');
     },
     resetDelivery: function resetDelivery() {
-      this.deliveryID = 1;
-      this.deliveryName = 'Самовывоз';
-      this.deliveryPrice = 0;
-      this.deliveryDirection = '';
-      this.deliveryDays = 0;
+      this.delivery.id = 1;
+      this.delivery.name = 'Самовывоз';
+      this.delivery.price = 0;
+      this.delivery.direction = '';
+      this.delivery.days = 0;
     }
   },
   components: {
@@ -2909,14 +2913,14 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
             alert('Ошибка');
             return;
           } else {
-            this.$parent.deliveryDirection = this.pek_response.region_from.BranchName + ' - ' + this.pek_response.region_to.BranchName;
-            this.$parent.deliveryDays = this.pek_response.periods_days;
+            this.$parent.delivery.direction = this.pek_response.region_from.BranchName + ' - ' + this.pek_response.region_to.BranchName;
+            this.$parent.delivery.days = this.pek_response.periods_days;
           }
         }
 
-        this.$parent.deliveryID = this.inputDelivery.id;
-        this.$parent.deliveryName = this.inputDelivery.name;
-        this.$parent.deliveryPrice = parseInt(this.priceDelivery).toFixed(0);
+        this.$parent.delivery.id = this.inputDelivery.id;
+        this.$parent.delivery.name = this.inputDelivery.name;
+        this.$parent.delivery.price = parseInt(this.priceDelivery).toFixed(0);
         this.$parent.closeDeliveryModal();
       } else {
         alert('Ошибка');
@@ -27132,7 +27136,7 @@ var render = function () {
                   staticStyle: { position: "sticky", top: "20px" },
                 },
                 [
-                  _vm.windowBoxes
+                  _vm.views.boxes
                     ? _c("div", { staticClass: "mb-4" }, [
                         _vm._m(0),
                         _vm._v(" "),
@@ -27143,8 +27147,8 @@ var render = function () {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.inputBox,
-                                expression: "inputBox",
+                                value: _vm.selected.box,
+                                expression: "selected.box",
                               },
                             ],
                             staticClass: "form-select form-select-lg mt-2 mb-3",
@@ -27160,12 +27164,16 @@ var render = function () {
                                         "_value" in o ? o._value : o.value
                                       return val
                                     })
-                                  _vm.inputBox = $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
+                                  _vm.$set(
+                                    _vm.selected,
+                                    "box",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
                                 },
                                 function ($event) {
-                                  return _vm.changeInputBox()
+                                  return _vm.changeBox()
                                 },
                               ],
                             },
@@ -27220,7 +27228,7 @@ var render = function () {
                       ])
                     : _vm._e(),
                   _vm._v(" "),
-                  _vm.windowCategories
+                  _vm.views.categories
                     ? _c(
                         "div",
                         { staticClass: "mb-4" },
@@ -27233,9 +27241,10 @@ var render = function () {
                                   {
                                     name: "show",
                                     rawName: "v-show",
-                                    value: _vm.currentCategory == category.id,
+                                    value:
+                                      _vm.views.category_current == category.id,
                                     expression:
-                                      "currentCategory == category.id",
+                                      "views.category_current == category.id",
                                   },
                                 ],
                               },
@@ -27259,7 +27268,7 @@ var render = function () {
                                 ),
                                 _vm._v(" "),
                                 _vm._l(
-                                  _vm.inputElements[category.slug],
+                                  _vm.selected.elements[category.slug],
                                   function (element, index) {
                                     return _c(
                                       "div",
@@ -27358,7 +27367,7 @@ var render = function () {
                                         ),
                                         _vm._v(" "),
                                         index > 0 &&
-                                        _vm.inputElements[category.slug]
+                                        _vm.selected.elements[category.slug]
                                           .length > 1
                                           ? _c(
                                               "button",
@@ -27491,7 +27500,7 @@ var render = function () {
                         )
                       : _vm._e(),
                     _vm._v(" "),
-                    _vm.windowQty
+                    _vm.views.quantity
                       ? _c(
                           "div",
                           { staticClass: "row align-items-center mb-3" },
@@ -27555,7 +27564,7 @@ var render = function () {
                         )
                       : _vm._e(),
                     _vm._v(" "),
-                    _vm.deliveryID && _vm.deliveryID > 0
+                    _vm.delivery.id && _vm.delivery.id > 0
                       ? _c(
                           "div",
                           { staticClass: "row align-items-center mb-3" },
@@ -27582,19 +27591,19 @@ var render = function () {
                                 [
                                   _vm._v(
                                     "\n                                " +
-                                      _vm._s(_vm.deliveryName) +
+                                      _vm._s(_vm.delivery.name) +
                                       " "
                                   ),
                                   _c("br"),
                                   _vm._v(" "),
-                                  _vm.deliveryDirection &&
-                                  _vm.deliveryDirection.length > 0
+                                  _vm.delivery.direction &&
+                                  _vm.delivery.direction.length > 0
                                     ? [
                                         _vm._v(
                                           "(" +
-                                            _vm._s(_vm.deliveryDirection) +
+                                            _vm._s(_vm.delivery.direction) +
                                             ", " +
-                                            _vm._s(_vm.deliveryDays) +
+                                            _vm._s(_vm.delivery.days) +
                                             " дн.)"
                                         ),
                                       ]
@@ -27616,7 +27625,7 @@ var render = function () {
                               [
                                 _vm._v(
                                   _vm._s(
-                                    _vm.deliveryPrice
+                                    _vm.delivery.price
                                       .toString()
                                       .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                                   ) + " ₽"
@@ -27627,8 +27636,8 @@ var render = function () {
                         )
                       : _vm._e(),
                     _vm._v(" "),
-                    _vm.deliveryName &&
-                    _vm.deliveryName.length > 0 &&
+                    _vm.delivery.name &&
+                    _vm.delivery.name.length > 0 &&
                     _vm.priceWithDelivery &&
                     _vm.priceWithDelivery > 0
                       ? _c("div", { staticClass: "row align-items-center" }, [
@@ -27671,11 +27680,11 @@ var render = function () {
                     [_vm._v("Корпус")]
                   ),
                   _vm._v(" "),
-                  _vm.inputBox && _vm.inputBox.id > 0
+                  _vm.selected.box && _vm.selected.box.id > 0
                     ? _c("div", { staticClass: "row align-items-center" }, [
                         _c("div", { staticClass: "col-8" }, [
                           _c("strong", { staticClass: "d-block" }, [
-                            _vm._v(_vm._s(_vm.inputBox.name)),
+                            _vm._v(_vm._s(_vm.selected.box.name)),
                           ]),
                         ]),
                         _vm._v(" "),
@@ -27683,7 +27692,7 @@ var render = function () {
                           _c("strong", { staticClass: "text-primary" }, [
                             _vm._v(
                               _vm._s(
-                                _vm.inputBox.price
+                                _vm.selected.box.price
                                   .toString()
                                   .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                               ) + " ₽"
@@ -27712,7 +27721,7 @@ var render = function () {
                         return [
                           element.category_id == category.id
                             ? [
-                                _vm._l(_vm.inputElements, function (inEl) {
+                                _vm._l(_vm.selected.elements, function (inEl) {
                                   return [
                                     _vm._l(inEl, function (inElEl) {
                                       return [
@@ -27805,8 +27814,8 @@ var render = function () {
             [_vm._m(3)]
           ),
       _vm._v(" "),
-      _vm.deliveryModal
-        ? _c("DeliveryModal", { attrs: { box: _vm.inputBox } })
+      _vm.views.modals.delivery
+        ? _c("DeliveryModal", { attrs: { box: _vm.selected.box } })
         : _vm._e(),
     ],
     1
