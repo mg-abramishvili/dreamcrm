@@ -48,9 +48,20 @@
                             <div class="col-6">Цена за 1 ед:</div>
                             <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽</div>
                         </div>
+                        <div v-if="deliveryID && deliveryID > 0" class="row align-items-center">
+                            <div class="col-6">
+                                Доставка <br><small @click="openDeliveryModal()" style="line-height: 1.3; display: block; cursor: pointer;">{{ deliveryName }}</small>
+                                <template v-if="deliveryDirection && deliveryDirection.length > 0 && deliveryDays && deliveryDays > 0">({{ deliveryDirection }}, {{ deliveryDays }} дн.)</template>
+                            </div>
+                            <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ deliveryPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽</div>
+                        </div>
+                        <div v-if="deliveryName && deliveryName.length > 0 && priceWithDelivery && priceWithDelivery > 0" class="row align-items-center">
+                            <div class="col-6">Итого</div>
+                            <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ priceWithDelivery.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽</div>
+                        </div>
                     </div>
 
-                    <button @click="openDeliveryModal()">Delivery</button>
+                    <!-- <button @click="openDeliveryModal()">Delivery</button> -->
                     
                 </div>
             </div>
@@ -115,6 +126,12 @@
                 currentCategory: '',
 
                 deliveryModal: false,
+
+                deliveryID: 0,
+                deliveryName: '',
+                deliveryPrice: 0,
+                deliveryDirection: '',
+                deliveryDays: 0,
             }
         },
         created() {
@@ -168,6 +185,9 @@
                     }
                 }
                 return parseInt(this.inputBox.price) + price.reduce((a, b) => a + b, 0)
+            },
+            priceWithDelivery() {
+                return this.price + parseInt(this.deliveryPrice)
             },
         },
         methods: {
@@ -243,6 +263,8 @@
                     if(this.categories[index + 1].elements && this.categories[index + 1].elements.length > 0) {
                         this.inputElements[this.categories[index + 1].slug][0].id = this.elementsFiltered.filter(element => element.category_id == this.categories[index + 1].id)[0].id
                     }
+                } else {
+                    this.openDeliveryModal()
                 }
             },
             changeInputBox() {

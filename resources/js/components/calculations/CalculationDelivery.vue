@@ -4,12 +4,18 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">ПЭК доставка</h5>
-                        <button @click="$parent.closeDeliveryModal()" type="button" class="btn-close"></button>
+                        <h5 class="modal-title">Доставка</h5>
+                        <!-- <button @click="$parent.closeDeliveryModal()" type="button" class="btn-close"></button> -->
                     </div>
                     <div class="modal-body m-3">
                         
-                        <div class="delivery mt-4" id="delivery">
+                        <div class="mb-3">
+                            <select v-model="inputDelivery" class="form-select">
+                                <option v-for="delivery in deliveries" :key="'delivery_' + delivery.id" :value="delivery">{{ delivery.name }}</option>
+                            </select>
+                        </div>
+
+                        <div v-if="inputDelivery.id == 3" class="delivery mt-4" id="delivery">
                             <div class="alert alert-primary alert-outline">
                                 <div></div>
                                 <div class="alert-message">
@@ -28,8 +34,6 @@
                                         </div>
                                     </div>
 
-                                    <p>{{ pek_price }}</p>
-
                                     <div v-if="pek_loading" class="spinner-border text-primary mt-4">
                                         <span class="sr-only">Загрузка...</span>
                                     </div>
@@ -38,6 +42,14 @@
                             </div>
                         </div>
 
+                        <p v-if="inputDelivery && inputDelivery.id > 0" class="text-center">
+                            <strong class="text-primary">
+                                {{ priceDelivery.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽
+                            </strong>
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button @click="saveDelivery()" class="btn btn-primary">Окей</button>
                     </div>
                 </div>
             </div>
@@ -51,6 +63,10 @@
         props: ['box'],
         data() {
             return {
+                deliveries: '',
+
+                inputDelivery: '',
+
                 pek_cities_data: {},
                 pek_cities: {},
                 pek_city_selected: '',
@@ -62,12 +78,30 @@
             }
         },
         created() {
+            this.loadDeliveries()
             this.loadTowns()
         },
         mounted () {
             document.body.classList.add('modal-open')
         },
+        computed: {
+            priceDelivery() {
+                if(this.inputDelivery.price && this.inputDelivery.price > 0)
+                {
+                    return this.inputDelivery.price
+                } else {
+                    return this.pek_price
+                }
+            }
+        },
         methods: {
+            loadDeliveries() {
+                axios
+                .get('/api/deliveries')
+                .then((response => {
+                    this.deliveries = response.data
+                }));
+            },
             loadTowns() {
                 axios
                 //.get('http://www.pecom.ru/ru/calc/towns.php')
@@ -117,6 +151,28 @@
                         this.pek_loading = false,
                         console.log(response.data)
                     ));
+            },
+            saveDelivery() {
+                if(this.inputDelivery && this.inputDelivery.id > 0) {
+                    if(this.inputDelivery.id == 3) {
+                            if(!this.priceDelivery > 0) {
+                            alert('Ошибка')
+                            return
+                        } else {
+                            this.$parent.deliveryDirection = this.pek_response.region_from.BranchName + ' - ' + this.pek_response.region_to.BranchName
+                            this.$parent.deliveryDays = this.pek_response.periods_days
+                        }
+                    }
+                    
+                    this.$parent.deliveryID = this.inputDelivery.id
+                    this.$parent.deliveryName = this.inputDelivery.name
+                    this.$parent.deliveryPrice = parseInt(this.priceDelivery).toFixed(0)
+
+                    this.$parent.closeDeliveryModal()
+
+                } else {
+                    alert('Ошибка')
+                }
             },
         },
     }

@@ -2422,6 +2422,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -2434,7 +2445,12 @@ __webpack_require__.r(__webpack_exports__);
       windowBoxes: true,
       windowCategories: false,
       currentCategory: '',
-      deliveryModal: false
+      deliveryModal: false,
+      deliveryID: 0,
+      deliveryName: '',
+      deliveryPrice: 0,
+      deliveryDirection: '',
+      deliveryDays: 0
     };
   },
   created: function created() {
@@ -2501,6 +2517,9 @@ __webpack_require__.r(__webpack_exports__);
       return parseInt(this.inputBox.price) + price.reduce(function (a, b) {
         return a + b;
       }, 0);
+    },
+    priceWithDelivery: function priceWithDelivery() {
+      return this.price + parseInt(this.deliveryPrice);
     }
   },
   methods: {
@@ -2591,6 +2610,8 @@ __webpack_require__.r(__webpack_exports__);
             return element.category_id == _this7.categories[index + 1].id;
           })[0].id;
         }
+      } else {
+        this.openDeliveryModal();
       }
     },
     changeInputBox: function changeInputBox() {
@@ -2690,10 +2711,24 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['box'],
   data: function data() {
     return {
+      deliveries: '',
+      inputDelivery: '',
       pek_cities_data: {},
       pek_cities: {},
       pek_city_selected: '',
@@ -2705,26 +2740,43 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
     };
   },
   created: function created() {
+    this.loadDeliveries();
     this.loadTowns();
   },
   mounted: function mounted() {
     document.body.classList.add('modal-open');
   },
+  computed: {
+    priceDelivery: function priceDelivery() {
+      if (this.inputDelivery.price && this.inputDelivery.price > 0) {
+        return this.inputDelivery.price;
+      } else {
+        return this.pek_price;
+      }
+    }
+  },
   methods: {
-    loadTowns: function loadTowns() {
+    loadDeliveries: function loadDeliveries() {
       var _this = this;
+
+      axios.get('/api/deliveries').then(function (response) {
+        _this.deliveries = response.data;
+      });
+    },
+    loadTowns: function loadTowns() {
+      var _this2 = this;
 
       axios //.get('http://www.pecom.ru/ru/calc/towns.php')
       .get('/towns.php').then(function (response) {
-        _this.pek_cities_data = response.data;
-        var data = _this.pek_cities_data;
+        _this2.pek_cities_data = response.data;
+        var data = _this2.pek_cities_data;
         var pek_cities = [];
 
         for (var i in data) {
           pek_cities.push(i);
         }
 
-        _this.pek_cities = pek_cities.sort();
+        _this2.pek_cities = pek_cities.sort();
       });
     },
     onCityChange: function onCityChange() {
@@ -2752,7 +2804,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       });
     },
     calcDelivery: function calcDelivery() {
-      var _this2 = this;
+      var _this3 = this;
 
       var width = parseInt(this.box.width) * 0.001;
       var height = parseInt(this.box.height) * 0.001;
@@ -2766,9 +2818,29 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
           'deliver[town]': "".concat(this.pek_city_sub_selected)
         }
       }).then(function (response) {
-        return _this2.pek_response = response.data, // this.pek_price = parseInt(response.data.auto[2]) + parseInt(response.data.ADD[1]),
-        _this2.pek_price = response.data.auto[2], _this2.pek_loading = false, console.log(response.data);
+        return _this3.pek_response = response.data, // this.pek_price = parseInt(response.data.auto[2]) + parseInt(response.data.ADD[1]),
+        _this3.pek_price = response.data.auto[2], _this3.pek_loading = false, console.log(response.data);
       });
+    },
+    saveDelivery: function saveDelivery() {
+      if (this.inputDelivery && this.inputDelivery.id > 0) {
+        if (this.inputDelivery.id == 3) {
+          if (!this.priceDelivery > 0) {
+            alert('Ошибка');
+            return;
+          } else {
+            this.$parent.deliveryDirection = this.pek_response.region_from.BranchName + ' - ' + this.pek_response.region_to.BranchName;
+            this.$parent.deliveryDays = this.pek_response.periods_days;
+          }
+        }
+
+        this.$parent.deliveryID = this.inputDelivery.id;
+        this.$parent.deliveryName = this.inputDelivery.name;
+        this.$parent.deliveryPrice = parseInt(this.priceDelivery).toFixed(0);
+        this.$parent.closeDeliveryModal();
+      } else {
+        alert('Ошибка');
+      }
     }
   }
 });
@@ -27282,19 +27354,101 @@ var render = function () {
                       ),
                     ])
                   : _vm._e(),
+                _vm._v(" "),
+                _vm.deliveryID && _vm.deliveryID > 0
+                  ? _c("div", { staticClass: "row align-items-center" }, [
+                      _c(
+                        "div",
+                        { staticClass: "col-6" },
+                        [
+                          _vm._v("\n                            Доставка "),
+                          _c("br"),
+                          _c(
+                            "small",
+                            {
+                              staticStyle: {
+                                "line-height": "1.3",
+                                display: "block",
+                                cursor: "pointer",
+                              },
+                              on: {
+                                click: function ($event) {
+                                  return _vm.openDeliveryModal()
+                                },
+                              },
+                            },
+                            [_vm._v(_vm._s(_vm.deliveryName))]
+                          ),
+                          _vm._v(" "),
+                          _vm.deliveryDirection &&
+                          _vm.deliveryDirection.length > 0 &&
+                          _vm.deliveryDays &&
+                          _vm.deliveryDays > 0
+                            ? [
+                                _vm._v(
+                                  "(" +
+                                    _vm._s(_vm.deliveryDirection) +
+                                    ", " +
+                                    _vm._s(_vm.deliveryDays) +
+                                    " дн.)"
+                                ),
+                              ]
+                            : _vm._e(),
+                        ],
+                        2
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "col-6 text-end text-primary",
+                          staticStyle: {
+                            "font-size": "26px",
+                            "font-weight": "bold",
+                          },
+                        },
+                        [
+                          _vm._v(
+                            _vm._s(
+                              _vm.deliveryPrice
+                                .toString()
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                            ) + " ₽"
+                          ),
+                        ]
+                      ),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.deliveryName &&
+                _vm.deliveryName.length > 0 &&
+                _vm.priceWithDelivery &&
+                _vm.priceWithDelivery > 0
+                  ? _c("div", { staticClass: "row align-items-center" }, [
+                      _c("div", { staticClass: "col-6" }, [_vm._v("Итого")]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "col-6 text-end text-primary",
+                          staticStyle: {
+                            "font-size": "26px",
+                            "font-weight": "bold",
+                          },
+                        },
+                        [
+                          _vm._v(
+                            _vm._s(
+                              _vm.priceWithDelivery
+                                .toString()
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                            ) + " ₽"
+                          ),
+                        ]
+                      ),
+                    ])
+                  : _vm._e(),
               ]),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  on: {
-                    click: function ($event) {
-                      return _vm.openDeliveryModal()
-                    },
-                  },
-                },
-                [_vm._v("Delivery")]
-              ),
             ]
           ),
         ]),
@@ -27467,169 +27621,236 @@ var render = function () {
           { staticClass: "modal-dialog", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _c("div", { staticClass: "modal-header" }, [
-                _c("h5", { staticClass: "modal-title" }, [
-                  _vm._v("ПЭК доставка"),
-                ]),
-                _vm._v(" "),
-                _c("button", {
-                  staticClass: "btn-close",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function ($event) {
-                      return _vm.$parent.closeDeliveryModal()
-                    },
-                  },
-                }),
-              ]),
+              _vm._m(0),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body m-3" }, [
-                _c(
-                  "div",
-                  { staticClass: "delivery mt-4", attrs: { id: "delivery" } },
-                  [
-                    _c(
+                _c("div", { staticClass: "mb-3" }, [
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.inputDelivery,
+                          expression: "inputDelivery",
+                        },
+                      ],
+                      staticClass: "form-select",
+                      on: {
+                        change: function ($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function (o) {
+                              return o.selected
+                            })
+                            .map(function (o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.inputDelivery = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        },
+                      },
+                    },
+                    _vm._l(_vm.deliveries, function (delivery) {
+                      return _c(
+                        "option",
+                        {
+                          key: "delivery_" + delivery.id,
+                          domProps: { value: delivery },
+                        },
+                        [_vm._v(_vm._s(delivery.name))]
+                      )
+                    }),
+                    0
+                  ),
+                ]),
+                _vm._v(" "),
+                _vm.inputDelivery.id == 3
+                  ? _c(
                       "div",
-                      { staticClass: "alert alert-primary alert-outline" },
+                      {
+                        staticClass: "delivery mt-4",
+                        attrs: { id: "delivery" },
+                      },
                       [
-                        _c("div"),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "alert-message" }, [
-                          _c("h6", { staticClass: "alert-heading" }, [
-                            _vm._v("Город доставки (ПЭК):"),
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "row mb-3" }, [
-                            _c("div", { staticClass: "col-12 col-md-6" }, [
-                              _c(
-                                "select",
-                                {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.pek_city_selected,
-                                      expression: "pek_city_selected",
-                                    },
-                                  ],
-                                  staticClass: "form-select",
-                                  on: {
-                                    change: [
-                                      function ($event) {
-                                        var $$selectedVal =
-                                          Array.prototype.filter
-                                            .call(
-                                              $event.target.options,
-                                              function (o) {
-                                                return o.selected
-                                              }
-                                            )
-                                            .map(function (o) {
-                                              var val =
-                                                "_value" in o
-                                                  ? o._value
-                                                  : o.value
-                                              return val
-                                            })
-                                        _vm.pek_city_selected = $event.target
-                                          .multiple
-                                          ? $$selectedVal
-                                          : $$selectedVal[0]
-                                      },
-                                      function ($event) {
-                                        return _vm.onCityChange()
-                                      },
-                                    ],
-                                  },
-                                },
-                                _vm._l(_vm.pek_cities, function (pek_city) {
-                                  return _c(
-                                    "option",
-                                    { domProps: { value: pek_city } },
-                                    [_vm._v(_vm._s(pek_city))]
-                                  )
-                                }),
-                                0
-                              ),
-                            ]),
+                        _c(
+                          "div",
+                          { staticClass: "alert alert-primary alert-outline" },
+                          [
+                            _c("div"),
                             _vm._v(" "),
-                            _c("div", { staticClass: "col-12 col-md-6" }, [
-                              _c(
-                                "select",
-                                {
-                                  directives: [
+                            _c("div", { staticClass: "alert-message" }, [
+                              _c("h6", { staticClass: "alert-heading" }, [
+                                _vm._v("Город доставки (ПЭК):"),
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "row mb-3" }, [
+                                _c("div", { staticClass: "col-12 col-md-6" }, [
+                                  _c(
+                                    "select",
                                     {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.pek_city_sub_selected,
-                                      expression: "pek_city_sub_selected",
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.pek_city_selected,
+                                          expression: "pek_city_selected",
+                                        },
+                                      ],
+                                      staticClass: "form-select",
+                                      on: {
+                                        change: [
+                                          function ($event) {
+                                            var $$selectedVal =
+                                              Array.prototype.filter
+                                                .call(
+                                                  $event.target.options,
+                                                  function (o) {
+                                                    return o.selected
+                                                  }
+                                                )
+                                                .map(function (o) {
+                                                  var val =
+                                                    "_value" in o
+                                                      ? o._value
+                                                      : o.value
+                                                  return val
+                                                })
+                                            _vm.pek_city_selected = $event
+                                              .target.multiple
+                                              ? $$selectedVal
+                                              : $$selectedVal[0]
+                                          },
+                                          function ($event) {
+                                            return _vm.onCityChange()
+                                          },
+                                        ],
+                                      },
                                     },
-                                  ],
-                                  staticClass: "form-select",
-                                  on: {
-                                    change: [
-                                      function ($event) {
-                                        var $$selectedVal =
-                                          Array.prototype.filter
-                                            .call(
-                                              $event.target.options,
-                                              function (o) {
-                                                return o.selected
-                                              }
-                                            )
-                                            .map(function (o) {
-                                              var val =
-                                                "_value" in o
-                                                  ? o._value
-                                                  : o.value
-                                              return val
-                                            })
-                                        _vm.pek_city_sub_selected = $event
-                                          .target.multiple
-                                          ? $$selectedVal
-                                          : $$selectedVal[0]
+                                    _vm._l(_vm.pek_cities, function (pek_city) {
+                                      return _c(
+                                        "option",
+                                        { domProps: { value: pek_city } },
+                                        [_vm._v(_vm._s(pek_city))]
+                                      )
+                                    }),
+                                    0
+                                  ),
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-12 col-md-6" }, [
+                                  _c(
+                                    "select",
+                                    {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.pek_city_sub_selected,
+                                          expression: "pek_city_sub_selected",
+                                        },
+                                      ],
+                                      staticClass: "form-select",
+                                      on: {
+                                        change: [
+                                          function ($event) {
+                                            var $$selectedVal =
+                                              Array.prototype.filter
+                                                .call(
+                                                  $event.target.options,
+                                                  function (o) {
+                                                    return o.selected
+                                                  }
+                                                )
+                                                .map(function (o) {
+                                                  var val =
+                                                    "_value" in o
+                                                      ? o._value
+                                                      : o.value
+                                                  return val
+                                                })
+                                            _vm.pek_city_sub_selected = $event
+                                              .target.multiple
+                                              ? $$selectedVal
+                                              : $$selectedVal[0]
+                                          },
+                                          function ($event) {
+                                            return _vm.calcDelivery()
+                                          },
+                                        ],
                                       },
-                                      function ($event) {
-                                        return _vm.calcDelivery()
-                                      },
-                                    ],
-                                  },
-                                },
-                                _vm._l(
-                                  _vm.pek_cities_sub,
-                                  function (pek_city_sub) {
-                                    return _c(
-                                      "option",
-                                      { domProps: { value: pek_city_sub.id } },
-                                      [_vm._v(_vm._s(pek_city_sub.name))]
-                                    )
-                                  }
-                                ),
-                                0
-                              ),
+                                    },
+                                    _vm._l(
+                                      _vm.pek_cities_sub,
+                                      function (pek_city_sub) {
+                                        return _c(
+                                          "option",
+                                          {
+                                            domProps: {
+                                              value: pek_city_sub.id,
+                                            },
+                                          },
+                                          [_vm._v(_vm._s(pek_city_sub.name))]
+                                        )
+                                      }
+                                    ),
+                                    0
+                                  ),
+                                ]),
+                              ]),
+                              _vm._v(" "),
+                              _vm.pek_loading
+                                ? _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "spinner-border text-primary mt-4",
+                                    },
+                                    [
+                                      _c("span", { staticClass: "sr-only" }, [
+                                        _vm._v("Загрузка..."),
+                                      ]),
+                                    ]
+                                  )
+                                : _vm._e(),
                             ]),
-                          ]),
-                          _vm._v(" "),
-                          _c("p", [_vm._v(_vm._s(_vm.pek_price))]),
-                          _vm._v(" "),
-                          _vm.pek_loading
-                            ? _c(
-                                "div",
-                                {
-                                  staticClass:
-                                    "spinner-border text-primary mt-4",
-                                },
-                                [
-                                  _c("span", { staticClass: "sr-only" }, [
-                                    _vm._v("Загрузка..."),
-                                  ]),
-                                ]
-                              )
-                            : _vm._e(),
-                        ]),
+                          ]
+                        ),
                       ]
-                    ),
-                  ]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.inputDelivery && _vm.inputDelivery.id > 0
+                  ? _c("p", { staticClass: "text-center" }, [
+                      _c("strong", { staticClass: "text-primary" }, [
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(
+                              _vm.priceDelivery
+                                .toString()
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                            ) +
+                            " ₽\n                        "
+                        ),
+                      ]),
+                    ])
+                  : _vm._e(),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    on: {
+                      click: function ($event) {
+                        return _vm.saveDelivery()
+                      },
+                    },
+                  },
+                  [_vm._v("Окей")]
                 ),
               ]),
             ]),
@@ -27641,7 +27862,16 @@ var render = function () {
     _c("div", { staticClass: "modal-backdrop fade show" }),
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h5", { staticClass: "modal-title" }, [_vm._v("Доставка")]),
+    ])
+  },
+]
 render._withStripped = true
 
 
