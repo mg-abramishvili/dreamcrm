@@ -7,79 +7,42 @@ use Illuminate\Http\Request;
 
 class CalculationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        return Calculation::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function calculation($id)
     {
-        //
+        return Calculation::with('boxes', 'elements.category')->find($id);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
-    }
+        $calculation = new Calculation();
+        $calculation->price = $request->price;
+        $calculation->quantity = $request->quantity;
+        $calculation->production_days = 7;
+        $calculation->save();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Calculation  $calculation
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Calculation $calculation)
-    {
-        //
-    }
+        $calculation->boxes()->attach($request->box['id'], [
+            'pre_rub' => 1,
+            'pre_usd' => 2,
+            'sborka' => 3,
+            'marzha' => 4,
+            'price' => 5
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Calculation  $calculation
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Calculation $calculation)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Calculation  $calculation
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Calculation $calculation)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Calculation  $calculation
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Calculation $calculation)
-    {
-        //
+        foreach($request->elements as $key => $elements)
+        {
+            foreach($elements as $element)
+            {
+                $calculation->elements()->attach($element['id'], [
+                    'price' => 1,
+                    'pre_rub' => 2,
+                    'pre_usd' => 3,
+                ]);
+            }
+        }
     }
 }

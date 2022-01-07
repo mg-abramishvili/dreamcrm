@@ -13,4 +13,9 @@ class Box extends Model
     {
         return $this->belongsToMany(Element::class);
     }
+
+    public function calculations()
+    {
+        return $this->belongsToMany(Calculation::class);
+    }
 }

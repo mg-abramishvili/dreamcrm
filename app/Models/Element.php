@@ -18,4 +18,9 @@ class Element extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function calculations()
+    {
+        return $this->belongsToMany(Calculation::class);
+    }
 }

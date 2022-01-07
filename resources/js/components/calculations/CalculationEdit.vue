@@ -1,6 +1,6 @@
 <template>
     <div style="position: relative;">
-        <h1 class="h3 m-0 mb-4">Новый расчет</h1>
+        <h1 class="h3 m-0 mb-4">Расчет № {{ calculation.id }} от {{ calculation.created_at }}</h1>
         
         <div v-if="elementsFiltered && elementsFiltered.length > 0" class="row">
             <div class="col-12 col-lg-5">
@@ -130,6 +130,8 @@
     export default {
         data() {
             return {
+                calculation: {},
+                
                 boxes: [],
                 categories: [],
                 elements: [],
@@ -166,8 +168,7 @@
             this.loadBoxes()
             this.loadCategories()
             this.loadElements()
-        },
-        mounted () {
+            this.loadCalculation()
         },
         watch: {
             selected: {
@@ -274,6 +275,24 @@
                     alert('Выберите корпус!')
                 }
             },
+            loadCalculation() {
+                axios
+                .get(`/api/calculation/${this.$route.params.id}`)
+                .then((response => {
+                    this.calculation = response.data
+
+                    response.data.boxes.forEach((box) => {
+                        this.selected.box = this.boxes.filter(b => b.id == box.id)[0]
+                    })
+
+                    response.data.elements.forEach((element) => {
+                        this.selected.elements[element.category.slug] = []
+                        this.selected.elements[element.category.slug].push({
+                            id: element.id
+                        })
+                    })
+                }))
+            },
             addElement(categorySlug) {
                 let checkEmpty = this.selected.elements[categorySlug].filter(element => element.id === null)
                 if (checkEmpty.length >= 1 && this.selected.elements[categorySlug].length > 0) {
@@ -345,7 +364,7 @@
                  axios
                 .post(`/api/calculations`, {
                     price: this.price,
-                    box: this.selected.box,
+                    box: this.selected.box.id,
                     elements: this.selected.elements,
                     quantity: this.quantity
                 })
