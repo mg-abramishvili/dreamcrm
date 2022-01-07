@@ -74,7 +74,7 @@
                             <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ priceWithDelivery | currency }} ₽</div>
                         </div>
                     </div>
-                    <button @click="saveCalculation()" class="btn btn-primary">Сохранить расчет</button>
+                    <button @click="updateCalculation()" class="btn btn-primary">Сохранить расчет</button>
                 </div>
             </div>
             <div class="col-12 col-lg-7">
@@ -324,7 +324,6 @@
 
                 if(index >= 0 && index < this.categories.length - 1 && nextCategory.elements && nextCategory.elements.length > 0) {
                     this.views.category_current = nextCategory.id
-                    this.selected.elements[nextCategory.slug][0].id = this.elementsFiltered.filter(element => element.category_id == nextCategory.id)[0].id
                 } else {
                     this.views.quantity = true
                     this.views.delivery = true
@@ -360,17 +359,17 @@
                 this.delivery.direction = ''
                 this.delivery.days = 0
             },
-            saveCalculation() {
-                 axios
-                .post(`/api/calculations`, {
-                    price: this.price,
-                    box: this.selected.box.id,
-                    elements: this.selected.elements,
-                    quantity: this.quantity
-                })
-                .then(response => (
-                    console.log(response)
-                ))
+            updateCalculation() {
+                // axios
+                // .post(`/api/calculations`, {
+                //     price: this.price,
+                //     box: this.selected.box.id,
+                //     elements: this.selected.elements,
+                //     quantity: this.quantity
+                // })
+                // .then(response => (
+                //     console.log(response)
+                // ))
             }
         },
         filters: {

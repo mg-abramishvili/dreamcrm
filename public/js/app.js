@@ -2442,14 +2442,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -2613,6 +2605,17 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get('/api/elements').then(function (response) {
         _this5.elements = response.data;
+      });
+    },
+    elementsFilteredForCategory: function elementsFilteredForCategory(category) {
+      var categoryElements = this.elements.filter(function (element) {
+        return element.category_id == category.id;
+      });
+      var categoryElementsSelected = this.selected.elements[category.slug];
+      return categoryElements.filter(function (element) {
+        return categoryElementsSelected.some(function (elementSelected) {
+          return elementSelected.id === element.id;
+        });
       });
     },
     activateViewsCategories: function activateViewsCategories() {
@@ -3315,9 +3318,6 @@ __webpack_require__.r(__webpack_exports__);
 
       if (index >= 0 && index < this.categories.length - 1 && nextCategory.elements && nextCategory.elements.length > 0) {
         this.views.category_current = nextCategory.id;
-        this.selected.elements[nextCategory.slug][0].id = this.elementsFiltered.filter(function (element) {
-          return element.category_id == nextCategory.id;
-        })[0].id;
       } else {
         this.views.quantity = true;
         this.views.delivery = true;
@@ -3354,15 +3354,16 @@ __webpack_require__.r(__webpack_exports__);
       this.delivery.direction = '';
       this.delivery.days = 0;
     },
-    saveCalculation: function saveCalculation() {
-      axios.post("/api/calculations", {
-        price: this.price,
-        box: this.selected.box.id,
-        elements: this.selected.elements,
-        quantity: this.quantity
-      }).then(function (response) {
-        return console.log(response);
-      });
+    updateCalculation: function updateCalculation() {// axios
+      // .post(`/api/calculations`, {
+      //     price: this.price,
+      //     box: this.selected.box.id,
+      //     elements: this.selected.elements,
+      //     quantity: this.quantity
+      // })
+      // .then(response => (
+      //     console.log(response)
+      // ))
     }
   },
   filters: {
@@ -28232,76 +28233,34 @@ var render = function () {
                         [_vm._v(_vm._s(category.name))]
                       ),
                       _vm._v(" "),
-                      _vm._l(_vm.elementsFiltered, function (element) {
-                        return [
-                          element.category_id == category.id
-                            ? [
-                                _vm._l(_vm.selected.elements, function (inEl) {
-                                  return [
-                                    _vm._l(inEl, function (inElEl) {
-                                      return [
-                                        element.id == inElEl.id
-                                          ? _c(
-                                              "div",
-                                              {
-                                                staticClass:
-                                                  "row align-items-center",
-                                              },
-                                              [
-                                                _c(
-                                                  "div",
-                                                  { staticClass: "col-8" },
-                                                  [
-                                                    _c(
-                                                      "strong",
-                                                      {
-                                                        staticClass: "d-block",
-                                                      },
-                                                      [
-                                                        _vm._v(
-                                                          _vm._s(element.name)
-                                                        ),
-                                                      ]
-                                                    ),
-                                                  ]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "div",
-                                                  {
-                                                    staticClass:
-                                                      "col-4 text-end",
-                                                  },
-                                                  [
-                                                    _c(
-                                                      "strong",
-                                                      {
-                                                        staticClass:
-                                                          "text-primary",
-                                                      },
-                                                      [
-                                                        _vm._v(
-                                                          _vm._s(
-                                                            _vm._f("currency")(
-                                                              element.price
-                                                            )
-                                                          ) + " ₽"
-                                                        ),
-                                                      ]
-                                                    ),
-                                                  ]
-                                                ),
-                                              ]
-                                            )
-                                          : _vm._e(),
-                                      ]
-                                    }),
-                                  ]
-                                }),
-                              ]
-                            : _vm._e(),
-                        ]
-                      }),
+                      _vm._l(
+                        _vm.elementsFilteredForCategory(category),
+                        function (element) {
+                          return _c(
+                            "div",
+                            {
+                              key: "element_" + element.id,
+                              staticClass: "row align-items-center",
+                            },
+                            [
+                              _c("div", { staticClass: "col-8" }, [
+                                _c("strong", { staticClass: "d-block" }, [
+                                  _vm._v(_vm._s(element.name)),
+                                ]),
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-4 text-end" }, [
+                                _c("strong", { staticClass: "text-primary" }, [
+                                  _vm._v(
+                                    _vm._s(_vm._f("currency")(element.price)) +
+                                      " ₽"
+                                  ),
+                                ]),
+                              ]),
+                            ]
+                          )
+                        }
+                      ),
                     ],
                     2
                   )
@@ -29218,7 +29177,7 @@ var render = function () {
                       staticClass: "btn btn-primary",
                       on: {
                         click: function ($event) {
-                          return _vm.saveCalculation()
+                          return _vm.updateCalculation()
                         },
                       },
                     },

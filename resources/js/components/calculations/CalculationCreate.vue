@@ -95,22 +95,14 @@
 
                 <div v-for="category in categories" :key="'category_' + category.id" class="mb-3 bg-white px-3 py-3">
                     <small style="color: rgb(136, 136, 136);">{{ category.name }}</small>
-                    <template v-for="element in elementsFiltered">
-                        <template v-if="element.category_id == category.id">
-                            <template v-for="inEl in selected.elements">
-                                <template v-for="inElEl in inEl">
-                                    <div v-if="element.id == inElEl.id" class="row align-items-center">
-                                        <div class="col-8">
-                                            <strong class="d-block">{{ element.name }}</strong>
-                                        </div>
-                                        <div class="col-4 text-end">
-                                            <strong class="text-primary">{{ element.price | currency }} ₽</strong>
-                                        </div>
-                                    </div>
-                                </template>
-                            </template>
-                        </template>
-                    </template>
+                    <div v-for="element in elementsFilteredForCategory(category)" :key="'element_' + element.id" class="row align-items-center">
+                        <div class="col-8">
+                            <strong class="d-block">{{ element.name }}</strong>
+                        </div>
+                        <div class="col-4 text-end">
+                            <strong class="text-primary">{{ element.price | currency }} ₽</strong>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -263,6 +255,11 @@
                 .then((response => {
                     this.elements = response.data
                 }))
+            },
+            elementsFilteredForCategory(category) {
+                var categoryElements = this.elements.filter(element => element.category_id == category.id)
+                var categoryElementsSelected = this.selected.elements[category.slug]
+                return categoryElements.filter(element => categoryElementsSelected.some(elementSelected => elementSelected.id === element.id))
             },
             activateViewsCategories() {
                 if(this.selected.box && this.selected.box.id > 0 && this.elementsFiltered.length > 0) {
