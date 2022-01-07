@@ -28,7 +28,7 @@
                                 <div v-for="(element, index) in selected.elements[category.slug]" :key="index" style="position: relative;">
                                     <select v-model="element.id" class="form-select form-select-lg mt-2 mb-3">
                                         <template v-for="element in elementsFiltered">
-                                            <option v-if="element.category_id == category.id" :value="element.id">
+                                            <option v-if="element.category_id == category.id" :key="'element_' + element.id" :value="element.id">
                                                 {{ element.name }} <template v-if="element.price > 0">&mdash; {{ element.price | currency }} ₽</template>
                                             </option>
                                         </template>
@@ -78,9 +78,6 @@
                 </div>
             </div>
             <div class="col-12 col-lg-7">
-                <!-- <ul>
-                    <li v-for="(element, categorySlug) in inputElements" :key="categorySlug"><strong>{{ categorySlug }}:</strong> {{ element }}</li>
-                </ul> -->
                 <div class="mb-3 bg-white px-3 py-3">
                     <small style="color: rgb(136, 136, 136);">Корпус</small>
                     <div v-if="selected.box && selected.box.id > 0" class="row align-items-center">
