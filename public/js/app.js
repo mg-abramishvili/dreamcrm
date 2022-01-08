@@ -2461,7 +2461,7 @@ __webpack_require__.r(__webpack_exports__);
       views: {
         boxes: true,
         categories: false,
-        category_current: '',
+        categoryCurrent: '',
         quantity: false,
         delivery: false,
         modals: {
@@ -2518,34 +2518,28 @@ __webpack_require__.r(__webpack_exports__);
         return this.elements;
       }
     },
-    price_pre_rub: function price_pre_rub() {
+    pricePreRub: function pricePreRub() {
       var price = [];
 
       for (var _i2 = 0, _Object$entries2 = Object.entries(this.selected.elements); _i2 < _Object$entries2.length; _i2++) {
         var category = _Object$entries2[_i2];
-
-        if (category[1] && category[1].length > 0) {
-          category[1].forEach(function (el) {
-            price.push(el.pre_rub);
-          });
-        }
+        category[1].forEach(function (el) {
+          price.push(el.pre_rub);
+        });
       }
 
       return parseInt(this.selected.box.pre_rub) + parseInt(this.selected.box.sborka) + parseInt(this.selected.box.marzha) + price.reduce(function (a, b) {
         return a + b;
       }, 0);
     },
-    price_pre_usd: function price_pre_usd() {
+    pricePreUsd: function pricePreUsd() {
       var price = [];
 
       for (var _i3 = 0, _Object$entries3 = Object.entries(this.selected.elements); _i3 < _Object$entries3.length; _i3++) {
         var category = _Object$entries3[_i3];
-
-        if (category[1] && category[1].length > 0) {
-          category[1].forEach(function (el) {
-            price.push(el.pre_usd);
-          });
-        }
+        category[1].forEach(function (el) {
+          price.push(el.pre_usd);
+        });
       }
 
       return parseInt(this.selected.box.pre_usd) + price.reduce(function (a, b) {
@@ -2557,12 +2551,9 @@ __webpack_require__.r(__webpack_exports__);
 
       for (var _i4 = 0, _Object$entries4 = Object.entries(this.selected.elements); _i4 < _Object$entries4.length; _i4++) {
         var category = _Object$entries4[_i4];
-
-        if (category[1] && category[1].length > 0) {
-          category[1].forEach(function (el) {
-            price.push(el.price);
-          });
-        }
+        category[1].forEach(function (el) {
+          price.push(el.price);
+        });
       }
 
       return parseInt(this.selected.box.price) + price.reduce(function (a, b) {
@@ -2594,7 +2585,7 @@ __webpack_require__.r(__webpack_exports__);
 
           _this4.addElement(category.slug);
         });
-        _this4.views.category_current = response.data[0].id;
+        _this4.views.categoryCurrent = response.data[0].id;
       });
     },
     loadElements: function loadElements() {
@@ -2609,11 +2600,17 @@ __webpack_require__.r(__webpack_exports__);
         return element.category_id == category.id;
       });
       var categoryElementsSelected = this.selected.elements[category.slug];
-      return categoryElements.filter(function (element) {
-        return categoryElementsSelected.some(function (elementSelected) {
-          return elementSelected.id === element.id;
-        });
+      var categoryElementsFiltered = [];
+      categoryElementsSelected.forEach(function (elementSelected) {
+        if (categoryElements.find(function (element) {
+          return element.id === elementSelected.id;
+        })) {
+          categoryElementsFiltered.push(categoryElements.find(function (element) {
+            return element.id === elementSelected.id;
+          }));
+        }
       });
+      return categoryElementsFiltered;
     },
     activateViewsCategories: function activateViewsCategories() {
       var _this6 = this;
@@ -2654,7 +2651,7 @@ __webpack_require__.r(__webpack_exports__);
       var index = this.categories.indexOf(category);
 
       if (index > 0 && index < this.categories.length + 1) {
-        this.views.category_current = this.categories[index - 1].id;
+        this.views.categoryCurrent = this.categories[index - 1].id;
       } else {
         this.views.boxes = true;
         this.views.categories = false;
@@ -2665,7 +2662,7 @@ __webpack_require__.r(__webpack_exports__);
       var nextCategory = this.categories[index + 1];
 
       if (index >= 0 && index < this.categories.length - 1 && nextCategory.elements && nextCategory.elements.length > 0) {
-        this.views.category_current = nextCategory.id;
+        this.views.categoryCurrent = nextCategory.id;
         this.selected.elements[nextCategory.slug][0].id = this.elementsFiltered.filter(function (element) {
           return element.category_id == nextCategory.id;
         })[0].id;
@@ -27760,9 +27757,9 @@ var render = function () {
                                     name: "show",
                                     rawName: "v-show",
                                     value:
-                                      _vm.views.category_current == category.id,
+                                      _vm.views.categoryCurrent == category.id,
                                     expression:
-                                      "views.category_current == category.id",
+                                      "views.categoryCurrent == category.id",
                                   },
                                 ],
                               },
@@ -27993,11 +27990,11 @@ var render = function () {
                                   [
                                     _vm._v(
                                       _vm._s(
-                                        _vm._f("currency")(_vm.price_pre_rub)
+                                        _vm._f("currency")(_vm.pricePreRub)
                                       ) +
                                         " ₽ / " +
                                         _vm._s(
-                                          _vm._f("currency")(_vm.price_pre_usd)
+                                          _vm._f("currency")(_vm.pricePreUsd)
                                         ) +
                                         " $"
                                     ),
@@ -28238,10 +28235,7 @@ var render = function () {
                         function (element) {
                           return _c(
                             "div",
-                            {
-                              key: "element_" + element.id,
-                              staticClass: "row align-items-center",
-                            },
+                            { staticClass: "row align-items-center" },
                             [
                               _c("div", { staticClass: "col-8" }, [
                                 _c("strong", { staticClass: "d-block" }, [

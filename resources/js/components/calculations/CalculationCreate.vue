@@ -20,7 +20,7 @@
 
                     <div v-if="views.categories" class="mb-4">
                         <div v-for="category in categories" :key="'category_' + category.id">
-                            <div v-show="views.category_current == category.id">
+                            <div v-show="views.categoryCurrent == category.id">
                                 <label><strong>{{ category.name }}</strong></label>
 
                                 <button @click="addElement(category.slug)" class="btn btn-sm btn-outline-danger">+</button>
@@ -49,7 +49,7 @@
                             <div class="col-6"><strong>Цена за 1 ед:</strong></div>
                             <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">
                                 {{ price | currency }} ₽
-                                <small style="display:block; line-height: 1; font-size: 15px; font-weight: 400; color: #777;">{{ price_pre_rub | currency }} ₽ / {{ price_pre_usd | currency }} $</small>
+                                <small style="display:block; line-height: 1; font-size: 15px; font-weight: 400; color: #777;">{{ pricePreRub | currency }} ₽ / {{ pricePreUsd | currency }} $</small>
                             </div>
                         </div>
                         <div v-if="views.quantity" class="row align-items-center mb-3">
@@ -92,7 +92,7 @@
 
                 <div v-for="category in categories" :key="'category_' + category.id" class="mb-3 bg-white px-3 py-3">
                     <small style="color: rgb(136, 136, 136);">{{ category.name }}</small>
-                    <div v-for="element in elementsFilteredForCategory(category)" :key="'element_' + element.id" class="row align-items-center">
+                    <div v-for="element in elementsFilteredForCategory(category)" class="row align-items-center">
                         <div class="col-8">
                             <strong class="d-block">{{ element.name }}</strong>
                         </div>
@@ -141,7 +141,7 @@
                 views: {
                     boxes: true,
                     categories: false,
-                    category_current: '',
+                    categoryCurrent: '',
                     quantity: false,
                     delivery: false,
 
@@ -184,36 +184,30 @@
                     return this.elements
                 }
             },
-            price_pre_rub() {
+            pricePreRub() {
                 var price = []
                 for (const category of Object.entries(this.selected.elements)) {
-                    if(category[1] && category[1].length > 0) {
-                        category[1].forEach((el) => {
-                            price.push(el.pre_rub)
-                        })
-                    }
+                    category[1].forEach((el) => {
+                        price.push(el.pre_rub)
+                    })
                 }
                 return parseInt(this.selected.box.pre_rub) + parseInt(this.selected.box.sborka) + parseInt(this.selected.box.marzha) + price.reduce((a, b) => a + b, 0)
             },
-            price_pre_usd() {
+            pricePreUsd() {
                 var price = []
                 for (const category of Object.entries(this.selected.elements)) {
-                    if(category[1] && category[1].length > 0) {
-                        category[1].forEach((el) => {
-                            price.push(el.pre_usd)
-                        })
-                    }
+                    category[1].forEach((el) => {
+                        price.push(el.pre_usd)
+                    })
                 }
                 return parseInt(this.selected.box.pre_usd) + price.reduce((a, b) => a + b, 0)
             },
             price() {
                 var price = []
                 for (const category of Object.entries(this.selected.elements)) {
-                    if(category[1] && category[1].length > 0) {
-                        category[1].forEach((el) => {
-                            price.push(el.price)
-                        })
-                    }
+                    category[1].forEach((el) => {
+                        price.push(el.price)
+                    })
                 }
                 return parseInt(this.selected.box.price) + price.reduce((a, b) => a + b, 0)
             },
@@ -243,7 +237,7 @@
                         this.addElement(category.slug)
                     })
 
-                    this.views.category_current = response.data[0].id
+                    this.views.categoryCurrent = response.data[0].id
                 }))
             },
             loadElements() {
@@ -256,7 +250,15 @@
             elementsFilteredForCategory(category) {
                 var categoryElements = this.elements.filter(element => element.category_id == category.id)
                 var categoryElementsSelected = this.selected.elements[category.slug]
-                return categoryElements.filter(element => categoryElementsSelected.some(elementSelected => elementSelected.id === element.id))
+                var categoryElementsFiltered = []
+
+                categoryElementsSelected.forEach((elementSelected) => {
+                    if(categoryElements.find(element => element.id === elementSelected.id)) {
+                        categoryElementsFiltered.push(categoryElements.find(element => element.id === elementSelected.id))
+                    }
+                })
+
+                return categoryElementsFiltered
             },
             activateViewsCategories() {
                 if(this.selected.box && this.selected.box.id > 0 && this.elementsFiltered.length > 0) {
@@ -287,7 +289,7 @@
             prevCategory(category) {
                 var index = this.categories.indexOf(category)
                 if(index > 0 && index < this.categories.length + 1) {
-                    this.views.category_current = this.categories[index - 1].id
+                    this.views.categoryCurrent = this.categories[index - 1].id
                 } else {
                     this.views.boxes = true
                     this.views.categories = false
@@ -298,7 +300,7 @@
                 var nextCategory = this.categories[index + 1]
 
                 if(index >= 0 && index < this.categories.length - 1 && nextCategory.elements && nextCategory.elements.length > 0) {
-                    this.views.category_current = nextCategory.id
+                    this.views.categoryCurrent = nextCategory.id
                     this.selected.elements[nextCategory.slug][0].id = this.elementsFiltered.filter(element => element.category_id == nextCategory.id)[0].id
                 } else {
                     this.views.quantity = true
