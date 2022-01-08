@@ -141,6 +141,33 @@ table.dataTable {
 /* TABLE */
 
 
+
+/* CALCULATION */
+.calculation-left-block-main-label {
+    height: 60px;
+    overflow: hidden;
+    position: relative;
+    line-height: 1.5;
+    margin-top: -15px;
+    margin-bottom: 10px;
+}
+.calculation-left-block-main-label strong {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    right: 40px;
+}
+.calculation-left-block-main-label button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+}
+/* CALCULATION */
+
+
+
 /* FILEPOND */
 .filepond--item {
     width: calc(25% - 0.5em);

@@ -4,9 +4,12 @@
         
         <div v-if="elementsFiltered && elementsFiltered.length > 0" class="row">
             <div class="col-12 col-lg-5">
-                <div class="calculation-input bg-white px-4 py-4" style="position: sticky; top: 20px;">
+                <div class="calculation-left-block bg-white px-4 py-4" style="position: sticky; top: 20px;">
+                    
                     <div v-if="views.boxes" class="mb-4">
-                        <label><strong>Корпус</strong></label>
+                        <div class="calculation-left-block-main-label">
+                            <strong>Корпус</strong>
+                        </div>
 
                         <select @change="changeBox()" v-model="selected.box" class="form-select form-select-lg mt-2 mb-3">
                             <option v-for="box in boxes" :key="'box_' + box.id" :value="box">{{ box.name }} &mdash; {{ box.price | currency }} ₽</option>
@@ -14,16 +17,17 @@
 
                         <div class="mt-4">
                             <button class="btn btn-outline-primary" disabled>Назад</button>
-                            <button @click="activateViewsCategories()" class="btn btn-outline-primary">Далее</button>
+                            <button @click="viewCategories()" class="btn btn-outline-primary">Далее</button>
                         </div>
                     </div>
 
                     <div v-if="views.categories" class="mb-4">
                         <div v-for="category in categories" :key="'category_' + category.id">
                             <div v-show="views.categoryCurrent == category.id">
-                                <label><strong>{{ category.name }}</strong></label>
-
-                                <button @click="addElement(category.slug)" class="btn btn-sm btn-outline-danger">+</button>
+                                <div class="calculation-left-block-main-label">
+                                    <strong>{{ category.name }}</strong>
+                                    <button @click="addElement(category.slug)" class="btn btn-sm btn-outline-danger">+</button>
+                                </div>
                                 
                                 <div v-for="(element, index) in selected.elements[category.slug]" :key="index" style="position: relative;">
                                     <select v-model="element.id" class="form-select form-select-lg mt-2 mb-3">
@@ -43,6 +47,32 @@
                             </div>
                         </div>
                     </div>
+
+                    <div v-if="views.quantity" class="mb-4">
+                        <div class="calculation-left-block-main-label">
+                            <strong>Количество</strong>
+                        </div>
+
+                        <input @change="resetDelivery()" v-model="quantity" type="number" class="form-control">
+
+                        <div class="mt-4">
+                            <button @click="viewCategories()" class="btn btn-outline-primary">Назад</button>
+                            <button @click="viewDelivery()" class="btn btn-outline-primary">Далее</button>
+                        </div>
+                    </div>
+
+                    <div v-if="views.delivery" class="mb-4">
+                        <div class="calculation-left-block-main-label">
+                            <strong>Доставка</strong>
+                        </div>
+
+                        <input type="number" class="form-control">
+
+                        <div class="mt-4">
+                            <button @click="viewQuantity()" class="btn btn-outline-primary">Назад</button>
+                            <button class="btn btn-outline-primary" disabled>Далее</button>
+                        </div>
+                    </div>
                     
                     <div class="total">
                         <div v-if="price && price > 0" class="row align-items-center mb-3">
@@ -52,12 +82,11 @@
                                 <small style="display:block; line-height: 1; font-size: 15px; font-weight: 400; color: #777;">{{ pricePreRub | currency }} ₽ / {{ pricePreUsd | currency }} $</small>
                             </div>
                         </div>
-                        <div v-if="views.quantity" class="row align-items-center mb-3">
+                        <div v-if="priceWithQuantity && priceWithQuantity > 0" class="row align-items-center mb-3">
                             <div class="col-6">
-                                <strong>Кол-во</strong>
-                                <input @change="resetDelivery()" v-model="quantity" type="number" class="form-control form-control-sm" style="font-size: 12px; display:inline-block; width: 70px;">
+                                <strong>Цена за {{ quantity }} ед:</strong>
                             </div>
-                            <div v-if="priceWithQuantity && priceWithQuantity > 0" class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ priceWithQuantity | currency }} ₽</div>
+                            <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ priceWithQuantity | currency }} ₽</div>
                         </div>
                         <div v-if="views.delivery" class="row align-items-center mb-3">
                             <div class="col-6">
@@ -145,9 +174,7 @@
                     quantity: false,
                     delivery: false,
 
-                    modals: {
-                        delivery: false,
-                    },
+                    modals: {},
                 },
             }
         },
@@ -260,15 +287,35 @@
 
                 return categoryElementsFiltered
             },
-            activateViewsCategories() {
+            viewBoxes() {
+                this.views.boxes = true
+                this.views.categories = false
+                this.views.quantity = false
+                this.views.delivery = false
+            },
+            viewCategories() {
                 if(this.selected.box && this.selected.box.id > 0 && this.elementsFiltered.length > 0) {
                     this.views.boxes = false
                     this.views.categories = true
+                    this.views.quantity = false
+                    this.views.delivery = false
 
                     this.selected.elements[this.categories[0].slug][0].id = this.elementsFiltered.filter(element => element.category_id == this.categories[0].id)[0].id
                 } else {
                     alert('Выберите корпус!')
                 }
+            },
+            viewQuantity() {
+                this.views.boxes = false
+                this.views.categories = false
+                this.views.quantity = true
+                this.views.delivery = false
+            },
+            viewDelivery() {
+                this.views.boxes = false
+                this.views.categories = false
+                this.views.quantity = false
+                this.views.delivery = true
             },
             addElement(categorySlug) {
                 let checkEmpty = this.selected.elements[categorySlug].filter(element => element.id === null)
@@ -291,8 +338,7 @@
                 if(index > 0 && index < this.categories.length + 1) {
                     this.views.categoryCurrent = this.categories[index - 1].id
                 } else {
-                    this.views.boxes = true
-                    this.views.categories = false
+                    this.viewBoxes()
                 }
             },
             nextCategory(category) {
@@ -303,11 +349,7 @@
                     this.views.categoryCurrent = nextCategory.id
                     this.selected.elements[nextCategory.slug][0].id = this.elementsFiltered.filter(element => element.category_id == nextCategory.id)[0].id
                 } else {
-                    this.views.quantity = true
-                    this.views.delivery = true
-                    if(!this.delivery.id > 0) {
-                        this.resetDelivery()
-                    }
+                    this.viewQuantity()
                 }
             },
             changeBox() {
@@ -321,14 +363,8 @@
                         })
                     }
                 }
+                this.quantity = 1
                 this.resetDelivery()
-            },
-            openDeliveryModal() {
-                this.views.modals.delivery = true
-            },
-            closeDeliveryModal() {
-                this.views.modals.delivery = false
-                document.body.classList.remove('modal-open')
             },
             resetDelivery() {
                 this.delivery.id = 0
