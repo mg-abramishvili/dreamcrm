@@ -12,7 +12,7 @@
 
 <script>
     export default {
-        props: ['box', 'quantity'],
+        props: ['box', 'quantity', 'delivery'],
         data() {
             return {
                 cities: [],
@@ -31,6 +31,11 @@
         created() {
             this.loadTowns()
         },
+        mounted() {
+            if(this.delivery.to) {
+                this.selected.name = this.delivery.to
+            }
+        },
         methods: {
             loadTowns() {
                 axios
@@ -41,8 +46,11 @@
                 }));
             },
             onCityChange() {
+                this.$parent.selected.delivery.to = this.selected.name
+                
                 var city = this.cities[this.selected.name]
                 this.selected.code = Object.entries(city).find(([key, value]) => value === this.selected.name)[0]
+                this.$parent.selected.delivery.code = Object.entries(city).find(([key, value]) => value === this.selected.name)[0]
                 this.calcDelivery()
             },
             calcDelivery() {

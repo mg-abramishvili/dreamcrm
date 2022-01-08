@@ -2486,6 +2486,7 @@ __webpack_require__.r(__webpack_exports__);
           id: '',
           name: '',
           price: '',
+          to: '',
           direction: '',
           days: ''
         }
@@ -2496,7 +2497,8 @@ __webpack_require__.r(__webpack_exports__);
         categories: false,
         categoryCurrent: '',
         quantity: false,
-        delivery: false
+        delivery: false,
+        saveButton: false
       }
     };
   },
@@ -2657,6 +2659,7 @@ __webpack_require__.r(__webpack_exports__);
       this.views.categories = false;
       this.views.quantity = false;
       this.views.delivery = false;
+      this.views.saveButton = false;
     },
     viewCategories: function viewCategories() {
       var _this7 = this;
@@ -2666,6 +2669,7 @@ __webpack_require__.r(__webpack_exports__);
         this.views.categories = true;
         this.views.quantity = false;
         this.views.delivery = false;
+        this.views.saveButton = false;
         this.selected.elements[this.categories[0].slug][0].id = this.elementsFiltered.filter(function (element) {
           return element.category_id == _this7.categories[0].id;
         })[0].id;
@@ -2678,12 +2682,14 @@ __webpack_require__.r(__webpack_exports__);
       this.views.categories = false;
       this.views.quantity = true;
       this.views.delivery = false;
+      this.views.saveButton = false;
     },
     viewDelivery: function viewDelivery() {
       this.views.boxes = false;
       this.views.categories = false;
       this.views.quantity = false;
       this.views.delivery = true;
+      this.views.saveButton = true;
     },
     addElement: function addElement(categorySlug) {
       var checkEmpty = this.selected.elements[categorySlug].filter(function (element) {
@@ -2751,6 +2757,7 @@ __webpack_require__.r(__webpack_exports__);
       });
       this.selected.delivery.name = delivery.name;
       this.selected.delivery.price = delivery.price;
+      this.selected.delivery.to = '';
       this.selected.delivery.direction = '';
       this.selected.delivery.days = '';
     },
@@ -2758,18 +2765,31 @@ __webpack_require__.r(__webpack_exports__);
       this.selected.delivery.id = '';
       this.selected.delivery.name = '';
       this.selected.delivery.price = '';
+      this.selected.delivery.to = '';
       this.selected.delivery.direction = '';
       this.selected.delivery.days = '';
     },
     saveCalculation: function saveCalculation() {
-      axios.post("/api/calculations", {
-        price: this.price,
-        box: this.selected.box,
-        elements: this.selected.elements,
-        quantity: this.quantity
-      }).then(function (response) {
-        return console.log(response);
-      });
+      if (!this.selected.delivery.id) {
+        alert('Выберите доставку');
+        return;
+      }
+
+      if (this.selected.delivery.id == 3 && this.selected.delivery.price <= 0) {
+        alert('Укажите город доставки');
+        return;
+      }
+
+      alert('Все норм'); // axios
+      // .post(`/api/calculations`, {
+      //     price: this.price,
+      //     box: this.selected.box,
+      //     elements: this.selected.elements,
+      //     quantity: this.quantity
+      // })
+      // .then(response => (
+      //     console.log(response)
+      // ))
     }
   },
   filters: {
@@ -2822,7 +2842,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['box', 'quantity'],
+  props: ['box', 'quantity', 'delivery'],
   data: function data() {
     return _defineProperty({
       cities: [],
@@ -2837,6 +2857,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   created: function created() {
     this.loadTowns();
   },
+  mounted: function mounted() {
+    if (this.delivery.to) {
+      this.selected.name = this.delivery.to;
+    }
+  },
   methods: {
     loadTowns: function loadTowns() {
       var _this = this;
@@ -2849,11 +2874,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     onCityChange: function onCityChange() {
       var _this2 = this;
 
+      this.$parent.selected.delivery.to = this.selected.name;
       var city = this.cities[this.selected.name];
       this.selected.code = Object.entries(city).find(function (_ref2) {
         var _ref3 = _slicedToArray(_ref2, 2),
             key = _ref3[0],
             value = _ref3[1];
+
+        return value === _this2.selected.name;
+      })[0];
+      this.$parent.selected.delivery.code = Object.entries(city).find(function (_ref4) {
+        var _ref5 = _slicedToArray(_ref4, 2),
+            key = _ref5[0],
+            value = _ref5[1];
 
         return value === _this2.selected.name;
       })[0];
@@ -27539,113 +27572,107 @@ var render = function () {
                     ])
                   : _vm._e(),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.views.delivery == true,
-                        expression: "views.delivery == true",
-                      },
-                    ],
-                    staticClass: "mb-4",
-                  },
-                  [
-                    _vm._m(2),
-                    _vm._v(" "),
-                    _c(
-                      "select",
-                      {
-                        directives: [
+                _vm.views.delivery
+                  ? _c(
+                      "div",
+                      { staticClass: "mb-4" },
+                      [
+                        _vm._m(2),
+                        _vm._v(" "),
+                        _c(
+                          "select",
                           {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.selected.delivery.id,
-                            expression: "selected.delivery.id",
-                          },
-                        ],
-                        staticClass: "form-select",
-                        on: {
-                          change: [
-                            function ($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function (o) {
-                                  return o.selected
-                                })
-                                .map(function (o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.$set(
-                                _vm.selected.delivery,
-                                "id",
-                                $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              )
-                            },
-                            function ($event) {
-                              return _vm.changeDelivery()
-                            },
-                          ],
-                        },
-                      },
-                      _vm._l(_vm.deliveries, function (delivery) {
-                        return _c(
-                          "option",
-                          {
-                            key: "delivery_" + delivery.id,
-                            domProps: { value: delivery.id },
-                          },
-                          [
-                            _vm._v(
-                              _vm._s(delivery.name) +
-                                " — " +
-                                _vm._s(delivery.price)
-                            ),
-                          ]
-                        )
-                      }),
-                      0
-                    ),
-                    _vm._v(" "),
-                    _vm.selected.delivery.id == 3
-                      ? _c("DeliveryPEK", {
-                          attrs: {
-                            box: _vm.selected.box,
-                            quantity: _vm.quantity,
-                          },
-                        })
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "mt-4" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-outline-primary",
-                          on: {
-                            click: function ($event) {
-                              return _vm.viewQuantity()
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.selected.delivery.id,
+                                expression: "selected.delivery.id",
+                              },
+                            ],
+                            staticClass: "form-select",
+                            on: {
+                              change: [
+                                function ($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function (o) {
+                                      return o.selected
+                                    })
+                                    .map(function (o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.selected.delivery,
+                                    "id",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                },
+                                function ($event) {
+                                  return _vm.changeDelivery()
+                                },
+                              ],
                             },
                           },
-                        },
-                        [_vm._v("Назад")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-outline-primary",
-                          attrs: { disabled: "" },
-                        },
-                        [_vm._v("Далее")]
-                      ),
-                    ]),
-                  ],
-                  1
-                ),
+                          _vm._l(_vm.deliveries, function (delivery) {
+                            return _c(
+                              "option",
+                              {
+                                key: "delivery_" + delivery.id,
+                                domProps: { value: delivery.id },
+                              },
+                              [
+                                _vm._v(
+                                  _vm._s(delivery.name) +
+                                    " — " +
+                                    _vm._s(delivery.price)
+                                ),
+                              ]
+                            )
+                          }),
+                          0
+                        ),
+                        _vm._v(" "),
+                        _vm.selected.delivery.id == 3
+                          ? _c("DeliveryPEK", {
+                              attrs: {
+                                box: _vm.selected.box,
+                                quantity: _vm.quantity,
+                                delivery: _vm.selected.delivery,
+                              },
+                            })
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "mt-4" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-outline-primary",
+                              on: {
+                                click: function ($event) {
+                                  return _vm.viewQuantity()
+                                },
+                              },
+                            },
+                            [_vm._v("Назад")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-outline-primary",
+                              attrs: { disabled: "" },
+                            },
+                            [_vm._v("Далее")]
+                          ),
+                        ]),
+                      ],
+                      1
+                    )
+                  : _vm._e(),
                 _vm._v(" "),
                 _c("div", { staticClass: "total" }, [
                   _vm.price && _vm.price > 0
@@ -27835,18 +27862,20 @@ var render = function () {
                     : _vm._e(),
                 ]),
                 _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-primary",
-                    on: {
-                      click: function ($event) {
-                        return _vm.saveCalculation()
+                _vm.views.saveButton
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-lg btn-primary w-100",
+                        on: {
+                          click: function ($event) {
+                            return _vm.saveCalculation()
+                          },
+                        },
                       },
-                    },
-                  },
-                  [_vm._v("Сохранить расчет")]
-                ),
+                      [_vm._v("Сохранить расчет")]
+                    )
+                  : _vm._e(),
               ]
             ),
           ]),

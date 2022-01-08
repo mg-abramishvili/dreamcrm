@@ -61,7 +61,7 @@
                         </div>
                     </div>
 
-                    <div v-show="views.delivery == true" class="mb-4">
+                    <div v-if="views.delivery" class="mb-4">
                         <div class="calculation-left-block-main-label">
                             <strong>Доставка</strong>
                         </div>
@@ -70,7 +70,7 @@
                             <option v-for="delivery in deliveries" :key="'delivery_' + delivery.id" :value="delivery.id">{{ delivery.name }} &mdash; {{ delivery.price }}</option>
                         </select>
 
-                        <DeliveryPEK v-if="selected.delivery.id == 3" :box="selected.box" :quantity="quantity"></DeliveryPEK>
+                        <DeliveryPEK v-if="selected.delivery.id == 3" :box="selected.box" :quantity="quantity" :delivery="selected.delivery"></DeliveryPEK>
 
                         <div class="mt-4">
                             <button @click="viewQuantity()" class="btn btn-outline-primary">Назад</button>
@@ -107,7 +107,7 @@
                             <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ priceWithDelivery | currency }} ₽</div>
                         </div>
                     </div>
-                    <button @click="saveCalculation()" class="btn btn-primary">Сохранить расчет</button>
+                    <button v-if="views.saveButton" @click="saveCalculation()" class="btn btn-lg btn-primary w-100">Сохранить расчет</button>
                 </div>
             </div>
             <div class="col-12 col-lg-7">
@@ -163,6 +163,7 @@
                         id: '',
                         name: '',
                         price: '',
+                        to: '',
                         direction: '',
                         days: '',
                     },
@@ -176,6 +177,7 @@
                     categoryCurrent: '',
                     quantity: false,
                     delivery: false,
+                    saveButton: false,
                 },
             }
         },
@@ -303,6 +305,7 @@
                 this.views.categories = false
                 this.views.quantity = false
                 this.views.delivery = false
+                this.views.saveButton = false
             },
             viewCategories() {
                 if(this.selected.box && this.selected.box.id > 0 && this.elementsFiltered.length > 0) {
@@ -310,6 +313,7 @@
                     this.views.categories = true
                     this.views.quantity = false
                     this.views.delivery = false
+                    this.views.saveButton = false
 
                     this.selected.elements[this.categories[0].slug][0].id = this.elementsFiltered.filter(element => element.category_id == this.categories[0].id)[0].id
                 } else {
@@ -321,12 +325,14 @@
                 this.views.categories = false
                 this.views.quantity = true
                 this.views.delivery = false
+                this.views.saveButton = false
             },
             viewDelivery() {
                 this.views.boxes = false
                 this.views.categories = false
                 this.views.quantity = false
                 this.views.delivery = true
+                this.views.saveButton = true
             },
             addElement(categorySlug) {
                 let checkEmpty = this.selected.elements[categorySlug].filter(element => element.id === null)
@@ -382,6 +388,7 @@
                 
                 this.selected.delivery.name = delivery.name
                 this.selected.delivery.price = delivery.price
+                this.selected.delivery.to = ''
                 this.selected.delivery.direction = ''
                 this.selected.delivery.days = ''
             },
@@ -389,20 +396,33 @@
                 this.selected.delivery.id = ''
                 this.selected.delivery.name = ''
                 this.selected.delivery.price = ''
+                this.selected.delivery.to = ''
                 this.selected.delivery.direction = ''
                 this.selected.delivery.days = ''
             },
             saveCalculation() {
-                 axios
-                .post(`/api/calculations`, {
-                    price: this.price,
-                    box: this.selected.box,
-                    elements: this.selected.elements,
-                    quantity: this.quantity
-                })
-                .then(response => (
-                    console.log(response)
-                ))
+                if(!this.selected.delivery.id) {
+                    alert('Выберите доставку')
+                    return
+                }
+
+                if(this.selected.delivery.id == 3 && this.selected.delivery.price <= 0) {
+                    alert('Укажите город доставки')
+                    return
+                }
+
+                alert('Все норм')
+
+                // axios
+                // .post(`/api/calculations`, {
+                //     price: this.price,
+                //     box: this.selected.box,
+                //     elements: this.selected.elements,
+                //     quantity: this.quantity
+                // })
+                // .then(response => (
+                //     console.log(response)
+                // ))
             }
         },
         filters: {
