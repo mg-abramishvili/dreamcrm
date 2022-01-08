@@ -125,7 +125,7 @@
 </template>
 
 <script>
-    import DeliveryModal from './CalculationDelivery.vue'
+    import DeliveryModal from './CalculationDeliveryPEK.vue'
 
     export default {
         data() {

@@ -61,12 +61,16 @@
                         </div>
                     </div>
 
-                    <div v-if="views.delivery" class="mb-4">
+                    <div v-show="views.delivery == true" class="mb-4">
                         <div class="calculation-left-block-main-label">
                             <strong>Доставка</strong>
                         </div>
 
-                        <input type="number" class="form-control">
+                        <select @change="changeDelivery()" v-model="selected.delivery.id" class="form-select">
+                            <option v-for="delivery in deliveries" :key="'delivery_' + delivery.id" :value="delivery.id">{{ delivery.name }} &mdash; {{ delivery.price }}</option>
+                        </select>
+
+                        <DeliveryPEK v-if="selected.delivery.id == 3" :box="selected.box" :quantity="quantity"></DeliveryPEK>
 
                         <div class="mt-4">
                             <button @click="viewQuantity()" class="btn btn-outline-primary">Назад</button>
@@ -82,23 +86,23 @@
                                 <small style="display:block; line-height: 1; font-size: 15px; font-weight: 400; color: #777;">{{ pricePreRub | currency }} ₽ / {{ pricePreUsd | currency }} $</small>
                             </div>
                         </div>
-                        <div v-if="priceWithQuantity && priceWithQuantity > 0" class="row align-items-center mb-3">
+                        <div v-if="quantity > 1 && priceWithQuantity && priceWithQuantity > 0" class="row align-items-center mb-3">
                             <div class="col-6">
                                 <strong>Цена за {{ quantity }} ед:</strong>
                             </div>
                             <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ priceWithQuantity | currency }} ₽</div>
                         </div>
-                        <div v-if="views.delivery" class="row align-items-center mb-3">
+                        <div v-if="selected.delivery.name" class="row align-items-center mb-3">
                             <div class="col-6">
                                 <strong>Доставка</strong> <br>
-                                <small @click="openDeliveryModal()" style="line-height: 1.3; display: block; cursor: pointer;">
-                                    {{ delivery.name }} <br>
-                                    <template v-if="delivery.direction && delivery.direction.length > 0">({{ delivery.direction }}, {{ delivery.days }} дн.)</template>
+                                <small style="line-height: 1.3; display: block; cursor: pointer;">
+                                    {{ selected.delivery.name }} <br>
+                                    <template v-if="selected.delivery.direction && selected.delivery.direction.length > 0">({{ selected.delivery.direction }}, {{ selected.delivery.days }} дн.)</template>
                                 </small>
                             </div>
-                            <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ delivery.price | currency }} ₽</div>
+                            <div v-if="selected.delivery.price" class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ selected.delivery.price | currency }} ₽</div>
                         </div>
-                        <div v-if="delivery.name && delivery.name.length > 0 && priceWithDelivery && priceWithDelivery > 0" class="row align-items-center">
+                        <div v-if="selected.delivery.name && selected.delivery.name.length > 0 && priceWithDelivery && priceWithDelivery > 0" class="row align-items-center">
                             <div class="col-6"><strong>Итого</strong></div>
                             <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ priceWithDelivery | currency }} ₽</div>
                         </div>
@@ -137,13 +141,12 @@
                 <span class="sr-only">Загрузка...</span>
             </div>
         </div>
-        
-        <DeliveryModal v-if="views.modals.delivery" v-bind:box="selected.box"></DeliveryModal>
+
     </div>
 </template>
 
 <script>
-    import DeliveryModal from './CalculationDelivery.vue'
+    import DeliveryPEK from './CalculationDeliveryPEK.vue'
 
     export default {
         data() {
@@ -151,21 +154,21 @@
                 boxes: [],
                 categories: [],
                 elements: [],
+                deliveries: [],
 
                 selected: {
                     box: {},
                     elements: {},
+                    delivery: {
+                        id: '',
+                        name: '',
+                        price: '',
+                        direction: '',
+                        days: '',
+                    },
                 },
 
                 quantity: 1,
-
-                delivery: {
-                    id: 0,
-                    name: '',
-                    price: 0,
-                    direction: '',
-                    days: 0,
-                },
 
                 views: {
                     boxes: true,
@@ -173,8 +176,6 @@
                     categoryCurrent: '',
                     quantity: false,
                     delivery: false,
-
-                    modals: {},
                 },
             }
         },
@@ -182,6 +183,7 @@
             this.loadBoxes()
             this.loadCategories()
             this.loadElements()
+            this.loadDeliveries()
         },
         mounted () {
         },
@@ -242,7 +244,9 @@
                 return this.price * this.quantity
             },
             priceWithDelivery() {
-                return this.priceWithQuantity + parseInt(this.delivery.price)
+                if(this.selected.delivery.price) {
+                    return this.priceWithQuantity + parseInt(this.selected.delivery.price)
+                }
             },
         },
         methods: {
@@ -273,6 +277,13 @@
                 .then((response => {
                     this.elements = response.data
                 }))
+            },
+            loadDeliveries() {
+                axios
+                .get('/api/deliveries')
+                .then((response => {
+                    this.deliveries = response.data
+                }));
             },
             elementsFilteredForCategory(category) {
                 var categoryElements = this.elements.filter(element => element.category_id == category.id)
@@ -366,12 +377,20 @@
                 this.quantity = 1
                 this.resetDelivery()
             },
+            changeDelivery() {
+                var delivery = this.deliveries.find(delivery => delivery.id === this.selected.delivery.id)
+                
+                this.selected.delivery.name = delivery.name
+                this.selected.delivery.price = delivery.price
+                this.selected.delivery.direction = ''
+                this.selected.delivery.days = ''
+            },
             resetDelivery() {
-                this.delivery.id = 0
-                this.delivery.name = 'Самовывоз'
-                this.delivery.price = 0
-                this.delivery.direction = ''
-                this.delivery.days = 0
+                this.selected.delivery.id = ''
+                this.selected.delivery.name = ''
+                this.selected.delivery.price = ''
+                this.selected.delivery.direction = ''
+                this.selected.delivery.days = ''
             },
             saveCalculation() {
                  axios
@@ -392,7 +411,7 @@
             }
         },
         components: {
-            DeliveryModal
+            DeliveryPEK
         }
     }
 </script>
