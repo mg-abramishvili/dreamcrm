@@ -5,6 +5,7 @@ use App\Http\Controllers\BoxController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\CalculationController;
+use App\Http\Controllers\OfferController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,3 +26,5 @@ Route::get('deliveries', [DeliveryController::class, 'index']);
 Route::get('calculations', [CalculationController::class, 'index']);
 Route::get('calculation/{id}', [CalculationController::class, 'calculation']);
 Route::post('calculations', [CalculationController::class, 'store']);
+
+Route::get('offers', [OfferController::class, 'index']);

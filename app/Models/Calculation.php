@@ -16,6 +16,6 @@ class Calculation extends Model
 
     public function elements()
     {
-        return $this->belongsToMany(Element::class);
+        return $this->belongsToMany(Element::class)->withPivot(['pre_rub', 'pre_usd', 'price']);
     }
 }

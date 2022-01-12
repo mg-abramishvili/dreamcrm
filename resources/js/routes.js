@@ -10,6 +10,8 @@ import CatalogSearch from './components/catalog/CatalogSearch.vue';
 import CalculationCreate from './components/calculations/CalculationCreate.vue';
 import CalculationEdit from './components/calculations/CalculationEdit.vue';
 
+import Offers from './components/offers/Offers.vue';
+
 export const routes = [
     {
         path: '/',
@@ -55,5 +57,10 @@ export const routes = [
         path: '/calculation/:id',
         name: 'CalculationEdit',
         component: CalculationEdit
+    },
+    {
+        path: '/offers',
+        name: 'Offers',
+        component: Offers
     },
 ];
