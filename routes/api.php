@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ElementController;
 use App\Http\Controllers\BoxController;
 use App\Http\Controllers\CategoryController;
@@ -9,6 +10,9 @@ use App\Http\Controllers\OfferController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/me', [AuthController::class, 'me']);
 
 Route::get('elements', [ElementController::class, 'index']);
 Route::get('element/{id}', [ElementController::class, 'element']);

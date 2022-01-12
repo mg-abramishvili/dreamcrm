@@ -1,10 +1,18 @@
 <template>
     <nav class="sidebar">
         <div class="sidebar-content">
-            <div class="sidebar-brand">
+            <!-- <div class="sidebar-brand">
                 <router-link :to="{name: 'Projects'}">
                     <img src="/img/logo.svg" alt="DreamApp">
                     <span>DreamApp CRM</span>
+                </router-link>
+            </div> -->
+            <div class="sidebar-user">
+                <router-link :to="{name: 'CalculationCreate'}">
+                    <div class="sidebar-user-avatar">
+                        <img src="https://eu.ui-avatars.com/api/?background=0D8ABC&color=fff" />
+                    </div>
+                    {{ $parent.user.name }}
                 </router-link>
             </div>
             <ul class="sidebar-nav">

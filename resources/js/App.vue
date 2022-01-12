@@ -1,7 +1,7 @@
 <template>
-	<div>
-		<div v-if="authenticated && authenticated === true" class="wrapper">
-			<Sidebar :class="{ collapsed: sidebar === false }" />
+	<div v-if="views.loading == false">
+		<div v-if="authenticated == true" class="wrapper">
+			<Sidebar :class="{ collapsed: views.sidebar === false }" />
 
 			<div class="main">
 				<main class="content">
@@ -12,7 +12,7 @@
 			</div>
 		</div>
 
-		<div v-if="authenticated && authenticated === false" id="auth_form" class="main d-flex justify-content-center w-100">
+		<div v-if="authenticated == false" id="auth_form" class="main d-flex justify-content-center w-100" style="margin-left: 0;">
 			<main class="content d-flex p-0">
 				<div class="container d-flex flex-column">
 					<div class="row h-100">
@@ -27,9 +27,9 @@
 									<div class="card-body">
 										<div class="m-sm-4">
 											<form @submit.prevent="handleLogin">
-												<div v-if="login_error_message.length" class="alert alert-danger alert-dismissible" role="alert">
-													<div class="alert-message">
-														{{ login_error_message }}
+												<div v-if="errors.length" class="alert alert-danger alert-dismissible" role="alert">
+													<div v-for="error in errors" class="alert-message">
+														{{ error }}
 													</div>
 												</div>
 												<div class="mb-3">
@@ -72,26 +72,33 @@
     export default {
         data() {
             return {
-				sidebar: true,
 				formData: {
                     email: '',
                     password: ''
                 },
-				user: {},
-				authenticated: true,
-				login_error_message: '',
+                
+                user: {},
+
+                authenticated: false,
+
+				errors: [],
+
+                views: {
+                    sidebar: true,
+                    loading: true,
+                }				
             }
         },
         created() {
-			// this.checkMe()
+			this.checkMe()
         },
 		methods: {
 			handleLogin() {
-                // send axios request to the login route
                 axios.get('/sanctum/csrf-cookie').then(response => {
                     axios.post('/api/login', this.formData).then(response => {
 						if(response.data === 'bad_login') {
-							this.login_error_message = 'Неверный E-mail или пароль'
+                            this.errors = []
+							this.errors.push('Неверный E-mail или пароль')
 						} else {
 							this.checkMe()
 						}
@@ -103,13 +110,10 @@
 					this.user = response.data
 					if(this.user.name && this.user.name.length) {
 						this.authenticated = true
-						this.counterUsers()
-						this.counterProjects()
-						this.counterClients()
-						this.counterPartners()
-						this.counterElementsBoxes()
+                        this.views.loading = false
 					} else {
 						this.authenticated = false
+                        this.views.loading = false
 					}
 				})
 			},
