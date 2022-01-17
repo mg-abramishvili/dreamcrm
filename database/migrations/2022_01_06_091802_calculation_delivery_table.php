@@ -14,7 +14,7 @@ class CalculationDeliveryTable extends Migration
             $table->integer('delivery_id');
             $table->string('direction_from')->nullable();
             $table->string('direction_to')->nullable();
-            $table->integer('days');
+            $table->string('days')->nullable();
             $table->decimal('price')->nullable();
         });
     }
