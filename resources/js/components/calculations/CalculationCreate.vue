@@ -490,11 +490,6 @@
                 ))
             }
         },
-        filters: {
-            currency(value) {
-                return parseInt(value).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") 
-            }
-        },
         components: {
             DeliveryPEK
         }

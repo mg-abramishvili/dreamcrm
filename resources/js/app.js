@@ -18,6 +18,11 @@ import {routes} from './routes';
 
 Vue.use(VueRouter);
 
+Vue.filter('currency', function (value) {
+    if (!value) return ''
+    return parseInt(value).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") 
+})
+
 const router = new VueRouter({
     mode: 'history',
     routes: routes,

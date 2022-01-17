@@ -30,44 +30,53 @@
                         <tr v-for="box in calculation.boxes">
                             <td>Корпус</td>
                             <td>{{ box.name }}</td>
-                            <td class="text-end">{{ box.price }} ₽</td>
+                            <td class="text-end">{{ box.price | currency }} ₽</td>
                         </tr>
                         <template v-for="element in calculation.elements">
                         <tr v-if="element.price > 0">
                             <td>{{ element.category.name }}</td>
                             <td>{{ element.name }}</td>
-                            <td class="text-end">{{ element.price }} ₽</td>
+                            <td class="text-end">{{ element.price | currency }} ₽</td>
                         </tr>
                         </template>
+                        <tr style="border-width:2px;">
+                            <td></td>
+                            <td class="text-end">
+                                Стоимость за ед.
+                            </td>
+                            <td class="text-end">
+                                {{ price | currency }} ₽
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td class="text-end">
+                                Кол-во
+                            </td>
+                            <td class="text-end">
+                                {{ calculation.quantity }} шт.
+                            </td>
+                        </tr>
+                        <tr v-if="calculation.delivery && calculation.delivery.length > 0" class="m-0">
+                            <td></td>
+                            <td class="text-end">
+                                Доставка {{ calculation.delivery[0].name }}
+                            </td>
+                            <td class="text-end">
+                                {{ calculation.delivery[0].pivot.price | currency }} ₽
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td class="text-end">
+                                Итого
+                            </td>
+                            <td class="text-end">
+                                {{ priceWithQuantity | currency }} ₽
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
-                <div class="text-end">
-                    <p class="m-0">
-                        Стоимость: 
-                        <strong>{{ price }} ₽</strong>
-                    </p>
-                    <p class="m-0">
-                        Кол-во: 
-                        <strong>{{ calculation.quantity }}</strong>
-                    </p>
-                    <p  v-if="calculation.delivery && calculation.delivery.length > 0" class="m-0">
-                        Доставка {{ calculation.delivery[0].name }}: 
-                        <strong>{{ calculation.delivery[0].pivot.price }} ₽</strong>
-                    </p>
-                    <p class="m-0">
-                        Итого: 
-                        <strong class="text-primary font-weight-bolder">{{ priceWithQuantity }} ₽</strong>
-                    </p>
-                </div>
-                <!--<div class="mt-4">
-                    <div class="alert alert-primary alert-outline">
-                        <div></div>
-                        <div class="alert-message">
-                            <h6 class="alert-heading">Комментарий:</h6>
-                            <p class="mb-0">{{ calculation.comment }}</p>
-                        </div>
-                    </div>
-                </div>-->
             </div>
         </div>
     </div>
