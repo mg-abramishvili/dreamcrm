@@ -27601,13 +27601,20 @@ var render = function () {
                     ),
                   ]),
                   _vm._v(" "),
-                  _c("td", { staticClass: "text-end" }, [
-                    _vm._v(
-                      "\n                            " +
-                        _vm._s(_vm._f("currency")(_vm.priceWithQuantity)) +
-                        " ₽\n                        "
-                    ),
-                  ]),
+                  _c(
+                    "td",
+                    {
+                      staticClass: "text-end text-primary",
+                      staticStyle: { "font-weight": "700" },
+                    },
+                    [
+                      _vm._v(
+                        "\n                            " +
+                          _vm._s(_vm._f("currency")(_vm.priceWithQuantity)) +
+                          " ₽\n                        "
+                      ),
+                    ]
+                  ),
                 ]),
               ],
               2

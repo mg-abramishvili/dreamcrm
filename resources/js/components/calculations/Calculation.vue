@@ -71,7 +71,7 @@
                             <td class="text-end">
                                 Итого
                             </td>
-                            <td class="text-end">
+                            <td class="text-end text-primary" style="font-weight: 700;">
                                 {{ priceWithQuantity | currency }} ₽
                             </td>
                         </tr>
