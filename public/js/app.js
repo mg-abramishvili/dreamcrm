@@ -2987,7 +2987,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   filters: {
     currency: function currency(value) {
-      return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+      return value.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     }
   },
   components: {
