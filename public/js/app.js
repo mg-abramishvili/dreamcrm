@@ -2396,6 +2396,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2415,6 +2422,11 @@ __webpack_require__.r(__webpack_exports__);
             return a + parseInt(b.price);
           }, 0);
         }
+      }
+    },
+    priceWithQuantity: function priceWithQuantity() {
+      if (this.price) {
+        return this.price * this.calculation.quantity;
       }
     }
   },
@@ -27507,22 +27519,6 @@ var render = function () {
                       : _vm._e(),
                   ]
                 }),
-                _vm._v(" "),
-                _vm.calculation.delivery && _vm.calculation.delivery.length > 0
-                  ? _c("tr", [
-                      _c("td", [_vm._v("Доставка")]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(_vm._s(_vm.calculation.delivery[0].name)),
-                      ]),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "text-end" }, [
-                        _vm._v(
-                          _vm._s(_vm.calculation.delivery[0].pivot.price) + " ₽"
-                        ),
-                      ]),
-                    ])
-                  : _vm._e(),
               ],
               2
             ),
@@ -27531,9 +27527,34 @@ var render = function () {
         _vm._v(" "),
         _c("div", { staticClass: "text-end" }, [
           _c("p", { staticClass: "m-0" }, [
+            _vm._v("\n                    Стоимость: \n                    "),
+            _c("strong", [_vm._v(_vm._s(_vm.price) + " ₽")]),
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "m-0" }, [
+            _vm._v("\n                    Кол-во: \n                    "),
+            _c("strong", [_vm._v(_vm._s(_vm.calculation.quantity))]),
+          ]),
+          _vm._v(" "),
+          _vm.calculation.delivery && _vm.calculation.delivery.length > 0
+            ? _c("p", { staticClass: "m-0" }, [
+                _vm._v(
+                  "\n                    Доставка " +
+                    _vm._s(_vm.calculation.delivery[0].name) +
+                    ": \n                    "
+                ),
+                _c("strong", [
+                  _vm._v(
+                    _vm._s(_vm.calculation.delivery[0].pivot.price) + " ₽"
+                  ),
+                ]),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _c("p", { staticClass: "m-0" }, [
             _vm._v("\n                    Итого: \n                    "),
             _c("strong", { staticClass: "text-primary font-weight-bolder" }, [
-              _vm._v(_vm._s(_vm.price) + " ₽"),
+              _vm._v(_vm._s(_vm.priceWithQuantity) + " ₽"),
             ]),
           ]),
         ]),

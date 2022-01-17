@@ -39,17 +39,24 @@
                             <td class="text-end">{{ element.price }} ₽</td>
                         </tr>
                         </template>
-                        <tr v-if="calculation.delivery && calculation.delivery.length > 0">
-                            <td>Доставка</td>
-                            <td>{{ calculation.delivery[0].name }}</td>
-                            <td class="text-end">{{ calculation.delivery[0].pivot.price }} ₽</td>
-                        </tr>
                     </tbody>
                 </table>
                 <div class="text-end">
                     <p class="m-0">
+                        Стоимость: 
+                        <strong>{{ price }} ₽</strong>
+                    </p>
+                    <p class="m-0">
+                        Кол-во: 
+                        <strong>{{ calculation.quantity }}</strong>
+                    </p>
+                    <p  v-if="calculation.delivery && calculation.delivery.length > 0" class="m-0">
+                        Доставка {{ calculation.delivery[0].name }}: 
+                        <strong>{{ calculation.delivery[0].pivot.price }} ₽</strong>
+                    </p>
+                    <p class="m-0">
                         Итого: 
-                        <strong class="text-primary font-weight-bolder">{{ price }} ₽</strong>
+                        <strong class="text-primary font-weight-bolder">{{ priceWithQuantity }} ₽</strong>
                     </p>
                 </div>
                 <!--<div class="mt-4">
@@ -82,6 +89,11 @@
                     } else {
                         return parseInt(this.calculation.boxes[0].price) + this.calculation.elements.reduce((a, b) => a + parseInt(b.price), 0)
                     }
+                }
+            },
+            priceWithQuantity() {
+                if(this.price) {
+                    return this.price * this.calculation.quantity
                 }
             },
         },
