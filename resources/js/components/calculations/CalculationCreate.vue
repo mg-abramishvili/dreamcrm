@@ -492,7 +492,7 @@
         },
         filters: {
             currency(value) {
-                return value.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") 
+                return parseInt(value).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") 
             }
         },
         components: {
