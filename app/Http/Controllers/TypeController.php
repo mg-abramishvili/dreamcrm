@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Box;
+use App\Models\Type;
 use Illuminate\Http\Request;
 
-class BoxController extends Controller
+class TypeController extends Controller
 {
     public function index()
     {
-        return Box::with('types')->get();
+        return Type::all();
     }
 }

@@ -80,7 +80,8 @@
                         this.selected.price = response.data.auto[2],
 
                         this.$parent.selected.delivery.price = response.data.auto[2].toFixed(0),
-                        this.$parent.selected.delivery.direction = response.data.region_from.BranchName + ' - ' + response.data.region_to.BranchName,
+                        this.$parent.selected.delivery.directionFrom = response.data.region_from.BranchName,
+                        this.$parent.selected.delivery.directionTo = response.data.region_to.BranchName,
                         this.$parent.selected.delivery.days = response.data.periods_days,
                         
                         this.loading = false

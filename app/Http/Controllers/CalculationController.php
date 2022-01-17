@@ -9,12 +9,12 @@ class CalculationController extends Controller
 {
     public function index()
     {
-        return Calculation::all();
+        return Calculation::with('user')->orderBy('created_at', 'desc')->get();
     }
 
     public function calculation($id)
     {
-        return Calculation::with('boxes', 'elements.category')->find($id);
+        return Calculation::with('type', 'boxes', 'elements.category', 'delivery', 'user')->find($id);
     }
 
     public function store(Request $request)
@@ -22,15 +22,17 @@ class CalculationController extends Controller
         $calculation = new Calculation();
         $calculation->price = $request->price;
         $calculation->quantity = $request->quantity;
-        $calculation->production_days = 7;
+        $calculation->production_days = 30;
+        $calculation->type_id = $request->type;
+        $calculation->user_id = $request->user;
         $calculation->save();
 
         $calculation->boxes()->attach($request->box['id'], [
-            'pre_rub' => 1,
-            'pre_usd' => 2,
-            'sborka' => 3,
-            'marzha' => 4,
-            'price' => 5
+            'pre_rub' => $request->box['pre_rub'],
+            'pre_usd' => $request->box['pre_usd'],
+            'sborka' => $request->box['sborka'],
+            'marzha' => $request->box['marzha'],
+            'price' => $request->box['price'],
         ]);
 
         foreach($request->elements as $key => $elements)
@@ -38,11 +40,18 @@ class CalculationController extends Controller
             foreach($elements as $element)
             {
                 $calculation->elements()->attach($element['id'], [
-                    'price' => 1,
-                    'pre_rub' => 2,
-                    'pre_usd' => 3,
+                    'price' => $element['price'],
+                    'pre_rub' => $element['pre_rub'],
+                    'pre_usd' => $element['pre_usd'],
                 ]);
             }
         }
+
+        $calculation->delivery()->attach($request->delivery['id'], [
+            'direction_from' => $request->delivery['directionFrom'],
+            'direction_to' => $request->delivery['directionTo'],
+            'days' => $request->delivery['days'],
+            'price' =>  $request->delivery['price'],
+        ]);
     }
 }

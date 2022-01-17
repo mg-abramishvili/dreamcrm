@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ElementController;
+use App\Http\Controllers\TypeController;
 use App\Http\Controllers\BoxController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DeliveryController;
@@ -17,6 +18,8 @@ Route::post('/me', [AuthController::class, 'me']);
 Route::get('elements', [ElementController::class, 'index']);
 Route::get('element/{id}', [ElementController::class, 'element']);
 Route::post('elements', [ElementController::class, 'store']);
+
+Route::get('types', [TypeController::class, 'index']);
 
 Route::get('boxes', [BoxController::class, 'index']);
 Route::get('box/{id}', [BoxController::class, 'box']);

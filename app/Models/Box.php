@@ -9,6 +9,13 @@ class Box extends Model
 {
     use HasFactory;
 
+    protected $casts = ['gallery' => 'json'];
+
+    public function types()
+    {
+        return $this->belongsToMany(Type::class);
+    }
+
     public function elements()
     {
         return $this->belongsToMany(Element::class);

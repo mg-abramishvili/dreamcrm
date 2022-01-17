@@ -7,8 +7,9 @@ import ElementEdit from './components/catalog/ElementEdit.vue';
 import Boxes from './components/catalog/Boxes.vue';
 import CatalogSearch from './components/catalog/CatalogSearch.vue';
 
+import Calculations from './components/calculations/Calculations.vue';
+import Calculation from './components/calculations/Calculation.vue';
 import CalculationCreate from './components/calculations/CalculationCreate.vue';
-import CalculationEdit from './components/calculations/CalculationEdit.vue';
 
 import Offers from './components/offers/Offers.vue';
 
@@ -49,14 +50,19 @@ export const routes = [
         component: CatalogSearch
     },
     {
+        path: '/calculations',
+        name: 'Calculations',
+        component: Calculations
+    },
+    {
         path: '/calculations/create',
         name: 'CalculationCreate',
         component: CalculationCreate
     },
     {
         path: '/calculation/:id',
-        name: 'CalculationEdit',
-        component: CalculationEdit
+        name: 'Calculation',
+        component: Calculation
     },
     {
         path: '/offers',

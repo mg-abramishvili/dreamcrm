@@ -1,22 +1,39 @@
 <template>
-    <div style="position: relative;">
+    <div style="position: relative; ">
         <h1 class="h3 m-0 mb-4">Новый расчет</h1>
         
         <div v-if="elementsFiltered && elementsFiltered.length > 0" class="row">
             <div class="col-12 col-lg-5">
                 <div class="calculation-left-block bg-white px-4 py-4" style="position: sticky; top: 20px;">
                     
+                    <div v-if="views.types" class="mb-4">
+                        <div class="calculation-left-block-main-label">
+                            <strong>Тип</strong>
+                        </div>
+
+                        <select @change="resetElements()" v-model="selected.type" class="form-select form-select-lg mt-2 mb-3">
+                            <option v-for="type in types" :key="'type_' + type.id" :value="type">{{ type.name }}</option>
+                        </select>
+
+                        <div class="mt-4">
+                            <button class="btn btn-outline-primary" disabled>Назад</button>
+                            <button @click="viewBoxes()" class="btn btn-outline-primary">Далее</button>
+                        </div>
+                    </div>
+
                     <div v-if="views.boxes" class="mb-4">
                         <div class="calculation-left-block-main-label">
                             <strong>Корпус</strong>
                         </div>
 
-                        <select @change="changeBox()" v-model="selected.box" class="form-select form-select-lg mt-2 mb-3">
-                            <option v-for="box in boxes" :key="'box_' + box.id" :value="box">{{ box.name }} &mdash; {{ box.price | currency }} ₽</option>
+                        <select @change="resetElements()" v-model="selected.box" class="form-select form-select-lg mt-2 mb-3">
+                            <template v-for="box in boxesFiltered">
+                                <option v-if="box.width > 0 && box.length > 0 && box.height > 0 && box.weight > 0" :key="'box_' + box.id" :value="box">{{ box.name }} &mdash; {{ box.price | currency }} ₽</option>
+                            </template>
                         </select>
 
                         <div class="mt-4">
-                            <button class="btn btn-outline-primary" disabled>Назад</button>
+                            <button @click="viewTypes()" class="btn btn-outline-primary">Назад</button>
                             <button @click="viewCategories()" class="btn btn-outline-primary">Далее</button>
                         </div>
                     </div>
@@ -97,7 +114,7 @@
                                 <strong>Доставка</strong> <br>
                                 <small style="line-height: 1.3; display: block; cursor: pointer;">
                                     {{ selected.delivery.name }} <br>
-                                    <template v-if="selected.delivery.direction && selected.delivery.direction.length > 0">({{ selected.delivery.direction }}, {{ selected.delivery.days }} дн.)</template>
+                                    <template v-if="selected.delivery.directionTo && selected.delivery.directionTo.length > 0">({{ selected.delivery.directionTo }}, {{ selected.delivery.days }} дн.)</template>
                                 </small>
                             </div>
                             <div v-if="selected.delivery.price" class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ selected.delivery.price | currency }} ₽</div>
@@ -111,6 +128,14 @@
                 </div>
             </div>
             <div class="col-12 col-lg-7">
+                <div class="mb-3 bg-white px-3 py-3">
+                    <small style="color: rgb(136, 136, 136);">Тип</small>
+                    <div v-if="selected.type && selected.type.id > 0" class="row align-items-center">
+                        <div class="col-12">
+                            <strong class="d-block">{{ selected.type.name }}</strong>
+                        </div>
+                    </div>
+                </div>
                 <div class="mb-3 bg-white px-3 py-3">
                     <small style="color: rgb(136, 136, 136);">Корпус</small>
                     <div v-if="selected.box && selected.box.id > 0" class="row align-items-center">
@@ -151,12 +176,14 @@
     export default {
         data() {
             return {
+                type: [],
                 boxes: [],
                 categories: [],
                 elements: [],
                 deliveries: [],
 
                 selected: {
+                    type: {},
                     box: {},
                     elements: {},
                     delivery: {
@@ -164,7 +191,8 @@
                         name: '',
                         price: '',
                         to: '',
-                        direction: '',
+                        directionFrom: '',
+                        directionTo: '',
                         days: '',
                     },
                 },
@@ -172,7 +200,8 @@
                 quantity: 1,
 
                 views: {
-                    boxes: true,
+                    types: true,
+                    boxes: false,
                     categories: false,
                     categoryCurrent: '',
                     quantity: false,
@@ -182,6 +211,7 @@
             }
         },
         created() {
+            this.loadTypes()
             this.loadBoxes()
             this.loadCategories()
             this.loadElements()
@@ -208,6 +238,13 @@
             }
         },
         computed: {
+            boxesFiltered() {
+                if(this.selected.type && this.selected.type.id > 0) {
+                    return this.boxes.filter(box => box.types.some(type => type.id === this.selected.type.id))
+                } else {
+                    return this.boxes
+                }
+            },
             elementsFiltered() {
                 if(this.selected.box && this.selected.box.id > 0) {
                     return this.elements.filter(element => element.boxes.some(box => box.id === this.selected.box.id))
@@ -216,31 +253,37 @@
                 }
             },
             pricePreRub() {
-                var price = []
-                for (const category of Object.entries(this.selected.elements)) {
-                    category[1].forEach((el) => {
-                        price.push(el.pre_rub)
-                    })
+                if(this.selected.box && this.selected.box.id > 0) {
+                    var price = []
+                    for (const category of Object.entries(this.selected.elements)) {
+                        category[1].forEach((el) => {
+                            price.push(el.pre_rub)
+                        })
+                    }
+                    return parseInt(this.selected.box.pre_rub) + parseInt(this.selected.box.sborka) + parseInt(this.selected.box.marzha) + price.reduce((a, b) => a + b, 0)
                 }
-                return parseInt(this.selected.box.pre_rub) + parseInt(this.selected.box.sborka) + parseInt(this.selected.box.marzha) + price.reduce((a, b) => a + b, 0)
             },
             pricePreUsd() {
-                var price = []
-                for (const category of Object.entries(this.selected.elements)) {
-                    category[1].forEach((el) => {
-                        price.push(el.pre_usd)
-                    })
+                if(this.selected.box && this.selected.box.id > 0) {
+                    var price = []
+                    for (const category of Object.entries(this.selected.elements)) {
+                        category[1].forEach((el) => {
+                            price.push(el.pre_usd)
+                        })
+                    }
+                    return parseInt(this.selected.box.pre_usd) + price.reduce((a, b) => a + b, 0)
                 }
-                return parseInt(this.selected.box.pre_usd) + price.reduce((a, b) => a + b, 0)
             },
             price() {
-                var price = []
-                for (const category of Object.entries(this.selected.elements)) {
-                    category[1].forEach((el) => {
-                        price.push(el.price)
-                    })
+                if(this.selected.box && this.selected.box.id > 0) {
+                    var price = []
+                    for (const category of Object.entries(this.selected.elements)) {
+                        category[1].forEach((el) => {
+                            price.push(el.price)
+                        })
+                    }
+                    return parseInt(this.selected.box.price) + price.reduce((a, b) => a + b, 0)
                 }
-                return parseInt(this.selected.box.price) + price.reduce((a, b) => a + b, 0)
             },
             priceWithQuantity() {
                 return this.price * this.quantity
@@ -252,6 +295,13 @@
             },
         },
         methods: {
+            loadTypes() {
+                axios
+                .get('/api/types')
+                .then((response => {
+                    this.types = response.data
+                }))
+            },
             loadBoxes() {
                 axios
                 .get('/api/boxes')
@@ -300,7 +350,16 @@
 
                 return categoryElementsFiltered
             },
+            viewTypes() {
+                this.views.types = true
+                this.views.boxes = false
+                this.views.categories = false
+                this.views.quantity = false
+                this.views.delivery = false
+                this.views.saveButton = false
+            },
             viewBoxes() {
+                this.views.types = false
                 this.views.boxes = true
                 this.views.categories = false
                 this.views.quantity = false
@@ -309,6 +368,7 @@
             },
             viewCategories() {
                 if(this.selected.box && this.selected.box.id > 0 && this.elementsFiltered.length > 0) {
+                    this.views.types = false
                     this.views.boxes = false
                     this.views.categories = true
                     this.views.quantity = false
@@ -321,6 +381,7 @@
                 }
             },
             viewQuantity() {
+                this.views.types = false
                 this.views.boxes = false
                 this.views.categories = false
                 this.views.quantity = true
@@ -328,6 +389,7 @@
                 this.views.saveButton = false
             },
             viewDelivery() {
+                this.views.types = false
                 this.views.boxes = false
                 this.views.categories = false
                 this.views.quantity = false
@@ -369,7 +431,17 @@
                     this.viewQuantity()
                 }
             },
-            changeBox() {
+            changeDelivery() {
+                var delivery = this.deliveries.find(delivery => delivery.id === this.selected.delivery.id)
+                
+                this.selected.delivery.name = delivery.name
+                this.selected.delivery.price = delivery.price
+                this.selected.delivery.to = ''
+                this.selected.delivery.directionFrom = ''
+                this.selected.delivery.directionTo = ''
+                this.selected.delivery.days = ''
+            },
+            resetElements() {
                 for (const category of Object.entries(this.selected.elements)) {
                     if(category[1] && category[1].length > 0) {
                         category[1].forEach((el) => {
@@ -383,21 +455,13 @@
                 this.quantity = 1
                 this.resetDelivery()
             },
-            changeDelivery() {
-                var delivery = this.deliveries.find(delivery => delivery.id === this.selected.delivery.id)
-                
-                this.selected.delivery.name = delivery.name
-                this.selected.delivery.price = delivery.price
-                this.selected.delivery.to = ''
-                this.selected.delivery.direction = ''
-                this.selected.delivery.days = ''
-            },
             resetDelivery() {
                 this.selected.delivery.id = ''
                 this.selected.delivery.name = ''
                 this.selected.delivery.price = ''
                 this.selected.delivery.to = ''
-                this.selected.delivery.direction = ''
+                this.selected.delivery.directionFrom = ''
+                this.selected.delivery.directionTo = ''
                 this.selected.delivery.days = ''
             },
             saveCalculation() {
@@ -411,18 +475,19 @@
                     return
                 }
 
-                alert('Все норм')
-
-                // axios
-                // .post(`/api/calculations`, {
-                //     price: this.price,
-                //     box: this.selected.box,
-                //     elements: this.selected.elements,
-                //     quantity: this.quantity
-                // })
-                // .then(response => (
-                //     console.log(response)
-                // ))
+                axios
+                .post(`/api/calculations`, {
+                    type: this.selected.type.id,
+                    box: this.selected.box,
+                    elements: this.selected.elements,
+                    quantity: this.quantity,
+                    price: this.price,
+                    delivery: this.selected.delivery,
+                    user: this.$parent.user.id,
+                })
+                .then(response => (
+                    this.$router.push({name: 'Calculations'})
+                ))
             }
         },
         filters: {
