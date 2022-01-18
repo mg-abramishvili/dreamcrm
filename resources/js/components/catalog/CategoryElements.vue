@@ -30,7 +30,7 @@
                             <a>{{ element.name }}</a>
                         </td>
                         <td class="align-middle">
-                            {{ element.price | currency }}
+                            {{ element.price | currency }} ₽
                         </td>
                     </tr>
                 </tbody>

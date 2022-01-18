@@ -30,7 +30,7 @@
                             <a>{{ box.name }}</a>
                         </td>
                         <td class="align-middle">
-                            {{ box.price | currency }}
+                            {{ box.price | currency }} ₽
                         </td>
                     </tr>
                 </tbody>
