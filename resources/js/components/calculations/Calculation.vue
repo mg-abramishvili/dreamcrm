@@ -3,7 +3,7 @@
         <div class="row align-items-center mb-4">
             <div class="col-12 col-lg-6">
                 <h1 class="h3 m-0">
-                    Расчет №{{ calculation.id }} от {{moment(calculation.created_at).format('DD.MM.YYYY HH:mm')}}
+                    Расчет №{{ calculation.id }} от {{moment(calculation.created_at).utcOffset(180).format('DD.MM.YYYY HH:mm')}}
                 </h1>    
                 <span v-if="calculation.user" class="text-sm">автор: {{ calculation.user.name }}</span>
             </div>
