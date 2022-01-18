@@ -19,7 +19,7 @@
                     </thead>
                     <tbody>
                         <tr v-for="calculation in calculations" :key="calculation.id" @click="goTo(calculation.id)">
-                            <td class="align-middle text-end">
+                            <td class="align-middle">
                                 {{moment(calculation.created_at).utcOffset(180).format('DD.MM.YYYY HH:mm')}}
                             </td>
                             <td class="align-middle">
