@@ -6,7 +6,7 @@ window.moment = require('moment');
 import moment from 'moment'
 
 Vue.prototype.$moment = moment;
-moment.locale('ru');
+// moment.locale('ru');
 
 import axios from 'axios'
 window.axios = require('axios');
