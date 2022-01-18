@@ -34,7 +34,7 @@
                                 </template>
                             </td>
                             <td class="align-middle text-end">
-                                {{moment(calculation.created_at).utcOffset(0).format('D MMMM YYYY HH:mm')}}
+                                {{moment(calculation.created_at).utcOffset(300).format('D MMMM YYYY HH:mm')}}
                             </td>
                         </tr>
                     </tbody>
