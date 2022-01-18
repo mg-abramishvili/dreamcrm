@@ -19,22 +19,22 @@
                     </thead>
                     <tbody>
                         <tr v-for="calculation in calculations" :key="calculation.id" @click="goTo(calculation.id)">
-                            <td class="align-middle">
-                                <!-- <img src="/img/profile.png" width="48" height="48" class="rounded-circle me-2" alt="Avatar"> -->
-                                <template v-if="calculation.user">
-                                    {{ calculation.user.name }}
-                                </template>
+                            <td class="align-middle text-end">
+                                {{moment(calculation.created_at).utcOffset(180).format('DD.MM.YYYY HH:mm')}}
                             </td>
                             <td class="align-middle">
                                 Расчет №{{ calculation.id }}
                             </td>
                             <td class="align-middle">
                                 <template v-for="box in calculation.boxes">
-                                    {{ box.title }}
+                                    {{ box.name }}
                                 </template>
                             </td>
-                            <td class="align-middle text-end">
-                                {{moment(calculation.created_at).utcOffset(180).format('D MMMM YYYY HH:mm')}}
+                            <td class="align-middle">
+                                <!-- <img src="/img/profile.png" width="48" height="48" class="rounded-circle me-2" alt="Avatar"> -->
+                                <template v-if="calculation.user">
+                                    {{ calculation.user.name }}
+                                </template>
                             </td>
                         </tr>
                     </tbody>
