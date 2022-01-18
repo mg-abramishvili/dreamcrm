@@ -21,7 +21,7 @@
             </div>
         </div>
 
-        <div class="card">
+        <div v-if="calculation && calculation.id > 0" class="card">
             <div class="card-body">
                 
                 
