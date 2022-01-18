@@ -11,10 +11,10 @@
                 <table class="table table-striped table-hover dataTable no-footer dtr-inline">
                     <thead>
                         <tr>
-                            <th>Автор расчета</th>
+                            <th>Дата расчета</th>
                             <th>№</th>
-                            <th></th>
-                            <th class="text-end">Дата расчета</th>
+                            <th>Корпус</th>
+                            <th>Автор расчета</th>
                         </tr>
                     </thead>
                     <tbody>
