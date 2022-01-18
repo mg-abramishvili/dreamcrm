@@ -72,7 +72,7 @@
                                 Итого
                             </td>
                             <td class="text-end text-primary" style="font-weight: 700;">
-                                {{ priceWithQuantity | currency }} ₽
+                                {{ priceTotal | currency }} ₽
                             </td>
                         </tr>
                     </tbody>
@@ -93,16 +93,18 @@
         computed: {
             price() {
                 if(this.calculation.boxes && this.calculation.boxes[0] && this.calculation.boxes[0].price && this.calculation && this.calculation.elements && this.calculation.elements.length > 0) {
-                    if(this.calculation.delivery && this.calculation.delivery.length > 0) {
-                        return parseInt(this.calculation.boxes[0].price) + this.calculation.elements.reduce((a, b) => a + parseInt(b.price), 0) + parseInt(this.calculation.delivery[0].pivot.price)
-                    } else {
-                        return parseInt(this.calculation.boxes[0].price) + this.calculation.elements.reduce((a, b) => a + parseInt(b.price), 0)
-                    }
+                    return parseInt(this.calculation.boxes[0].price) + this.calculation.elements.reduce((a, b) => a + parseInt(b.price), 0)
                 }
             },
-            priceWithQuantity() {
-                if(this.price) {
-                    return this.price * this.calculation.quantity
+            priceTotal() {
+                if(this.calculation.delivery && this.calculation.delivery.length > 0) {
+                    if(this.price) {
+                        return (this.price * this.calculation.quantity) + parseInt(this.calculation.delivery[0].pivot.price)
+                    }
+                } else {
+                    if(this.price) {
+                        return this.price * this.calculation.quantity
+                    }
                 }
             },
         },
