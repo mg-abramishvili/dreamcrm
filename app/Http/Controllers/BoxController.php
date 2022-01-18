@@ -9,6 +9,11 @@ class BoxController extends Controller
 {
     public function index()
     {
-        return Box::with('types')->get();
+        return Box::all();
+    }
+
+    public function indexByType($id)
+    {
+        return Box::whereRelation('types', 'type_id', $id)->get();
     }
 }

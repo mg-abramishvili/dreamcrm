@@ -16,12 +16,14 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/me', [AuthController::class, 'me']);
 
 Route::get('elements', [ElementController::class, 'index']);
+Route::get('elements/box/{id}', [ElementController::class, 'indexByBox']);
 Route::get('element/{id}', [ElementController::class, 'element']);
 Route::post('elements', [ElementController::class, 'store']);
 
 Route::get('types', [TypeController::class, 'index']);
 
 Route::get('boxes', [BoxController::class, 'index']);
+Route::get('boxes/type/{id}', [BoxController::class, 'indexByType']);
 Route::get('box/{id}', [BoxController::class, 'box']);
 
 Route::get('categories', [CategoryController::class, 'index']);

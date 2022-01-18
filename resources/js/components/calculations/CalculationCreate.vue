@@ -2,7 +2,7 @@
     <div style="position: relative; ">
         <h1 class="h3 m-0 mb-4">Новый расчет</h1>
         
-        <div v-if="elementsFiltered && elementsFiltered.length > 0" class="row">
+        <div v-if="types && types.length > 0" class="row">
             <div class="col-12 col-lg-5">
                 <div class="calculation-left-block bg-white px-4 py-4" style="position: sticky; top: 20px;">
                     
@@ -11,7 +11,7 @@
                             <strong>Тип</strong>
                         </div>
 
-                        <select @change="resetElements()" v-model="selected.type" class="form-select form-select-lg mt-2 mb-3">
+                        <select @change="loadBoxes(); resetElements()" v-model="selected.type" class="form-select form-select-lg mt-2 mb-3">
                             <option v-for="type in types" :key="'type_' + type.id" :value="type">{{ type.name }}</option>
                         </select>
 
@@ -26,8 +26,8 @@
                             <strong>Корпус</strong>
                         </div>
 
-                        <select @change="resetElements()" v-model="selected.box" class="form-select form-select-lg mt-2 mb-3">
-                            <template v-for="box in boxesFiltered">
+                        <select @change="loadElements(); resetElements()" v-model="selected.box" class="form-select form-select-lg mt-2 mb-3">
+                            <template v-for="box in boxes">
                                 <option v-if="box.width > 0 && box.length > 0 && box.height > 0 && box.weight > 0" :key="'box_' + box.id" :value="box">{{ box.name }} &mdash; {{ box.price | currency }} ₽</option>
                             </template>
                         </select>
@@ -48,7 +48,7 @@
                                 
                                 <div v-for="(element, index) in selected.elements[category.slug]" :key="index" style="position: relative;">
                                     <select v-model="element.id" class="form-select form-select-lg mt-2 mb-3">
-                                        <template v-for="element in elementsFiltered">
+                                        <template v-for="element in elements">
                                             <option v-if="element.category_id == category.id" :key="'element_' + element.id" :value="element.id">
                                                 {{ element.name }} <template v-if="element.price > 0">&mdash; {{ element.price | currency }} ₽</template>
                                             </option>
@@ -176,7 +176,7 @@
     export default {
         data() {
             return {
-                type: [],
+                types: [],
                 boxes: [],
                 categories: [],
                 elements: [],
@@ -212,9 +212,7 @@
         },
         created() {
             this.loadTypes()
-            this.loadBoxes()
             this.loadCategories()
-            this.loadElements()
             this.loadDeliveries()
         },
         mounted () {
@@ -238,20 +236,6 @@
             }
         },
         computed: {
-            boxesFiltered() {
-                if(this.selected.type && this.selected.type.id > 0) {
-                    return this.boxes.filter(box => box.types.some(type => type.id === this.selected.type.id))
-                } else {
-                    return this.boxes
-                }
-            },
-            elementsFiltered() {
-                if(this.selected.box && this.selected.box.id > 0) {
-                    return this.elements.filter(element => element.boxes.some(box => box.id === this.selected.box.id))
-                } else {
-                    return this.elements
-                }
-            },
             pricePreRub() {
                 if(this.selected.box && this.selected.box.id > 0) {
                     var price = []
@@ -304,7 +288,7 @@
             },
             loadBoxes() {
                 axios
-                .get('/api/boxes')
+                .get(`/api/boxes/type/${this.selected.type.id}`)
                 .then((response => {
                     this.boxes = response.data
                 }))
@@ -324,11 +308,14 @@
                 }))
             },
             loadElements() {
-                axios
-                .get('/api/elements')
-                .then((response => {
-                    this.elements = response.data
-                }))
+                if(this.selected.box && this.selected.box.id > 0) {
+                    axios
+                    .get(`/api/elements/box/${this.selected.box.id}`)
+                    .then((response => {
+                        this.elements = response.data
+                    }))
+                }
+                
             },
             loadDeliveries() {
                 axios
@@ -367,7 +354,7 @@
                 this.views.saveButton = false
             },
             viewCategories() {
-                if(this.selected.box && this.selected.box.id > 0 && this.elementsFiltered.length > 0) {
+                if(this.selected.box && this.selected.box.id > 0 && this.elements && this.elements.length > 0) {
                     this.views.types = false
                     this.views.boxes = false
                     this.views.categories = true
@@ -375,7 +362,7 @@
                     this.views.delivery = false
                     this.views.saveButton = false
 
-                    this.selected.elements[this.categories[0].slug][0].id = this.elementsFiltered.filter(element => element.category_id == this.categories[0].id)[0].id
+                    this.selected.elements[this.categories[0].slug][0].id = this.elements.filter(element => element.category_id == this.categories[0].id)[0].id
                 } else {
                     alert('Выберите корпус!')
                 }
@@ -426,7 +413,7 @@
 
                 if(index >= 0 && index < this.categories.length - 1 && nextCategory.elements && nextCategory.elements.length > 0) {
                     this.views.categoryCurrent = nextCategory.id
-                    this.selected.elements[nextCategory.slug][0].id = this.elementsFiltered.filter(element => element.category_id == nextCategory.id)[0].id
+                    this.selected.elements[nextCategory.slug][0].id = this.elements.filter(element => element.category_id == nextCategory.id)[0].id
                 } else {
                     this.viewQuantity()
                 }
