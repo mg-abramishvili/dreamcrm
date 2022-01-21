@@ -12,6 +12,7 @@ import Calculation from './components/calculations/Calculation.vue';
 import CalculationCreate from './components/calculations/CalculationCreate.vue';
 
 import Offers from './components/offers/Offers.vue';
+import Offer from './components/offers/Offer.vue';
 
 export const routes = [
     {
@@ -68,5 +69,10 @@ export const routes = [
         path: '/offers',
         name: 'Offers',
         component: Offers
+    },
+    {
+        path: '/offer/:id',
+        name: 'Offer',
+        component: Offer
     },
 ];

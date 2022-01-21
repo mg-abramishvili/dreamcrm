@@ -37,3 +37,5 @@ Route::get('calculation/{id}', [CalculationController::class, 'calculation']);
 Route::post('calculations', [CalculationController::class, 'store']);
 
 Route::get('offers', [OfferController::class, 'index']);
+Route::get('offer/{id}', [OfferController::class, 'offer']);
+Route::get('offer/{id}/pdf', [OfferController::class, 'offerPDF']);

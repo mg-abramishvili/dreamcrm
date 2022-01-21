@@ -33,4 +33,9 @@ class Calculation extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function offers()
+    {
+        return $this->belongsToMany(Offer::class);
+    }
 }

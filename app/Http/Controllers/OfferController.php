@@ -11,9 +11,19 @@ class OfferController extends Controller
 {
     public function index()
     {
-        $offer = Calculation::orderBy('created_at', 'desc')->first();
+        return Offer::all();
+    }
+
+    public function offer($id)
+    {
+        return Offer::with('calculations')->find($id);
+    }
+
+    public function offerPDF($id)
+    {
+        $offer = Offer::with('calculations.elements')->find($id);
 
         $pdf = PDF::loadView('offers.pdf', compact('offer'));
-        return $pdf->download('invoice.pdf');
+        return $pdf->download('offer.pdf');
     }
 }
