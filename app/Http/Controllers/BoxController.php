@@ -16,4 +16,9 @@ class BoxController extends Controller
     {
         return Box::whereRelation('types', 'type_id', $id)->get();
     }
+
+    public function box($id)
+    {
+        return Box::with('types')->find($id);
+    }
 }

@@ -25,7 +25,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="box in boxes" :key="'box_' + box.id">
+                    <tr @click="goTo(box.id)" v-for="box in boxes" :key="'box_' + box.id">
                         <td class="align-middle">
                             <a>{{ box.name }}</a>
                         </td>
@@ -58,7 +58,10 @@
                 .then(response => (
                     this.boxes = response.data
                 ));
-            }
+            },
+            goTo(id) {
+                this.$router.push({name: 'BoxEdit', params: {id: id}})
+            },
         },
     }
 </script>

@@ -5,6 +5,7 @@ import CategoryElements from './components/catalog/CategoryElements.vue';
 import ElementCreate from './components/catalog/ElementCreate.vue';
 import ElementEdit from './components/catalog/ElementEdit.vue';
 import Boxes from './components/catalog/Boxes.vue';
+import BoxEdit from './components/catalog/BoxEdit.vue';
 import CatalogSearch from './components/catalog/CatalogSearch.vue';
 
 import Calculations from './components/calculations/Calculations.vue';
@@ -44,6 +45,11 @@ export const routes = [
         path: '/catalog/boxes',
         name: 'Boxes',
         component: Boxes
+    },
+    {
+        path: '/box/:id/edit',
+        name: 'BoxEdit',
+        component: BoxEdit
     },
     {
         path: '/catalog/search',
