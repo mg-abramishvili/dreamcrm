@@ -33,10 +33,10 @@
                             <td class="text-end">{{ box.price | currency }} ₽</td>
                         </tr>
                         <template v-for="element in calculation.elements">
-                        <tr v-if="element.price > 0">
+                        <tr v-if="element.pivot.price > 0">
                             <td>{{ element.category.name }}</td>
                             <td>{{ element.name }}</td>
-                            <td class="text-end">{{ element.price | currency }} ₽</td>
+                            <td class="text-end">{{ element.pivot.price | currency }} ₽</td>
                         </tr>
                         </template>
                         <tr style="border-width:2px;">

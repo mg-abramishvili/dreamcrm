@@ -8,6 +8,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\CalculationController;
 use App\Http\Controllers\OfferController;
+use App\Http\Controllers\DollarController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,7 @@ Route::get('elements', [ElementController::class, 'index']);
 Route::get('elements/box/{id}', [ElementController::class, 'indexByBox']);
 Route::get('element/{id}', [ElementController::class, 'element']);
 Route::post('elements', [ElementController::class, 'store']);
+Route::get('elements-prices-update', [ElementController::class, 'updatePrices']);
 
 Route::get('types', [TypeController::class, 'index']);
 
@@ -39,3 +41,6 @@ Route::post('calculations', [CalculationController::class, 'store']);
 Route::get('offers', [OfferController::class, 'index']);
 Route::get('offer/{id}', [OfferController::class, 'offer']);
 Route::get('offer/{id}/pdf', [OfferController::class, 'offerPDF']);
+
+Route::get('usd', [DollarController::class, 'index']);
+Route::get('usd/update', [DollarController::class, 'update']);

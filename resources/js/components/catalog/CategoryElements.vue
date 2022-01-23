@@ -25,7 +25,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="element in elements" :key="'element_' + element.id">
+                    <tr @click="goTo(element.id)" v-for="element in elements" :key="'element_' + element.id">
                         <td class="align-middle">
                             <a>{{ element.name }}</a>
                         </td>
@@ -66,7 +66,10 @@
                 .then(response => (
                     this.elements = response.data
                 ));
-            }
+            },
+            goTo(id) {
+                this.$router.push({name: 'ElementEdit', params: {id: id}})
+            },
         },
     }
 </script>

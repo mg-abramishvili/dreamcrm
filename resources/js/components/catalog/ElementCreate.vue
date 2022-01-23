@@ -1,5 +1,5 @@
 <template>
-    <div v-if="categories && categories.length > 0 && boxes && boxes.length > 0 && usdKurs && usdKurs > 0">
+    <div v-if="categories && categories.length > 0 && boxes && boxes.length > 0 && usd.kurs && usd.kurs > 0">
         <div class="row align-items-center mb-4">
             <div class="col-12 col-lg-6">
                 <h1 class="h3 m-0">
@@ -29,8 +29,8 @@
                 <label id="name_label">Название</label>
                 <input v-model="name" id="name_input" type="text" class="form-control mb-3">
 
-                <label>Курс USD <small>(на {{moment(usdKursDate).format('DD.MM.YYYY')}})</small></label>
-                <input v-model="usdKurs" type="text" class="form-control mb-3" disabled>
+                <label>Курс USD <small>(на {{ usd.date | formatDate}})</small></label>
+                <input v-model="usd.kurs" type="text" class="form-control mb-3" disabled>
 
                 <div class="row" style="position: relative">
                     <div class="col-6">
@@ -47,19 +47,18 @@
                 <div class="form-group" style="position: relative;">
                     <label id="price_label">Цена (финальная)</label>
                     <input v-model="price" id="price_input" type="text" class="form-control mb-3">
-                    <button @click="TotalPrice()" style="position: absolute; top: 50%; transform: translateY(-50%); right: 1rem; border: none; box-shadow: none; font-size: 0.7rem; background: none; margin-top: 0.75rem">пересчитать</button>
                 </div>
 
-                <label id="selectedCategory_label">Категория</label>
-                <select v-model="selectedCategory" id="selectedCategory_input" class="form-select mb-3">
+                <label>Категория</label>
+                <select v-model="selected.category" class="form-select mb-3">
                     <option v-for="category in categories" :key="'key_' + category.id" :value="category.id">{{ category.name }}</option>
                 </select>
 
                 <div class="d-flex justify-content-between">
-                    <label id="selectedBoxes_label">Совместимость</label>
+                    <label>Совместимость</label>
                     <button @click="selectAllBoxes()" class="btn btn-sm">выбрать все</button>
                 </div>
-                <select v-model="selectedBoxes" id="selectedBoxes_input" class="form-control mb-3" style="height: 300px;" multiple>
+                <select v-model="selected.boxes" class="form-control mb-3" style="height: 300px;" multiple>
                     <option v-for="box in boxes" :key="'box_' + box.id" :value="box.id">{{ box.name }}</option>
                 </select>
                 <button @click="saveElement()" class="btn btn-primary">Сохранить</button>
@@ -80,27 +79,30 @@
                 name: '',
                 pre_rub: 0,
                 pre_usd: 0,
-                selectedCategory: '',
-                selectedBoxes: [],
+
+                selected: {
+                    category: '',
+                    boxes: [],
+                },
                 
                 categories: [],
                 boxes: [],
 
-                usdKurs: '',
-                usdKursDate: '',
+                usd: {
+                    kurs: '',
+                    date: '',
+                },
 
                 errors: [],
-
-                moment: moment,
             }
         },
         computed: {
             price: function () {
                 if(this.pre_rub && this.pre_rub.length > 0 || this.pre_usd && this.pre_usd.length > 0) {
                     if(this.pre_rub && this.pre_rub.length > 0 && this.pre_usd && this.pre_usd.length > 0) {
-                        return Math.ceil((parseFloat(this.pre_rub) + (parseFloat(this.usdKurs) * parseFloat(this.pre_usd))) / 50) * 50
+                        return Math.ceil((parseFloat(this.pre_rub) + (parseFloat(this.usd.kurs) * parseFloat(this.pre_usd))) / 50) * 50
                     } else if (!this.pre_rub) {
-                        return Math.ceil(parseFloat(parseFloat(this.usdKurs) * parseFloat(this.pre_usd) / 50)) * 50
+                        return Math.ceil(parseFloat(parseFloat(this.usd.kurs) * parseFloat(this.pre_usd) / 50)) * 50
                     } else if (!this.pre_usd) {
                         return Math.ceil(parseFloat(this.pre_rub) / 50) * 50
                     }
@@ -112,7 +114,7 @@
         created() {
             this.loadCategories()            
             this.loadBoxes()            
-            this.loadUsdKurs()            
+            this.loadUsd()            
         },
         methods: {
             loadCategories() {
@@ -120,7 +122,7 @@
                     .then((response => {
                         this.categories = response.data
                         if(this.$route.params.category) {
-                            this.selectedCategory = this.$route.params.category
+                            this.selected.category = this.$route.params.category
                         }
                     }))
             },
@@ -130,15 +132,16 @@
                         this.boxes = response.data
                     ))
             },
-            loadUsdKurs() {
-                axios.get('https://www.cbr-xml-daily.ru/daily_json.js', { withCredentials: false })
-                    .then(response => (
-                        this.usdKurs = response.data.Valute.USD.Value,
-                        this.usdKursDate = response.data.Date
-                    ));
+            loadUsd() {
+                axios
+                .get('/api/usd')
+                .then((response => {
+                    this.usd.kurs = response.data.kurs,
+                    this.usd.date = response.data.updated_at
+                }))
             },
             selectAllBoxes() {
-                this.selectedBoxes = this.boxes.map(box => box.id)
+                this.selected.boxes = this.boxes.map(box => box.id)
             },
             saveElement() {
                 this.errors = []
@@ -149,10 +152,10 @@
                 if (!this.price) {
                     this.errors.push('Укажите цену');
                 }
-                if (!this.selectedCategory) {
+                if (!this.selected.category) {
                     this.errors.push('Укажите категорию');
                 }
-                if (!this.selectedBoxes.length) {
+                if (!this.selected.boxes.length) {
                     this.errors.push('Укажите совместимость');
                 }
 
@@ -166,11 +169,11 @@
                     pre_rub: this.pre_rub,
                     pre_usd: this.pre_usd,
                     price: this.price,
-                    category: this.selectedCategory,
-                    boxes: this.selectedBoxes,
+                    category: this.selected.category,
+                    boxes: this.selected.boxes,
                 })
                 .then(response => (
-                    this.$router.push({path: `/catalog/${this.selectedCategory}/elements/`}) 
+                    this.$router.push({path: `/catalog/${this.selected.category}/elements/`}) 
                 ))
                 .catch((error) => {
                     if(error.response) {

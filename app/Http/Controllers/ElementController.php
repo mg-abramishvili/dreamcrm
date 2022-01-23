@@ -19,7 +19,7 @@ class ElementController extends Controller
 
     public function element($id)
     {
-        return Element::where('id', $id)->first();
+        return Element::where('id', $id)->with('boxes', 'category')->first();
     }
 
     public function store(Request $request)
@@ -43,5 +43,24 @@ class ElementController extends Controller
         $element->price = $request->price;
         $element->save();
         $element->boxes()->attach($request->boxes, ['element_id' => $element->id]);
+    }
+
+    public function updatePrices()
+    {
+        $kurs = 0;
+        $currencies = simplexml_load_file("http://www.cbr.ru/scripts/XML_daily.asp");
+        foreach ($currencies->Valute as $currency) {
+            if ($currency["ID"] == 'R01235') {
+                $kurs = round(str_replace(',','.',$currency->Value), 2);
+            }
+        }
+
+        if($kurs && $kurs > 0) {
+            $elements = Element::get();
+            foreach ($elements as $element) {
+                $element->price = ceil((($element->pre_usd * $kurs) + $element->pre_rub) / 50) * 50;
+                $element->save();
+            }
+        }        
     }
 }
