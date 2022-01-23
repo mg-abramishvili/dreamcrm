@@ -24,8 +24,10 @@ class DollarController extends Controller
             }
         }
 
-        $dollar = Dollar::find(1);
-        $dollar->kurs = $kurs;
-        $dollar->save();
+        if($kurs && $kurs > 0) {
+            $dollar = Dollar::find(1);
+            $dollar->kurs = $kurs;
+            $dollar->save();
+        }
     }
 }
