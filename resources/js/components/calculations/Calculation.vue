@@ -8,16 +8,15 @@
                 <span v-if="calculation.user" class="text-sm">автор: {{ calculation.user.name }}</span>
             </div>
             <div class="col-12 col-lg-6 text-end">
-                <!--<router-link :to="{name: 'CalculationEdit', params: {id: calculation.id}}" class="btn btn-warning">Изменить</router-link>-->
-                <!-- <template v-if="calculation.offers && calculation.offers.length">
+                <template v-if="calculation.offers && calculation.offers.length">
                     <div class="text-sm">У расчета есть КП: </div>
                     <template v-for="offer in calculation.offers">
-                        <router-link :to="{name: 'OfferItem', params: {id: offer.id}}" class="btn btn-outline-primary">КП №{{offer.id}} от {{moment(offer.created_at).format('D MMMM YYYY')}}</router-link>
+                        <router-link :to="{name: 'Offer', params: {id: offer.id}}" class="btn btn-outline-primary">КП №{{offer.id}} от {{ offer.created_at | formatDate }}</router-link>
                     </template>
                 </template>
-                <template v-else>
+                <template v-if="calculation.offers && calculation.offers.length == 0">
                     <router-link :to="{name: 'OfferCreate', params: {calculation_id: calculation.id}}" class="btn btn-primary">Создать КП из расчета</router-link>
-                </template> -->
+                </template>
             </div>
         </div>
 
@@ -30,7 +29,7 @@
                         <tr v-for="box in calculation.boxes">
                             <td>Корпус</td>
                             <td>{{ box.name }}</td>
-                            <td class="text-end">{{ box.price | currency }} ₽</td>
+                            <td class="text-end">{{ box.pivot.price | currency }} ₽</td>
                         </tr>
                         <template v-for="element in calculation.elements">
                         <tr v-if="element.pivot.price > 0">
@@ -93,7 +92,7 @@
         computed: {
             price() {
                 if(this.calculation.boxes && this.calculation.boxes[0] && this.calculation.boxes[0].price && this.calculation && this.calculation.elements && this.calculation.elements.length > 0) {
-                    return parseInt(this.calculation.boxes[0].price) + this.calculation.elements.reduce((a, b) => a + parseInt(b.price), 0)
+                    return parseInt(this.calculation.boxes[0].pivot.price) + this.calculation.elements.reduce((a, b) => a + parseInt(b.pivot.price), 0)
                 }
             },
             priceTotal() {

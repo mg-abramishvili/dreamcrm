@@ -2411,7 +2411,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2422,8 +2421,8 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     price: function price() {
       if (this.calculation.boxes && this.calculation.boxes[0] && this.calculation.boxes[0].price && this.calculation && this.calculation.elements && this.calculation.elements.length > 0) {
-        return parseInt(this.calculation.boxes[0].price) + this.calculation.elements.reduce(function (a, b) {
-          return a + parseInt(b.price);
+        return parseInt(this.calculation.boxes[0].pivot.price) + this.calculation.elements.reduce(function (a, b) {
+          return a + parseInt(b.pivot.price);
         }, 0);
       }
     },
@@ -28319,7 +28318,60 @@ var render = function () {
           : _vm._e(),
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-12 col-lg-6 text-end" }),
+      _c(
+        "div",
+        { staticClass: "col-12 col-lg-6 text-end" },
+        [
+          _vm.calculation.offers && _vm.calculation.offers.length
+            ? [
+                _c("div", { staticClass: "text-sm" }, [
+                  _vm._v("У расчета есть КП: "),
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.calculation.offers, function (offer) {
+                  return [
+                    _c(
+                      "router-link",
+                      {
+                        staticClass: "btn btn-outline-primary",
+                        attrs: {
+                          to: { name: "Offer", params: { id: offer.id } },
+                        },
+                      },
+                      [
+                        _vm._v(
+                          "КП №" +
+                            _vm._s(offer.id) +
+                            " от " +
+                            _vm._s(_vm._f("formatDate")(offer.created_at))
+                        ),
+                      ]
+                    ),
+                  ]
+                }),
+              ]
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.calculation.offers && _vm.calculation.offers.length == 0
+            ? [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: {
+                      to: {
+                        name: "OfferCreate",
+                        params: { calculation_id: _vm.calculation.id },
+                      },
+                    },
+                  },
+                  [_vm._v("Создать КП из расчета")]
+                ),
+              ]
+            : _vm._e(),
+        ],
+        2
+      ),
     ]),
     _vm._v(" "),
     _vm.calculation && _vm.calculation.id > 0
@@ -28342,7 +28394,9 @@ var render = function () {
                         _c("td", [_vm._v(_vm._s(box.name))]),
                         _vm._v(" "),
                         _c("td", { staticClass: "text-end" }, [
-                          _vm._v(_vm._s(_vm._f("currency")(box.price)) + " ₽"),
+                          _vm._v(
+                            _vm._s(_vm._f("currency")(box.pivot.price)) + " ₽"
+                          ),
                         ]),
                       ])
                     }),

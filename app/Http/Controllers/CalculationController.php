@@ -14,7 +14,7 @@ class CalculationController extends Controller
 
     public function calculation($id)
     {
-        return Calculation::with('type', 'boxes', 'elements.category', 'delivery', 'user')->find($id);
+        return Calculation::with('type', 'boxes', 'elements.category', 'delivery', 'user', 'offers')->find($id);
     }
 
     public function store(Request $request)

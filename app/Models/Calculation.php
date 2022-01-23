@@ -16,7 +16,7 @@ class Calculation extends Model
 
     public function boxes()
     {
-        return $this->belongsToMany(Box::class);
+        return $this->belongsToMany(Box::class)->withPivot(['pre_rub', 'pre_usd', 'price']);
     }
 
     public function elements()
