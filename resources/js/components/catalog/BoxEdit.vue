@@ -23,41 +23,39 @@
                     </div>
                 </div>
 
-                <label>Название</label>
-                <input v-model="name" type="text" class="form-control mb-3">
-
-                <label>Курс USD <small>(на {{ usd.date | formatDate}})</small></label>
-                <input v-model="usd.kurs" type="text" class="form-control mb-3" disabled>
-
-                <div class="row" style="position: relative">
-                    <div class="col-3">
-                        <label>Цена RUB</label>
-                        <input v-model="pre_rub" type="number" class="form-control mb-3">
-                    </div>
-                    <div class="col-3">
-                        <label>Цена USD</label>
-                        <input v-model="pre_usd" type="number" class="form-control mb-3">
-                    </div>
-                    <div class="col-3">
-                        <label>Сборка</label>
-                        <input v-model="sborka" type="number" class="form-control mb-3">
-                    </div>
-                    <div class="col-3">
-                        <label>Маржа</label>
-                        <input v-model="marzha" type="number" class="form-control mb-3">
-                    </div>
-                    <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: block; width: 10px; padding: 0; margin: 0; margin-top: 2px;">+</span>
+                <div class="mb-3">
+                    <label>Название</label>
+                    <input v-model="name" type="text" class="form-control">
                 </div>
 
-                <div class="form-group" style="position: relative;">
-                    <label>Цена (финальная)</label>
-                    <input v-model="price" type="text" class="form-control mb-3">
+                <div class="row">
+                    <div class="col">
+                        <label>Цена RUB</label>
+                        <input v-model="pre_rub" type="number" class="form-control">
+                    </div>
+                    <div class="col">
+                        <label>Цена USD </label>
+                        <input v-model="pre_usd" type="number" class="form-control">
+                        <small>{{ usd.kurs }} ₽ от {{ usd.date | formatDateShort }}</small>
+                    </div>
+                    <div class="col">
+                        <label>Цена Сборка</label>
+                        <input v-model="sborka" type="number" class="form-control">
+                    </div>
+                    <div class="col">
+                        <label>Цена Маржа</label>
+                        <input v-model="marzha" type="number" class="form-control">
+                    </div>
+                    <div class="col">
+                        <label>Цена (финальная)</label>
+                        <input v-model="price" disabled type="number" class="form-control">
+                    </div>
                 </div>
 
                 <div class="d-flex justify-content-between">
                     <label>Тип</label>
                 </div>
-                <select v-model="selected.types" class="form-control mb-3" style="height: 300px;" multiple>
+                <select v-model="selected.types" class="form-control mb-3" style="height: 200px;" multiple>
                     <option v-for="type in types" :key="'type_' + type.id" :value="type.id">{{ type.name }}</option>
                 </select>
                 <button @click="updateBox(box.id)" class="btn btn-primary">Сохранить</button>
