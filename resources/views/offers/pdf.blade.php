@@ -53,7 +53,7 @@
 </head>
 <body>
     <div class="page">
-        <table class="table" style="padding-top: 50px; margin-bottom: 50px;">
+        <table class="table" style="padding-top: 70px; margin-bottom: 50px;">
             <tbody>
                 <tr>
                     <td style="width: 50%; padding-left: 50px; border: 0; vertical-align:top;">
@@ -71,9 +71,8 @@
                             @endif
                         @endforeach
                     </td>
-                    <td style="width: 50%; border: 0; vertical-align:top;">
-                        <img src="{{ public_path('img/logo-h.png') }}" style="width: auto; height: 100px;"/>
-                        <br>
+                    <td style="width: 50%; border: 0; vertical-align:top; position: relative;">
+                        <img src="{{ public_path('img/logo-h.png') }}" style="width: auto; height: 60px; position: absolute; top: -30px; right: 60px;"/>
                         <span>8 800 301-09-39</span>
 
                         <br><br>
@@ -91,7 +90,9 @@
 
         <span style="display:block;margin-bottom: 20px; text-align: center;">www.dreamapp.ru | Интерактивная автоматизация | Профессиональное сенсорное оборудование</span>
         
-        <span style="display:block;margin-bottom: 20px; text-align: center; font-size: 22px; font-weight: bold;">Коммерческое предложение №{{ $offer->id }} от {{ $offer->created_at }}</span>
+        <span style="display:block;margin-bottom: 20px; text-align: center; font-size: 22px; font-weight: bold;">
+            Коммерческое предложение №{{ $offer->id }} от {{ Carbon\Carbon::parse($offer->created_at)->format('d.m.Y') }}
+        </span>
 
         <table class="table">
             <tbody>
