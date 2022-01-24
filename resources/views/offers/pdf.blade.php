@@ -45,15 +45,18 @@
             width: 100vw;
             height: 100vh;
             position: relative;
+            background: url('{{ public_path('img/offer-bg.png') }}');
+            background-size: cover;
+            background-position: center center;
         }
     </style>
 </head>
 <body>
     <div class="page">
-        <table class="table" style="margin-bottom: 50px;">
+        <table class="table" style="padding-top: 50px; margin-bottom: 50px;">
             <tbody>
                 <tr>
-                    <td style="width: 50%; padding-left: 50px;">
+                    <td style="width: 50%; padding-left: 50px; border: 0; vertical-align:top;">
                         <span>Менеджер отдела продаж</span>
                         <br>
                         @foreach($offer->calculations as $calculation)
@@ -62,11 +65,15 @@
                                     {{ $calculation->user->name }}
                                 </span>
                                 <br>
+                                <span>+7 999 000-00-00</span>
+                                <br>
                                 <span>{{ $calculation->user->email }}</span>
                             @endif
                         @endforeach
                     </td>
-                    <td style="width: 50%;">
+                    <td style="width: 50%; border: 0; vertical-align:top;">
+                        <img src="{{ public_path('img/logo-h.png') }}" style="width: auto; height: 100px;"/>
+                        <br>
                         <span>8 800 301-09-39</span>
 
                         <br><br>
