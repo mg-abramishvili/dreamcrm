@@ -24,6 +24,7 @@
         html,body {
             font-family: 'Roboto', sans-serif;
             font-size: 14px;
+            line-height: 1;
         }
 
         .table {
@@ -49,19 +50,52 @@
             background-size: cover;
             background-position: center center;
         }
+
+        .table-top-row {
+            margin-bottom: 15px;
+        }
+        .table-top-cell-icon {
+            width: 20px;
+            height: auto;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 6px;
+        }
+        .table-top-cell-text {
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 1;
+            margin-top: -2px;
+            font-size: 13px;
+        }
+        .rank {
+            display: inline-block;
+            line-height: 1;
+            margin: 0;
+            width: 100%;
+        }
+        .name {
+            margin-top: 0;
+            margin-bottom: 10px;
+            line-height: 1;
+            display: inline-block;
+            width: 100%;
+            font-size: 28px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
     <div class="page">
-        <table class="table" style="padding-top: 70px; margin-bottom: 50px;">
+        <table class="table" style="padding-top: 70px; margin-bottom: 10px;">
             <tbody>
                 <tr>
-                    <td style="width: 50%; padding-left: 50px; border: 0; vertical-align:top;">
-                        <span>Менеджер отдела продаж</span>
+                    <td style="width: 50%; padding-left: 40px; border: 0; vertical-align:top;">
+                        <span class="rank">Менеджер отдела продаж</span>
                         <br>
                         @foreach($offer->calculations as $calculation)
                             @if($loop->first)
-                                <span style="margin-top:0; margin-bottom:0; font-size: 30px; font-weight: bold;">
+                                <span class="name">
                                     {{ $calculation->user->name }}
                                 </span>
                                 <br>
@@ -72,29 +106,37 @@
                         @endforeach
                     </td>
                     <td style="width: 50%; border: 0; vertical-align:top; position: relative;">
-                        <img src="{{ public_path('img/logo-h.png') }}" style="width: auto; height: 60px; position: absolute; top: -30px; right: 60px;"/>
-                        <span>8 800 301-09-39</span>
+                        <img src="{{ public_path('img/logo-h.png') }}" style="width: auto; height: 60px; position: absolute; top: -35px; right: 60px;"/>
+                        
+                        <div class="table-top-row">
+                            <img src="{{ public_path('img/envelope-fill.png') }}" class="table-top-cell-icon" />
+                            <span class="table-top-cell-text">8 800 301-09-39</span>
+                        </div>
 
-                        <br><br>
+                        <div class="table-top-row">
+                            <img src="{{ public_path('img/envelope-fill.png') }}" class="table-top-cell-icon" />
+                            <span class="table-top-cell-text">mg@dreamapp.ru | info@dreamapp.ru</span>
+                        </div>
 
-                        <span>mg@dreamapp.ru | info@dreamapp.ru</span>
-
-                        <br><br>
-
-                        <span>г. Москва, ул. Марии Поливановой, д. 9</span><br>
-                        <span>г. Санкт-Петербург, шоссе Революции, д. 69, офис 4</span>
+                        <div class="table-top-row">
+                            <img src="{{ public_path('img/envelope-fill.png') }}" class="table-top-cell-icon" />
+                            <span class="table-top-cell-text">
+                                г. Москва, ул. Марии Поливановой, д. 9<br>
+                                г. Санкт-Петербург, шоссе Революции, д. 69, офис 4
+                            </span>
+                        </div>
                     </td>
                 </tr>
             </tbody>
         </table>
 
-        <span style="display:block;margin-bottom: 20px; text-align: center;">www.dreamapp.ru | Интерактивная автоматизация | Профессиональное сенсорное оборудование</span>
+        <span style="display:block;margin-bottom: 20px; text-align: center; font-size: 12px; color: #888;">www.dreamapp.ru | Интерактивная автоматизация | Профессиональное сенсорное оборудование</span>
         
         <span style="display:block;margin-bottom: 20px; text-align: center; font-size: 22px; font-weight: bold;">
             Коммерческое предложение №{{ $offer->id }} от {{ Carbon\Carbon::parse($offer->created_at)->format('d.m.Y') }}
         </span>
 
-        <table class="table">
+        <table class="table" style="width: 90%; margin: 0 auto;">
             <tbody>
                 @foreach($offer->calculations as $calculation)
                     <td>
