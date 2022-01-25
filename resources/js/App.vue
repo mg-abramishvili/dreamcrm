@@ -34,23 +34,18 @@
 												</div>
 												<div class="mb-3">
 													<label class="form-label">E-mail</label>
-													<input type="email" name="email" class="form-control form-control-lg" v-model="formData.email" placeholder="">
+													<input type="email" name="email" ref="email" class="form-control form-control-lg" v-model="formData.email" placeholder="">
 												</div>
 												<div class="mb-3">
 													<label class="form-label">Пароль</label>
 													<input type="password" name="password" class="form-control form-control-lg" v-model="formData.password" placeholder="">
-													<!--<small>
-														<a href="#">Восстановить пароль</a>
-													</small>-->
 												</div>
-												<!--<div>
-													<div class="form-check align-items-center">
-														<input id="customControlInline" type="checkbox" class="form-check-input" value="remember-me" name="remember-me" checked="">
-														<label class="form-check-label text-small" for="customControlInline">Запомнить меня</label>
-													</div>
-												</div>-->
 												<div class="text-center mt-3">
-													<button type="submit" class="btn btn-lg btn-primary">Войти</button>
+
+													<button class="btn btn-lg btn-primary" type="submit" :disabled="views.submitButton == false">
+														<span v-if="views.submitButton == false" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+														Войти
+													</button>
 												</div>
 											</form>
 										</div>
@@ -86,6 +81,7 @@
                 views: {
                     sidebar: true,
                     loading: true,
+					submitButton: true,
                 }				
             }
         },
@@ -94,13 +90,16 @@
         },
 		methods: {
 			handleLogin() {
+				this.views.submitButton = false
                 axios.get('/sanctum/csrf-cookie').then(response => {
                     axios.post('/api/login', this.formData).then(response => {
 						if(response.data === 'bad_login') {
                             this.errors = []
 							this.errors.push('Неверный E-mail или пароль')
+							this.views.submitButton = true
 						} else {
 							this.checkMe()
+							// this.views.submitButton = true
 						}
                     })
                 });
@@ -114,6 +113,12 @@
 					} else {
 						this.authenticated = false
                         this.views.loading = false
+						setTimeout(() => {
+							if(this.$refs.email) {
+								this.$refs.email.focus()
+							}
+						}, 100);
+						
 					}
 				})
 			},

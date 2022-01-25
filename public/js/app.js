@@ -2130,11 +2130,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -2148,7 +2143,8 @@ __webpack_require__.r(__webpack_exports__);
       errors: [],
       views: {
         sidebar: true,
-        loading: true
+        loading: true,
+        submitButton: true
       }
     };
   },
@@ -2159,14 +2155,18 @@ __webpack_require__.r(__webpack_exports__);
     handleLogin: function handleLogin() {
       var _this = this;
 
+      this.views.submitButton = false;
       axios.get('/sanctum/csrf-cookie').then(function (response) {
         axios.post('/api/login', _this.formData).then(function (response) {
           if (response.data === 'bad_login') {
             _this.errors = [];
 
             _this.errors.push('Неверный E-mail или пароль');
+
+            _this.views.submitButton = true;
           } else {
-            _this.checkMe();
+            _this.checkMe(); // this.views.submitButton = true
+
           }
         });
       });
@@ -2183,6 +2183,11 @@ __webpack_require__.r(__webpack_exports__);
         } else {
           _this2.authenticated = false;
           _this2.views.loading = false;
+          setTimeout(function () {
+            if (_this2.$refs.email) {
+              _this2.$refs.email.focus();
+            }
+          }, 100);
         }
       });
     },
@@ -27846,6 +27851,7 @@ var render = function () {
                                                 expression: "formData.email",
                                               },
                                             ],
+                                            ref: "email",
                                             staticClass:
                                               "form-control form-control-lg",
                                             attrs: {
@@ -27912,7 +27918,40 @@ var render = function () {
                                           }),
                                         ]),
                                         _vm._v(" "),
-                                        _vm._m(1),
+                                        _c(
+                                          "div",
+                                          { staticClass: "text-center mt-3" },
+                                          [
+                                            _c(
+                                              "button",
+                                              {
+                                                staticClass:
+                                                  "btn btn-lg btn-primary",
+                                                attrs: {
+                                                  type: "submit",
+                                                  disabled:
+                                                    _vm.views.submitButton ==
+                                                    false,
+                                                },
+                                              },
+                                              [
+                                                _vm.views.submitButton == false
+                                                  ? _c("span", {
+                                                      staticClass:
+                                                        "spinner-border spinner-border-sm",
+                                                      attrs: {
+                                                        role: "status",
+                                                        "aria-hidden": "true",
+                                                      },
+                                                    })
+                                                  : _vm._e(),
+                                                _vm._v(
+                                                  "\n\t\t\t\t\t\t\t\t\t\t\t\t\tВойти\n\t\t\t\t\t\t\t\t\t\t\t\t"
+                                                ),
+                                              ]
+                                            ),
+                                          ]
+                                        ),
                                       ]
                                     ),
                                   ]),
@@ -27938,18 +27977,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "text-center mt-4 mb-4" }, [
       _c("h1", { staticClass: "h2" }, [_vm._v("DreamApp CRM")]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "text-center mt-3" }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-lg btn-primary", attrs: { type: "submit" } },
-        [_vm._v("Войти")]
-      ),
     ])
   },
 ]
