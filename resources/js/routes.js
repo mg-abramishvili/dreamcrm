@@ -15,6 +15,8 @@ import CalculationCreate from './components/calculations/CalculationCreate.vue';
 import Offers from './components/offers/Offers.vue';
 import Offer from './components/offers/Offer.vue';
 
+import Tasks from './components/tasks/Tasks.vue';
+
 export const routes = [
     {
         path: '/',
@@ -80,5 +82,10 @@ export const routes = [
         path: '/offer/:id',
         name: 'Offer',
         component: Offer
+    },
+    {
+        path: '/tasks',
+        name: 'Tasks',
+        component: Tasks
     },
 ];

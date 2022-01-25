@@ -9,6 +9,7 @@ use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\CalculationController;
 use App\Http\Controllers\OfferController;
 use App\Http\Controllers\DollarController;
+use App\Http\Controllers\TaskController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -44,3 +45,5 @@ Route::get('offer/{id}/pdf', [OfferController::class, 'offerPDF']);
 
 Route::get('usd', [DollarController::class, 'index']);
 Route::get('usd/update', [DollarController::class, 'update']);
+
+Route::get('tasks', [TaskController::class, 'index']);

@@ -15,6 +15,7 @@ class CreateTasksTable extends Migration
             $table->integer('board_id')->nullable();
             $table->date('deadline')->nullable();
             $table->text('files')->nullable();
+            $table->string('status');
             $table->timestamps();
         });
     }
