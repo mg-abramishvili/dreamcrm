@@ -17,11 +17,16 @@ class User extends Authenticatable
         return $this->hasMany(Calculation::class);
     }
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    public function tasks()
+    {
+        return $this->belongsToMany(Task::class);
+    }
+
+    public function task_comments()
+    {
+        return $this->hasMany(TaskComment::class);
+    }
+
     protected $fillable = [
         'name',
         'email',

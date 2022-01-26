@@ -233,3 +233,16 @@ table.dataTable {
 }
 
 /* PROJECT ITEM */
+
+
+/* TASK MODAL */
+.tasks-page .modal-title {
+    font-size: 20px;
+}
+.tasks-page .modal-body {
+    padding: 0;
+}
+.tasks-page .task-modal-comments {
+    margin-top: 40px
+}
+/* TASK MODAL */
