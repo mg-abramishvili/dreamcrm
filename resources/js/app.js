@@ -24,11 +24,15 @@ Vue.filter('currency', function (value) {
 })
 Vue.filter('formatDate', function (value) {
     if (!value) return ''
-    return moment(value).format('DD.MM.YYYY')
+    return moment(value).utcOffset(180).format('DD.MM.YYYY')
 })
 Vue.filter('formatDateShort', function (value) {
     if (!value) return ''
-    return moment(value).format('DD.MM')
+    return moment(value).utcOffset(180).format('DD.MM')
+})
+Vue.filter('formatDateTimeOnly', function (value) {
+    if (!value) return ''
+    return moment(value).utcOffset(180).format('H:mm')
 })
 
 const router = new VueRouter({

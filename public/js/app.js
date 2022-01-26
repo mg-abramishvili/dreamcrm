@@ -4351,6 +4351,19 @@ __webpack_require__.r(__webpack_exports__);
     return {//
     };
   },
+  mounted: function mounted() {
+    var _this = this;
+
+    document.getElementsByClassName('modal')[0].focus();
+    document.body.style.overflow = "hidden";
+    var modal = document.getElementsByClassName('modal')[0];
+
+    window.onclick = function () {
+      if (event.target == modal) {
+        _this.closeModal();
+      }
+    };
+  },
   methods: {
     closeModal: function closeModal() {
       this.$parent.views.modal = false;
@@ -4374,6 +4387,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -4413,7 +4435,7 @@ __webpack_require__.r(__webpack_exports__);
         user_id: this.$parent.$parent.$parent.user.id,
         text: this.text
       }).then(function (response) {
-        return _this2.text = '', _this2.getComments();
+        return _this2.text = '', _this2.getComments(), _this2.$parent.getTasks();
       });
     }
   }
@@ -4502,6 +4524,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -4516,13 +4550,16 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    var _this = this;
-
-    axios.get('/api/tasks').then(function (response) {
-      return _this.tasks = response.data;
-    });
+    this.getTasks();
   },
   methods: {
+    getTasks: function getTasks() {
+      var _this = this;
+
+      axios.get('/api/tasks').then(function (response) {
+        return _this.tasks = response.data;
+      });
+    },
     openTaskModal: function openTaskModal(task) {
       this.selected.task = task;
       this.views.modal = true;
@@ -4570,11 +4607,15 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('currency', function (value) 
 });
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('formatDate', function (value) {
   if (!value) return '';
-  return moment__WEBPACK_IMPORTED_MODULE_0___default()(value).format('DD.MM.YYYY');
+  return moment__WEBPACK_IMPORTED_MODULE_0___default()(value).utcOffset(180).format('DD.MM.YYYY');
 });
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('formatDateShort', function (value) {
   if (!value) return '';
-  return moment__WEBPACK_IMPORTED_MODULE_0___default()(value).format('DD.MM');
+  return moment__WEBPACK_IMPORTED_MODULE_0___default()(value).utcOffset(180).format('DD.MM');
+});
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('formatDateTimeOnly', function (value) {
+  if (!value) return '';
+  return moment__WEBPACK_IMPORTED_MODULE_0___default()(value).utcOffset(180).format('H:mm');
 });
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_5__["default"]({
   mode: 'history',
@@ -32287,6 +32328,17 @@ var render = function () {
       staticClass: "modal fade show",
       staticStyle: { display: "block" },
       attrs: { tabindex: "-1", "aria-modal": "true", role: "dialog" },
+      on: {
+        keyup: function ($event) {
+          if (
+            !$event.type.indexOf("key") &&
+            _vm._k($event.keyCode, "esc", 27, $event.key, ["Esc", "Escape"])
+          ) {
+            return null
+          }
+          return _vm.closeModal()
+        },
+      },
     },
     [
       _c(
@@ -32398,12 +32450,60 @@ var render = function () {
     { staticClass: "task-modal-comments" },
     [
       _vm._l(_vm.comments, function (comment) {
-        return _c("p", { key: "comment_" + comment.id }, [
-          _c("small", { staticClass: "d-block" }, [
-            _vm._v(_vm._s(comment.user.name)),
-          ]),
-          _vm._v("\n        " + _vm._s(comment.text) + "\n    "),
-        ])
+        return _c(
+          "div",
+          {
+            key: "comment_" + comment.id,
+            staticClass: "chat-message-left pb-4",
+          },
+          [
+            _c("div", [
+              _c("img", {
+                staticClass: "rounded-circle me-1",
+                attrs: {
+                  src: "img/no-image.jpg",
+                  alt: "Bertha Martin",
+                  width: "40",
+                  height: "40",
+                },
+              }),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "text-muted text-comment-date small text-nowrap mt-2",
+                },
+                [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(_vm._f("formatDateTimeOnly")(comment.created_at))
+                  ),
+                  _c("br"),
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(_vm._f("formatDate")(comment.created_at)) +
+                      "\n            "
+                  ),
+                ]
+              ),
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "w-100 flex-shrink-1 bg-light rounded py-2 px-3 ms-3",
+              },
+              [
+                _c("div", { staticClass: "fw-bold mb-1" }, [
+                  _vm._v(_vm._s(comment.user.name)),
+                ]),
+                _vm._v("\n            " + _vm._s(comment.text) + "\n        "),
+              ]
+            ),
+          ]
+        )
       }),
       _vm._v(" "),
       _c("textarea", {
@@ -32502,7 +32602,49 @@ var render = function () {
                       _c("div", { staticClass: "card-body p-3" }, [
                         _c("p", [_vm._v(_vm._s(task.name))]),
                         _vm._v(" "),
-                        _vm._m(2, true),
+                        _c("div", { staticClass: "mt-n1" }, [
+                          _c("span", { staticClass: "btn btn-sm p-0" }, [
+                            _c(
+                              "svg",
+                              {
+                                staticClass: "feather feather-message-square",
+                                attrs: {
+                                  xmlns: "http://www.w3.org/2000/svg",
+                                  width: "24",
+                                  height: "24",
+                                  viewBox: "0 0 24 24",
+                                  fill: "none",
+                                  stroke: "currentColor",
+                                  "stroke-width": "2",
+                                  "stroke-linecap": "round",
+                                  "stroke-linejoin": "round",
+                                },
+                              },
+                              [
+                                _c("path", {
+                                  attrs: {
+                                    d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
+                                  },
+                                }),
+                              ]
+                            ),
+                            _vm._v(
+                              "\n                                    " +
+                                _vm._s(task.comments.length) +
+                                "\n                                "
+                            ),
+                          ]),
+                          _vm._v(" "),
+                          _c("img", {
+                            staticClass: "rounded-circle",
+                            attrs: {
+                              src: "img/no-image.jpg",
+                              width: "32",
+                              height: "32",
+                              alt: "Avatar",
+                            },
+                          }),
+                        ]),
                       ]),
                     ]
                   )
@@ -32515,7 +32657,7 @@ var render = function () {
         _vm._v(" "),
         _c("div", { staticClass: "col-12 col-lg-4" }, [
           _c("div", { staticClass: "card" }, [
-            _vm._m(3),
+            _vm._m(2),
             _vm._v(" "),
             _c(
               "div",
@@ -32540,7 +32682,49 @@ var render = function () {
                       _c("div", { staticClass: "card-body p-3" }, [
                         _c("p", [_vm._v(_vm._s(task.name))]),
                         _vm._v(" "),
-                        _vm._m(4, true),
+                        _c("div", { staticClass: "mt-n1" }, [
+                          _c("span", { staticClass: "btn btn-sm p-0" }, [
+                            _c(
+                              "svg",
+                              {
+                                staticClass: "feather feather-message-square",
+                                attrs: {
+                                  xmlns: "http://www.w3.org/2000/svg",
+                                  width: "24",
+                                  height: "24",
+                                  viewBox: "0 0 24 24",
+                                  fill: "none",
+                                  stroke: "currentColor",
+                                  "stroke-width": "2",
+                                  "stroke-linecap": "round",
+                                  "stroke-linejoin": "round",
+                                },
+                              },
+                              [
+                                _c("path", {
+                                  attrs: {
+                                    d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
+                                  },
+                                }),
+                              ]
+                            ),
+                            _vm._v(
+                              "\n                                    " +
+                                _vm._s(task.comments.length) +
+                                "\n                                "
+                            ),
+                          ]),
+                          _vm._v(" "),
+                          _c("img", {
+                            staticClass: "rounded-circle",
+                            attrs: {
+                              src: "img/no-image.jpg",
+                              width: "32",
+                              height: "32",
+                              alt: "Avatar",
+                            },
+                          }),
+                        ]),
                       ]),
                     ]
                   )
@@ -32553,7 +32737,7 @@ var render = function () {
         _vm._v(" "),
         _c("div", { staticClass: "col-12 col-lg-4" }, [
           _c("div", { staticClass: "card" }, [
-            _vm._m(5),
+            _vm._m(3),
             _vm._v(" "),
             _c(
               "div",
@@ -32578,7 +32762,49 @@ var render = function () {
                       _c("div", { staticClass: "card-body p-3" }, [
                         _c("p", [_vm._v(_vm._s(task.name))]),
                         _vm._v(" "),
-                        _vm._m(6, true),
+                        _c("div", { staticClass: "mt-n1" }, [
+                          _c("span", { staticClass: "btn btn-sm p-0" }, [
+                            _c(
+                              "svg",
+                              {
+                                staticClass: "feather feather-message-square",
+                                attrs: {
+                                  xmlns: "http://www.w3.org/2000/svg",
+                                  width: "24",
+                                  height: "24",
+                                  viewBox: "0 0 24 24",
+                                  fill: "none",
+                                  stroke: "currentColor",
+                                  "stroke-width": "2",
+                                  "stroke-linecap": "round",
+                                  "stroke-linejoin": "round",
+                                },
+                              },
+                              [
+                                _c("path", {
+                                  attrs: {
+                                    d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
+                                  },
+                                }),
+                              ]
+                            ),
+                            _vm._v(
+                              "\n                                    " +
+                                _vm._s(task.comments.length) +
+                                "\n                                "
+                            ),
+                          ]),
+                          _vm._v(" "),
+                          _c("img", {
+                            staticClass: "rounded-circle",
+                            attrs: {
+                              src: "img/no-image.jpg",
+                              width: "32",
+                              height: "32",
+                              alt: "Avatar",
+                            },
+                          }),
+                        ]),
                       ]),
                     ]
                   )
@@ -32624,22 +32850,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "mt-n1" }, [
-      _c("img", {
-        staticClass: "rounded-circle",
-        attrs: {
-          src: "img/no-image.jpg",
-          width: "32",
-          height: "32",
-          alt: "Avatar",
-        },
-      }),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header pb-0" }, [
       _c("h5", { staticClass: "card-title mb-0" }, [_vm._v("В работе")]),
     ])
@@ -32648,40 +32858,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "mt-n1" }, [
-      _c("img", {
-        staticClass: "rounded-circle",
-        attrs: {
-          src: "img/no-image.jpg",
-          width: "32",
-          height: "32",
-          alt: "Avatar",
-        },
-      }),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header pb-0" }, [
       _c("h5", { staticClass: "card-title mb-0" }, [_vm._v("Выполнено")]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "mt-n1" }, [
-      _c("img", {
-        staticClass: "rounded-circle",
-        attrs: {
-          src: "img/no-image.jpg",
-          width: "32",
-          height: "32",
-          alt: "Avatar",
-        },
-      }),
     ])
   },
 ]

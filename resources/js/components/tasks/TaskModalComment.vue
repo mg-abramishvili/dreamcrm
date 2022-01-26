@@ -1,9 +1,18 @@
 <template>
     <div class="task-modal-comments">
-        <p v-for="comment in comments" :key="'comment_' + comment.id">
-            <small class="d-block">{{ comment.user.name }}</small>
-            {{ comment.text }}
-        </p>
+        <div v-for="comment in comments" :key="'comment_' + comment.id" class="chat-message-left pb-4">
+            <div>
+                <img src="img/no-image.jpg" class="rounded-circle me-1" alt="Bertha Martin" width="40" height="40">
+                <div class="text-muted text-comment-date small text-nowrap mt-2" >
+                    {{ comment.created_at | formatDateTimeOnly }}<br>
+                    {{ comment.created_at | formatDate }}
+                </div>
+            </div>
+            <div class="w-100 flex-shrink-1 bg-light rounded py-2 px-3 ms-3">
+                <div class="fw-bold mb-1">{{ comment.user.name }}</div>
+                {{ comment.text }}
+            </div>
+        </div>
 
         <textarea v-model="text" class="form-control mb-2" placeholder="Напишите комментарий" style="resize: vertical;"></textarea>
         <button @click="saveComment()" class="btn btn-primary">Сохранить</button>
@@ -40,7 +49,8 @@ export default {
             })
             .then(response => (
                 this.text = '',
-                this.getComments()
+                this.getComments(),
+                this.$parent.getTasks()
             ))
         }
     },

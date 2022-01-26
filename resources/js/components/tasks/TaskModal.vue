@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade show" tabindex="-1" style="display: block;" aria-modal="true" role="dialog">
+    <div @keyup.esc="closeModal()" class="modal fade show" tabindex="-1" style="display: block;" aria-modal="true" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -39,6 +39,17 @@
         data() {
             return {
                 //
+            }
+        },
+        mounted() {
+            document.getElementsByClassName('modal')[0].focus()
+            document.body.style.overflow = "hidden"
+
+            var modal = document.getElementsByClassName('modal')[0]
+            window.onclick = () => {
+                if (event.target == modal) {
+                    this.closeModal()
+                }
             }
         },
         methods: {

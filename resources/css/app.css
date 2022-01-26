@@ -236,6 +236,14 @@ table.dataTable {
 
 
 /* TASK MODAL */
+.tasks-page .modal {
+    overflow-y: auto;
+}
+.text-comment-date {
+    font-size: 10px;
+    color: #999;
+    text-align: center;
+}
 .tasks-page .modal-title {
     font-size: 20px;
 }

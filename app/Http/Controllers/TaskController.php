@@ -9,6 +9,6 @@ class TaskController extends Controller
 {
     public function index()
     {
-        return Task::with('users')->get();
+        return Task::with('users', 'comments')->get();
     }
 }
