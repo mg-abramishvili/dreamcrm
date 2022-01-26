@@ -15,13 +15,20 @@
                             <TaskModalComment :task_id="task.id"></TaskModalComment>
                         </div>
                         <div class="col-12 col-lg-3">
-                            <h6>Участники</h6>
-                            <ul>
-                                <li v-for="user in task.users" :key="'task_user_' + user.id">
-                                    {{ user.name }}
-                                </li>
-                            </ul>
-                            <h6>Действия</h6>
+                            <h6 class="text-muted mb-0">Статус</h6>
+                            <span v-if="task.status == 'todo'" class="badge rounded-pill bg-primary text-sm">Сделать</span>
+                            <span v-if="task.status == 'inprogress'" class="badge rounded-pill bg-warning text-sm">В работе</span>
+                            <span v-if="task.status == 'completed'" class="badge rounded-pill bg-success text-sm">Выполнено</span>
+                            
+                            <h6 class="text-muted mt-4">Участники</h6>
+                            <div v-for="user in task.users" :key="'task_user_' + user.id" class="d-flex align-items-center mb-1">
+                                <img src="/img/no-image.jpg" width="36" height="36" class="rounded-circle me-2" alt="">
+                                <div class="flex-grow-1">
+                                    <strong>{{ user.name }}</strong>
+                                </div>
+                            </div>
+                            
+                            <h6 class="text-muted mt-4">Действия</h6>
                             <button class="w-100 btn btn-outline-primary mb-2">Перенаправить</button>
                             <button class="w-100 btn btn-success">Задача выполнена</button>
                         </div>

@@ -1,5 +1,5 @@
 <template>
-    <div class="task-modal-comments">
+    <div v-if="views.loading == false" class="task-modal-comments">
         <div v-for="comment in comments" :key="'comment_' + comment.id" class="chat-message-left pb-4">
             <div>
                 <img src="img/no-image.jpg" class="rounded-circle me-1" alt="Bertha Martin" width="40" height="40">
@@ -27,6 +27,10 @@ export default {
             comments: [],
 
             text: '',
+
+            views: {
+                loading: true,
+            },
         }
     },
     created() {
@@ -37,7 +41,8 @@ export default {
             axios
             .get(`/api/task/${this.task_id}/comments`)
             .then(response => (
-                this.comments = response.data
+                this.comments = response.data,
+                this.views.loading = false
             ))
         },
         saveComment() {

@@ -4344,6 +4344,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['task'],
@@ -4413,7 +4420,10 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       comments: [],
-      text: ''
+      text: '',
+      views: {
+        loading: true
+      }
     };
   },
   created: function created() {
@@ -4424,7 +4434,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get("/api/task/".concat(this.task_id, "/comments")).then(function (response) {
-        return _this.comments = response.data;
+        return _this.comments = response.data, _this.views.loading = false;
       });
     },
     saveComment: function saveComment() {
@@ -32385,35 +32395,92 @@ var render = function () {
                   1
                 ),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-12 col-lg-3" }, [
-                  _c("h6", [_vm._v("Участники")]),
-                  _vm._v(" "),
-                  _c(
-                    "ul",
+                _c(
+                  "div",
+                  { staticClass: "col-12 col-lg-3" },
+                  [
+                    _c("h6", { staticClass: "text-muted mb-0" }, [
+                      _vm._v("Статус"),
+                    ]),
+                    _vm._v(" "),
+                    _vm.task.status == "todo"
+                      ? _c(
+                          "span",
+                          {
+                            staticClass:
+                              "badge rounded-pill bg-primary text-sm",
+                          },
+                          [_vm._v("Сделать")]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.task.status == "inprogress"
+                      ? _c(
+                          "span",
+                          {
+                            staticClass:
+                              "badge rounded-pill bg-warning text-sm",
+                          },
+                          [_vm._v("В работе")]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.task.status == "completed"
+                      ? _c(
+                          "span",
+                          {
+                            staticClass:
+                              "badge rounded-pill bg-success text-sm",
+                          },
+                          [_vm._v("Выполнено")]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("h6", { staticClass: "text-muted mt-4" }, [
+                      _vm._v("Участники"),
+                    ]),
+                    _vm._v(" "),
                     _vm._l(_vm.task.users, function (user) {
-                      return _c("li", { key: "task_user_" + user.id }, [
-                        _vm._v(
-                          "\n                                " +
-                            _vm._s(user.name) +
-                            "\n                            "
-                        ),
-                      ])
+                      return _c(
+                        "div",
+                        {
+                          key: "task_user_" + user.id,
+                          staticClass: "d-flex align-items-center mb-1",
+                        },
+                        [
+                          _c("img", {
+                            staticClass: "rounded-circle me-2",
+                            attrs: {
+                              src: "/img/no-image.jpg",
+                              width: "36",
+                              height: "36",
+                              alt: "",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "flex-grow-1" }, [
+                            _c("strong", [_vm._v(_vm._s(user.name))]),
+                          ]),
+                        ]
+                      )
                     }),
-                    0
-                  ),
-                  _vm._v(" "),
-                  _c("h6", [_vm._v("Действия")]),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    { staticClass: "w-100 btn btn-outline-primary mb-2" },
-                    [_vm._v("Перенаправить")]
-                  ),
-                  _vm._v(" "),
-                  _c("button", { staticClass: "w-100 btn btn-success" }, [
-                    _vm._v("Задача выполнена"),
-                  ]),
-                ]),
+                    _vm._v(" "),
+                    _c("h6", { staticClass: "text-muted mt-4" }, [
+                      _vm._v("Действия"),
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      { staticClass: "w-100 btn btn-outline-primary mb-2" },
+                      [_vm._v("Перенаправить")]
+                    ),
+                    _vm._v(" "),
+                    _c("button", { staticClass: "w-100 btn btn-success" }, [
+                      _vm._v("Задача выполнена"),
+                    ]),
+                  ],
+                  2
+                ),
               ]),
             ]),
           ]),
@@ -32445,105 +32512,111 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "task-modal-comments" },
-    [
-      _vm._l(_vm.comments, function (comment) {
-        return _c(
-          "div",
-          {
-            key: "comment_" + comment.id,
-            staticClass: "chat-message-left pb-4",
-          },
-          [
-            _c("div", [
-              _c("img", {
-                staticClass: "rounded-circle me-1",
-                attrs: {
-                  src: "img/no-image.jpg",
-                  alt: "Bertha Martin",
-                  width: "40",
-                  height: "40",
-                },
-              }),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "text-muted text-comment-date small text-nowrap mt-2",
-                },
-                [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(_vm._f("formatDateTimeOnly")(comment.created_at))
-                  ),
-                  _c("br"),
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(_vm._f("formatDate")(comment.created_at)) +
-                      "\n            "
-                  ),
-                ]
-              ),
-            ]),
-            _vm._v(" "),
-            _c(
+  return _vm.views.loading == false
+    ? _c(
+        "div",
+        { staticClass: "task-modal-comments" },
+        [
+          _vm._l(_vm.comments, function (comment) {
+            return _c(
               "div",
               {
-                staticClass:
-                  "w-100 flex-shrink-1 bg-light rounded py-2 px-3 ms-3",
+                key: "comment_" + comment.id,
+                staticClass: "chat-message-left pb-4",
               },
               [
-                _c("div", { staticClass: "fw-bold mb-1" }, [
-                  _vm._v(_vm._s(comment.user.name)),
+                _c("div", [
+                  _c("img", {
+                    staticClass: "rounded-circle me-1",
+                    attrs: {
+                      src: "img/no-image.jpg",
+                      alt: "Bertha Martin",
+                      width: "40",
+                      height: "40",
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "text-muted text-comment-date small text-nowrap mt-2",
+                    },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(
+                            _vm._f("formatDateTimeOnly")(comment.created_at)
+                          )
+                      ),
+                      _c("br"),
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(_vm._f("formatDate")(comment.created_at)) +
+                          "\n            "
+                      ),
+                    ]
+                  ),
                 ]),
-                _vm._v("\n            " + _vm._s(comment.text) + "\n        "),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "w-100 flex-shrink-1 bg-light rounded py-2 px-3 ms-3",
+                  },
+                  [
+                    _c("div", { staticClass: "fw-bold mb-1" }, [
+                      _vm._v(_vm._s(comment.user.name)),
+                    ]),
+                    _vm._v(
+                      "\n            " + _vm._s(comment.text) + "\n        "
+                    ),
+                  ]
+                ),
               ]
-            ),
-          ]
-        )
-      }),
-      _vm._v(" "),
-      _c("textarea", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.text,
-            expression: "text",
-          },
-        ],
-        staticClass: "form-control mb-2",
-        staticStyle: { resize: "vertical" },
-        attrs: { placeholder: "Напишите комментарий" },
-        domProps: { value: _vm.text },
-        on: {
-          input: function ($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.text = $event.target.value
-          },
-        },
-      }),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function ($event) {
-              return _vm.saveComment()
+            )
+          }),
+          _vm._v(" "),
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.text,
+                expression: "text",
+              },
+            ],
+            staticClass: "form-control mb-2",
+            staticStyle: { resize: "vertical" },
+            attrs: { placeholder: "Напишите комментарий" },
+            domProps: { value: _vm.text },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.text = $event.target.value
+              },
             },
-          },
-        },
-        [_vm._v("Сохранить")]
-      ),
-    ],
-    2
-  )
+          }),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary",
+              on: {
+                click: function ($event) {
+                  return _vm.saveComment()
+                },
+              },
+            },
+            [_vm._v("Сохранить")]
+          ),
+        ],
+        2
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -32603,37 +32676,40 @@ var render = function () {
                         _c("p", [_vm._v(_vm._s(task.name))]),
                         _vm._v(" "),
                         _c("div", { staticClass: "mt-n1" }, [
-                          _c("span", { staticClass: "btn btn-sm p-0" }, [
-                            _c(
-                              "svg",
-                              {
-                                staticClass: "feather feather-message-square",
-                                attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "24",
-                                  height: "24",
-                                  viewBox: "0 0 24 24",
-                                  fill: "none",
-                                  stroke: "currentColor",
-                                  "stroke-width": "2",
-                                  "stroke-linecap": "round",
-                                  "stroke-linejoin": "round",
-                                },
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
+                          task.comments && task.comments.length > 0
+                            ? _c("span", { staticClass: "btn btn-sm p-0" }, [
+                                _c(
+                                  "svg",
+                                  {
+                                    staticClass:
+                                      "feather feather-message-square",
+                                    attrs: {
+                                      xmlns: "http://www.w3.org/2000/svg",
+                                      width: "24",
+                                      height: "24",
+                                      viewBox: "0 0 24 24",
+                                      fill: "none",
+                                      stroke: "currentColor",
+                                      "stroke-width": "2",
+                                      "stroke-linecap": "round",
+                                      "stroke-linejoin": "round",
+                                    },
                                   },
-                                }),
-                              ]
-                            ),
-                            _vm._v(
-                              "\n                                    " +
-                                _vm._s(task.comments.length) +
-                                "\n                                "
-                            ),
-                          ]),
+                                  [
+                                    _c("path", {
+                                      attrs: {
+                                        d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
+                                      },
+                                    }),
+                                  ]
+                                ),
+                                _vm._v(
+                                  "\n                                    " +
+                                    _vm._s(task.comments.length) +
+                                    "\n                                "
+                                ),
+                              ])
+                            : _vm._e(),
                           _vm._v(" "),
                           _c("img", {
                             staticClass: "rounded-circle",
@@ -32683,37 +32759,40 @@ var render = function () {
                         _c("p", [_vm._v(_vm._s(task.name))]),
                         _vm._v(" "),
                         _c("div", { staticClass: "mt-n1" }, [
-                          _c("span", { staticClass: "btn btn-sm p-0" }, [
-                            _c(
-                              "svg",
-                              {
-                                staticClass: "feather feather-message-square",
-                                attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "24",
-                                  height: "24",
-                                  viewBox: "0 0 24 24",
-                                  fill: "none",
-                                  stroke: "currentColor",
-                                  "stroke-width": "2",
-                                  "stroke-linecap": "round",
-                                  "stroke-linejoin": "round",
-                                },
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
+                          task.comments && task.comments.length > 0
+                            ? _c("span", { staticClass: "btn btn-sm p-0" }, [
+                                _c(
+                                  "svg",
+                                  {
+                                    staticClass:
+                                      "feather feather-message-square",
+                                    attrs: {
+                                      xmlns: "http://www.w3.org/2000/svg",
+                                      width: "24",
+                                      height: "24",
+                                      viewBox: "0 0 24 24",
+                                      fill: "none",
+                                      stroke: "currentColor",
+                                      "stroke-width": "2",
+                                      "stroke-linecap": "round",
+                                      "stroke-linejoin": "round",
+                                    },
                                   },
-                                }),
-                              ]
-                            ),
-                            _vm._v(
-                              "\n                                    " +
-                                _vm._s(task.comments.length) +
-                                "\n                                "
-                            ),
-                          ]),
+                                  [
+                                    _c("path", {
+                                      attrs: {
+                                        d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
+                                      },
+                                    }),
+                                  ]
+                                ),
+                                _vm._v(
+                                  "\n                                    " +
+                                    _vm._s(task.comments.length) +
+                                    "\n                                "
+                                ),
+                              ])
+                            : _vm._e(),
                           _vm._v(" "),
                           _c("img", {
                             staticClass: "rounded-circle",
@@ -32763,37 +32842,40 @@ var render = function () {
                         _c("p", [_vm._v(_vm._s(task.name))]),
                         _vm._v(" "),
                         _c("div", { staticClass: "mt-n1" }, [
-                          _c("span", { staticClass: "btn btn-sm p-0" }, [
-                            _c(
-                              "svg",
-                              {
-                                staticClass: "feather feather-message-square",
-                                attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "24",
-                                  height: "24",
-                                  viewBox: "0 0 24 24",
-                                  fill: "none",
-                                  stroke: "currentColor",
-                                  "stroke-width": "2",
-                                  "stroke-linecap": "round",
-                                  "stroke-linejoin": "round",
-                                },
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
+                          task.comments && task.comments.length > 0
+                            ? _c("span", { staticClass: "btn btn-sm p-0" }, [
+                                _c(
+                                  "svg",
+                                  {
+                                    staticClass:
+                                      "feather feather-message-square",
+                                    attrs: {
+                                      xmlns: "http://www.w3.org/2000/svg",
+                                      width: "24",
+                                      height: "24",
+                                      viewBox: "0 0 24 24",
+                                      fill: "none",
+                                      stroke: "currentColor",
+                                      "stroke-width": "2",
+                                      "stroke-linecap": "round",
+                                      "stroke-linejoin": "round",
+                                    },
                                   },
-                                }),
-                              ]
-                            ),
-                            _vm._v(
-                              "\n                                    " +
-                                _vm._s(task.comments.length) +
-                                "\n                                "
-                            ),
-                          ]),
+                                  [
+                                    _c("path", {
+                                      attrs: {
+                                        d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
+                                      },
+                                    }),
+                                  ]
+                                ),
+                                _vm._v(
+                                  "\n                                    " +
+                                    _vm._s(task.comments.length) +
+                                    "\n                                "
+                                ),
+                              ])
+                            : _vm._e(),
                           _vm._v(" "),
                           _c("img", {
                             staticClass: "rounded-circle",
