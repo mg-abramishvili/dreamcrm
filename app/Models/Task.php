@@ -19,8 +19,8 @@ class Task extends Model
         return $this->hasMany(TaskComment::class);
     }
 
-    public function board()
+    public function column()
     {
-        return $this->belongsTo(TaskBoard::class);
+        return $this->belongsTo(TaskBoardColumn::class, 'column_id');
     }
 }

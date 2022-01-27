@@ -12,6 +12,10 @@ class TaskBoardController extends Controller
     {
         $user = User::find($request->user()->id);
 
+        if($user->task_board_permissions && $user->task_board_permissions->can_see_all_boards == 1) {
+            return TaskBoard::all();
+        }
+
         return TaskBoard::with('users')->whereRelation('users', 'user_id', $user->id)->get();
     }
 }

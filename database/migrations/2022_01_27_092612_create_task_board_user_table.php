@@ -12,7 +12,6 @@ class CreateTaskBoardUserTable extends Migration
             $table->id();
             $table->integer('task_board_id');
             $table->integer('user_id');
-            $table->timestamps();
         });
     }
 

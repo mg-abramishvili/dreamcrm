@@ -9,118 +9,91 @@
                     </option>
                 </select>
             </div>
-            <div class="col-12 col-lg-4">
-                
+            <div class="col-12 col-lg-4 text-end">
+                <button class="btn btn-primary">Создать задачу</button>
             </div>
         </div>
         
         <div v-if="views.loading == false">
-            <div class="tasks-page-board">
-                <div class="row">
-                    <div class="col-12 col-lg-4">
-                        <div class="card">
-                            <div class="card-header pb-0">
-                                <h5 class="card-title mb-0">Сделать</h5>
-                            </div>
-                            <div class="card-body">
-                                <div @click="openTaskModal(task)" v-for="task in tasks.filter(task => task.status == 'todo')" :key="task.id" class="card mb-3 bg-light cursor-pointer border">
-                                    <div class="card-body p-3">
-                                        <p>{{ task.name }}</p>
-                                        <div class="mt-n1">
-                                            <span v-if="task.comments && task.comments.length > 0" class="btn btn-sm p-0">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                                                {{ task.comments.length }}
-                                            </span>
-                                            <img src="img/no-image.jpg" width="32" height="32" class="rounded-circle" alt="Avatar">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="tasks-page-board align-items-start">
                     
-                    <div class="col-12 col-lg-4">
-                        <div class="card">
-                            <div class="card-header pb-0">
-                                <h5 class="card-title mb-0">В работе</h5>
-                            </div>
-                            <div class="card-body">
-                                <div @click="openTaskModal(task)" v-for="task in tasks.filter(task => task.status == 'inprogress')" :key="task.id" class="card mb-3 bg-light cursor-pointer border">
-                                    <div class="card-body p-3">
-                                        <p>{{ task.name }}</p>
-                                        <div class="mt-n1">
-                                            <span v-if="task.comments && task.comments.length > 0" class="btn btn-sm p-0">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                                                {{ task.comments.length }}
-                                            </span>
-                                            <img src="img/no-image.jpg" width="32" height="32" class="rounded-circle" alt="Avatar">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div v-for="column in columns" :key="'column_' + column.id" class="card">
+                    <div class="card-header pb-0">
+                        <h5 class="card-title mb-0">{{ column.name }}</h5>
+                        <button @click="openCreateTaskModal(column.id)" class="btn">+</button>
                     </div>
-                    
-                    <div class="col-12 col-lg-4">
-                        <div class="card">
-                            <div class="card-header pb-0">
-                                <h5 class="card-title mb-0">Выполнено</h5>
-                            </div>
-                            <div class="card-body">
-                                <div @click="openTaskModal(task)" v-for="task in tasks.filter(task => task.status == 'completed')" :key="task.id" class="card mb-3 bg-light cursor-pointer border">
-                                    <div class="card-body p-3">
-                                        <p>{{ task.name }}</p>
-                                        <div class="mt-n1">
-                                            <span v-if="task.comments && task.comments.length > 0" class="btn btn-sm p-0">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                                                {{ task.comments.length }}
-                                            </span>
-                                            <img src="img/no-image.jpg" width="32" height="32" class="rounded-circle" alt="Avatar">
+                    <div class="card-body">
+                        <div @click="openTaskModal(task)" v-for="task in column.tasks.filter(task => task.column_id == column.id)" :key="task.id" class="card mb-3 bg-light cursor-pointer border">
+                            <div class="card-body p-3">
+                                <p>{{ task.name }}</p>
+                                <div class="mt-n1">
+                                    <div class="d-inline-flex me-2">
+                                        <div v-for="user in task.users" :key="'task_user_' + user.id" style="margin: 0 2px;">
+                                            <img :src="user.avatar" width="18" height="18" class="rounded-circle" :alt="user.name">
                                         </div>
                                     </div>
+                                    <span v-if="task.comments && task.comments.length > 0" class="btn btn-sm p-0 d-inline-flex align-items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square" style="margin-right: 3px;">
+                                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                                        </svg>
+                                        {{ task.comments.length }}
+                                    </span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <button @click="openCreateColumnModal()" class="btn btn-outline-primary">Добавить колонку</button>
+
             </div>
         </div>
 
-        <TaskModal v-if="views.modal" :task="selected.task"></TaskModal>
-        <div v-if="views.modal" class="modal-backdrop fade show"></div>
+        <TaskModal v-if="views.modals.openTask" :task_id="selected.task.id"></TaskModal>
+        
+        <CreateTaskModal v-if="views.modals.createTask" :column_id="selected.column"></CreateTaskModal>
+        
+        <CreateColumnModal v-if="views.modals.createColumn" :board_id="selected.board"></CreateColumnModal>
+        
+        <div v-if="views.modals.showBackdrop" class="modal-backdrop fade show"></div>
     </div>
 </template>
 
 <script>
     import TaskModal from './TaskModal.vue'
+    import CreateColumnModal from './CreateColumnModal.vue'
+    import CreateTaskModal from './CreateTaskModal.vue'
 
     export default {
         data() {
             return {
                 boards: [],
-                tasks: [],
+                columns: [],
 
                 selected: {
                     board: {},
+                    column: {},
                     task: {},
                 },
 
                 views: {
                     loading: true,
-                    modal: false,
+                    modals: {
+                        openTask: false,
+                        createTask: false,
+                        createColumn: false,
+                        showBackdrop: false,
+                    },
                 },
             }
         },
         created() {
             this.getBoards()
         },
-        computed: {
-
-        },
         methods: {
             getBoards() {
                 axios
-                .get('/api/boards')
+                .get('/api/tasks/boards')
                 .then((response => {
                     this.boards = response.data
 
@@ -128,24 +101,43 @@
 
                     if(response.data[0]) {
                         this.selected.board = response.data[0].id
-                        this.getTasks()
+                        this.getColumns()
                     }
                 }))
+            },
+            getColumns() {
+                axios
+                .get(`/api/tasks/board/${this.selected.board}/columns`)
+                .then(response => (
+                    this.columns = response.data
+                ))
             },
             getTasks() {
                 axios
                 .get(`/api/tasks/board/${this.selected.board}`)
                 .then(response => (
-                    this.tasks = response.data
+                    this.columns = response.data
                 ))
             },
             openTaskModal(task) {
                 this.selected.task = task
-                this.views.modal = true
+                this.views.modals.openTask = true
+                this.views.modals.showBackdrop = true
+            },
+            openCreateColumnModal() {
+                this.views.modals.createColumn = true
+                this.views.modals.showBackdrop = true
+            },
+            openCreateTaskModal(column) {
+                this.selected.column = column
+                this.views.modals.createTask = true
+                this.views.modals.showBackdrop = true
             },
         },
         components: {
-            TaskModal
+            TaskModal,
+            CreateColumnModal,
+            CreateTaskModal
         }
     }
 </script>

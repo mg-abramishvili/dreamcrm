@@ -236,6 +236,14 @@ table.dataTable {
 
 
 /* TASK MODAL */
+.tasks-page-board {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+.tasks-page-board .card {
+    flex: 0 0 30%;
+}
 .tasks-page .modal {
     overflow-y: auto;
 }

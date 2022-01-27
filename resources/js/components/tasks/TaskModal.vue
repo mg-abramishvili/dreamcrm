@@ -1,6 +1,6 @@
 <template>
     <div @keyup.esc="closeModal()" class="modal fade show" tabindex="-1" style="display: block;" aria-modal="true" role="dialog">
-        <div class="modal-dialog modal-lg" role="document">
+        <div v-if="task && task.id > 0" class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">{{ task.name }}</h5>
@@ -9,8 +9,13 @@
                 <div class="modal-body m-3">
                     <div class="row">
                         <div class="col-12 col-lg-9">
-                            <p v-if="task.description" class="mb-0">{{ task.description }}</p>
-                            <p v-else class="mb-0">Нет описания</p>
+                            <template v-if="views.changeDescription">
+                                <TaskChangeDescription :task="task"></TaskChangeDescription>
+                            </template>
+                            <template v-else>
+                                <p v-if="task.description" class="mb-0">{{ task.description }}</p>
+                                <p v-else class="mb-0">Нет описания</p>
+                            </template>
 
                             <TaskModalComment :task_id="task.id"></TaskModalComment>
                         </div>
@@ -22,15 +27,16 @@
                             
                             <h6 class="text-muted mt-4">Участники</h6>
                             <div v-for="user in task.users" :key="'task_user_' + user.id" class="d-flex align-items-center mb-1">
-                                <img src="/img/no-image.jpg" width="36" height="36" class="rounded-circle me-2" alt="">
+                                <img :src="user.avatar" width="36" height="36" class="rounded-circle me-2" alt="">
                                 <div class="flex-grow-1">
                                     <strong>{{ user.name }}</strong>
                                 </div>
                             </div>
                             
                             <h6 class="text-muted mt-4">Действия</h6>
-                            <button class="w-100 btn btn-outline-primary mb-2">Перенаправить</button>
-                            <button class="w-100 btn btn-success">Задача выполнена</button>
+                            <button @click="views.changeDescription = true" class="w-100 btn btn-outline-primary mb-2">Изменить описание</button>
+                            <button v-if="task.status !== 'completed'" @click="completeTask()" class="w-100 btn btn-success">Отметить как выполненную</button>
+                            <button v-if="task.status == 'completed'" @click="returnTask()" class="w-100 btn btn-warning">Вернуть в работу</button>
                         </div>
                     </div>
                 </div>
@@ -41,12 +47,21 @@
 
 <script>
     import TaskModalComment from './TaskModalComment.vue'
+    import TaskChangeDescription from './TaskChangeDescription.vue'
+    
     export default {
-        props: ['task'],
+        props: ['task_id'],
         data() {
             return {
-                //
+                task: {},
+
+                views: {
+                    changeDescription: false,
+                },
             }
+        },
+        created() {
+            this.getTask()
         },
         mounted() {
             document.getElementsByClassName('modal')[0].focus()
@@ -60,13 +75,42 @@
             }
         },
         methods: {
+            getTask() {
+                axios
+                .get(`/api/task/${this.task_id}`)
+                .then(response => (
+                    this.task = response.data
+                ))
+            },
             closeModal() {
-                this.$parent.views.modal = false
+                this.$parent.views.modals.openTask = false
+                this.$parent.views.modals.showBackdrop = false
                 document.body.style.overflow = "auto"
+            },
+            completeTask() {
+                if (confirm("Точно выполнена?")) {
+                    axios
+                    .put(`/api/task/${this.task.id}/complete`)
+                    .then(response => (
+                        this.$parent.getTasks(),
+                        this.closeModal()
+                    ))
+                }
+            },
+            returnTask() {
+                if (confirm("Точно вернуть в работу?")) {
+                    axios
+                    .put(`/api/task/${this.task.id}/inprogress`)
+                    .then(response => (
+                        this.$parent.getTasks(),
+                        this.closeModal()
+                    ))
+                }
             },
         },
         components: {
-            TaskModalComment
+            TaskModalComment,
+            TaskChangeDescription
         },
     }
 </script>

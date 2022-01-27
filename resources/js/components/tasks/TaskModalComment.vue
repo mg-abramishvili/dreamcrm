@@ -2,7 +2,7 @@
     <div v-if="views.loading == false" class="task-modal-comments">
         <div v-for="comment in comments" :key="'comment_' + comment.id" class="chat-message-left pb-4">
             <div>
-                <img src="img/no-image.jpg" class="rounded-circle me-1" alt="Bertha Martin" width="40" height="40">
+                <img :src="comment.user.avatar" class="rounded-circle me-1" alt="Bertha Martin" width="40" height="40">
                 <div class="text-muted text-comment-date small text-nowrap mt-2" >
                     {{ comment.created_at | formatDateTimeOnly }}<br>
                     {{ comment.created_at | formatDate }}
@@ -46,17 +46,19 @@ export default {
             ))
         },
         saveComment() {
-            axios
-            .post(`/api/task/${this.task_id}/comments`, {
-                task_id: this.task_id,
-                user_id: this.$parent.$parent.$parent.user.id,
-                text: this.text
-            })
-            .then(response => (
-                this.text = '',
-                this.getComments(),
-                this.$parent.$parent.getTasks()
-            ))
+            if(this.text && this.text.length > 0) {
+                axios
+                .post(`/api/task/${this.task_id}/comments`, {
+                    task_id: this.task_id,
+                    user_id: this.$parent.$parent.$parent.user.id,
+                    text: this.text
+                })
+                .then(response => (
+                    this.text = '',
+                    this.getComments(),
+                    this.$parent.$parent.getTasks()
+                ))
+            }
         }
     },
 }
