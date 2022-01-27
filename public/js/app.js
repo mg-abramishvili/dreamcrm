@@ -4374,6 +4374,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     closeModal: function closeModal() {
       this.$parent.views.modal = false;
+      document.body.style.overflow = "auto";
     }
   },
   components: {
@@ -4445,7 +4446,7 @@ __webpack_require__.r(__webpack_exports__);
         user_id: this.$parent.$parent.$parent.user.id,
         text: this.text
       }).then(function (response) {
-        return _this2.text = '', _this2.getComments(), _this2.$parent.getTasks();
+        return _this2.text = '', _this2.getComments(), _this2.$parent.$parent.getTasks();
       });
     }
   }

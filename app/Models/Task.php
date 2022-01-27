@@ -18,4 +18,9 @@ class Task extends Model
     {
         return $this->hasMany(TaskComment::class);
     }
+
+    public function board()
+    {
+        return $this->belongsTo(TaskBoard::class);
+    }
 }

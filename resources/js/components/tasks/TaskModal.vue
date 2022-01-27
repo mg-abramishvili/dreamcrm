@@ -62,6 +62,7 @@
         methods: {
             closeModal() {
                 this.$parent.views.modal = false
+                document.body.style.overflow = "auto"
             },
         },
         components: {

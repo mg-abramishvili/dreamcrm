@@ -55,7 +55,7 @@ export default {
             .then(response => (
                 this.text = '',
                 this.getComments(),
-                this.$parent.getTasks()
+                this.$parent.$parent.getTasks()
             ))
         }
     },

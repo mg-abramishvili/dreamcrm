@@ -27,6 +27,11 @@ class User extends Authenticatable
         return $this->hasMany(TaskComment::class);
     }
 
+    public function task_permissions()
+    {
+        return $this->hasOne(UserPermissionTask::class);
+    }
+
     protected $fillable = [
         'name',
         'email',
