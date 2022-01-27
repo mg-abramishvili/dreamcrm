@@ -53,12 +53,16 @@ class TaskController extends Controller
     {
         $task = new Task();
 
+        $user = User::find($request->user()->id);
+
         $task->column_id = $request->column_id;
         $task->name = $request->name;
         $task->description = $request->description;
         $task->status = 'active';
 
         $task->save();
+
+        $task->users()->sync($user->id);
     }
 
     public function description($id, Request $request)
