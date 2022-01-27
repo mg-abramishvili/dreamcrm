@@ -4709,6 +4709,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _CreateTaskModal_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CreateTaskModal.vue */ "./resources/js/components/tasks/CreateTaskModal.vue");
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.umd.js");
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var vue_dragscroll__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-dragscroll */ "./node_modules/vue-dragscroll/src/main.js");
 //
 //
 //
@@ -4772,6 +4773,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+
 
 
 
@@ -4863,6 +4869,9 @@ __webpack_require__.r(__webpack_exports__);
     CreateColumnModal: _CreateColumnModal_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     CreateTaskModal: _CreateTaskModal_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
     draggable: (vuedraggable__WEBPACK_IMPORTED_MODULE_3___default())
+  },
+  directives: {
+    dragscroll: vue_dragscroll__WEBPACK_IMPORTED_MODULE_4__.dragscroll
   }
 });
 
@@ -30853,6 +30862,590 @@ module.exports = function (list, options) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-dragscroll/src/directive-next.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/vue-dragscroll/src/directive-next.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils */ "./node_modules/vue-dragscroll/src/utils.js");
+
+
+const POINTER_START_EVENTS = ['mousedown', 'touchstart']
+const POINTER_MOVE_EVENTS = ['mousemove', 'touchmove']
+const POINTER_END_EVENTS = ['mouseup', 'touchend']
+
+const init = function (el, binding, vnode) {
+  // Default parameters
+  let target = el // the element to apply the dragscroll on
+  let active = true // enable/disable dragscroll
+  let container = window
+
+  // config type: boolean
+  // Example: v-dragscroll="true" or v-dragscroll="false"
+  if (typeof binding.value === 'boolean') {
+    active = binding.value
+  } else if (typeof binding.value === 'object') {
+    // config type: object
+    // Example: v-dragscroll="{ active: true , target: "child" }"
+
+    // parameter: target
+    if (typeof binding.value.target === 'string') {
+      target = el.querySelector(binding.value.target)
+      if (!target) {
+        console.error('There is no element with the current target value.')
+      }
+    } else if (typeof binding.value.target !== 'undefined') {
+      console.error('The parameter "target" should be either \'undefined\' or \'string\'.')
+    }
+    // parameter: container
+    if (typeof binding.value.container === 'string') {
+      container = document.querySelector(binding.value.container)
+      if (!container) {
+        console.error('There is no element with the current container value.')
+      }
+    } else if (typeof binding.value.container !== 'undefined') {
+      console.error('The parameter "container" should be be either \'undefined\' or \'string\'.')
+    }
+
+    // parameter: active
+    if (typeof binding.value.active === 'boolean') {
+      active = binding.value.active
+    } else if (typeof binding.value.active !== 'undefined') {
+      console.error('The parameter "active" value should be either \'undefined\', \'true\' or \'false\'.')
+    }
+  } else if (typeof binding.value !== 'undefined') {
+    // Throw an error if invalid parameters
+    console.error('The passed value should be either \'undefined\', \'true\' or \'false\' or \'object\'.')
+  }
+
+  const scrollBy = function (x, y) {
+    if (container === window) {
+      window.scrollBy(x, y)
+    } else {
+      container.scrollLeft += x
+      container.scrollTop += y
+    }
+  }
+
+  const reset = function () {
+    let lastClientX, lastClientY, pushed
+    let isDragging = false
+    // let isClick = false // workaround to handle click event from touch
+
+    target.md = function (e) {
+      // e.preventDefault()
+      const isMouseEvent = e instanceof window.MouseEvent
+      // The coordinates of the mouse pointer compared to the page when the mouse button is clicked on an element
+      const pageX = isMouseEvent ? e.pageX : e.touches[0].pageX
+      const pageY = isMouseEvent ? e.pageY : e.touches[0].pageY
+      const clickedElement = document.elementFromPoint(pageX - window.pageXOffset, pageY - window.pageYOffset)
+
+      const hasNoChildDrag = binding.arg === 'nochilddrag'
+      const ignoreLeft = binding.modifiers.noleft
+      const ignoreRight = binding.modifiers.noright
+      const ignoreMiddle = binding.modifiers.nomiddle
+      const ignoreBack = binding.modifiers.noback
+      const ignoreForward = binding.modifiers.noforward
+      const hasFirstChildDrag = binding.arg === 'firstchilddrag'
+      const isEl = clickedElement === target
+      const isFirstChild = clickedElement === target.firstChild
+      const isDataDraggable = hasNoChildDrag ? typeof clickedElement.dataset.dragscroll !== 'undefined' : typeof clickedElement.dataset.noDragscroll === 'undefined'
+
+      if (!isEl && (!isDataDraggable || (hasFirstChildDrag && !isFirstChild))) {
+        return
+      }
+
+      if (e.which === 1 && ignoreLeft) {
+        return
+      } else if (e.which === 2 && ignoreMiddle) {
+        return
+      } else if (e.which === 3 && ignoreRight) {
+        return
+      } else if (e.which === 4 && ignoreBack) {
+        return
+      } else if (e.which === 5 && ignoreForward) {
+        return
+      }
+
+      pushed = 1
+      // The coordinates of the mouse pointer compared to the viewport when the mouse button is clicked on an element
+      lastClientX = isMouseEvent ? e.clientX : e.touches[0].clientX
+      lastClientY = isMouseEvent ? e.clientY : e.touches[0].clientY
+      // if (e.type === 'touchstart') {
+      //   isClick = true
+      // }
+    }
+
+    target.mu = function (e) {
+      pushed = 0
+      if (isDragging) {
+        _utils__WEBPACK_IMPORTED_MODULE_0__["default"].emitEvent2(vnode, 'dragscrollend')
+      }
+      isDragging = false
+      // if (e.type === 'touchend' && isClick === true) {
+      //   // this workaround enable click will using touch
+      //   e.target.click()
+      //   isClick = false
+      // } else {
+      //   e.target.focus()
+      // }
+    }
+
+    target.mm = function (e) {
+      const isMouseEvent = e instanceof window.MouseEvent
+      let newScrollX, newScrollY
+      const eventDetail = {}
+      if (pushed) {
+        e.preventDefault()
+        // pushed
+        // Emit start event
+        if (!isDragging) {
+          _utils__WEBPACK_IMPORTED_MODULE_0__["default"].emitEvent2(vnode, 'dragscrollstart')
+        }
+        isDragging = true
+
+        // when we reach the end or the begining of X or Y
+        const isEndX = ((target.scrollLeft + target.clientWidth) >= target.scrollWidth) || target.scrollLeft === 0
+        const isEndY = ((target.scrollTop + target.clientHeight) >= target.scrollHeight) || target.scrollTop === 0
+
+        // get new scroll dimentions
+        newScrollX = (-lastClientX + (lastClientX = isMouseEvent ? e.clientX : e.touches[0].clientX))
+        newScrollY = (-lastClientY + (lastClientY = isMouseEvent ? e.clientY : e.touches[0].clientY))
+
+        if (binding.modifiers.pass) {
+          // compute and scroll
+          target.scrollLeft -= binding.modifiers.y ? -0 : newScrollX
+          target.scrollTop -= binding.modifiers.x ? -0 : newScrollY
+          if (target === document.body) {
+            target.scrollLeft -= binding.modifiers.y ? -0 : newScrollX
+            target.scrollTop -= binding.modifiers.x ? -0 : newScrollY
+          }
+
+          // if one side reach the end scroll container
+          if (isEndX || binding.modifiers.y) {
+            scrollBy(-newScrollX, 0)
+          }
+          if (isEndY || binding.modifiers.x) {
+            scrollBy(0, -newScrollY)
+          }
+        } else {
+          // disable one scroll direction in case x or y is specified
+          if (binding.modifiers.x) newScrollY = -0
+          if (binding.modifiers.y) newScrollX = -0
+
+          // compute and scroll
+          target.scrollLeft -= newScrollX
+          target.scrollTop -= newScrollY
+          if (target === document.body) {
+            target.scrollLeft -= newScrollX
+            target.scrollTop -= newScrollY
+          }
+        }
+
+        // Emit events
+        eventDetail.deltaX = -newScrollX
+        eventDetail.deltaY = -newScrollY
+        _utils__WEBPACK_IMPORTED_MODULE_0__["default"].emitEvent2(vnode, 'dragscrollmove', eventDetail)
+      }
+    }
+
+    _utils__WEBPACK_IMPORTED_MODULE_0__["default"].addEventListeners(target, POINTER_START_EVENTS, target.md)
+
+    _utils__WEBPACK_IMPORTED_MODULE_0__["default"].addEventListeners(window, POINTER_END_EVENTS, target.mu)
+
+    _utils__WEBPACK_IMPORTED_MODULE_0__["default"].addEventListeners(window, POINTER_MOVE_EVENTS, target.mm)
+  }
+  // if value is undefined or true we will init
+  if (active) {
+    if (document.readyState === 'complete') {
+      reset()
+    } else {
+      window.addEventListener('load', reset)
+    }
+  } else {
+    // if value is false means we disable
+    // window.removeEventListener('load', reset)
+    _utils__WEBPACK_IMPORTED_MODULE_0__["default"].removeEventListeners(target, POINTER_START_EVENTS, target.md)
+    _utils__WEBPACK_IMPORTED_MODULE_0__["default"].removeEventListeners(window, POINTER_END_EVENTS, target.mu)
+    _utils__WEBPACK_IMPORTED_MODULE_0__["default"].removeEventListeners(window, POINTER_MOVE_EVENTS, target.mm)
+  }
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  mounted: function (el, binding, vnode) {
+    init(el, binding, vnode)
+  },
+  updated: function (el, binding, vnode, oldVnode) {
+    // update the component only if the parameters change
+    if (JSON.stringify(binding.value) !== JSON.stringify(binding.oldValue)) {
+      init(el, binding, vnode)
+    }
+  },
+  unmounted: function (el, binding, vnode) {
+    const target = el
+    _utils__WEBPACK_IMPORTED_MODULE_0__["default"].removeEventListeners(target, POINTER_START_EVENTS, target.md)
+    _utils__WEBPACK_IMPORTED_MODULE_0__["default"].removeEventListeners(window, POINTER_END_EVENTS, target.mu)
+    _utils__WEBPACK_IMPORTED_MODULE_0__["default"].removeEventListeners(window, POINTER_MOVE_EVENTS, target.mm)
+  }
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-dragscroll/src/directive.js":
+/*!******************************************************!*\
+  !*** ./node_modules/vue-dragscroll/src/directive.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils */ "./node_modules/vue-dragscroll/src/utils.js");
+
+
+const POINTER_START_EVENTS = ['mousedown', 'touchstart']
+const POINTER_MOVE_EVENTS = ['mousemove', 'touchmove']
+const POINTER_END_EVENTS = ['mouseup', 'touchend']
+
+const init = function (el, binding, vnode) {
+  // Default parameters
+  let target = el // the element to apply the dragscroll on
+  let active = true // enable/disable dragscroll
+  let container = window
+
+  // config type: boolean
+  // Example: v-dragscroll="true" or v-dragscroll="false"
+  if (typeof binding.value === 'boolean') {
+    active = binding.value
+  } else if (typeof binding.value === 'object') {
+    // config type: object
+    // Example: v-dragscroll="{ active: true , target: "child" }"
+
+    // parameter: target
+    if (typeof binding.value.target === 'string') {
+      target = el.querySelector(binding.value.target)
+      if (!target) {
+        console.error('There is no element with the current target value.')
+      }
+    } else if (typeof binding.value.target !== 'undefined') {
+      console.error('The parameter "target" should be either \'undefined\' or \'string\'.')
+    }
+    // parameter: container
+    if (typeof binding.value.container === 'string') {
+      container = document.querySelector(binding.value.container)
+      if (!container) {
+        console.error('There is no element with the current container value.')
+      }
+    } else if (typeof binding.value.container !== 'undefined') {
+      console.error('The parameter "container" should be be either \'undefined\' or \'string\'.')
+    }
+
+    // parameter: active
+    if (typeof binding.value.active === 'boolean') {
+      active = binding.value.active
+    } else if (typeof binding.value.active !== 'undefined') {
+      console.error('The parameter "active" value should be either \'undefined\', \'true\' or \'false\'.')
+    }
+  } else if (typeof binding.value !== 'undefined') {
+    // Throw an error if invalid parameters
+    console.error('The passed value should be either \'undefined\', \'true\' or \'false\' or \'object\'.')
+  }
+
+  const scrollBy = function (x, y) {
+    if (container === window) {
+      window.scrollBy(x, y)
+    } else {
+      container.scrollLeft += x
+      container.scrollTop += y
+    }
+  }
+
+  const reset = function () {
+    let lastClientX, lastClientY, pushed
+    let isDragging = false
+    // let isClick = false // workaround to handle click event from touch
+
+    target.md = function (e) {
+      // e.preventDefault()
+      const isMouseEvent = e instanceof window.MouseEvent
+      // The coordinates of the mouse pointer compared to the page when the mouse button is clicked on an element
+      const pageX = isMouseEvent ? e.pageX : e.touches[0].pageX
+      const pageY = isMouseEvent ? e.pageY : e.touches[0].pageY
+      const clickedElement = document.elementFromPoint(pageX - window.pageXOffset, pageY - window.pageYOffset)
+
+      const hasNoChildDrag = binding.arg === 'nochilddrag'
+      const ignoreLeft = binding.modifiers.noleft
+      const ignoreRight = binding.modifiers.noright
+      const ignoreMiddle = binding.modifiers.nomiddle
+      const ignoreBack = binding.modifiers.noback
+      const ignoreForward = binding.modifiers.noforward
+      const hasFirstChildDrag = binding.arg === 'firstchilddrag'
+      const isEl = clickedElement === target
+      const isFirstChild = clickedElement === target.firstChild
+      const isDataDraggable = hasNoChildDrag ? typeof clickedElement.dataset.dragscroll !== 'undefined' : typeof clickedElement.dataset.noDragscroll === 'undefined'
+
+      if (!isEl && (!isDataDraggable || (hasFirstChildDrag && !isFirstChild))) {
+        return
+      }
+
+      if (e.which === 1 && ignoreLeft) {
+        return
+      } else if (e.which === 2 && ignoreMiddle) {
+        return
+      } else if (e.which === 3 && ignoreRight) {
+        return
+      } else if (e.which === 4 && ignoreBack) {
+        return
+      } else if (e.which === 5 && ignoreForward) {
+        return
+      }
+
+      pushed = 1
+      // The coordinates of the mouse pointer compared to the viewport when the mouse button is clicked on an element
+      lastClientX = isMouseEvent ? e.clientX : e.touches[0].clientX
+      lastClientY = isMouseEvent ? e.clientY : e.touches[0].clientY
+      // if (e.type === 'touchstart') {
+      //   isClick = true
+      // }
+    }
+
+    target.mu = function (e) {
+      pushed = 0
+      if (isDragging) {
+        _utils__WEBPACK_IMPORTED_MODULE_0__["default"].emitEvent(vnode, 'dragscrollend')
+      }
+      isDragging = false
+      // if (e.type === 'touchend' && isClick === true) {
+      //   // this workaround enable click will using touch
+      //   e.target.click()
+      //   isClick = false
+      // } else {
+      //   e.target.focus()
+      // }
+    }
+
+    target.mm = function (e) {
+      const isMouseEvent = e instanceof window.MouseEvent
+      let newScrollX, newScrollY
+      const eventDetail = {}
+      if (pushed) {
+        e.preventDefault()
+        // pushed
+        // Emit start event
+        if (!isDragging) {
+          _utils__WEBPACK_IMPORTED_MODULE_0__["default"].emitEvent(vnode, 'dragscrollstart')
+        }
+        isDragging = true
+
+        // when we reach the end or the begining of X or Y
+        const isEndX = ((target.scrollLeft + target.clientWidth) >= target.scrollWidth) || target.scrollLeft === 0
+        const isEndY = ((target.scrollTop + target.clientHeight) >= target.scrollHeight) || target.scrollTop === 0
+
+        // get new scroll dimentions
+        newScrollX = (-lastClientX + (lastClientX = isMouseEvent ? e.clientX : e.touches[0].clientX))
+        newScrollY = (-lastClientY + (lastClientY = isMouseEvent ? e.clientY : e.touches[0].clientY))
+
+        if (binding.modifiers.pass) {
+          // compute and scroll
+          target.scrollLeft -= binding.modifiers.y ? -0 : newScrollX
+          target.scrollTop -= binding.modifiers.x ? -0 : newScrollY
+          if (target === document.body) {
+            target.scrollLeft -= binding.modifiers.y ? -0 : newScrollX
+            target.scrollTop -= binding.modifiers.x ? -0 : newScrollY
+          }
+
+          // if one side reach the end scroll container
+          if (isEndX || binding.modifiers.y) {
+            scrollBy(-newScrollX, 0)
+          }
+          if (isEndY || binding.modifiers.x) {
+            scrollBy(0, -newScrollY)
+          }
+        } else {
+          // disable one scroll direction in case x or y is specified
+          if (binding.modifiers.x) newScrollY = -0
+          if (binding.modifiers.y) newScrollX = -0
+
+          // compute and scroll
+          target.scrollLeft -= newScrollX
+          target.scrollTop -= newScrollY
+          if (target === document.body) {
+            target.scrollLeft -= newScrollX
+            target.scrollTop -= newScrollY
+          }
+        }
+
+        // Emit events
+        eventDetail.deltaX = -newScrollX
+        eventDetail.deltaY = -newScrollY
+        _utils__WEBPACK_IMPORTED_MODULE_0__["default"].emitEvent(vnode, 'dragscrollmove', eventDetail)
+      }
+    }
+
+    _utils__WEBPACK_IMPORTED_MODULE_0__["default"].addEventListeners(target, POINTER_START_EVENTS, target.md)
+
+    _utils__WEBPACK_IMPORTED_MODULE_0__["default"].addEventListeners(window, POINTER_END_EVENTS, target.mu)
+
+    _utils__WEBPACK_IMPORTED_MODULE_0__["default"].addEventListeners(window, POINTER_MOVE_EVENTS, target.mm)
+  }
+  // if value is undefined or true we will init
+  if (active) {
+    if (document.readyState === 'complete') {
+      reset()
+    } else {
+      window.addEventListener('load', reset)
+    }
+  } else {
+    // if value is false means we disable
+    // window.removeEventListener('load', reset)
+    _utils__WEBPACK_IMPORTED_MODULE_0__["default"].removeEventListeners(target, POINTER_START_EVENTS, target.md)
+    _utils__WEBPACK_IMPORTED_MODULE_0__["default"].removeEventListeners(window, POINTER_END_EVENTS, target.mu)
+    _utils__WEBPACK_IMPORTED_MODULE_0__["default"].removeEventListeners(window, POINTER_MOVE_EVENTS, target.mm)
+  }
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  inserted: function (el, binding, vnode) {
+    init(el, binding, vnode)
+  },
+  update: function (el, binding, vnode, oldVnode) {
+    // update the component only if the parameters change
+    if (JSON.stringify(binding.value) !== JSON.stringify(binding.oldValue)) {
+      init(el, binding, vnode)
+    }
+  },
+  unbind: function (el, binding, vnode) {
+    const target = el
+    _utils__WEBPACK_IMPORTED_MODULE_0__["default"].removeEventListeners(target, POINTER_START_EVENTS, target.md)
+    _utils__WEBPACK_IMPORTED_MODULE_0__["default"].removeEventListeners(window, POINTER_END_EVENTS, target.mu)
+    _utils__WEBPACK_IMPORTED_MODULE_0__["default"].removeEventListeners(window, POINTER_MOVE_EVENTS, target.mm)
+  }
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-dragscroll/src/main.js":
+/*!*************************************************!*\
+  !*** ./node_modules/vue-dragscroll/src/main.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "dragscroll": () => (/* reexport safe */ _directive__WEBPACK_IMPORTED_MODULE_0__["default"]),
+/* harmony export */   "dragscrollNext": () => (/* reexport safe */ _directive_next__WEBPACK_IMPORTED_MODULE_1__["default"]),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _directive__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./directive */ "./node_modules/vue-dragscroll/src/directive.js");
+/* harmony import */ var _directive_next__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./directive-next */ "./node_modules/vue-dragscroll/src/directive-next.js");
+
+
+
+// Vue 2
+const VueDragscroll = {
+  install (Vue, options) {
+    const major = Number(Vue.version.split('.')[0])
+    const minor = Number(Vue.version.split('.')[1])
+
+    if (major < 2 && minor < 1) {
+      throw new Error(`v-dragscroll supports vue version 2.1 and above. You are using Vue@${Vue.version}. Please upgrade to the latest version of Vue.`)
+    }
+
+    Vue.directive('dragscroll', _directive__WEBPACK_IMPORTED_MODULE_0__["default"])
+  }
+}
+
+if (typeof window !== 'undefined' && window.Vue) {
+  if (window.Vue.version.split('.')[0] <= 2) {
+    window.VueDragscroll = VueDragscroll
+    window.Vue.use(VueDragscroll)
+  } else {
+    window.VueDragscroll = _directive_next__WEBPACK_IMPORTED_MODULE_1__["default"]
+  }
+}
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (VueDragscroll);
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-dragscroll/src/utils.js":
+/*!**************************************************!*\
+  !*** ./node_modules/vue-dragscroll/src/utils.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  addEventListeners (el, events, handler) {
+    for (let i = 0, len = events.length; i < len; i++) {
+      el.addEventListener(events[i], handler, { passive: false })
+    }
+  },
+
+  removeEventListeners (el, events, handler) {
+    for (let i = 0, len = events.length; i < len; i++) {
+      el.removeEventListener(events[i], handler, { passive: false })
+    }
+  },
+
+  emitEvent: function (vnode, eventName, eventDetail) {
+    // Vue 2
+    // If vnode is a Vue component instance, use $emit. Otherwise use a native HTML event.
+    if (vnode.componentInstance) {
+      vnode.componentInstance.$emit(eventName, eventDetail)
+    } else {
+      let event
+      if (typeof (window.CustomEvent) === 'function') {
+        event = new window.CustomEvent(eventName, { detail: eventDetail })
+      } else {
+        // Deprecated fallback for IE
+        event = document.createEvent('CustomEvent')
+        event.initCustomEvent(eventName, true, true, eventDetail)
+      }
+      vnode.elm.dispatchEvent(event)
+    }
+  },
+
+  emitEvent2: function (vnode, eventName, eventDetail) {
+    // Vue 3
+    // If vnode is a Vue component instance, use $emit. Otherwise use a native HTML event.
+    if (vnode.componentInstance) {
+      vnode.componentInstance.$emit(eventName, eventDetail)
+    } else {
+      let event
+      if (typeof (window.CustomEvent) === 'function') {
+        event = new window.CustomEvent(eventName, { detail: eventDetail })
+      } else {
+        // Deprecated fallback for IE
+        event = document.createEvent('CustomEvent')
+        event.initCustomEvent(eventName, true, true, eventDetail)
+      }
+      vnode.el.dispatchEvent(event)
+    }
+  }
+});
+
+
+/***/ }),
+
 /***/ "./resources/js/App.vue":
 /*!******************************!*\
   !*** ./resources/js/App.vue ***!
@@ -37297,65 +37890,94 @@ var render = function () {
         ? _c("div", [
             _c(
               "div",
-              { staticClass: "tasks-page-board align-items-start" },
+              {
+                directives: [
+                  {
+                    name: "dragscroll",
+                    rawName: "v-dragscroll:nochilddrag",
+                    arg: "nochilddrag",
+                  },
+                ],
+                staticClass: "tasks-page-board align-items-start",
+              },
               [
                 _vm._l(_vm.columns, function (column) {
-                  return _c("div", { key: column.id, staticClass: "card" }, [
-                    _c("div", { staticClass: "card-header pb-0" }, [
-                      _c("h5", { staticClass: "card-title mb-0" }, [
-                        _vm._v(_vm._s(column.name)),
+                  return _c(
+                    "div",
+                    { key: column.id, staticClass: "task-column" },
+                    [
+                      _c("div", { staticClass: "card-header p-0" }, [
+                        _c(
+                          "div",
+                          { staticClass: "row align-items-center mb-2" },
+                          [
+                            _c("div", { staticClass: "col-9" }, [
+                              _c("h5", { staticClass: "card-title mb-0" }, [
+                                _vm._v(_vm._s(column.name)),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-3 text-end" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-sm btn-outline-primary",
+                                  on: {
+                                    click: function ($event) {
+                                      return _vm.openCreateTaskModal(column.id)
+                                    },
+                                  },
+                                },
+                                [_vm._v("+")]
+                              ),
+                            ]),
+                          ]
+                        ),
                       ]),
                       _vm._v(" "),
                       _c(
-                        "button",
+                        "draggable",
                         {
-                          staticClass: "btn",
+                          staticClass: "task-column-body",
+                          attrs: {
+                            group: "tasks",
+                            move: _vm.detectMove,
+                            animation: "350",
+                          },
                           on: {
-                            click: function ($event) {
-                              return _vm.openCreateTaskModal(column.id)
+                            change: function ($event) {
+                              return _vm.moveTask($event, column.id)
                             },
+                          },
+                          model: {
+                            value: column.tasks,
+                            callback: function ($$v) {
+                              _vm.$set(column, "tasks", $$v)
+                            },
+                            expression: "column.tasks",
                           },
                         },
-                        [_vm._v("+")]
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "card-body" },
-                      [
-                        _c(
-                          "draggable",
-                          {
-                            attrs: { group: "tasks", move: _vm.detectMove },
-                            on: {
-                              change: function ($event) {
-                                return _vm.moveTask($event, column.id)
-                              },
-                            },
-                            model: {
-                              value: column.tasks,
-                              callback: function ($$v) {
-                                _vm.$set(column, "tasks", $$v)
-                              },
-                              expression: "column.tasks",
-                            },
-                          },
-                          _vm._l(column.tasks, function (task) {
-                            return _c(
-                              "div",
-                              {
-                                key: task.id,
-                                staticClass:
-                                  "card mb-3 bg-light cursor-pointer border",
-                                on: {
-                                  click: function ($event) {
-                                    return _vm.openTaskModal(task)
-                                  },
+                        _vm._l(column.tasks, function (task) {
+                          return _c(
+                            "div",
+                            {
+                              key: task.id,
+                              staticClass: "card m-0",
+                              staticStyle: { "box-shadow": "none" },
+                              on: {
+                                click: function ($event) {
+                                  return _vm.openTaskModal(task)
                                 },
                               },
-                              [
-                                _c("div", { staticClass: "card-body p-3" }, [
+                            },
+                            [
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "card-body bg-light cursor-pointer p-3",
+                                },
+                                [
                                   _c("p", [_vm._v(_vm._s(task.name))]),
                                   _vm._v(" "),
                                   _c("div", { staticClass: "mt-n1" }, [
@@ -37423,24 +38045,24 @@ var render = function () {
                                               ]
                                             ),
                                             _vm._v(
-                                              "\n                                        " +
+                                              "\n                                    " +
                                                 _vm._s(task.comments.length) +
-                                                "\n                                    "
+                                                "\n                                "
                                             ),
                                           ]
                                         )
                                       : _vm._e(),
                                   ]),
-                                ]),
-                              ]
-                            )
-                          }),
-                          0
-                        ),
-                      ],
-                      1
-                    ),
-                  ])
+                                ]
+                              ),
+                            ]
+                          )
+                        }),
+                        0
+                      ),
+                    ],
+                    1
+                  )
                 }),
                 _vm._v(" "),
                 _c(

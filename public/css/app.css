@@ -273,12 +273,39 @@ table.dataTable {
 
 /* TASK MODAL */
 .tasks-page-board {
+    overflow-x: scroll;
+	white-space: nowrap;
+    width: 100%;
+}
+.tasks-page-board .task-column {
+    display: inline-block;
+    vertical-align: top;
+    width: 300px;
+    margin-right: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 0.875rem 0 rgb(41 48 66 / 10%);
+    padding: 10px;
+    border-radius: 6px;
+}
+.tasks-page-board .task-column-body {
     display: flex;
     flex-wrap: wrap;
-    gap: 15px;
+    flex-direction: column;
+    gap: 10px;
 }
-.tasks-page-board .card {
-    flex: 0 0 30%;
+.tasks-page-board .task-column-body .card-body {
+    border-radius: 6px;
+    border: 0;
+    box-shadow: 0 1px 0 #091e4240;
+}
+.sortable-ghost {
+    transform: rotate(5deg) !important;
+    z-index: 10 !important;
+    box-shadow: 0 1px 16px rgb(0 0 0 / 15%) !important;
+    opacity: 1 !important;
+}
+.sortable-drag {
+    opacity: 0 !important;
 }
 .tasks-page .modal {
     overflow-y: auto;

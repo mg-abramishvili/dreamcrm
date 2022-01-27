@@ -15,35 +15,39 @@
         </div>
         
         <div v-if="views.loading == false">
-            <div class="tasks-page-board align-items-start">
+            <div v-dragscroll:nochilddrag class="tasks-page-board align-items-start">
                     
-                <div v-for="column in columns" :key="column.id" class="card">
-                    <div class="card-header pb-0">
-                        <h5 class="card-title mb-0">{{ column.name }}</h5>
-                        <button @click="openCreateTaskModal(column.id)" class="btn">+</button>
+                <div v-for="column in columns" :key="column.id" class="task-column">
+                    <div class="card-header p-0">
+                        <div class="row align-items-center mb-2">
+                            <div class="col-9">
+                                <h5 class="card-title mb-0">{{ column.name }}</h5>
+                            </div>
+                            <div class="col-3 text-end">
+                                <button @click="openCreateTaskModal(column.id)" class="btn btn-sm btn-outline-primary">+</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <draggable v-model="column.tasks" group="tasks" :move="detectMove" @change="moveTask($event, column.id)">
-                            <div @click="openTaskModal(task)" v-for="task in column.tasks" :key="task.id" class="card mb-3 bg-light cursor-pointer border">
-                                <div class="card-body p-3">
-                                    <p>{{ task.name }}</p>
-                                    <div class="mt-n1">
-                                        <div class="d-inline-flex me-2">
-                                            <div v-for="user in task.users" :key="'task_user_' + user.id" style="margin: 0 2px;">
-                                                <img :src="user.avatar" width="18" height="18" class="rounded-circle" :alt="user.name">
-                                            </div>
+                    <draggable v-model="column.tasks" group="tasks" :move="detectMove" @change="moveTask($event, column.id)" animation="350" class="task-column-body">
+                        <div @click="openTaskModal(task)" v-for="task in column.tasks" :key="task.id" class="card m-0" style="box-shadow: none;">
+                            <div class="card-body bg-light cursor-pointer p-3">
+                                <p>{{ task.name }}</p>
+                                <div class="mt-n1">
+                                    <div class="d-inline-flex me-2">
+                                        <div v-for="user in task.users" :key="'task_user_' + user.id" style="margin: 0 2px;">
+                                            <img :src="user.avatar" width="18" height="18" class="rounded-circle" :alt="user.name">
                                         </div>
-                                        <span v-if="task.comments && task.comments.length > 0" class="btn btn-sm p-0 d-inline-flex align-items-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square" style="margin-right: 3px;">
-                                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                                            </svg>
-                                            {{ task.comments.length }}
-                                        </span>
                                     </div>
+                                    <span v-if="task.comments && task.comments.length > 0" class="btn btn-sm p-0 d-inline-flex align-items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square" style="margin-right: 3px;">
+                                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                                        </svg>
+                                        {{ task.comments.length }}
+                                    </span>
                                 </div>
                             </div>
-                        </draggable>
-                    </div>
+                        </div>
+                    </draggable>
                 </div>
 
                 <button @click="openCreateColumnModal()" class="btn btn-outline-primary">Добавить колонку</button>
@@ -67,6 +71,8 @@
     import CreateTaskModal from './CreateTaskModal.vue'
 
     import draggable from 'vuedraggable'
+
+    import { dragscroll } from 'vue-dragscroll'
 
     export default {
         data() {
@@ -160,6 +166,9 @@
             CreateColumnModal,
             CreateTaskModal,
             draggable
+        },
+        directives: {
+            dragscroll
         }
     }
 </script>
