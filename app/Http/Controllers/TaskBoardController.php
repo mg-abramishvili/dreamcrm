@@ -3,83 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\TaskBoard;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class TaskBoardController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
+        $user = User::find($request->user()->id);
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\TaskBoard  $taskBoard
-     * @return \Illuminate\Http\Response
-     */
-    public function show(TaskBoard $taskBoard)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\TaskBoard  $taskBoard
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(TaskBoard $taskBoard)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\TaskBoard  $taskBoard
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, TaskBoard $taskBoard)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\TaskBoard  $taskBoard
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(TaskBoard $taskBoard)
-    {
-        //
+        return TaskBoard::with('users')->whereRelation('users', 'user_id', $user->id)->get();
     }
 }

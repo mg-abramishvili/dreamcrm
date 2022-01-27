@@ -11,6 +11,7 @@ use App\Http\Controllers\OfferController;
 use App\Http\Controllers\DollarController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TaskCommentController;
+use App\Http\Controllers\TaskBoardController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -47,6 +48,8 @@ Route::get('offer/{id}/pdf', [OfferController::class, 'offerPDF']);
 Route::get('usd', [DollarController::class, 'index']);
 Route::get('usd/update', [DollarController::class, 'update']);
 
-Route::get('tasks', [TaskController::class, 'index']);
+Route::get('boards', [TaskBoardController::class, 'index']);
+
+Route::get('tasks/board/{id}', [TaskController::class, 'index']);
 Route::get('task/{id}/comments', [TaskCommentController::class, 'index']);
 Route::post('task/{id}/comments', [TaskCommentController::class, 'store']);

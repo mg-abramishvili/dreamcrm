@@ -4547,28 +4547,58 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      boards: [],
       tasks: [],
       selected: {
+        board: {},
         task: {}
       },
       views: {
+        loading: true,
         modal: false
       }
     };
   },
   created: function created() {
-    this.getTasks();
+    this.getBoards();
   },
+  computed: {},
   methods: {
-    getTasks: function getTasks() {
+    getBoards: function getBoards() {
       var _this = this;
 
-      axios.get('/api/tasks').then(function (response) {
-        return _this.tasks = response.data;
+      axios.get('/api/boards').then(function (response) {
+        _this.boards = response.data;
+        _this.views.loading = false;
+
+        if (response.data[0]) {
+          _this.selected.board = response.data[0].id;
+
+          _this.getTasks();
+        }
+      });
+    },
+    getTasks: function getTasks() {
+      var _this2 = this;
+
+      axios.get("/api/tasks/board/".concat(this.selected.board)).then(function (response) {
+        return _this2.tasks = response.data;
       });
     },
     openTaskModal: function openTaskModal(task) {
@@ -32646,258 +32676,341 @@ var render = function () {
     "div",
     { staticClass: "tasks-page" },
     [
-      _vm._m(0),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-12 col-lg-4" }, [
-          _c("div", { staticClass: "card" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "card-body" },
-              _vm._l(
-                _vm.tasks.filter(function (task) {
-                  return task.status == "todo"
-                }),
-                function (task) {
-                  return _c(
-                    "div",
-                    {
-                      key: task.id,
-                      staticClass: "card mb-3 bg-light cursor-pointer border",
-                      on: {
-                        click: function ($event) {
-                          return _vm.openTaskModal(task)
-                        },
-                      },
-                    },
-                    [
-                      _c("div", { staticClass: "card-body p-3" }, [
-                        _c("p", [_vm._v(_vm._s(task.name))]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "mt-n1" }, [
-                          task.comments && task.comments.length > 0
-                            ? _c("span", { staticClass: "btn btn-sm p-0" }, [
-                                _c(
-                                  "svg",
-                                  {
-                                    staticClass:
-                                      "feather feather-message-square",
-                                    attrs: {
-                                      xmlns: "http://www.w3.org/2000/svg",
-                                      width: "24",
-                                      height: "24",
-                                      viewBox: "0 0 24 24",
-                                      fill: "none",
-                                      stroke: "currentColor",
-                                      "stroke-width": "2",
-                                      "stroke-linecap": "round",
-                                      "stroke-linejoin": "round",
-                                    },
-                                  },
-                                  [
-                                    _c("path", {
-                                      attrs: {
-                                        d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
-                                      },
-                                    }),
-                                  ]
-                                ),
-                                _vm._v(
-                                  "\n                                    " +
-                                    _vm._s(task.comments.length) +
-                                    "\n                                "
-                                ),
-                              ])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _c("img", {
-                            staticClass: "rounded-circle",
-                            attrs: {
-                              src: "img/no-image.jpg",
-                              width: "32",
-                              height: "32",
-                              alt: "Avatar",
-                            },
-                          }),
-                        ]),
-                      ]),
-                    ]
-                  )
-                }
-              ),
-              0
-            ),
+      _c("div", { staticClass: "row align-items-center mb-4" }, [
+        _c("div", { staticClass: "col-12 col-lg-8" }, [
+          _c("h1", { staticClass: "h3 m-0 d-inline-flex w-auto me-2" }, [
+            _vm._v("Задачи"),
           ]),
+          _vm._v(" "),
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.selected.board,
+                  expression: "selected.board",
+                },
+              ],
+              staticClass: "form-select d-inline-flex w-50",
+              on: {
+                change: [
+                  function ($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function (o) {
+                        return o.selected
+                      })
+                      .map(function (o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.selected,
+                      "board",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  },
+                  function ($event) {
+                    return _vm.getTasks()
+                  },
+                ],
+              },
+            },
+            _vm._l(_vm.boards, function (board) {
+              return _c(
+                "option",
+                { key: "board_" + board.id, domProps: { value: board.id } },
+                [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(board.name) +
+                      "\n                "
+                  ),
+                ]
+              )
+            }),
+            0
+          ),
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-12 col-lg-4" }, [
-          _c("div", { staticClass: "card" }, [
-            _vm._m(2),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "card-body" },
-              _vm._l(
-                _vm.tasks.filter(function (task) {
-                  return task.status == "inprogress"
-                }),
-                function (task) {
-                  return _c(
-                    "div",
-                    {
-                      key: task.id,
-                      staticClass: "card mb-3 bg-light cursor-pointer border",
-                      on: {
-                        click: function ($event) {
-                          return _vm.openTaskModal(task)
-                        },
-                      },
-                    },
-                    [
-                      _c("div", { staticClass: "card-body p-3" }, [
-                        _c("p", [_vm._v(_vm._s(task.name))]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "mt-n1" }, [
-                          task.comments && task.comments.length > 0
-                            ? _c("span", { staticClass: "btn btn-sm p-0" }, [
-                                _c(
-                                  "svg",
-                                  {
-                                    staticClass:
-                                      "feather feather-message-square",
-                                    attrs: {
-                                      xmlns: "http://www.w3.org/2000/svg",
-                                      width: "24",
-                                      height: "24",
-                                      viewBox: "0 0 24 24",
-                                      fill: "none",
-                                      stroke: "currentColor",
-                                      "stroke-width": "2",
-                                      "stroke-linecap": "round",
-                                      "stroke-linejoin": "round",
-                                    },
-                                  },
-                                  [
-                                    _c("path", {
-                                      attrs: {
-                                        d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
-                                      },
-                                    }),
-                                  ]
-                                ),
-                                _vm._v(
-                                  "\n                                    " +
-                                    _vm._s(task.comments.length) +
-                                    "\n                                "
-                                ),
-                              ])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _c("img", {
-                            staticClass: "rounded-circle",
-                            attrs: {
-                              src: "img/no-image.jpg",
-                              width: "32",
-                              height: "32",
-                              alt: "Avatar",
-                            },
-                          }),
-                        ]),
-                      ]),
-                    ]
-                  )
-                }
-              ),
-              0
-            ),
-          ]),
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-12 col-lg-4" }, [
-          _c("div", { staticClass: "card" }, [
-            _vm._m(3),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "card-body" },
-              _vm._l(
-                _vm.tasks.filter(function (task) {
-                  return task.status == "completed"
-                }),
-                function (task) {
-                  return _c(
-                    "div",
-                    {
-                      key: task.id,
-                      staticClass: "card mb-3 bg-light cursor-pointer border",
-                      on: {
-                        click: function ($event) {
-                          return _vm.openTaskModal(task)
-                        },
-                      },
-                    },
-                    [
-                      _c("div", { staticClass: "card-body p-3" }, [
-                        _c("p", [_vm._v(_vm._s(task.name))]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "mt-n1" }, [
-                          task.comments && task.comments.length > 0
-                            ? _c("span", { staticClass: "btn btn-sm p-0" }, [
-                                _c(
-                                  "svg",
-                                  {
-                                    staticClass:
-                                      "feather feather-message-square",
-                                    attrs: {
-                                      xmlns: "http://www.w3.org/2000/svg",
-                                      width: "24",
-                                      height: "24",
-                                      viewBox: "0 0 24 24",
-                                      fill: "none",
-                                      stroke: "currentColor",
-                                      "stroke-width": "2",
-                                      "stroke-linecap": "round",
-                                      "stroke-linejoin": "round",
-                                    },
-                                  },
-                                  [
-                                    _c("path", {
-                                      attrs: {
-                                        d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
-                                      },
-                                    }),
-                                  ]
-                                ),
-                                _vm._v(
-                                  "\n                                    " +
-                                    _vm._s(task.comments.length) +
-                                    "\n                                "
-                                ),
-                              ])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _c("img", {
-                            staticClass: "rounded-circle",
-                            attrs: {
-                              src: "img/no-image.jpg",
-                              width: "32",
-                              height: "32",
-                              alt: "Avatar",
-                            },
-                          }),
-                        ]),
-                      ]),
-                    ]
-                  )
-                }
-              ),
-              0
-            ),
-          ]),
-        ]),
+        _c("div", { staticClass: "col-12 col-lg-4" }),
       ]),
+      _vm._v(" "),
+      _vm.views.loading == false
+        ? _c("div", [
+            _c("div", { staticClass: "tasks-page-board" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-12 col-lg-4" }, [
+                  _c("div", { staticClass: "card" }, [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "card-body" },
+                      _vm._l(
+                        _vm.tasks.filter(function (task) {
+                          return task.status == "todo"
+                        }),
+                        function (task) {
+                          return _c(
+                            "div",
+                            {
+                              key: task.id,
+                              staticClass:
+                                "card mb-3 bg-light cursor-pointer border",
+                              on: {
+                                click: function ($event) {
+                                  return _vm.openTaskModal(task)
+                                },
+                              },
+                            },
+                            [
+                              _c("div", { staticClass: "card-body p-3" }, [
+                                _c("p", [_vm._v(_vm._s(task.name))]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "mt-n1" }, [
+                                  task.comments && task.comments.length > 0
+                                    ? _c(
+                                        "span",
+                                        { staticClass: "btn btn-sm p-0" },
+                                        [
+                                          _c(
+                                            "svg",
+                                            {
+                                              staticClass:
+                                                "feather feather-message-square",
+                                              attrs: {
+                                                xmlns:
+                                                  "http://www.w3.org/2000/svg",
+                                                width: "24",
+                                                height: "24",
+                                                viewBox: "0 0 24 24",
+                                                fill: "none",
+                                                stroke: "currentColor",
+                                                "stroke-width": "2",
+                                                "stroke-linecap": "round",
+                                                "stroke-linejoin": "round",
+                                              },
+                                            },
+                                            [
+                                              _c("path", {
+                                                attrs: {
+                                                  d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
+                                                },
+                                              }),
+                                            ]
+                                          ),
+                                          _vm._v(
+                                            "\n                                            " +
+                                              _vm._s(task.comments.length) +
+                                              "\n                                        "
+                                          ),
+                                        ]
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _c("img", {
+                                    staticClass: "rounded-circle",
+                                    attrs: {
+                                      src: "img/no-image.jpg",
+                                      width: "32",
+                                      height: "32",
+                                      alt: "Avatar",
+                                    },
+                                  }),
+                                ]),
+                              ]),
+                            ]
+                          )
+                        }
+                      ),
+                      0
+                    ),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-12 col-lg-4" }, [
+                  _c("div", { staticClass: "card" }, [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "card-body" },
+                      _vm._l(
+                        _vm.tasks.filter(function (task) {
+                          return task.status == "inprogress"
+                        }),
+                        function (task) {
+                          return _c(
+                            "div",
+                            {
+                              key: task.id,
+                              staticClass:
+                                "card mb-3 bg-light cursor-pointer border",
+                              on: {
+                                click: function ($event) {
+                                  return _vm.openTaskModal(task)
+                                },
+                              },
+                            },
+                            [
+                              _c("div", { staticClass: "card-body p-3" }, [
+                                _c("p", [_vm._v(_vm._s(task.name))]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "mt-n1" }, [
+                                  task.comments && task.comments.length > 0
+                                    ? _c(
+                                        "span",
+                                        { staticClass: "btn btn-sm p-0" },
+                                        [
+                                          _c(
+                                            "svg",
+                                            {
+                                              staticClass:
+                                                "feather feather-message-square",
+                                              attrs: {
+                                                xmlns:
+                                                  "http://www.w3.org/2000/svg",
+                                                width: "24",
+                                                height: "24",
+                                                viewBox: "0 0 24 24",
+                                                fill: "none",
+                                                stroke: "currentColor",
+                                                "stroke-width": "2",
+                                                "stroke-linecap": "round",
+                                                "stroke-linejoin": "round",
+                                              },
+                                            },
+                                            [
+                                              _c("path", {
+                                                attrs: {
+                                                  d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
+                                                },
+                                              }),
+                                            ]
+                                          ),
+                                          _vm._v(
+                                            "\n                                            " +
+                                              _vm._s(task.comments.length) +
+                                              "\n                                        "
+                                          ),
+                                        ]
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _c("img", {
+                                    staticClass: "rounded-circle",
+                                    attrs: {
+                                      src: "img/no-image.jpg",
+                                      width: "32",
+                                      height: "32",
+                                      alt: "Avatar",
+                                    },
+                                  }),
+                                ]),
+                              ]),
+                            ]
+                          )
+                        }
+                      ),
+                      0
+                    ),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-12 col-lg-4" }, [
+                  _c("div", { staticClass: "card" }, [
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "card-body" },
+                      _vm._l(
+                        _vm.tasks.filter(function (task) {
+                          return task.status == "completed"
+                        }),
+                        function (task) {
+                          return _c(
+                            "div",
+                            {
+                              key: task.id,
+                              staticClass:
+                                "card mb-3 bg-light cursor-pointer border",
+                              on: {
+                                click: function ($event) {
+                                  return _vm.openTaskModal(task)
+                                },
+                              },
+                            },
+                            [
+                              _c("div", { staticClass: "card-body p-3" }, [
+                                _c("p", [_vm._v(_vm._s(task.name))]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "mt-n1" }, [
+                                  task.comments && task.comments.length > 0
+                                    ? _c(
+                                        "span",
+                                        { staticClass: "btn btn-sm p-0" },
+                                        [
+                                          _c(
+                                            "svg",
+                                            {
+                                              staticClass:
+                                                "feather feather-message-square",
+                                              attrs: {
+                                                xmlns:
+                                                  "http://www.w3.org/2000/svg",
+                                                width: "24",
+                                                height: "24",
+                                                viewBox: "0 0 24 24",
+                                                fill: "none",
+                                                stroke: "currentColor",
+                                                "stroke-width": "2",
+                                                "stroke-linecap": "round",
+                                                "stroke-linejoin": "round",
+                                              },
+                                            },
+                                            [
+                                              _c("path", {
+                                                attrs: {
+                                                  d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
+                                                },
+                                              }),
+                                            ]
+                                          ),
+                                          _vm._v(
+                                            "\n                                            " +
+                                              _vm._s(task.comments.length) +
+                                              "\n                                        "
+                                          ),
+                                        ]
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _c("img", {
+                                    staticClass: "rounded-circle",
+                                    attrs: {
+                                      src: "img/no-image.jpg",
+                                      width: "32",
+                                      height: "32",
+                                      alt: "Avatar",
+                                    },
+                                  }),
+                                ]),
+                              ]),
+                            ]
+                          )
+                        }
+                      ),
+                      0
+                    ),
+                  ]),
+                ]),
+              ]),
+            ]),
+          ])
+        : _vm._e(),
       _vm._v(" "),
       _vm.views.modal
         ? _c("TaskModal", { attrs: { task: _vm.selected.task } })
@@ -32911,16 +33024,6 @@ var render = function () {
   )
 }
 var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row align-items-center mb-4" }, [
-      _c("div", { staticClass: "col-12 col-lg-6" }, [
-        _c("h1", { staticClass: "h3 m-0" }, [_vm._v("Задачи")]),
-      ]),
-    ])
-  },
   function () {
     var _vm = this
     var _h = _vm.$createElement

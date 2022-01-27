@@ -32,6 +32,11 @@ class User extends Authenticatable
         return $this->hasOne(UserPermissionTask::class);
     }
 
+    public function task_boards()
+    {
+        return $this->belongsToMany(TaskBoard::class);
+    }
+
     protected $fillable = [
         'name',
         'email',
