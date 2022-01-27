@@ -58,4 +58,4 @@ Route::get('task/{id}', [TaskController::class, 'task']);
 Route::post('task/{id}/comments', [TaskCommentController::class, 'store']);
 Route::put('task/{id}/complete', [TaskController::class, 'complete']);
 Route::put('task/{id}/inprogress', [TaskController::class, 'inprogress']);
-Route::put('task/{id}/description', [TaskController::class, 'description']);
+Route::put('task/{id}/update', [TaskController::class, 'update']);

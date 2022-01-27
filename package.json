@@ -25,6 +25,7 @@
         "hooper": "^0.3.4",
         "moment": "^2.29.1",
         "vue-filepond": "^6.0.0",
-        "vue-router": "^3.5.1"
+        "vue-router": "^3.5.1",
+        "vuedraggable": "^2.24.3"
     }
 }

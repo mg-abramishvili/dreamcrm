@@ -65,11 +65,16 @@ class TaskController extends Controller
         $task->users()->sync($user->id);
     }
 
-    public function description($id, Request $request)
+    public function update($id, Request $request)
     {
         $task = Task::find($id);
 
-        $task->description = $request->description;
+        if(isset($request->column_id)) {
+            $task->column_id = $request->column_id;
+        }
+        if(isset($request->description)) {
+            $task->description = $request->description;
+        }
         
         $task->save();
     }
