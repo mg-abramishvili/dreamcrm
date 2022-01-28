@@ -27,7 +27,9 @@ class TaskBoardColumnController extends Controller
                 },
             ],
         )
-        ->whereHas('tasks')
+        ->whereHas('tasks', function ($q) use($user) {
+            $q->whereRelation('users', 'user_id', $user->id);
+        })
         ->get();
     }
 

@@ -324,8 +324,7 @@ table.dataTable {
     gap: 10px;
     overflow-y: auto;
     max-height: calc(75vh - 75px);
-    padding: 0 5px;
-    padding-bottom: 3px;
+    padding: 10px 5px;
 }
 .tasks-page-board .task-column-body::-webkit-scrollbar {
     width: 5px;
@@ -346,7 +345,7 @@ table.dataTable {
     box-shadow: 0 1.5px 0 rgba(0,0,0,0.25);
 }
 .sortable-ghost {
-    transform: rotate(5deg) !important;
+    transform: rotate(4deg) !important;
     border: 2px solid rgba(63, 128, 234, 0.5) !important;
     border-radius: 6px !important;
     opacity: 1 !important;

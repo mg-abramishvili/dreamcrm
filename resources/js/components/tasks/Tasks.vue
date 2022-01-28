@@ -24,10 +24,11 @@
                                 <h5 class="card-title mb-0">{{ column.name }}</h5>
                             </div>
                             <div class="col-3 text-end">
-                                <button v-if="column.board && column.board.admin == $parent.user.id" @click="openCreateTaskModal(column.id)" class="btn btn-sm btn-outline-primary">+</button>
+                                <button v-if="column.board && column.board.admin == $parent.user.id" @click="openCreateTask(column.id)" class="btn btn-sm btn-outline-primary">+</button>
                             </div>
                         </div>
                     </div>
+                    <CreateTask v-if="views.createTask && selected.column == column.id" :column_id="selected.column"></CreateTask>
                     <draggable v-model="column.tasks" group="tasks" :move="detectMove" @change="moveTask($event, column.id)" :disabled="views.draggable == false" class="task-column-body">
                         <div @click="openTaskModal(task)" v-for="task in column.tasks" :key="task.id" class="card m-0" style="box-shadow: none;">
                             <div class="card-body bg-light cursor-pointer p-3">
@@ -56,8 +57,6 @@
 
         <TaskModal v-if="views.modals.openTask" :task_id="selected.task.id"></TaskModal>
         
-        <CreateTaskModal v-if="views.modals.createTask" :column_id="selected.column"></CreateTaskModal>
-        
         <CreateColumnModal v-if="views.modals.createColumn" :board_id="selected.board.id"></CreateColumnModal>
         
         <div v-if="views.modals.showBackdrop" class="modal-backdrop fade show"></div>
@@ -67,7 +66,7 @@
 <script>
     import TaskModal from './TaskModal.vue'
     import CreateColumnModal from './CreateColumnModal.vue'
-    import CreateTaskModal from './CreateTaskModal.vue'
+    import CreateTask from './CreateTask.vue'
 
     import draggable from 'vuedraggable'
 
@@ -88,9 +87,9 @@
                 views: {
                     loading: true,
                     draggable: false,
+                    createTask: false,
                     modals: {
                         openTask: false,
-                        createTask: false,
                         createColumn: false,
                         showBackdrop: false,
                     },
@@ -144,10 +143,9 @@
                 this.views.modals.createColumn = true
                 this.views.modals.showBackdrop = true
             },
-            openCreateTaskModal(column) {
+            openCreateTask(column) {
                 this.selected.column = column
-                this.views.modals.createTask = true
-                this.views.modals.showBackdrop = true
+                this.views.createTask = true
             },
             moveTask(event, column_id) {
                 console.log(event, column_id)
@@ -170,7 +168,7 @@
         components: {
             TaskModal,
             CreateColumnModal,
-            CreateTaskModal,
+            CreateTask,
             draggable
         },
         directives: {
