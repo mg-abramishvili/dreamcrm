@@ -34,6 +34,11 @@
                             </div>
                             
                             <h6 class="text-muted mt-4">Действия</h6>
+                            <div style="position: relative;">
+                                <button @click="addUser()" class="w-100 btn btn-outline-primary mb-2">Добавить участника</button>
+                                <TaskAddUser v-if="views.addUser" :task="task"></TaskAddUser>
+                            </div>
+
                             <button @click="views.changeDescription = true" class="w-100 btn btn-outline-primary mb-2">Изменить описание</button>
                             <button v-if="task.status !== 'completed'" @click="completeTask()" class="w-100 btn btn-success">Отметить как выполненную</button>
                             <button v-if="task.status == 'completed'" @click="returnTask()" class="w-100 btn btn-warning">Вернуть в работу</button>
@@ -48,6 +53,7 @@
 <script>
     import TaskModalComment from './TaskModalComment.vue'
     import TaskChangeDescription from './TaskChangeDescription.vue'
+    import TaskAddUser from './TaskAddUser.vue'
     
     export default {
         props: ['task_id'],
@@ -57,6 +63,7 @@
 
                 views: {
                     changeDescription: false,
+                    addUser: false,
                 },
             }
         },
@@ -107,10 +114,18 @@
                     ))
                 }
             },
+            addUser() {
+                if(this.views.addUser == true) {
+                    this.views.addUser = false
+                } else {
+                    this.views.addUser = true
+                }
+            },
         },
         components: {
             TaskModalComment,
-            TaskChangeDescription
+            TaskChangeDescription,
+            TaskAddUser
         },
     }
 </script>

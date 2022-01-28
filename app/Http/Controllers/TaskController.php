@@ -75,6 +75,9 @@ class TaskController extends Controller
         if(isset($request->description)) {
             $task->description = $request->description;
         }
+        if(isset($request->user_id)) {
+            $task->users()->attach($request->user_id, ['task_id' => $task->id]);
+        }
         
         $task->save();
     }
