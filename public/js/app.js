@@ -4466,7 +4466,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.put("/api/task/".concat(this.task.id, "/update"), {
         user_id: user_id
       }).then(function (response) {
-        return _this2.getUsers(), _this2.$parent.$parent.getColumns(), _this2.closeForm();
+        return _this2.$parent.getTask(), _this2.$parent.$parent.getColumns(), _this2.closeForm();
       });
     }
   }

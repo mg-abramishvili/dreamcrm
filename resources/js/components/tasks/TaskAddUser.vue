@@ -43,7 +43,7 @@
                     user_id: user_id
                 })
                 .then(response => (
-                    this.getUsers(),
+                    this.$parent.getTask(),
                     this.$parent.$parent.getColumns(),
                     this.closeForm()
                 ))
