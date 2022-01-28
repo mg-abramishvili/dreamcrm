@@ -1,6 +1,6 @@
 <template>
     <div class="tasks-page">
-        <div class="row align-items-center mb-4">
+        <div class="row tasks-page-header">
             <div class="col-12 col-lg-8">
                 <h1 class="h3 m-0 d-inline-flex w-auto me-2">Задачи</h1>
                 <select v-model="selected.board" @change="getTasks()" class="form-select d-inline-flex w-50">
@@ -14,11 +14,11 @@
             </div>
         </div>
         
-        <div v-if="views.loading == false">
+        <template v-if="views.loading == false">
             <div v-dragscroll:nochilddrag class="tasks-page-board align-items-start">
                     
                 <div v-for="column in columns" :key="column.id" class="task-column">
-                    <div class="card-header p-0">
+                    <div class="card-header">
                         <div class="row align-items-center mb-2">
                             <div class="col-9">
                                 <h5 class="card-title mb-0">{{ column.name }}</h5>
@@ -28,7 +28,7 @@
                             </div>
                         </div>
                     </div>
-                    <draggable v-model="column.tasks" group="tasks" :move="detectMove" @change="moveTask($event, column.id)" animation="350" class="task-column-body">
+                    <draggable v-model="column.tasks" group="tasks" :move="detectMove" @change="moveTask($event, column.id)" class="task-column-body">
                         <div @click="openTaskModal(task)" v-for="task in column.tasks" :key="task.id" class="card m-0" style="box-shadow: none;">
                             <div class="card-body bg-light cursor-pointer p-3">
                                 <p>{{ task.name }}</p>
@@ -53,7 +53,7 @@
                 <button @click="openCreateColumnModal()" class="btn btn-outline-primary">Добавить колонку</button>
 
             </div>
-        </div>
+        </template>
 
         <TaskModal v-if="views.modals.openTask" :task_id="selected.task.id"></TaskModal>
         

@@ -6,6 +6,7 @@ html {
 
 body {
     font-size: 16px;
+    overflow-y: auto;
 }
 
 .modal-open {
@@ -236,10 +237,36 @@ table.dataTable {
 
 
 /* TASK MODAL */
+.tasks-page {
+    height: calc(100vh - 3rem);
+    position: relative;
+}
+.tasks-page-header {
+    align-items: center;
+    height: 50px;
+    margin-bottom: 25px;
+}
 .tasks-page-board {
-    overflow-x: scroll;
+    overflow-x: auto;
 	white-space: nowrap;
-    width: 100%;
+    margin-left: -2.5rem;
+    width: calc(100% + 5rem);
+    height: calc(100% - 75px);
+    padding: 0 2.5rem;
+}
+.tasks-page-board::-webkit-scrollbar {
+    height: 8px;
+}
+.tasks-page-board::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    margin: 0 2.5rem;
+}
+.tasks-page-board::-webkit-scrollbar-thumb {
+    background: #3f80ea;
+    border-radius: 5px;
+}
+.tasks-page-board::-webkit-scrollbar-thumb:hover {
+    background: #3f80ea;
 }
 .tasks-page-board .task-column {
     display: inline-block;
@@ -248,24 +275,44 @@ table.dataTable {
     margin-right: 10px;
     background-color: #fff;
     box-shadow: 0 0 0.875rem 0 rgb(41 48 66 / 10%);
-    padding: 10px;
+    padding: 5px;
+    padding-bottom: 10px;
     border-radius: 6px;
+}
+.tasks-page-board .card-header {
+    padding: 5px;
 }
 .tasks-page-board .task-column-body {
     display: flex;
-    flex-wrap: wrap;
     flex-direction: column;
     gap: 10px;
+    overflow-y: auto;
+    max-height: calc(75vh - 75px);
+    padding: 0 5px;
+    padding-bottom: 3px;
+}
+.tasks-page-board .task-column-body::-webkit-scrollbar {
+    width: 5px;
+}
+.tasks-page-board .task-column-body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+.tasks-page-board .task-column-body::-webkit-scrollbar-thumb {
+    background: #a7a7a7;
+    border-radius: 5px;
+}
+.tasks-page-board .task-column-body::-webkit-scrollbar-thumb:hover {
+    background: #a7a7a7;
 }
 .tasks-page-board .task-column-body .card-body {
     border-radius: 6px;
     border: 0;
-    box-shadow: 0 1px 0 #091e4240;
+    box-shadow: 0 1.5px 0 rgba(0,0,0,0.25);
 }
 .sortable-ghost {
     transform: rotate(5deg) !important;
-    z-index: 10 !important;
-    box-shadow: 0 1px 16px rgb(0 0 0 / 15%) !important;
+    border: 2px solid rgba(63, 128, 234, 0.5) !important;
+    border-radius: 6px !important;
     opacity: 1 !important;
 }
 .sortable-drag {

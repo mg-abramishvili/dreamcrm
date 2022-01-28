@@ -4,15 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Models\TaskBoard;
 use App\Models\TaskBoardColumn;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class TaskBoardColumnController extends Controller
 {
-    public function index($id)
+    public function index($id, Request $request)
     {
         $board = TaskBoard::find($id);
 
-        return TaskBoardColumn::where('board_id', $board->id)->with('tasks.users', 'tasks.comments')->get();
+        $user = User::find($request->user()->id);
+
+        if($user->task_board_permissions && $user->task_board_permissions->can_see_all_boards == 1) {
+            return TaskBoardColumn::where('board_id', $board->id)->with('tasks.users', 'tasks.comments')->get();
+        }
+
+        return TaskBoardColumn::where('board_id', $board->id)->with('tasks.users')->whereHas('tasks', function ($q) use($user) {
+                $q->whereRelation('users', 'user_id', $user->id);
+            })
+        ->get();
     }
 
     public function store(Request $request)

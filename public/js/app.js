@@ -37825,7 +37825,7 @@ var render = function () {
     "div",
     { staticClass: "tasks-page" },
     [
-      _c("div", { staticClass: "row align-items-center mb-4" }, [
+      _c("div", { staticClass: "row tasks-page-header" }, [
         _c("div", { staticClass: "col-12 col-lg-8" }, [
           _c("h1", { staticClass: "h3 m-0 d-inline-flex w-auto me-2" }, [
             _vm._v("Задачи"),
@@ -37887,7 +37887,7 @@ var render = function () {
       ]),
       _vm._v(" "),
       _vm.views.loading == false
-        ? _c("div", [
+        ? [
             _c(
               "div",
               {
@@ -37906,7 +37906,7 @@ var render = function () {
                     "div",
                     { key: column.id, staticClass: "task-column" },
                     [
-                      _c("div", { staticClass: "card-header p-0" }, [
+                      _c("div", { staticClass: "card-header" }, [
                         _c(
                           "div",
                           { staticClass: "row align-items-center mb-2" },
@@ -37939,11 +37939,7 @@ var render = function () {
                         "draggable",
                         {
                           staticClass: "task-column-body",
-                          attrs: {
-                            group: "tasks",
-                            move: _vm.detectMove,
-                            animation: "350",
-                          },
+                          attrs: { group: "tasks", move: _vm.detectMove },
                           on: {
                             change: function ($event) {
                               return _vm.moveTask($event, column.id)
@@ -38080,7 +38076,7 @@ var render = function () {
               ],
               2
             ),
-          ])
+          ]
         : _vm._e(),
       _vm._v(" "),
       _vm.views.modals.openTask
@@ -38099,7 +38095,7 @@ var render = function () {
         ? _c("div", { staticClass: "modal-backdrop fade show" })
         : _vm._e(),
     ],
-    1
+    2
   )
 }
 var staticRenderFns = [
