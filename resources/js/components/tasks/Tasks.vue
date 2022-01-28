@@ -4,7 +4,7 @@
             <div class="col-12 col-lg-8">
                 <h1 class="h3 m-0 d-inline-flex w-auto me-2">Задачи</h1>
                 <select v-model="selected.board" @change="getTasks()" class="form-select d-inline-flex w-50">
-                    <option v-for="board in boards" :key="'board_' + board.id" :value="board.id">
+                    <option v-for="board in boards" :key="'board_' + board.id" :value="board">
                         {{ board.name }}
                     </option>
                 </select>
@@ -24,11 +24,11 @@
                                 <h5 class="card-title mb-0">{{ column.name }}</h5>
                             </div>
                             <div class="col-3 text-end">
-                                <button @click="openCreateTaskModal(column.id)" class="btn btn-sm btn-outline-primary">+</button>
+                                <button v-if="column.board && column.board.admin == $parent.user.id" @click="openCreateTaskModal(column.id)" class="btn btn-sm btn-outline-primary">+</button>
                             </div>
                         </div>
                     </div>
-                    <draggable v-model="column.tasks" group="tasks" :move="detectMove" @change="moveTask($event, column.id)" class="task-column-body">
+                    <draggable v-model="column.tasks" group="tasks" :move="detectMove" @change="moveTask($event, column.id)" :disabled="views.draggable == false" class="task-column-body">
                         <div @click="openTaskModal(task)" v-for="task in column.tasks" :key="task.id" class="card m-0" style="box-shadow: none;">
                             <div class="card-body bg-light cursor-pointer p-3">
                                 <p>{{ task.name }}</p>
@@ -50,8 +50,7 @@
                     </draggable>
                 </div>
 
-                <button @click="openCreateColumnModal()" class="btn btn-outline-primary">Добавить колонку</button>
-
+                <button v-if="selected.board.admin == $parent.user.id" @click="openCreateColumnModal()" class="btn btn-outline-primary">Добавить колонку</button>
             </div>
         </template>
 
@@ -59,7 +58,7 @@
         
         <CreateTaskModal v-if="views.modals.createTask" :column_id="selected.column"></CreateTaskModal>
         
-        <CreateColumnModal v-if="views.modals.createColumn" :board_id="selected.board"></CreateColumnModal>
+        <CreateColumnModal v-if="views.modals.createColumn" :board_id="selected.board.id"></CreateColumnModal>
         
         <div v-if="views.modals.showBackdrop" class="modal-backdrop fade show"></div>
     </div>
@@ -88,6 +87,7 @@
 
                 views: {
                     loading: true,
+                    draggable: false,
                     modals: {
                         openTask: false,
                         createTask: false,
@@ -110,21 +110,27 @@
                     this.views.loading = false
 
                     if(response.data[0]) {
-                        this.selected.board = response.data[0].id
+                        this.selected.board = response.data[0]
                         this.getColumns()
                     }
                 }))
             },
             getColumns() {
+                if(this.selected.board.admin == this.$parent.user.id) {
+                    this.views.draggable = true
+                } else {
+                    this.views.draggable = false
+                }
+
                 axios
-                .get(`/api/tasks/board/${this.selected.board}/columns`)
+                .get(`/api/tasks/board/${this.selected.board.id}/columns`)
                 .then(response => (
                     this.columns = response.data
                 ))
             },
             getTasks() {
                 axios
-                .get(`/api/tasks/board/${this.selected.board}`)
+                .get(`/api/tasks/board/${this.selected.board.id}`)
                 .then(response => (
                     this.columns = response.data
                 ))

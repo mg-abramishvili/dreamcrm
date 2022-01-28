@@ -4776,7 +4776,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -4794,6 +4793,7 @@ __webpack_require__.r(__webpack_exports__);
       },
       views: {
         loading: true,
+        draggable: false,
         modals: {
           openTask: false,
           createTask: false,
@@ -4815,7 +4815,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.views.loading = false;
 
         if (response.data[0]) {
-          _this.selected.board = response.data[0].id;
+          _this.selected.board = response.data[0];
 
           _this.getColumns();
         }
@@ -4824,14 +4824,20 @@ __webpack_require__.r(__webpack_exports__);
     getColumns: function getColumns() {
       var _this2 = this;
 
-      axios.get("/api/tasks/board/".concat(this.selected.board, "/columns")).then(function (response) {
+      if (this.selected.board.admin == this.$parent.user.id) {
+        this.views.draggable = true;
+      } else {
+        this.views.draggable = false;
+      }
+
+      axios.get("/api/tasks/board/".concat(this.selected.board.id, "/columns")).then(function (response) {
         return _this2.columns = response.data;
       });
     },
     getTasks: function getTasks() {
       var _this3 = this;
 
-      axios.get("/api/tasks/board/".concat(this.selected.board)).then(function (response) {
+      axios.get("/api/tasks/board/".concat(this.selected.board.id)).then(function (response) {
         return _this3.columns = response.data;
       });
     },
@@ -37869,7 +37875,7 @@ var render = function () {
             _vm._l(_vm.boards, function (board) {
               return _c(
                 "option",
-                { key: "board_" + board.id, domProps: { value: board.id } },
+                { key: "board_" + board.id, domProps: { value: board } },
                 [
                   _vm._v(
                     "\n                    " +
@@ -37918,18 +37924,24 @@ var render = function () {
                             ]),
                             _vm._v(" "),
                             _c("div", { staticClass: "col-3 text-end" }, [
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-sm btn-outline-primary",
-                                  on: {
-                                    click: function ($event) {
-                                      return _vm.openCreateTaskModal(column.id)
+                              column.board &&
+                              column.board.admin == _vm.$parent.user.id
+                                ? _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-sm btn-outline-primary",
+                                      on: {
+                                        click: function ($event) {
+                                          return _vm.openCreateTaskModal(
+                                            column.id
+                                          )
+                                        },
+                                      },
                                     },
-                                  },
-                                },
-                                [_vm._v("+")]
-                              ),
+                                    [_vm._v("+")]
+                                  )
+                                : _vm._e(),
                             ]),
                           ]
                         ),
@@ -37939,7 +37951,11 @@ var render = function () {
                         "draggable",
                         {
                           staticClass: "task-column-body",
-                          attrs: { group: "tasks", move: _vm.detectMove },
+                          attrs: {
+                            group: "tasks",
+                            move: _vm.detectMove,
+                            disabled: _vm.views.draggable == false,
+                          },
                           on: {
                             change: function ($event) {
                               return _vm.moveTask($event, column.id)
@@ -38061,18 +38077,20 @@ var render = function () {
                   )
                 }),
                 _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-outline-primary",
-                    on: {
-                      click: function ($event) {
-                        return _vm.openCreateColumnModal()
+                _vm.selected.board.admin == _vm.$parent.user.id
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-outline-primary",
+                        on: {
+                          click: function ($event) {
+                            return _vm.openCreateColumnModal()
+                          },
+                        },
                       },
-                    },
-                  },
-                  [_vm._v("Добавить колонку")]
-                ),
+                      [_vm._v("Добавить колонку")]
+                    )
+                  : _vm._e(),
               ],
               2
             ),
@@ -38088,7 +38106,9 @@ var render = function () {
         : _vm._e(),
       _vm._v(" "),
       _vm.views.modals.createColumn
-        ? _c("CreateColumnModal", { attrs: { board_id: _vm.selected.board } })
+        ? _c("CreateColumnModal", {
+            attrs: { board_id: _vm.selected.board.id },
+          })
         : _vm._e(),
       _vm._v(" "),
       _vm.views.modals.showBackdrop

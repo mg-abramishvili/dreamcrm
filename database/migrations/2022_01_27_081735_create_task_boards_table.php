@@ -11,6 +11,7 @@ class CreateTaskBoardsTable extends Migration
         Schema::create('task_boards', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->integer('admin');
             $table->boolean('is_active');
         });
     }
