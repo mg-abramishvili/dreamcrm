@@ -163,7 +163,32 @@
                 }
             },
             moveColumn(event) {
-                console.log(event)
+                // console.log(event)
+                
+                var reorderedColumns = this.columns.map(function(column, index){
+                    {
+                        return {
+                            id: column.id,
+                            index: index,
+                        } 
+                    }
+                })
+
+                axios
+                .put(`/api/tasks/columns/reorder`, { columns: reorderedColumns })
+                .then((response => {
+                    if(response.data == 'OK') {
+                        // this.getColumns()
+                    }
+                }))
+                .catch((error) => {
+                    if(error.response) {
+                        for(var key in error.response.data.errors){
+                            console.log(key)
+                            alert(key)
+                        }
+                    }
+                })
             },
             detectMove: function(evt){
                 // console.log(evt)

@@ -16,7 +16,7 @@ class TaskBoardColumnController extends Controller
         $user = User::find($request->user()->id);
 
         if($user->task_board_permissions && $user->task_board_permissions->can_see_all_boards == 1 || $board->admin == $user->id) {
-            return TaskBoardColumn::where('board_id', $board->id)->with('board', 'tasks.users', 'tasks.comments')->get();
+            return TaskBoardColumn::where('board_id', $board->id)->with('board', 'tasks.users', 'tasks.comments')->orderBy('order', 'asc')->get();
         }
 
         return TaskBoardColumn::where('board_id', $board->id)->with(
@@ -30,6 +30,7 @@ class TaskBoardColumnController extends Controller
         ->whereHas('tasks', function ($q) use($user) {
             $q->whereRelation('users', 'user_id', $user->id);
         })
+        ->orderBy('order', 'asc')
         ->get();
     }
 
@@ -42,5 +43,18 @@ class TaskBoardColumnController extends Controller
         $column->order = 99;
 
         $column->save();
+    }
+
+    public function reorder(Request $request)
+    {
+        $columns = $request->columns;
+
+        foreach($columns as $clmn) {
+            $column = TaskBoardColumn::find($clmn["id"]);
+            $column->order = $clmn["index"];
+            $column->save();
+        }
+
+        // return 'OK';
     }
 }

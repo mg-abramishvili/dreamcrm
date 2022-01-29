@@ -4909,7 +4909,28 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     moveColumn: function moveColumn(event) {
-      console.log(event);
+      // console.log(event)
+      var reorderedColumns = this.columns.map(function (column, index) {
+        {
+          return {
+            id: column.id,
+            index: index
+          };
+        }
+      });
+      axios.put("/api/tasks/columns/reorder", {
+        columns: reorderedColumns
+      }).then(function (response) {
+        if (response.data == 'OK') {// this.getColumns()
+        }
+      })["catch"](function (error) {
+        if (error.response) {
+          for (var key in error.response.data.errors) {
+            console.log(key);
+            alert(key);
+          }
+        }
+      });
     },
     detectMove: function detectMove(evt) {// console.log(evt)
     }

@@ -55,6 +55,7 @@ Route::get('users', [UserController::class, 'index']);
 Route::get('tasks/boards', [TaskBoardController::class, 'index']);
 Route::get('tasks/board/{id}/columns', [TaskBoardColumnController::class, 'index']);
 Route::post('tasks/columns', [TaskBoardColumnController::class, 'store']);
+Route::put('tasks/columns/reorder', [TaskBoardColumnController::class, 'reorder']);
 Route::post('tasks', [TaskController::class, 'store']);
 Route::get('task/{id}/comments', [TaskCommentController::class, 'index']);
 Route::get('task/{id}', [TaskController::class, 'task']);
