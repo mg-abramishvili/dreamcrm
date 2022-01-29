@@ -12,10 +12,11 @@ class CreateTasksTable extends Migration
             $table->id();
             $table->string('name');
             $table->longText('description')->nullable();
-            $table->integer('column_id')->nullable();
+            $table->integer('column_id');
             $table->date('deadline')->nullable();
             $table->text('files')->nullable();
             $table->string('status');
+            $table->integer('order');
             $table->timestamps();
         });
     }

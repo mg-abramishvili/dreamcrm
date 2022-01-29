@@ -12,6 +12,7 @@ class CreateTaskBoardColumnsTable extends Migration
             $table->id();
             $table->integer('board_id');
             $table->string('name');
+            $table->integer('order');
         });
     }
 

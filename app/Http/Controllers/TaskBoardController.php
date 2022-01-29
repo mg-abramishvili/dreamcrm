@@ -16,6 +16,6 @@ class TaskBoardController extends Controller
             return TaskBoard::all();
         }
 
-        return TaskBoard::with('users')->whereRelation('users', 'user_id', $user->id)->get();
+        return TaskBoard::with('users')->whereRelation('users', 'user_id', $user->id)->orWhere('admin', $user->id)->get();
     }
 }

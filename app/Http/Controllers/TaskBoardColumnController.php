@@ -39,6 +39,7 @@ class TaskBoardColumnController extends Controller
 
         $column->name = $request->name;
         $column->board_id = $request->board_id;
+        $column->order = 99;
 
         $column->save();
     }

@@ -57,8 +57,13 @@ class TaskController extends Controller
 
         $task->column_id = $request->column_id;
         $task->name = $request->name;
-        $task->description = $request->description;
+
+        if(isset($request->description)) {
+            $task->description = $request->description;
+        }
+
         $task->status = 'active';
+        $task->order = 99;
 
         $task->save();
 
