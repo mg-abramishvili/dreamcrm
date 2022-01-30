@@ -1,15 +1,19 @@
 <template>
     <div class="tasks-page">
         <div class="row tasks-page-header">
-            <div class="col-12 col-lg-8">
+            <div class="col-12 col-lg-9">
                 <h1 class="h3 m-0 d-inline-flex w-auto me-2">Задачи</h1>
-                <select v-model="selected.board" @change="getTasks()" class="form-select d-inline-flex w-50">
-                    <option v-for="board in boards" :key="'board_' + board.id" :value="board">
-                        {{ board.name }}
-                    </option>
-                </select>
+                <div class="d-inline-flex w-75">
+                    <select v-if="views.createTaskBoard == false" v-model="selected.board" @change="getTasks()" class="form-select w-50">
+                        <option v-for="board in boards" :key="'board_' + board.id" :value="board">
+                            {{ board.name }}
+                        </option>
+                    </select>
+                    <CreateTaskBoard v-if="views.createTaskBoard"></CreateTaskBoard>
+                    <button v-if="views.createTaskBoard == false" @click="openCreateTaskBoard()" class="btn btn-outline-primary mx-1">Создать доску</button>
+                </div>
             </div>
-            <div class="col-12 col-lg-4 text-end">
+            <div class="col-12 col-lg-3 text-end">
                 <button v-if="selected.board.admin == $parent.user.id" @click="openCreateColumnModal()" class="btn btn-outline-primary">Добавить колонку</button>
             </div>
         </div>
@@ -64,6 +68,7 @@
     import TaskModal from './TaskModal.vue'
     import CreateColumnModal from './CreateColumnModal.vue'
     import CreateTask from './CreateTask.vue'
+    import CreateTaskBoard from './CreateTaskBoard.vue'
 
     import draggable from 'vuedraggable'
 
@@ -85,6 +90,7 @@
                     loading: true,
                     draggable: false,
                     createTask: false,
+                    createTaskBoard: false,
                     modals: {
                         openTask: false,
                         createColumn: false,
@@ -140,6 +146,9 @@
                 this.views.modals.createColumn = true
                 this.views.modals.showBackdrop = true
             },
+            openCreateTaskBoard() {
+                this.views.createTaskBoard = true
+            },
             openCreateTask(column) {
                 this.selected.column = column
                 this.views.createTask = true
@@ -188,6 +197,7 @@
             TaskModal,
             CreateColumnModal,
             CreateTask,
+            CreateTaskBoard,
             draggable
         },
         directives: {

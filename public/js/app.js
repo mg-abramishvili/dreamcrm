@@ -4417,6 +4417,39 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/tasks/CreateTaskBoard.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/tasks/CreateTaskBoard.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      name: ''
+    };
+  },
+  mounted: function mounted() {
+    document.getElementsByClassName('form-control')[0].focus();
+  },
+  methods: {}
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/tasks/TaskAddUser.vue?vue&type=script&lang=js&":
 /*!************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/tasks/TaskAddUser.vue?vue&type=script&lang=js& ***!
@@ -4753,9 +4786,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _TaskModal_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TaskModal.vue */ "./resources/js/components/tasks/TaskModal.vue");
 /* harmony import */ var _CreateColumnModal_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateColumnModal.vue */ "./resources/js/components/tasks/CreateColumnModal.vue");
 /* harmony import */ var _CreateTask_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CreateTask.vue */ "./resources/js/components/tasks/CreateTask.vue");
-/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.umd.js");
-/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var vue_dragscroll__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-dragscroll */ "./node_modules/vue-dragscroll/src/main.js");
+/* harmony import */ var _CreateTaskBoard_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./CreateTaskBoard.vue */ "./resources/js/components/tasks/CreateTaskBoard.vue");
+/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.umd.js");
+/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var vue_dragscroll__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue-dragscroll */ "./node_modules/vue-dragscroll/src/main.js");
 //
 //
 //
@@ -4818,6 +4852,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+
 
 
 
@@ -4837,6 +4876,7 @@ __webpack_require__.r(__webpack_exports__);
         loading: true,
         draggable: false,
         createTask: false,
+        createTaskBoard: false,
         modals: {
           openTask: false,
           createColumn: false,
@@ -4892,6 +4932,9 @@ __webpack_require__.r(__webpack_exports__);
       this.views.modals.createColumn = true;
       this.views.modals.showBackdrop = true;
     },
+    openCreateTaskBoard: function openCreateTaskBoard() {
+      this.views.createTaskBoard = true;
+    },
     openCreateTask: function openCreateTask(column) {
       this.selected.column = column;
       this.views.createTask = true;
@@ -4932,10 +4975,11 @@ __webpack_require__.r(__webpack_exports__);
     TaskModal: _TaskModal_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     CreateColumnModal: _CreateColumnModal_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     CreateTask: _CreateTask_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    draggable: (vuedraggable__WEBPACK_IMPORTED_MODULE_3___default())
+    CreateTaskBoard: _CreateTaskBoard_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    draggable: (vuedraggable__WEBPACK_IMPORTED_MODULE_4___default())
   },
   directives: {
-    dragscroll: vue_dragscroll__WEBPACK_IMPORTED_MODULE_4__.dragscroll
+    dragscroll: vue_dragscroll__WEBPACK_IMPORTED_MODULE_5__.dragscroll
   }
 });
 
@@ -32214,6 +32258,45 @@ component.options.__file = "resources/js/components/tasks/CreateTask.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/tasks/CreateTaskBoard.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/tasks/CreateTaskBoard.vue ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _CreateTaskBoard_vue_vue_type_template_id_02fe0ee9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateTaskBoard.vue?vue&type=template&id=02fe0ee9& */ "./resources/js/components/tasks/CreateTaskBoard.vue?vue&type=template&id=02fe0ee9&");
+/* harmony import */ var _CreateTaskBoard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateTaskBoard.vue?vue&type=script&lang=js& */ "./resources/js/components/tasks/CreateTaskBoard.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CreateTaskBoard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CreateTaskBoard_vue_vue_type_template_id_02fe0ee9___WEBPACK_IMPORTED_MODULE_0__.render,
+  _CreateTaskBoard_vue_vue_type_template_id_02fe0ee9___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/tasks/CreateTaskBoard.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/tasks/TaskAddUser.vue":
 /*!*******************************************************!*\
   !*** ./resources/js/components/tasks/TaskAddUser.vue ***!
@@ -32681,6 +32764,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/tasks/CreateTaskBoard.vue?vue&type=script&lang=js&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/tasks/CreateTaskBoard.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateTaskBoard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CreateTaskBoard.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/tasks/CreateTaskBoard.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateTaskBoard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/tasks/TaskAddUser.vue?vue&type=script&lang=js&":
 /*!********************************************************************************!*\
   !*** ./resources/js/components/tasks/TaskAddUser.vue?vue&type=script&lang=js& ***!
@@ -33089,6 +33188,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateTask_vue_vue_type_template_id_5945d1a6___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateTask_vue_vue_type_template_id_5945d1a6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CreateTask.vue?vue&type=template&id=5945d1a6& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/tasks/CreateTask.vue?vue&type=template&id=5945d1a6&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/tasks/CreateTaskBoard.vue?vue&type=template&id=02fe0ee9&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/tasks/CreateTaskBoard.vue?vue&type=template&id=02fe0ee9& ***!
+  \******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateTaskBoard_vue_vue_type_template_id_02fe0ee9___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateTaskBoard_vue_vue_type_template_id_02fe0ee9___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateTaskBoard_vue_vue_type_template_id_02fe0ee9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CreateTaskBoard.vue?vue&type=template&id=02fe0ee9& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/tasks/CreateTaskBoard.vue?vue&type=template&id=02fe0ee9&");
 
 
 /***/ }),
@@ -37445,6 +37561,47 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/tasks/CreateTaskBoard.vue?vue&type=template&id=02fe0ee9&":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/tasks/CreateTaskBoard.vue?vue&type=template&id=02fe0ee9& ***!
+  \*********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "d-inline-flex w-100" }, [
+      _c("input", {
+        staticClass: "form-control w-50",
+        attrs: { type: "text", placeholder: "Название новой доски" },
+      }),
+      _vm._v(" "),
+      _c("button", { staticClass: "btn btn-primary mx-1" }, [_vm._v("OK")]),
+      _vm._v(" "),
+      _c("button", { staticClass: "btn btn-outline-danger" }, [_vm._v("×")]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/tasks/TaskAddUser.vue?vue&type=template&id=ad0ef02a&":
 /*!*****************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/tasks/TaskAddUser.vue?vue&type=template&id=ad0ef02a& ***!
@@ -37980,64 +38137,95 @@ var render = function () {
     { staticClass: "tasks-page" },
     [
       _c("div", { staticClass: "row tasks-page-header" }, [
-        _c("div", { staticClass: "col-12 col-lg-8" }, [
+        _c("div", { staticClass: "col-12 col-lg-9" }, [
           _c("h1", { staticClass: "h3 m-0 d-inline-flex w-auto me-2" }, [
             _vm._v("Задачи"),
           ]),
           _vm._v(" "),
           _c(
-            "select",
-            {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.selected.board,
-                  expression: "selected.board",
-                },
-              ],
-              staticClass: "form-select d-inline-flex w-50",
-              on: {
-                change: [
-                  function ($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function (o) {
-                        return o.selected
-                      })
-                      .map(function (o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.$set(
-                      _vm.selected,
-                      "board",
-                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                    )
-                  },
-                  function ($event) {
-                    return _vm.getTasks()
-                  },
-                ],
-              },
-            },
-            _vm._l(_vm.boards, function (board) {
-              return _c(
-                "option",
-                { key: "board_" + board.id, domProps: { value: board } },
-                [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(board.name) +
-                      "\n                "
-                  ),
-                ]
-              )
-            }),
-            0
+            "div",
+            { staticClass: "d-inline-flex w-75" },
+            [
+              _vm.views.createTaskBoard == false
+                ? _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.selected.board,
+                          expression: "selected.board",
+                        },
+                      ],
+                      staticClass: "form-select w-50",
+                      on: {
+                        change: [
+                          function ($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function (o) {
+                                return o.selected
+                              })
+                              .map(function (o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.selected,
+                              "board",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          },
+                          function ($event) {
+                            return _vm.getTasks()
+                          },
+                        ],
+                      },
+                    },
+                    _vm._l(_vm.boards, function (board) {
+                      return _c(
+                        "option",
+                        {
+                          key: "board_" + board.id,
+                          domProps: { value: board },
+                        },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(board.name) +
+                              "\n                    "
+                          ),
+                        ]
+                      )
+                    }),
+                    0
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.views.createTaskBoard ? _c("CreateTaskBoard") : _vm._e(),
+              _vm._v(" "),
+              _vm.views.createTaskBoard == false
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-outline-primary mx-1",
+                      on: {
+                        click: function ($event) {
+                          return _vm.openCreateTaskBoard()
+                        },
+                      },
+                    },
+                    [_vm._v("Создать доску")]
+                  )
+                : _vm._e(),
+            ],
+            1
           ),
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-12 col-lg-4 text-end" }, [
+        _c("div", { staticClass: "col-12 col-lg-3 text-end" }, [
           _vm.selected.board.admin == _vm.$parent.user.id
             ? _c(
                 "button",
