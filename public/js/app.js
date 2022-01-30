@@ -4818,10 +4818,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 
 
@@ -38062,7 +38058,7 @@ var render = function () {
       _vm.views.loading == false
         ? [
             _c(
-              "div",
+              "draggable",
               {
                 directives: [
                   {
@@ -38072,205 +38068,197 @@ var render = function () {
                   },
                 ],
                 staticClass: "tasks-page-board align-items-start",
-              },
-              [
-                _c(
-                  "draggable",
-                  {
-                    attrs: {
-                      move: _vm.detectMove,
-                      disabled: _vm.views.draggable == false,
-                    },
-                    on: {
-                      change: function ($event) {
-                        return _vm.moveColumn($event)
-                      },
-                    },
-                    model: {
-                      value: _vm.columns,
-                      callback: function ($$v) {
-                        _vm.columns = $$v
-                      },
-                      expression: "columns",
-                    },
+                attrs: {
+                  move: _vm.detectMove,
+                  disabled: _vm.views.draggable == false,
+                },
+                on: {
+                  change: function ($event) {
+                    return _vm.moveColumn($event)
                   },
-                  _vm._l(_vm.columns, function (column) {
-                    return _c(
-                      "div",
-                      { key: column.id, staticClass: "task-column my-4" },
-                      [
-                        _c("div", { staticClass: "card-header" }, [
-                          _c(
-                            "div",
-                            { staticClass: "row align-items-center mb-2" },
-                            [
-                              _c("div", { staticClass: "col-9" }, [
-                                _c("h5", { staticClass: "card-title mb-0" }, [
-                                  _vm._v(_vm._s(column.name)),
-                                ]),
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-3 text-end" }, [
-                                column.board &&
-                                column.board.admin == _vm.$parent.user.id
-                                  ? _c(
-                                      "button",
-                                      {
-                                        staticClass:
-                                          "btn btn-sm btn-outline-primary",
-                                        on: {
-                                          click: function ($event) {
-                                            return _vm.openCreateTask(column.id)
-                                          },
-                                        },
-                                      },
-                                      [_vm._v("+")]
-                                    )
-                                  : _vm._e(),
-                              ]),
-                            ]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _vm.views.createTask && _vm.selected.column == column.id
-                          ? _c("CreateTask", {
-                              attrs: { column_id: _vm.selected.column },
-                            })
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _c(
-                          "draggable",
-                          {
-                            staticClass: "task-column-body",
-                            attrs: {
-                              group: "tasks",
-                              move: _vm.detectMove,
-                              disabled: _vm.views.draggable == false,
-                            },
-                            on: {
-                              change: function ($event) {
-                                return _vm.moveTask($event, column.id)
-                              },
-                            },
-                            model: {
-                              value: column.tasks,
-                              callback: function ($$v) {
-                                _vm.$set(column, "tasks", $$v)
-                              },
-                              expression: "column.tasks",
-                            },
-                          },
-                          _vm._l(column.tasks, function (task) {
-                            return _c(
-                              "div",
-                              {
-                                key: task.id,
-                                staticClass: "card m-0",
-                                staticStyle: { "box-shadow": "none" },
-                                on: {
-                                  click: function ($event) {
-                                    return _vm.openTaskModal(task)
-                                  },
-                                },
-                              },
-                              [
-                                _c(
-                                  "div",
+                },
+                model: {
+                  value: _vm.columns,
+                  callback: function ($$v) {
+                    _vm.columns = $$v
+                  },
+                  expression: "columns",
+                },
+              },
+              _vm._l(_vm.columns, function (column) {
+                return _c(
+                  "div",
+                  { key: column.id, staticClass: "task-column" },
+                  [
+                    _c("div", { staticClass: "card-header" }, [
+                      _c(
+                        "div",
+                        { staticClass: "row align-items-center mb-2" },
+                        [
+                          _c("div", { staticClass: "col-9" }, [
+                            _c("h5", { staticClass: "card-title mb-0" }, [
+                              _vm._v(_vm._s(column.name)),
+                            ]),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-3 text-end" }, [
+                            column.board &&
+                            column.board.admin == _vm.$parent.user.id
+                              ? _c(
+                                  "button",
                                   {
                                     staticClass:
-                                      "card-body bg-light cursor-pointer p-3",
+                                      "btn btn-sm btn-outline-primary",
+                                    on: {
+                                      click: function ($event) {
+                                        return _vm.openCreateTask(column.id)
+                                      },
+                                    },
                                   },
-                                  [
-                                    _c("p", [_vm._v(_vm._s(task.name))]),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "mt-n1" }, [
-                                      _c(
+                                  [_vm._v("+")]
+                                )
+                              : _vm._e(),
+                          ]),
+                        ]
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _vm.views.createTask && _vm.selected.column == column.id
+                      ? _c("CreateTask", {
+                          attrs: { column_id: _vm.selected.column },
+                        })
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c(
+                      "draggable",
+                      {
+                        staticClass: "task-column-body",
+                        attrs: {
+                          group: "tasks",
+                          move: _vm.detectMove,
+                          disabled: _vm.views.draggable == false,
+                        },
+                        on: {
+                          change: function ($event) {
+                            return _vm.moveTask($event, column.id)
+                          },
+                        },
+                        model: {
+                          value: column.tasks,
+                          callback: function ($$v) {
+                            _vm.$set(column, "tasks", $$v)
+                          },
+                          expression: "column.tasks",
+                        },
+                      },
+                      _vm._l(column.tasks, function (task) {
+                        return _c(
+                          "div",
+                          {
+                            key: task.id,
+                            staticClass: "card m-0",
+                            staticStyle: { "box-shadow": "none" },
+                            on: {
+                              click: function ($event) {
+                                return _vm.openTaskModal(task)
+                              },
+                            },
+                          },
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "card-body bg-light cursor-pointer p-3",
+                              },
+                              [
+                                _c("p", [_vm._v(_vm._s(task.name))]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "mt-n1" }, [
+                                  _c(
+                                    "div",
+                                    { staticClass: "d-inline-flex me-2" },
+                                    _vm._l(task.users, function (user) {
+                                      return _c(
                                         "div",
-                                        { staticClass: "d-inline-flex me-2" },
-                                        _vm._l(task.users, function (user) {
-                                          return _c(
-                                            "div",
+                                        {
+                                          key: "task_user_" + user.id,
+                                          staticStyle: { margin: "0 2px" },
+                                        },
+                                        [
+                                          _c("img", {
+                                            staticClass: "rounded-circle",
+                                            attrs: {
+                                              src: user.avatar,
+                                              width: "18",
+                                              height: "18",
+                                              alt: user.name,
+                                            },
+                                          }),
+                                        ]
+                                      )
+                                    }),
+                                    0
+                                  ),
+                                  _vm._v(" "),
+                                  task.comments && task.comments.length > 0
+                                    ? _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "btn btn-sm p-0 d-inline-flex align-items-center",
+                                        },
+                                        [
+                                          _c(
+                                            "svg",
                                             {
-                                              key: "task_user_" + user.id,
-                                              staticStyle: { margin: "0 2px" },
+                                              staticClass:
+                                                "feather feather-message-square",
+                                              staticStyle: {
+                                                "margin-right": "3px",
+                                              },
+                                              attrs: {
+                                                xmlns:
+                                                  "http://www.w3.org/2000/svg",
+                                                width: "24",
+                                                height: "24",
+                                                viewBox: "0 0 24 24",
+                                                fill: "none",
+                                                stroke: "currentColor",
+                                                "stroke-width": "2",
+                                                "stroke-linecap": "round",
+                                                "stroke-linejoin": "round",
+                                              },
                                             },
                                             [
-                                              _c("img", {
-                                                staticClass: "rounded-circle",
+                                              _c("path", {
                                                 attrs: {
-                                                  src: user.avatar,
-                                                  width: "18",
-                                                  height: "18",
-                                                  alt: user.name,
+                                                  d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
                                                 },
                                               }),
                                             ]
-                                          )
-                                        }),
-                                        0
-                                      ),
-                                      _vm._v(" "),
-                                      task.comments && task.comments.length > 0
-                                        ? _c(
-                                            "span",
-                                            {
-                                              staticClass:
-                                                "btn btn-sm p-0 d-inline-flex align-items-center",
-                                            },
-                                            [
-                                              _c(
-                                                "svg",
-                                                {
-                                                  staticClass:
-                                                    "feather feather-message-square",
-                                                  staticStyle: {
-                                                    "margin-right": "3px",
-                                                  },
-                                                  attrs: {
-                                                    xmlns:
-                                                      "http://www.w3.org/2000/svg",
-                                                    width: "24",
-                                                    height: "24",
-                                                    viewBox: "0 0 24 24",
-                                                    fill: "none",
-                                                    stroke: "currentColor",
-                                                    "stroke-width": "2",
-                                                    "stroke-linecap": "round",
-                                                    "stroke-linejoin": "round",
-                                                  },
-                                                },
-                                                [
-                                                  _c("path", {
-                                                    attrs: {
-                                                      d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
-                                                    },
-                                                  }),
-                                                ]
-                                              ),
-                                              _vm._v(
-                                                "\n                                        " +
-                                                  _vm._s(task.comments.length) +
-                                                  "\n                                    "
-                                              ),
-                                            ]
-                                          )
-                                        : _vm._e(),
-                                    ]),
-                                  ]
-                                ),
+                                          ),
+                                          _vm._v(
+                                            "\n                                    " +
+                                              _vm._s(task.comments.length) +
+                                              "\n                                "
+                                          ),
+                                        ]
+                                      )
+                                    : _vm._e(),
+                                ]),
                               ]
-                            )
-                          }),
-                          0
-                        ),
-                      ],
-                      1
-                    )
-                  }),
-                  0
-                ),
-              ],
-              1
+                            ),
+                          ]
+                        )
+                      }),
+                      0
+                    ),
+                  ],
+                  1
+                )
+              }),
+              0
             ),
           ]
         : _vm._e(),
