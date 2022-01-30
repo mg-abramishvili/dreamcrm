@@ -29,6 +29,8 @@ class AuthController extends Controller
 
     public function me(Request $request)
     {
-        return $request->user()->load('permissions');
+        if($request->user()) {
+            return $request->user()->load('permissions');
+        }
     }
 }
