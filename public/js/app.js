@@ -4445,7 +4445,17 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     document.getElementsByClassName('form-control')[0].focus();
   },
-  methods: {}
+  methods: {
+    saveTaskBoard: function saveTaskBoard() {
+      var _this = this;
+
+      axios.post("/api/tasks/boards", {
+        name: this.name
+      }).then(function (response) {
+        return _this.name = '', _this.$parent.views.createTaskBoard = false, _this.$parent.getBoards(response.data.id);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -4670,7 +4680,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (confirm("Точно выполнена?")) {
         axios.put("/api/task/".concat(this.task.id, "/complete")).then(function (response) {
-          return _this3.$parent.getTasks(), _this3.closeModal();
+          return _this3.$parent.getColumns(), _this3.closeModal();
         });
       }
     },
@@ -4679,7 +4689,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (confirm("Точно вернуть в работу?")) {
         axios.put("/api/task/".concat(this.task.id, "/inprogress")).then(function (response) {
-          return _this4.$parent.getTasks(), _this4.closeModal();
+          return _this4.$parent.getColumns(), _this4.closeModal();
         });
       }
     },
@@ -4763,7 +4773,7 @@ __webpack_require__.r(__webpack_exports__);
           user_id: this.$parent.$parent.$parent.user.id,
           text: this.text
         }).then(function (response) {
-          return _this2.text = '', _this2.getComments(), _this2.$parent.$parent.getTasks();
+          return _this2.text = '', _this2.getComments(), _this2.$parent.$parent.getColumns();
         });
       }
     }
@@ -4889,14 +4899,25 @@ __webpack_require__.r(__webpack_exports__);
     this.getBoards();
   },
   methods: {
-    getBoards: function getBoards() {
+    getBoards: function getBoards(board_id) {
       var _this = this;
 
       axios.get('/api/tasks/boards').then(function (response) {
         _this.boards = response.data;
         _this.views.loading = false;
 
+        if (board_id) {
+          _this.selected.board = response.data.find(function (board) {
+            return board.id == board_id;
+          });
+
+          _this.getColumns();
+
+          return;
+        }
+
         if (response.data[0]) {
+          console.log(response.data[0]);
           _this.selected.board = response.data[0];
 
           _this.getColumns();
@@ -4914,13 +4935,6 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get("/api/tasks/board/".concat(this.selected.board.id, "/columns")).then(function (response) {
         return _this2.columns = response.data;
-      });
-    },
-    getTasks: function getTasks() {
-      var _this3 = this;
-
-      axios.get("/api/tasks/board/".concat(this.selected.board.id)).then(function (response) {
-        return _this3.columns = response.data;
       });
     },
     openTaskModal: function openTaskModal(task) {
@@ -37577,25 +37591,52 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "d-inline-flex w-100" }, [
+  return _c(
+    "div",
+    { staticClass: "d-inline-flex w-100 tasks-new-board-form" },
+    [
       _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.name,
+            expression: "name",
+          },
+        ],
         staticClass: "form-control w-50",
         attrs: { type: "text", placeholder: "Название новой доски" },
+        domProps: { value: _vm.name },
+        on: {
+          input: function ($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.name = $event.target.value
+          },
+        },
       }),
       _vm._v(" "),
-      _c("button", { staticClass: "btn btn-primary mx-1" }, [_vm._v("OK")]),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary mx-1",
+          on: {
+            click: function ($event) {
+              return _vm.saveTaskBoard()
+            },
+          },
+        },
+        [_vm._v("OK")]
+      ),
       _vm._v(" "),
-      _c("button", { staticClass: "btn btn-outline-danger" }, [_vm._v("×")]),
-    ])
-  },
-]
+      _c("button", { staticClass: "btn btn-outline-danger" }, [
+        _vm._v("Отмена"),
+      ]),
+    ]
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -38179,7 +38220,7 @@ var render = function () {
                             )
                           },
                           function ($event) {
-                            return _vm.getTasks()
+                            return _vm.getColumns()
                           },
                         ],
                       },

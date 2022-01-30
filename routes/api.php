@@ -53,6 +53,7 @@ Route::get('usd/update', [DollarController::class, 'update']);
 Route::get('users', [UserController::class, 'index']);
 
 Route::get('tasks/boards', [TaskBoardController::class, 'index']);
+Route::post('tasks/boards', [TaskBoardController::class, 'store']);
 Route::get('tasks/board/{id}/columns', [TaskBoardColumnController::class, 'index']);
 Route::post('tasks/columns', [TaskBoardColumnController::class, 'store']);
 Route::put('tasks/columns/reorder', [TaskBoardColumnController::class, 'reorder']);

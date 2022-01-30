@@ -9,6 +9,8 @@ class TaskBoard extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     public function columns()
     {
         return $this->hasMany(TaskBoardColumn::class, 'board_id');

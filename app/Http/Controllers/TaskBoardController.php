@@ -18,4 +18,19 @@ class TaskBoardController extends Controller
 
         return TaskBoard::with('users')->whereRelation('users', 'user_id', $user->id)->orWhere('admin', $user->id)->get();
     }
+
+    public function store(Request $request)
+    {
+        $user = User::find($request->user()->id);
+
+        $board = new TaskBoard();
+
+        $board->name = $request->name;
+        $board->admin = $user->id;
+        $board->is_active = true;
+
+        $board->save();
+
+        return $board;
+    }
 }

@@ -99,7 +99,7 @@
                     axios
                     .put(`/api/task/${this.task.id}/complete`)
                     .then(response => (
-                        this.$parent.getTasks(),
+                        this.$parent.getColumns(),
                         this.closeModal()
                     ))
                 }
@@ -109,7 +109,7 @@
                     axios
                     .put(`/api/task/${this.task.id}/inprogress`)
                     .then(response => (
-                        this.$parent.getTasks(),
+                        this.$parent.getColumns(),
                         this.closeModal()
                     ))
                 }

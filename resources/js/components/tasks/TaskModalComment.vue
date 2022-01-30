@@ -56,7 +56,7 @@ export default {
                 .then(response => (
                     this.text = '',
                     this.getComments(),
-                    this.$parent.$parent.getTasks()
+                    this.$parent.$parent.getColumns()
                 ))
             }
         }

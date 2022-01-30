@@ -4,7 +4,7 @@
             <div class="col-12 col-lg-9">
                 <h1 class="h3 m-0 d-inline-flex w-auto me-2">Задачи</h1>
                 <div class="d-inline-flex w-75">
-                    <select v-if="views.createTaskBoard == false" v-model="selected.board" @change="getTasks()" class="form-select w-50">
+                    <select v-if="views.createTaskBoard == false" v-model="selected.board" @change="getColumns()" class="form-select w-50">
                         <option v-for="board in boards" :key="'board_' + board.id" :value="board">
                             {{ board.name }}
                         </option>
@@ -103,7 +103,7 @@
             this.getBoards()
         },
         methods: {
-            getBoards() {
+            getBoards(board_id) {
                 axios
                 .get('/api/tasks/boards')
                 .then((response => {
@@ -111,7 +111,14 @@
 
                     this.views.loading = false
 
+                    if(board_id) {
+                        this.selected.board = response.data.find(board => board.id == board_id)
+                        this.getColumns()
+                        return
+                    }
+
                     if(response.data[0]) {
+                        console.log(response.data[0])
                         this.selected.board = response.data[0]
                         this.getColumns()
                     }
@@ -126,13 +133,6 @@
 
                 axios
                 .get(`/api/tasks/board/${this.selected.board.id}/columns`)
-                .then(response => (
-                    this.columns = response.data
-                ))
-            },
-            getTasks() {
-                axios
-                .get(`/api/tasks/board/${this.selected.board.id}`)
                 .then(response => (
                     this.columns = response.data
                 ))
