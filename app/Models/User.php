@@ -12,6 +12,11 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public function permissions()
+    {
+        return $this->hasOne(UserPermission::class);
+    }
+
     public function calculations()
     {
         return $this->hasMany(Calculation::class);
@@ -22,24 +27,9 @@ class User extends Authenticatable
         return $this->belongsToMany(Task::class);
     }
 
-    public function task_comments()
+    public function taskComments()
     {
         return $this->hasMany(TaskComment::class);
-    }
-
-    public function task_board_permissions()
-    {
-        return $this->hasOne(UserPermissionTaskBoard::class);
-    }
-    
-    public function task_permissions()
-    {
-        return $this->hasOne(UserPermissionTask::class);
-    }
-
-    public function task_boards()
-    {
-        return $this->belongsToMany(TaskBoard::class);
     }
 
     protected $fillable = [
@@ -48,21 +38,11 @@ class User extends Authenticatable
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];

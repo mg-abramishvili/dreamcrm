@@ -27,7 +27,7 @@
                                 <h5 class="card-title mb-0">{{ column.name }}</h5>
                             </div>
                             <div class="col-3 text-end">
-                                <button v-if="column.board && column.board.admin == $parent.user.id" @click="openCreateTask(column.id)" class="btn btn-sm btn-outline-primary">+</button>
+                                <button v-if="column.board && column.board.admin == $parent.user.id || $parent.user.permissions && $parent.user.permissions.can_see_all_boards" @click="openCreateTask(column.id)" class="btn btn-sm btn-outline-primary">+</button>
                             </div>
                         </div>
                     </div>

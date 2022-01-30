@@ -38343,8 +38343,10 @@ var render = function () {
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "col-3 text-end" }, [
-                            column.board &&
-                            column.board.admin == _vm.$parent.user.id
+                            (column.board &&
+                              column.board.admin == _vm.$parent.user.id) ||
+                            (_vm.$parent.user.permissions &&
+                              _vm.$parent.user.permissions.can_see_all_boards)
                               ? _c(
                                   "button",
                                   {

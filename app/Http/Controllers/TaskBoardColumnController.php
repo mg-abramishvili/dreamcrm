@@ -15,7 +15,7 @@ class TaskBoardColumnController extends Controller
 
         $user = User::find($request->user()->id);
 
-        if($user->task_board_permissions && $user->task_board_permissions->can_see_all_boards == 1 || $board->admin == $user->id) {
+        if($user->permissions && $user->permissions->can_see_all_boards == 1 || $board->admin == $user->id) {
             return TaskBoardColumn::where('board_id', $board->id)->with('board', 'tasks.users', 'tasks.comments')->orderBy('order', 'asc')->get();
         }
 
