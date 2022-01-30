@@ -13,7 +13,7 @@ class CreateUserPermissionTaskBoardsTable extends Migration
             $table->integer('user_id');
             $table->boolean('can_see_all_boards')->nullable();
             $table->boolean('can_delete_all_boards')->nullable();
-            $table->boolean('can_create_board')->nullable();
+            $table->boolean('can_create_boards')->nullable();
         });
     }
 

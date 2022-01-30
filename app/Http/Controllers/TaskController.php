@@ -81,7 +81,9 @@ class TaskController extends Controller
             $task->description = $request->description;
         }
         if(isset($request->user_id)) {
-            $task->users()->attach($request->user_id, ['task_id' => $task->id]);
+            $task->users()->sync($request->user_id);
+            $board = TaskBoard::find($task->column->board->id);
+            $board->users()->sync($request->user_id);
         }
         
         $task->save();

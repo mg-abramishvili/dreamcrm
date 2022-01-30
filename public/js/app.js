@@ -4454,6 +4454,9 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         return _this.name = '', _this.$parent.views.createTaskBoard = false, _this.$parent.getBoards(response.data.id);
       });
+    },
+    cancelCreateTaskBoard: function cancelCreateTaskBoard() {
+      this.name = '', this.$parent.views.createTaskBoard = false;
     }
   }
 });
@@ -37630,9 +37633,18 @@ var render = function () {
         [_vm._v("OK")]
       ),
       _vm._v(" "),
-      _c("button", { staticClass: "btn btn-outline-danger" }, [
-        _vm._v("Отмена"),
-      ]),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-outline-danger",
+          on: {
+            click: function ($event) {
+              return _vm.cancelCreateTaskBoard()
+            },
+          },
+        },
+        [_vm._v("Отмена")]
+      ),
     ]
   )
 }
