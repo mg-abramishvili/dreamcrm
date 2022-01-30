@@ -343,3 +343,17 @@ table.dataTable {
     overflow-y: auto;
 }
 /* TASK MODAL */
+
+
+/* NOTIFICATION */
+.notyf__toast {
+    position: fixed;
+    bottom: 40px;
+    right: 25px;
+    color: #fff;
+    padding: 0 5px;
+}
+.notyf__wrapper {
+    padding: 5px;
+}
+/* NOTIFICATION */

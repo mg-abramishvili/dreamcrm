@@ -22,11 +22,11 @@
                     column_id: this.column_id,
                     name: this.name,
                 })
-                .then(response => (
-                    this.name = '',
-                    this.$parent.getColumns(),
-                    this.$parent.views.createTask = false
-                ))
+                .then((response => {
+                    this.name = ''
+                    this.$parent.$parent.getColumns()
+                    this.$parent.$parent.views.createTask = false
+                }))
             },
         },
     }

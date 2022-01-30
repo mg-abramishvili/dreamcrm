@@ -4405,7 +4405,11 @@ __webpack_require__.r(__webpack_exports__);
         column_id: this.column_id,
         name: this.name
       }).then(function (response) {
-        return _this.name = '', _this.$parent.getColumns(), _this.$parent.views.createTask = false;
+        _this.name = '';
+
+        _this.$parent.$parent.getColumns();
+
+        _this.$parent.$parent.views.createTask = false;
       });
     }
   }
@@ -4903,13 +4907,13 @@ __webpack_require__.r(__webpack_exports__);
         var task_id = event.added.element.id;
         axios.put("/api/task/".concat(event.added.element.id, "/update"), {
           column_id: column_id
-        }).then(function (response) {
-          return console.log('saved!');
+        }).then(function (response) {//
+        })["catch"](function (error) {
+          alert('Ошибка сервера');
         });
       }
     },
     moveColumn: function moveColumn(event) {
-      // console.log(event)
       var reorderedColumns = this.columns.map(function (column, index) {
         {
           return {
@@ -4920,16 +4924,9 @@ __webpack_require__.r(__webpack_exports__);
       });
       axios.put("/api/tasks/columns/reorder", {
         columns: reorderedColumns
-      }).then(function (response) {
-        if (response.data == 'OK') {// this.getColumns()
-        }
+      }).then(function (response) {//
       })["catch"](function (error) {
-        if (error.response) {
-          for (var key in error.response.data.errors) {
-            console.log(key);
-            alert(key);
-          }
-        }
+        alert('Ошибка сервера');
       });
     },
     detectMove: function detectMove(evt) {// console.log(evt)

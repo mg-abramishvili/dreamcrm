@@ -157,14 +157,15 @@
                     .put(`/api/task/${event.added.element.id}/update`, {
                         column_id: column_id
                     })
-                    .then(response => (
-                        console.log('saved!')
-                    ))
+                    .then((response => {
+                        //
+                    }))
+                    .catch((error) => {
+                        alert('Ошибка сервера')
+                    })
                 }
             },
             moveColumn(event) {
-                // console.log(event)
-                
                 var reorderedColumns = this.columns.map(function(column, index){
                     {
                         return {
@@ -177,20 +178,13 @@
                 axios
                 .put(`/api/tasks/columns/reorder`, { columns: reorderedColumns })
                 .then((response => {
-                    if(response.data == 'OK') {
-                        // this.getColumns()
-                    }
+                    //
                 }))
                 .catch((error) => {
-                    if(error.response) {
-                        for(var key in error.response.data.errors){
-                            console.log(key)
-                            alert(key)
-                        }
-                    }
+                    alert('Ошибка сервера')
                 })
             },
-            detectMove: function(evt){
+            detectMove: function(evt) {
                 // console.log(evt)
             }
         },
