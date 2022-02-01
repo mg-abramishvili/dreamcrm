@@ -51781,7 +51781,11 @@ var render = function () {
                                             "a",
                                             {
                                               attrs: {
-                                                href: "/uploads/" + file.name,
+                                                href:
+                                                  "/uploads/task_" +
+                                                  _vm.task.id +
+                                                  "/" +
+                                                  file.name,
                                                 target: "_blank",
                                               },
                                             },

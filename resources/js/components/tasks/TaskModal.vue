@@ -52,7 +52,7 @@
                                 <template>
                                     <ul v-if="task.files && task.files.length > 0" class="tasks-file-list">
                                         <li v-for="file in task.files" :key="'task_file_' + file.id">
-                                            <a :href="'/uploads/' + file.name" target="_blank">
+                                            <a :href="'/uploads/task_' + task.id + '/' + file.name" target="_blank">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file align-middle me-2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
                                                 {{ file.name }}
                                             </a>

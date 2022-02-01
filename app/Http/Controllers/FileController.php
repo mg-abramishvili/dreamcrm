@@ -13,9 +13,13 @@ class FileController extends Controller
             $task_files = request()->file('task_files');
             for ($i = 0; $i < count($task_files); $i++) {
                 $task_file = $task_files[$i];
-                // $task_file_name = md5(time() . rand(1, 100000)) . '.' . $task_file->getClientOriginalExtension();
                 $task_file_name = $task_file->getClientOriginalName();
-                $task_file->move(public_path() . '/uploads', $task_file_name);
+                
+                if(File::where('task_id', $request->task_id)->where('name', $task_file_name)->count() > 0) {
+                    $task_file_name = '1_' . $task_file->getClientOriginalName();
+                }
+
+                $task_file->move(public_path() . '/uploads/task_' . $request->task_id, $task_file_name);
 
                 $file = new File();
                 $file->name = $task_file_name;
