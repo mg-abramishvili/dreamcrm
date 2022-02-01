@@ -38458,42 +38458,44 @@ var render = function () {
             },
           }),
           _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-primary",
-              on: {
-                click: function ($event) {
-                  return _vm.saveComment()
-                },
-              },
-            },
-            [
-              _c(
-                "svg",
+          _vm.text.length > 0
+            ? _c(
+                "button",
                 {
-                  staticClass: "feather feather-arrow-right align-middle",
-                  attrs: {
-                    xmlns: "http://www.w3.org/2000/svg",
-                    width: "24",
-                    height: "24",
-                    viewBox: "0 0 24 24",
-                    fill: "none",
-                    stroke: "currentColor",
-                    "stroke-width": "2",
-                    "stroke-linecap": "round",
-                    "stroke-linejoin": "round",
+                  staticClass: "btn btn-primary",
+                  on: {
+                    click: function ($event) {
+                      return _vm.saveComment()
+                    },
                   },
                 },
                 [
-                  _c("line", {
-                    attrs: { x1: "5", y1: "12", x2: "19", y2: "12" },
-                  }),
-                  _c("polyline", { attrs: { points: "12 5 19 12 12 19" } }),
+                  _c(
+                    "svg",
+                    {
+                      staticClass: "feather feather-arrow-right align-middle",
+                      attrs: {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        width: "24",
+                        height: "24",
+                        viewBox: "0 0 24 24",
+                        fill: "none",
+                        stroke: "currentColor",
+                        "stroke-width": "2",
+                        "stroke-linecap": "round",
+                        "stroke-linejoin": "round",
+                      },
+                    },
+                    [
+                      _c("line", {
+                        attrs: { x1: "5", y1: "12", x2: "19", y2: "12" },
+                      }),
+                      _c("polyline", { attrs: { points: "12 5 19 12 12 19" } }),
+                    ]
+                  ),
                 ]
-              ),
-            ]
-          ),
+              )
+            : _vm._e(),
         ],
         2
       )
