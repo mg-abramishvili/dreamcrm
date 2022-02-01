@@ -26,6 +26,7 @@ export default {
                 description: this.description,
             })
             .then(response => (
+                this.$parent.getTask(),
                 this.$parent.$parent.getColumns(),
                 this.$parent.views.changeDescription = false
             ))

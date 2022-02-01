@@ -6,7 +6,7 @@ window.moment = require('moment');
 import moment from 'moment'
 
 Vue.prototype.$moment = moment;
-// moment.locale('ru');
+moment.locale('ru');
 
 import axios from 'axios'
 window.axios = require('axios');
@@ -33,6 +33,10 @@ Vue.filter('formatDateShort', function (value) {
 Vue.filter('formatDateTimeOnly', function (value) {
     if (!value) return ''
     return moment(value).utcOffset(180).format('H:mm')
+})
+Vue.filter('formatDateLong', function (value) {
+    if (!value) return ''
+    return moment(value).format('dddd, D MMMM')
 })
 
 const router = new VueRouter({

@@ -59,6 +59,10 @@ class TaskController extends Controller
             $task->status = $request->status;
         }
 
+        if(isset($request->deadline)) {
+            $task->deadline = $request->deadline;
+        }
+
         $task->save();
     }
 }

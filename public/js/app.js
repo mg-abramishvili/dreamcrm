@@ -4524,6 +4524,51 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/tasks/TaskChangeDeadline.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/tasks/TaskChangeDeadline.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['task'],
+  data: function data() {
+    return {//
+    };
+  },
+  created: function created() {
+    this.getDeadline();
+  },
+  methods: {
+    getDeadline: function getDeadline() {
+      this.deadline = this.task.deadline;
+    },
+    updateDeadline: function updateDeadline() {
+      var _this = this;
+
+      axios.put("/api/task/".concat(this.task.id, "/update"), {
+        deadline: this.deadline
+      }).then(function (response) {
+        return _this.$parent.getTask(), _this.$parent.$parent.getColumns(), _this.$parent.views.changeDeadline = false;
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/tasks/TaskChangeDescription.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/tasks/TaskChangeDescription.vue?vue&type=script&lang=js& ***!
@@ -4561,7 +4606,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.put("/api/task/".concat(this.task.id, "/update"), {
         description: this.description
       }).then(function (response) {
-        return _this.$parent.$parent.getColumns(), _this.$parent.views.changeDescription = false;
+        return _this.$parent.getTask(), _this.$parent.$parent.getColumns(), _this.$parent.views.changeDescription = false;
       });
     }
   }
@@ -4582,7 +4627,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _TaskModalComment_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TaskModalComment.vue */ "./resources/js/components/tasks/TaskModalComment.vue");
 /* harmony import */ var _TaskChangeDescription_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TaskChangeDescription.vue */ "./resources/js/components/tasks/TaskChangeDescription.vue");
-/* harmony import */ var _TaskAddUser_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TaskAddUser.vue */ "./resources/js/components/tasks/TaskAddUser.vue");
+/* harmony import */ var _TaskChangeDeadline_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TaskChangeDeadline.vue */ "./resources/js/components/tasks/TaskChangeDeadline.vue");
+/* harmony import */ var _TaskAddUser_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./TaskAddUser.vue */ "./resources/js/components/tasks/TaskAddUser.vue");
 //
 //
 //
@@ -4639,6 +4685,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -4649,6 +4713,7 @@ __webpack_require__.r(__webpack_exports__);
       task: {},
       views: {
         changeDescription: false,
+        changeDeadline: false,
         addUser: false
       }
     };
@@ -4711,6 +4776,13 @@ __webpack_require__.r(__webpack_exports__);
         this.views.changeDescription = true;
       }
     },
+    changeDeadline: function changeDeadline() {
+      if (this.views.changeDeadline == true) {
+        this.views.changeDeadline = false;
+      } else {
+        this.views.changeDeadline = true;
+      }
+    },
     addUser: function addUser() {
       if (this.views.addUser == true) {
         this.views.addUser = false;
@@ -4722,7 +4794,8 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     TaskModalComment: _TaskModalComment_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     TaskChangeDescription: _TaskChangeDescription_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    TaskAddUser: _TaskAddUser_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    TaskChangeDeadline: _TaskChangeDeadline_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    TaskAddUser: _TaskAddUser_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   }
 });
 
@@ -5039,8 +5112,8 @@ __webpack_require__.r(__webpack_exports__);
 
 window.moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 
-vue__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.$moment = (moment__WEBPACK_IMPORTED_MODULE_0___default()); // moment.locale('ru');
-
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.$moment = (moment__WEBPACK_IMPORTED_MODULE_0___default());
+moment__WEBPACK_IMPORTED_MODULE_0___default().locale('ru');
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"); //window.axios.defaults.withCredentials = true;
 
@@ -5063,6 +5136,10 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('formatDateShort', function (
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('formatDateTimeOnly', function (value) {
   if (!value) return '';
   return moment__WEBPACK_IMPORTED_MODULE_0___default()(value).utcOffset(180).format('H:mm');
+});
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('formatDateLong', function (value) {
+  if (!value) return '';
+  return moment__WEBPACK_IMPORTED_MODULE_0___default()(value).format('dddd, D MMMM');
 });
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_5__["default"]({
   mode: 'history',
@@ -32370,6 +32447,45 @@ component.options.__file = "resources/js/components/tasks/TaskAddUser.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/tasks/TaskChangeDeadline.vue":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/tasks/TaskChangeDeadline.vue ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _TaskChangeDeadline_vue_vue_type_template_id_96cc10ce___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TaskChangeDeadline.vue?vue&type=template&id=96cc10ce& */ "./resources/js/components/tasks/TaskChangeDeadline.vue?vue&type=template&id=96cc10ce&");
+/* harmony import */ var _TaskChangeDeadline_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TaskChangeDeadline.vue?vue&type=script&lang=js& */ "./resources/js/components/tasks/TaskChangeDeadline.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _TaskChangeDeadline_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _TaskChangeDeadline_vue_vue_type_template_id_96cc10ce___WEBPACK_IMPORTED_MODULE_0__.render,
+  _TaskChangeDeadline_vue_vue_type_template_id_96cc10ce___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/tasks/TaskChangeDeadline.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/tasks/TaskChangeDescription.vue":
 /*!*****************************************************************!*\
   !*** ./resources/js/components/tasks/TaskChangeDescription.vue ***!
@@ -32830,6 +32946,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/tasks/TaskChangeDeadline.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/tasks/TaskChangeDeadline.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TaskChangeDeadline_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./TaskChangeDeadline.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/tasks/TaskChangeDeadline.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TaskChangeDeadline_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/tasks/TaskChangeDescription.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************!*\
   !*** ./resources/js/components/tasks/TaskChangeDescription.vue?vue&type=script&lang=js& ***!
@@ -33256,6 +33388,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TaskAddUser_vue_vue_type_template_id_ad0ef02a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TaskAddUser_vue_vue_type_template_id_ad0ef02a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./TaskAddUser.vue?vue&type=template&id=ad0ef02a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/tasks/TaskAddUser.vue?vue&type=template&id=ad0ef02a&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/tasks/TaskChangeDeadline.vue?vue&type=template&id=96cc10ce&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/tasks/TaskChangeDeadline.vue?vue&type=template&id=96cc10ce& ***!
+  \*********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TaskChangeDeadline_vue_vue_type_template_id_96cc10ce___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TaskChangeDeadline_vue_vue_type_template_id_96cc10ce___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TaskChangeDeadline_vue_vue_type_template_id_96cc10ce___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./TaskChangeDeadline.vue?vue&type=template&id=96cc10ce& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/tasks/TaskChangeDeadline.vue?vue&type=template&id=96cc10ce&");
 
 
 /***/ }),
@@ -37755,6 +37904,66 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/tasks/TaskChangeDeadline.vue?vue&type=template&id=96cc10ce&":
+/*!************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/tasks/TaskChangeDeadline.vue?vue&type=template&id=96cc10ce& ***!
+  \************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.deadline,
+          expression: "deadline",
+        },
+      ],
+      staticClass: "form-control w-25 d-inline-flex",
+      attrs: { type: "date" },
+      domProps: { value: _vm.deadline },
+      on: {
+        input: function ($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.deadline = $event.target.value
+        },
+      },
+    }),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        on: {
+          click: function ($event) {
+            return _vm.updateDeadline()
+          },
+        },
+      },
+      [_vm._v("Сохранить")]
+    ),
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/tasks/TaskChangeDescription.vue?vue&type=template&id=6793954b&":
 /*!***************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/tasks/TaskChangeDescription.vue?vue&type=template&id=6793954b& ***!
@@ -37890,48 +38099,105 @@ var render = function () {
                       "div",
                       { staticClass: "col-12 col-lg-9" },
                       [
-                        _c("div", { staticClass: "mb-1" }, [
-                          _vm._m(0),
-                          _vm._v(" "),
-                          _vm.task.column.board.admin ==
-                          _vm.$parent.$parent.user.id
-                            ? _c(
-                                "button",
-                                {
-                                  staticClass:
-                                    "btn btn-sm btn-outline-secondary",
-                                  on: {
-                                    click: function ($event) {
-                                      return _vm.changeDescription()
+                        _c(
+                          "div",
+                          { staticClass: "mb-4" },
+                          [
+                            _c("div", { staticClass: "mb-1" }, [
+                              _vm._m(0),
+                              _vm._v(" "),
+                              _vm.task.column.board.admin ==
+                              _vm.$parent.$parent.user.id
+                                ? _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-sm btn-outline-secondary",
+                                      on: {
+                                        click: function ($event) {
+                                          return _vm.changeDeadline()
+                                        },
+                                      },
                                     },
-                                  },
-                                },
-                                [_vm._v("Изменить")]
-                              )
-                            : _vm._e(),
-                        ]),
+                                    [_vm._v("Изменить")]
+                                  )
+                                : _vm._e(),
+                            ]),
+                            _vm._v(" "),
+                            _vm.views.changeDeadline
+                              ? [
+                                  _c("TaskChangeDeadline", {
+                                    attrs: { task: _vm.task },
+                                  }),
+                                ]
+                              : [
+                                  _vm.task.deadline
+                                    ? _c("p", { staticClass: "mb-0" }, [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm._f("formatDateLong")(
+                                              _vm.task.deadline
+                                            )
+                                          )
+                                        ),
+                                      ])
+                                    : _c("p", { staticClass: "mb-0" }, [
+                                        _vm._v("Не указан"),
+                                      ]),
+                                ],
+                          ],
+                          2
+                        ),
                         _vm._v(" "),
-                        _vm.views.changeDescription
-                          ? [
-                              _c("TaskChangeDescription", {
-                                attrs: { task: _vm.task },
-                              }),
-                            ]
-                          : [
-                              _vm.task.description
-                                ? _c("p", { staticClass: "mb-0" }, [
-                                    _vm._v(_vm._s(_vm.task.description)),
-                                  ])
-                                : _c("p", { staticClass: "mb-0" }, [
-                                    _vm._v("Нет описания"),
-                                  ]),
-                            ],
+                        _c(
+                          "div",
+                          { staticClass: "mb-4" },
+                          [
+                            _c("div", { staticClass: "mb-1" }, [
+                              _vm._m(1),
+                              _vm._v(" "),
+                              _vm.task.column.board.admin ==
+                              _vm.$parent.$parent.user.id
+                                ? _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-sm btn-outline-secondary",
+                                      on: {
+                                        click: function ($event) {
+                                          return _vm.changeDescription()
+                                        },
+                                      },
+                                    },
+                                    [_vm._v("Изменить")]
+                                  )
+                                : _vm._e(),
+                            ]),
+                            _vm._v(" "),
+                            _vm.views.changeDescription
+                              ? [
+                                  _c("TaskChangeDescription", {
+                                    attrs: { task: _vm.task },
+                                  }),
+                                ]
+                              : [
+                                  _vm.task.description
+                                    ? _c("p", { staticClass: "mb-0" }, [
+                                        _vm._v(_vm._s(_vm.task.description)),
+                                      ])
+                                    : _c("p", { staticClass: "mb-0" }, [
+                                        _vm._v("Нет описания"),
+                                      ]),
+                                ],
+                          ],
+                          2
+                        ),
                         _vm._v(" "),
                         _c("TaskModalComment", {
                           attrs: { task_id: _vm.task.id },
                         }),
                       ],
-                      2
+                      1
                     ),
                     _vm._v(" "),
                     _c(
@@ -38064,6 +38330,14 @@ var render = function () {
   )
 }
 var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "text-muted" }, [
+      _c("strong", [_vm._v("Срок")]),
+    ])
+  },
   function () {
     var _vm = this
     var _h = _vm.$createElement

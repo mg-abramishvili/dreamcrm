@@ -10,18 +10,35 @@
                     <span class="text-muted">{{ task.column.name }}</span>
                     <div class="row mt-4">
                         <div class="col-12 col-lg-9">
-                            <div class="mb-1">
-                                <span class="text-muted"><strong>Описание</strong></span>
-                                <button v-if="task.column.board.admin == $parent.$parent.user.id" @click="changeDescription()" class="btn btn-sm btn-outline-secondary">Изменить</button>
+                            <div class="mb-4">
+                                <div class="mb-1">
+                                    <span class="text-muted"><strong>Срок</strong></span>
+                                    <button v-if="task.column.board.admin == $parent.$parent.user.id" @click="changeDeadline()" class="btn btn-sm btn-outline-secondary">Изменить</button>
+                                </div>
+
+                                <template v-if="views.changeDeadline">
+                                    <TaskChangeDeadline :task="task"></TaskChangeDeadline>
+                                </template>
+                                <template v-else>
+                                    <p v-if="task.deadline" class="mb-0">{{ task.deadline | formatDateLong }}</p>
+                                    <p v-else class="mb-0">Не указан</p>
+                                </template>
                             </div>
 
-                            <template v-if="views.changeDescription">
-                                <TaskChangeDescription :task="task"></TaskChangeDescription>
-                            </template>
-                            <template v-else>
-                                <p v-if="task.description" class="mb-0">{{ task.description }}</p>
-                                <p v-else class="mb-0">Нет описания</p>
-                            </template>
+                            <div class="mb-4">
+                                <div class="mb-1">
+                                    <span class="text-muted"><strong>Описание</strong></span>
+                                    <button v-if="task.column.board.admin == $parent.$parent.user.id" @click="changeDescription()" class="btn btn-sm btn-outline-secondary">Изменить</button>
+                                </div>
+
+                                <template v-if="views.changeDescription">
+                                    <TaskChangeDescription :task="task"></TaskChangeDescription>
+                                </template>
+                                <template v-else>
+                                    <p v-if="task.description" class="mb-0">{{ task.description }}</p>
+                                    <p v-else class="mb-0">Нет описания</p>
+                                </template>
+                            </div>
 
                             <TaskModalComment :task_id="task.id"></TaskModalComment>
                         </div>
@@ -57,6 +74,7 @@
 <script>
     import TaskModalComment from './TaskModalComment.vue'
     import TaskChangeDescription from './TaskChangeDescription.vue'
+    import TaskChangeDeadline from './TaskChangeDeadline.vue'
     import TaskAddUser from './TaskAddUser.vue'
     
     export default {
@@ -67,6 +85,7 @@
 
                 views: {
                     changeDescription: false,
+                    changeDeadline: false,
                     addUser: false,
                 },
             }
@@ -129,6 +148,13 @@
                     this.views.changeDescription = true
                 }
             },
+            changeDeadline() {
+                if(this.views.changeDeadline == true) {
+                    this.views.changeDeadline = false
+                } else {
+                    this.views.changeDeadline = true
+                }
+            },
             addUser() {
                 if(this.views.addUser == true) {
                     this.views.addUser = false
@@ -140,6 +166,7 @@
         components: {
             TaskModalComment,
             TaskChangeDescription,
+            TaskChangeDeadline,
             TaskAddUser
         },
     }
