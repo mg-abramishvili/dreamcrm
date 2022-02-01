@@ -21,8 +21,7 @@
                         </div>
                         <div class="col-12 col-lg-3">
                             <h6 class="text-muted mb-0">Статус</h6>
-                            <span v-if="task.status == 'todo'" class="badge rounded-pill bg-primary text-sm">Сделать</span>
-                            <span v-if="task.status == 'inprogress'" class="badge rounded-pill bg-warning text-sm">В работе</span>
+                            <span v-if="task.status == 'active'" class="badge rounded-pill bg-primary text-sm">В работе</span>
                             <span v-if="task.status == 'completed'" class="badge rounded-pill bg-success text-sm">Выполнено</span>
                             
                             <h6 class="text-muted mt-4">Участники</h6>
@@ -97,7 +96,9 @@
             completeTask() {
                 if (confirm("Точно выполнена?")) {
                     axios
-                    .put(`/api/task/${this.task.id}/complete`)
+                    .put(`/api/task/${this.task.id}/update`, {
+                        status: 'completed'
+                    })
                     .then(response => (
                         this.$parent.getColumns(),
                         this.closeModal()
@@ -107,7 +108,9 @@
             returnTask() {
                 if (confirm("Точно вернуть в работу?")) {
                     axios
-                    .put(`/api/task/${this.task.id}/inprogress`)
+                    .put(`/api/task/${this.task.id}/update`, {
+                        status: 'active'
+                    })
                     .then(response => (
                         this.$parent.getColumns(),
                         this.closeModal()

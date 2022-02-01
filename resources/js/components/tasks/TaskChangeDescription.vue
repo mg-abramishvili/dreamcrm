@@ -22,11 +22,11 @@ export default {
         },
         updateDescription() {
             axios
-            .put(`/api/task/${this.task.id}/description`, {
+            .put(`/api/task/${this.task.id}/update`, {
                 description: this.description,
             })
             .then(response => (
-                this.$parent.getTask(),
+                this.$parent.$parent.getColumns(),
                 this.$parent.views.changeDescription = false
             ))
         }

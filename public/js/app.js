@@ -4558,10 +4558,10 @@ __webpack_require__.r(__webpack_exports__);
     updateDescription: function updateDescription() {
       var _this = this;
 
-      axios.put("/api/task/".concat(this.task.id, "/description"), {
+      axios.put("/api/task/".concat(this.task.id, "/update"), {
         description: this.description
       }).then(function (response) {
-        return _this.$parent.getTask(), _this.$parent.views.changeDescription = false;
+        return _this.$parent.$parent.getColumns(), _this.$parent.views.changeDescription = false;
       });
     }
   }
@@ -4583,7 +4583,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _TaskModalComment_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TaskModalComment.vue */ "./resources/js/components/tasks/TaskModalComment.vue");
 /* harmony import */ var _TaskChangeDescription_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TaskChangeDescription.vue */ "./resources/js/components/tasks/TaskChangeDescription.vue");
 /* harmony import */ var _TaskAddUser_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TaskAddUser.vue */ "./resources/js/components/tasks/TaskAddUser.vue");
-//
 //
 //
 //
@@ -4682,7 +4681,9 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       if (confirm("Точно выполнена?")) {
-        axios.put("/api/task/".concat(this.task.id, "/complete")).then(function (response) {
+        axios.put("/api/task/".concat(this.task.id, "/update"), {
+          status: 'completed'
+        }).then(function (response) {
           return _this3.$parent.getColumns(), _this3.closeModal();
         });
       }
@@ -4691,7 +4692,9 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
 
       if (confirm("Точно вернуть в работу?")) {
-        axios.put("/api/task/".concat(this.task.id, "/inprogress")).then(function (response) {
+        axios.put("/api/task/".concat(this.task.id, "/update"), {
+          status: 'active'
+        }).then(function (response) {
           return _this4.$parent.getColumns(), _this4.closeModal();
         });
       }
@@ -37675,45 +37678,57 @@ var render = function () {
     _vm.views.loading == false
       ? _c(
           "div",
-          _vm._l(_vm.users, function (user) {
-            return _c(
-              "a",
-              {
-                key: "user_" + user.id,
-                staticClass: "dropdown-item",
-                on: {
-                  click: function ($event) {
-                    return _vm.addUser(user.id)
+          _vm._l(
+            _vm.users.filter(function (user) {
+              return user.id != _vm.task.column.board.admin
+            }),
+            function (user) {
+              return _c(
+                "a",
+                {
+                  key: "user_" + user.id,
+                  staticClass: "dropdown-item",
+                  on: {
+                    click: function ($event) {
+                      return _vm.addUser(user.id)
+                    },
                   },
                 },
-              },
-              [
-                _vm._v("\n            " + _vm._s(user.name) + "\n            "),
-                _vm.task.users.find(function (task_user) {
-                  return task_user.id == user.id
-                })
-                  ? _c(
-                      "svg",
-                      {
-                        staticClass: "feather feather-check align-middle me-2",
-                        attrs: {
-                          xmlns: "http://www.w3.org/2000/svg",
-                          width: "24",
-                          height: "24",
-                          viewBox: "0 0 24 24",
-                          fill: "none",
-                          stroke: "currentColor",
-                          "stroke-width": "2",
-                          "stroke-linecap": "round",
-                          "stroke-linejoin": "round",
+                [
+                  _vm._v(
+                    "\n            " + _vm._s(user.name) + "\n            "
+                  ),
+                  _vm.task.users.find(function (task_user) {
+                    return task_user.id == user.id
+                  })
+                    ? _c(
+                        "svg",
+                        {
+                          staticClass:
+                            "feather feather-check align-middle me-2",
+                          attrs: {
+                            xmlns: "http://www.w3.org/2000/svg",
+                            width: "24",
+                            height: "24",
+                            viewBox: "0 0 24 24",
+                            fill: "none",
+                            stroke: "currentColor",
+                            "stroke-width": "2",
+                            "stroke-linecap": "round",
+                            "stroke-linejoin": "round",
+                          },
                         },
-                      },
-                      [_c("polyline", { attrs: { points: "20 6 9 17 4 12" } })]
-                    )
-                  : _vm._e(),
-              ]
-            )
-          }),
+                        [
+                          _c("polyline", {
+                            attrs: { points: "20 6 9 17 4 12" },
+                          }),
+                        ]
+                      )
+                    : _vm._e(),
+                ]
+              )
+            }
+          ),
           0
         )
       : _vm._e(),
@@ -37888,23 +37903,12 @@ var render = function () {
                           _vm._v("Статус"),
                         ]),
                         _vm._v(" "),
-                        _vm.task.status == "todo"
+                        _vm.task.status == "active"
                           ? _c(
                               "span",
                               {
                                 staticClass:
                                   "badge rounded-pill bg-primary text-sm",
-                              },
-                              [_vm._v("Сделать")]
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.task.status == "inprogress"
-                          ? _c(
-                              "span",
-                              {
-                                staticClass:
-                                  "badge rounded-pill bg-warning text-sm",
                               },
                               [_vm._v("В работе")]
                             )

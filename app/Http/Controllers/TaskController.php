@@ -11,7 +11,7 @@ class TaskController extends Controller
 {
     public function task($id)
     {
-        return Task::with('users', 'comments')->find($id);
+        return Task::with('users', 'comments', 'column.board')->find($id);
     }
 
     public function store(Request $request)
@@ -42,15 +42,23 @@ class TaskController extends Controller
         if(isset($request->column_id)) {
             $task->column_id = $request->column_id;
         }
+
         if(isset($request->description)) {
             $task->description = $request->description;
         }
+
         if(isset($request->user_id)) {
-            $task->users()->attach($request->user_id);
-            // $board = TaskBoard::find($task->column->board->id);
-            // $board->users()->sync($request->user_id);
+            if($task->users()->wherePivot('user_id', $request->user_id)->exists()) {
+                $task->users()->detach($request->user_id);
+            } else {
+                $task->users()->attach($request->user_id);
+            }
         }
         
+        if(isset($request->status)) {
+            $task->status = $request->status;
+        }
+
         $task->save();
     }
 }
