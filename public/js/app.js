@@ -4634,6 +4634,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -4699,6 +4704,13 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
+    changeDescription: function changeDescription() {
+      if (this.views.changeDescription == true) {
+        this.views.changeDescription = false;
+      } else {
+        this.views.changeDescription = true;
+      }
+    },
     addUser: function addUser() {
       if (this.views.addUser == true) {
         this.views.addUser = false;
@@ -4727,6 +4739,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
 //
 //
 //
@@ -37867,11 +37881,36 @@ var render = function () {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body m-3" }, [
-                  _c("div", { staticClass: "row" }, [
+                  _c("span", { staticClass: "text-muted" }, [
+                    _vm._v(_vm._s(_vm.task.column.name)),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row mt-4" }, [
                     _c(
                       "div",
                       { staticClass: "col-12 col-lg-9" },
                       [
+                        _c("div", { staticClass: "mb-1" }, [
+                          _vm._m(0),
+                          _vm._v(" "),
+                          _vm.task.column.board.admin ==
+                          _vm.$parent.$parent.user.id
+                            ? _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "btn btn-sm btn-outline-secondary",
+                                  on: {
+                                    click: function ($event) {
+                                      return _vm.changeDescription()
+                                    },
+                                  },
+                                },
+                                [_vm._v("Изменить")]
+                              )
+                            : _vm._e(),
+                        ]),
+                        _vm._v(" "),
                         _vm.views.changeDescription
                           ? [
                               _c("TaskChangeDescription", {
@@ -37983,19 +38022,6 @@ var render = function () {
                           1
                         ),
                         _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "w-100 btn btn-outline-primary mb-2",
-                            on: {
-                              click: function ($event) {
-                                _vm.views.changeDescription = true
-                              },
-                            },
-                          },
-                          [_vm._v("Изменить описание")]
-                        ),
-                        _vm._v(" "),
                         _vm.task.status !== "completed"
                           ? _c(
                               "button",
@@ -38037,7 +38063,16 @@ var render = function () {
     ]
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "text-muted" }, [
+      _c("strong", [_vm._v("Описание")]),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -38159,7 +38194,31 @@ var render = function () {
                 },
               },
             },
-            [_vm._v("Сохранить")]
+            [
+              _c(
+                "svg",
+                {
+                  staticClass: "feather feather-arrow-right align-middle",
+                  attrs: {
+                    xmlns: "http://www.w3.org/2000/svg",
+                    width: "24",
+                    height: "24",
+                    viewBox: "0 0 24 24",
+                    fill: "none",
+                    stroke: "currentColor",
+                    "stroke-width": "2",
+                    "stroke-linecap": "round",
+                    "stroke-linejoin": "round",
+                  },
+                },
+                [
+                  _c("line", {
+                    attrs: { x1: "5", y1: "12", x2: "19", y2: "12" },
+                  }),
+                  _c("polyline", { attrs: { points: "12 5 19 12 12 19" } }),
+                ]
+              ),
+            ]
           ),
         ],
         2

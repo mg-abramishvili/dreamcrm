@@ -7,8 +7,14 @@
                     <button @click="closeModal()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body m-3">
-                    <div class="row">
+                    <span class="text-muted">{{ task.column.name }}</span>
+                    <div class="row mt-4">
                         <div class="col-12 col-lg-9">
+                            <div class="mb-1">
+                                <span class="text-muted"><strong>Описание</strong></span>
+                                <button v-if="task.column.board.admin == $parent.$parent.user.id" @click="changeDescription()" class="btn btn-sm btn-outline-secondary">Изменить</button>
+                            </div>
+
                             <template v-if="views.changeDescription">
                                 <TaskChangeDescription :task="task"></TaskChangeDescription>
                             </template>
@@ -38,7 +44,6 @@
                                 <TaskAddUser v-if="views.addUser" :task="task"></TaskAddUser>
                             </div>
 
-                            <button @click="views.changeDescription = true" class="w-100 btn btn-outline-primary mb-2">Изменить описание</button>
                             <button v-if="task.status !== 'completed'" @click="completeTask()" class="w-100 btn btn-success">Отметить как выполненную</button>
                             <button v-if="task.status == 'completed'" @click="returnTask()" class="w-100 btn btn-warning">Вернуть в работу</button>
                         </div>
@@ -115,6 +120,13 @@
                         this.$parent.getColumns(),
                         this.closeModal()
                     ))
+                }
+            },
+            changeDescription() {
+                if(this.views.changeDescription == true) {
+                    this.views.changeDescription = false
+                } else {
+                    this.views.changeDescription = true
                 }
             },
             addUser() {

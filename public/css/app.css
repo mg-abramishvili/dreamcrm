@@ -367,9 +367,34 @@ table.dataTable {
 }
 .tasks-page .modal-body {
     padding: 0;
+    margin-top: 0 !important;
+}
+.tasks-page .modal-header {
+    border: 0;
+    padding-bottom: 0;
 }
 .tasks-page .task-modal-comments {
-    margin-top: 40px
+    margin-top: 40px;
+    position: relative;
+}
+.tasks-page .task-modal-comments .btn-primary {
+    border-radius: 100%;
+    width: 35px;
+    height: 35px;
+    line-height: 60px;
+    text-align: center;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    padding: 0;
+    line-height: 35px;
+}
+.tasks-page .task-modal-comments .btn-primary svg {
+    width: 20px;
+    height: 20px;
+    line-height: 1;
+    display: block;
+    margin: 0 auto;
 }
 .tasks-page .modal-body .dropdown-menu {
     width: 100%;
