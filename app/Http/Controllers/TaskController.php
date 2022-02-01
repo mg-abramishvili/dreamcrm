@@ -11,7 +11,7 @@ class TaskController extends Controller
 {
     public function task($id)
     {
-        return Task::with('users', 'comments', 'column.board')->find($id);
+        return Task::with('users', 'comments', 'files.user', 'column.board')->find($id);
     }
 
     public function store(Request $request)

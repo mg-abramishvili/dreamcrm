@@ -14,6 +14,7 @@ use App\Http\Controllers\TaskCommentController;
 use App\Http\Controllers\TaskBoardController;
 use App\Http\Controllers\TaskBoardColumnController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\FileController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -62,3 +63,5 @@ Route::get('task/{id}/comments', [TaskCommentController::class, 'index']);
 Route::get('task/{id}', [TaskController::class, 'task']);
 Route::post('task/{id}/comments', [TaskCommentController::class, 'store']);
 Route::put('task/{id}/update', [TaskController::class, 'update']);
+
+Route::post('file/upload', [FileController::class, 'store']);

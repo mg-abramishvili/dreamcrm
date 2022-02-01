@@ -40,6 +40,28 @@
                                 </template>
                             </div>
 
+                            <div class="mb-4">
+                                <div class="mb-1">
+                                    <span class="text-muted"><strong>Файлы</strong></span>
+                                    <button @click="openFileUpload()" class="btn btn-sm btn-outline-secondary">Добавить</button>
+                                </div>
+
+                                <template v-if="views.openFileUpload">
+                                    <TaskFileUpload :task="task"></TaskFileUpload>
+                                </template>
+                                <template>
+                                    <ul v-if="task.files && task.files.length > 0" class="tasks-file-list">
+                                        <li v-for="file in task.files" :key="'task_file_' + file.id">
+                                            <a :href="'/uploads/' + file.name" target="_blank">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file align-middle me-2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+                                                {{ file.name }}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <p v-else class="mb-0">Нет описания</p>
+                                </template>
+                            </div>
+
                             <TaskModalComment :task_id="task.id"></TaskModalComment>
                         </div>
                         <div class="col-12 col-lg-3">
@@ -75,6 +97,7 @@
     import TaskModalComment from './TaskModalComment.vue'
     import TaskChangeDescription from './TaskChangeDescription.vue'
     import TaskChangeDeadline from './TaskChangeDeadline.vue'
+    import TaskFileUpload from './TaskFileUpload.vue'
     import TaskAddUser from './TaskAddUser.vue'
     
     export default {
@@ -86,6 +109,7 @@
                 views: {
                     changeDescription: false,
                     changeDeadline: false,
+                    openFileUpload: false,
                     addUser: false,
                 },
             }
@@ -155,6 +179,13 @@
                     this.views.changeDeadline = true
                 }
             },
+            openFileUpload() {
+                if(this.views.openFileUpload == true) {
+                    this.views.openFileUpload = false
+                } else {
+                    this.views.openFileUpload = true
+                }
+            },
             addUser() {
                 if(this.views.addUser == true) {
                     this.views.addUser = false
@@ -167,6 +198,7 @@
             TaskModalComment,
             TaskChangeDescription,
             TaskChangeDeadline,
+            TaskFileUpload,
             TaskAddUser
         },
     }

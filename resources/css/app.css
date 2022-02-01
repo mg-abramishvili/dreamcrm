@@ -367,8 +367,21 @@ table.dataTable {
     height: 200px;
     overflow-y: auto;
 }
-.tasks-new-board-form {
-
+.tasks-file-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.tasks-file-list li {
+    margin-bottom: 5px;
+}
+.tasks-file-list li:last-child {
+    margin-bottom: 0;
+}
+.tasks-file-list li a {
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
 }
 /* TASK MODAL */
 

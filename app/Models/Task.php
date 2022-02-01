@@ -23,4 +23,9 @@ class Task extends Model
     {
         return $this->belongsTo(TaskBoardColumn::class, 'column_id');
     }
+
+    public function files()
+    {
+        return $this->hasMany(File::class);
+    }
 }
