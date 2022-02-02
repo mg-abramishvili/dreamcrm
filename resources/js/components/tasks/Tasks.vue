@@ -119,7 +119,6 @@
                     }
 
                     if(response.data[0]) {
-                        console.log(response.data[0])
                         this.selected.board = response.data[0]
                         this.getColumns()
                     }

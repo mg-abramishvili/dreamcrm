@@ -4952,6 +4952,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -4982,7 +4984,7 @@ __webpack_require__.r(__webpack_exports__);
     document.body.style.overflow = "hidden";
     var modal = document.getElementsByClassName('modal')[0];
 
-    window.onclick = function () {
+    window.onclick = function (event) {
       if (event.target == modal) {
         _this.closeModal();
       }
@@ -5200,7 +5202,6 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         if (response.data[0]) {
-          console.log(response.data[0]);
           _this.selected.board = response.data[0];
 
           _this.getColumns();
@@ -51416,7 +51417,7 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "w-75 d-flex mb-2" }, [
+  return _c("div", { staticClass: "w-75 d-flex" }, [
     _c("input", {
       directives: [
         {
@@ -51426,7 +51427,7 @@ var render = function () {
           expression: "name",
         },
       ],
-      staticClass: "form-control",
+      staticClass: "modal-title modal-title-input",
       attrs: { placeholder: "Название" },
       domProps: { value: _vm.name },
       on: {
@@ -51968,43 +51969,45 @@ var render = function () {
             },
             [
               _c("div", { staticClass: "modal-content" }, [
-                _c(
-                  "div",
-                  { staticClass: "modal-header" },
-                  [
-                    _vm.views.changeTaskName
-                      ? [_c("ChangeTaskName", { attrs: { task: _vm.task } })]
-                      : [
-                          _c(
-                            "h5",
-                            {
-                              staticClass: "modal-title",
-                              on: {
-                                click: function ($event) {
-                                  _vm.views.changeTaskName = true
+                _c("div", { staticClass: "modal-header" }, [
+                  _c(
+                    "div",
+                    { staticClass: "w-100", attrs: { id: "task_name" } },
+                    [
+                      _vm.views.changeTaskName
+                        ? [_c("ChangeTaskName", { attrs: { task: _vm.task } })]
+                        : [
+                            _c(
+                              "h5",
+                              {
+                                staticClass: "modal-title",
+                                on: {
+                                  click: function ($event) {
+                                    _vm.views.changeTaskName = true
+                                  },
                                 },
                               },
-                            },
-                            [_vm._v(_vm._s(_vm.task.name))]
-                          ),
-                        ],
-                    _vm._v(" "),
-                    _c("button", {
-                      staticClass: "btn-close",
-                      attrs: {
-                        type: "button",
-                        "data-bs-dismiss": "modal",
-                        "aria-label": "Close",
+                              [_vm._v(_vm._s(_vm.task.name))]
+                            ),
+                          ],
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c("button", {
+                    staticClass: "btn-close",
+                    attrs: {
+                      type: "button",
+                      "data-bs-dismiss": "modal",
+                      "aria-label": "Close",
+                    },
+                    on: {
+                      click: function ($event) {
+                        return _vm.closeModal()
                       },
-                      on: {
-                        click: function ($event) {
-                          return _vm.closeModal()
-                        },
-                      },
-                    }),
-                  ],
-                  2
-                ),
+                    },
+                  }),
+                ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body m-3" }, [
                   _vm.views.changeTaskName == false

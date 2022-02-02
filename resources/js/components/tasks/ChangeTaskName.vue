@@ -1,6 +1,6 @@
 <template>
-    <div class="w-75 d-flex mb-2">
-        <input v-model="name" class="form-control" placeholder="Название">
+    <div class="w-75 d-flex">
+        <input v-model="name" class="modal-title modal-title-input" placeholder="Название">
         <button @click="updateName()" class="btn btn-primary">Сохранить</button>
     </div>
 </template>
