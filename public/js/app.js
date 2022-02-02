@@ -52254,6 +52254,8 @@ var render = function () {
               _vm._v(" "),
               _vm.views.createTaskBoard ? _c("CreateTaskBoard") : _vm._e(),
               _vm._v(" "),
+              _vm.$parent.user.permissions &&
+              _vm.$parent.user.permissions.can_see_all_boards &&
               _vm.views.createTaskBoard == false
                 ? _c(
                     "button",

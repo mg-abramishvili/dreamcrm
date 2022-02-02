@@ -10,7 +10,7 @@
                         </option>
                     </select>
                     <CreateTaskBoard v-if="views.createTaskBoard"></CreateTaskBoard>
-                    <button v-if="views.createTaskBoard == false" @click="openCreateTaskBoard()" class="btn btn-outline-primary mx-1">Создать доску</button>
+                    <button v-if="$parent.user.permissions && $parent.user.permissions.can_see_all_boards && views.createTaskBoard == false" @click="openCreateTaskBoard()" class="btn btn-outline-primary mx-1">Создать доску</button>
                 </div>
             </div>
             <div class="col-12 col-lg-3 text-end">

@@ -280,7 +280,6 @@ table.dataTable {
 .tasks-page-header {
     align-items: center;
     height: 50px;
-    margin-bottom: 25px;
 }
 .tasks-page-board {
     overflow-x: auto;
@@ -314,6 +313,7 @@ table.dataTable {
     padding: 5px;
     padding-bottom: 10px;
     border-radius: 6px;
+    margin-top: 25px;
 }
 .tasks-page-board .card-header {
     padding: 5px;
