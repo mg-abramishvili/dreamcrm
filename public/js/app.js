@@ -4968,6 +4968,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['task_id'],
   data: function data() {
@@ -52056,15 +52057,25 @@ var render = function () {
               },
               [
                 _c("div", [
-                  _c("img", {
-                    staticClass: "rounded-circle me-1",
-                    attrs: {
-                      src: comment.user.avatar,
-                      alt: "Bertha Martin",
-                      width: "40",
-                      height: "40",
-                    },
-                  }),
+                  comment.user.avatar
+                    ? _c("img", {
+                        staticClass: "rounded-circle me-1",
+                        attrs: {
+                          src: comment.user.avatar,
+                          alt: "",
+                          width: "40",
+                          height: "40",
+                        },
+                      })
+                    : _c("img", {
+                        staticClass: "rounded-circle me-1",
+                        attrs: {
+                          src: "/img/no-image.jpg",
+                          alt: "",
+                          width: "40",
+                          height: "40",
+                        },
+                      }),
                   _vm._v(" "),
                   _c(
                     "div",

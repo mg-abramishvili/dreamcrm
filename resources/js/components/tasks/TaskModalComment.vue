@@ -2,7 +2,8 @@
     <div v-if="views.loading == false" class="task-modal-comments">
         <div v-for="comment in comments" :key="'comment_' + comment.id" class="chat-message-left pb-4">
             <div>
-                <img :src="comment.user.avatar" class="rounded-circle me-1" alt="Bertha Martin" width="40" height="40">
+                <img v-if="comment.user.avatar" :src="comment.user.avatar" class="rounded-circle me-1" alt="" width="40" height="40">
+                <img v-else src="/img/no-image.jpg" class="rounded-circle me-1" alt="" width="40" height="40">
                 <div class="text-muted text-comment-date small text-nowrap mt-2" >
                     {{ comment.created_at | formatDateTimeOnly }}<br>
                     {{ comment.created_at | formatDate }}
