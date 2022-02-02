@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="col-12 col-lg-3 text-end">
-                <button v-if="selected.board.admin == $parent.user.id" @click="openCreateColumnModal()" class="btn btn-outline-primary">Добавить колонку</button>
+                <button v-if="selected.board.admin == $parent.user.id" @click="openCreateColumn()" class="btn btn-outline-primary">Добавить колонку</button>
             </div>
         </div>
         
@@ -33,7 +33,7 @@
                     </div>
                     <CreateTask v-if="views.createTask && selected.column == column.id" :column_id="selected.column"></CreateTask>
                     <draggable v-model="column.tasks" group="tasks" :move="detectMove" @change="moveTask($event, column.id)" :disabled="views.draggable == false" class="task-column-body">
-                        <div @click="openTaskModal(task)" v-for="task in column.tasks" :key="task.id" class="card m-0" style="box-shadow: none;">
+                        <div @click="openTask(task)" v-for="task in column.tasks" :key="task.id" class="card m-0" style="box-shadow: none;">
                             <div class="card-body bg-light cursor-pointer p-3">
                                 <p>{{ task.name }}</p>
                                 <div class="mt-n1">
@@ -57,17 +57,17 @@
             </draggable>
         </template>
 
-        <TaskModal v-if="views.modals.openTask" :task_id="selected.task.id"></TaskModal>
+        <TaskItem v-if="views.modals.openTask" :task_id="selected.task.id"></TaskItem>
         
-        <CreateColumnModal v-if="views.modals.createColumn" :board_id="selected.board.id"></CreateColumnModal>
+        <CreateColumn v-if="views.modals.createColumn" :board_id="selected.board.id"></CreateColumn>
         
         <div v-if="views.modals.showBackdrop" class="modal-backdrop fade show"></div>
     </div>
 </template>
 
 <script>
-    import TaskModal from './TaskModal.vue'
-    import CreateColumnModal from './CreateColumnModal.vue'
+    import TaskItem from './Task.vue'
+    import CreateColumn from './CreateColumn.vue'
     import CreateTask from './CreateTask.vue'
     import CreateTaskBoard from './CreateTaskBoard.vue'
 
@@ -138,12 +138,12 @@
                     this.columns = response.data
                 ))
             },
-            openTaskModal(task) {
+            openTask(task) {
                 this.selected.task = task
                 this.views.modals.openTask = true
                 this.views.modals.showBackdrop = true
             },
-            openCreateColumnModal() {
+            openCreateColumn() {
                 this.views.modals.createColumn = true
                 this.views.modals.showBackdrop = true
             },
@@ -195,8 +195,8 @@
             }
         },
         components: {
-            TaskModal,
-            CreateColumnModal,
+            TaskItem,
+            CreateColumn,
             CreateTask,
             CreateTaskBoard,
             draggable

@@ -17,7 +17,7 @@
                                 </div>
 
                                 <template v-if="views.changeDeadline">
-                                    <TaskChangeDeadline :task="task"></TaskChangeDeadline>
+                                    <ChangeDeadline :task="task"></ChangeDeadline>
                                 </template>
                                 <template v-else>
                                     <p v-if="task.deadline" class="mb-0">{{ task.deadline | formatDateLong }}</p>
@@ -32,7 +32,7 @@
                                 </div>
 
                                 <template v-if="views.changeDescription">
-                                    <TaskChangeDescription :task="task"></TaskChangeDescription>
+                                    <ChangeDescription :task="task"></ChangeDescription>
                                 </template>
                                 <template v-else>
                                     <p v-if="task.description" class="mb-0">{{ task.description }}</p>
@@ -47,7 +47,7 @@
                                 </div>
 
                                 <template v-if="views.openFileUpload">
-                                    <TaskFileUpload :task="task"></TaskFileUpload>
+                                    <FileUpload :task="task"></FileUpload>
                                 </template>
                                 <template>
                                     <ul v-if="task.files && task.files.length > 0" class="tasks-file-list">
@@ -62,7 +62,7 @@
                                 </template>
                             </div>
 
-                            <TaskModalComment :task_id="task.id"></TaskModalComment>
+                            <Comments :task_id="task.id"></Comments>
                         </div>
                         <div class="col-12 col-lg-3">
                             <h6 class="text-muted mb-0">Статус</h6>
@@ -81,7 +81,7 @@
                             <h6 class="text-muted mt-4">Действия</h6>
                             <div style="position: relative;">
                                 <button v-if="task.column.board.admin == $parent.$parent.user.id" @click="addUser()" class="w-100 btn btn-outline-primary mb-2">Добавить участника</button>
-                                <TaskAddUser v-if="views.addUser" :task="task"></TaskAddUser>
+                                <AddUser v-if="views.addUser" :task="task"></AddUser>
                             </div>
 
                             <button v-if="task.status !== 'completed'" @click="completeTask()" class="w-100 btn btn-success">Отметить как выполненную</button>
@@ -95,11 +95,11 @@
 </template>
 
 <script>
-    import TaskModalComment from './TaskModalComment.vue'
-    import TaskChangeDescription from './TaskChangeDescription.vue'
-    import TaskChangeDeadline from './TaskChangeDeadline.vue'
-    import TaskFileUpload from './TaskFileUpload.vue'
-    import TaskAddUser from './TaskAddUser.vue'
+    import Comments from './Comments.vue'
+    import ChangeDescription from './ChangeDescription.vue'
+    import ChangeDeadline from './ChangeDeadline.vue'
+    import FileUpload from './FileUpload.vue'
+    import AddUser from './AddUser.vue'
     
     export default {
         props: ['task_id'],
@@ -196,11 +196,11 @@
             },
         },
         components: {
-            TaskModalComment,
-            TaskChangeDescription,
-            TaskChangeDeadline,
-            TaskFileUpload,
-            TaskAddUser
+            Comments,
+            ChangeDescription,
+            ChangeDeadline,
+            FileUpload,
+            AddUser
         },
     }
 </script>
