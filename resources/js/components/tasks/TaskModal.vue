@@ -80,7 +80,7 @@
                             
                             <h6 class="text-muted mt-4">Действия</h6>
                             <div style="position: relative;">
-                                <button @click="addUser()" class="w-100 btn btn-outline-primary mb-2">Добавить участника</button>
+                                <button v-if="task.column.board.admin == $parent.$parent.user.id" @click="addUser()" class="w-100 btn btn-outline-primary mb-2">Добавить участника</button>
                                 <TaskAddUser v-if="views.addUser" :task="task"></TaskAddUser>
                             </div>
 

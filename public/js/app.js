@@ -51933,19 +51933,22 @@ var render = function () {
                           "div",
                           { staticStyle: { position: "relative" } },
                           [
-                            _c(
-                              "button",
-                              {
-                                staticClass:
-                                  "w-100 btn btn-outline-primary mb-2",
-                                on: {
-                                  click: function ($event) {
-                                    return _vm.addUser()
+                            _vm.task.column.board.admin ==
+                            _vm.$parent.$parent.user.id
+                              ? _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "w-100 btn btn-outline-primary mb-2",
+                                    on: {
+                                      click: function ($event) {
+                                        return _vm.addUser()
+                                      },
+                                    },
                                   },
-                                },
-                              },
-                              [_vm._v("Добавить участника")]
-                            ),
+                                  [_vm._v("Добавить участника")]
+                                )
+                              : _vm._e(),
                             _vm._v(" "),
                             _vm.views.addUser
                               ? _c("TaskAddUser", { attrs: { task: _vm.task } })
