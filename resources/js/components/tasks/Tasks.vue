@@ -39,7 +39,8 @@
                                 <div class="mt-n1">
                                     <div class="d-inline-flex me-2">
                                         <div v-for="user in task.users" :key="'task_user_' + user.id" style="margin: 0 2px;">
-                                            <img :src="user.avatar" width="18" height="18" class="rounded-circle" :alt="user.name">
+                                            <img v-if="user.avatar" :src="user.avatar" width="18" height="18" class="rounded-circle" :alt="user.name">
+                                            <img v-else src="/img/no-image.jpg" width="18" height="18" class="rounded-circle" :alt="user.name">
                                         </div>
                                     </div>
                                     <span v-if="task.comments && task.comments.length > 0" class="btn btn-sm p-0 d-inline-flex align-items-center">

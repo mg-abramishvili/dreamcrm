@@ -5091,6 +5091,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -52426,15 +52427,25 @@ var render = function () {
                                           staticStyle: { margin: "0 2px" },
                                         },
                                         [
-                                          _c("img", {
-                                            staticClass: "rounded-circle",
-                                            attrs: {
-                                              src: user.avatar,
-                                              width: "18",
-                                              height: "18",
-                                              alt: user.name,
-                                            },
-                                          }),
+                                          user.avatar
+                                            ? _c("img", {
+                                                staticClass: "rounded-circle",
+                                                attrs: {
+                                                  src: user.avatar,
+                                                  width: "18",
+                                                  height: "18",
+                                                  alt: user.name,
+                                                },
+                                              })
+                                            : _c("img", {
+                                                staticClass: "rounded-circle",
+                                                attrs: {
+                                                  src: "/img/no-image.jpg",
+                                                  width: "18",
+                                                  height: "18",
+                                                  alt: user.name,
+                                                },
+                                              }),
                                         ]
                                       )
                                     }),
