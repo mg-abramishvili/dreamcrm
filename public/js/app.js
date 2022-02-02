@@ -4824,6 +4824,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -51891,15 +51892,25 @@ var render = function () {
                               staticClass: "d-flex align-items-center mb-1",
                             },
                             [
-                              _c("img", {
-                                staticClass: "rounded-circle me-2",
-                                attrs: {
-                                  src: user.avatar,
-                                  width: "36",
-                                  height: "36",
-                                  alt: "",
-                                },
-                              }),
+                              user.avatar
+                                ? _c("img", {
+                                    staticClass: "rounded-circle me-2",
+                                    attrs: {
+                                      src: user.avatar,
+                                      width: "36",
+                                      height: "36",
+                                      alt: "",
+                                    },
+                                  })
+                                : _c("img", {
+                                    staticClass: "rounded-circle me-2",
+                                    attrs: {
+                                      src: "/img/no-image.jpg",
+                                      width: "36",
+                                      height: "36",
+                                      alt: "",
+                                    },
+                                  }),
                               _vm._v(" "),
                               _c("div", { staticClass: "flex-grow-1" }, [
                                 _c("strong", [_vm._v(_vm._s(user.name))]),
