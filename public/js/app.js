@@ -4952,8 +4952,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 
@@ -4978,24 +4976,15 @@ __webpack_require__.r(__webpack_exports__);
     this.getTask();
   },
   mounted: function mounted() {
-    var _this = this;
-
     document.getElementsByClassName('modal')[0].focus();
     document.body.style.overflow = "hidden";
-    var modal = document.getElementsByClassName('modal')[0];
-
-    window.onclick = function (event) {
-      if (event.target == modal) {
-        _this.closeModal();
-      }
-    };
   },
   methods: {
     getTask: function getTask() {
-      var _this2 = this;
+      var _this = this;
 
       axios.get("/api/task/".concat(this.task_id)).then(function (response) {
-        return _this2.task = response.data;
+        return _this.task = response.data;
       });
     },
     closeModal: function closeModal() {
@@ -5004,24 +4993,24 @@ __webpack_require__.r(__webpack_exports__);
       document.body.style.overflow = "auto";
     },
     completeTask: function completeTask() {
-      var _this3 = this;
+      var _this2 = this;
 
       if (confirm("Точно выполнена?")) {
         axios.put("/api/task/".concat(this.task.id, "/update"), {
           status: 'completed'
         }).then(function (response) {
-          return _this3.$parent.getColumns(), _this3.closeModal();
+          return _this2.$parent.getColumns(), _this2.closeModal();
         });
       }
     },
     returnTask: function returnTask() {
-      var _this4 = this;
+      var _this3 = this;
 
       if (confirm("Точно вернуть в работу?")) {
         axios.put("/api/task/".concat(this.task.id, "/update"), {
           status: 'active'
         }).then(function (response) {
-          return _this4.$parent.getColumns(), _this4.closeModal();
+          return _this3.$parent.getColumns(), _this3.closeModal();
         });
       }
     },
@@ -51969,45 +51958,43 @@ var render = function () {
             },
             [
               _c("div", { staticClass: "modal-content" }, [
-                _c("div", { staticClass: "modal-header" }, [
-                  _c(
-                    "div",
-                    { staticClass: "w-100", attrs: { id: "task_name" } },
-                    [
-                      _vm.views.changeTaskName
-                        ? [_c("ChangeTaskName", { attrs: { task: _vm.task } })]
-                        : [
-                            _c(
-                              "h5",
-                              {
-                                staticClass: "modal-title",
-                                on: {
-                                  click: function ($event) {
-                                    _vm.views.changeTaskName = true
-                                  },
+                _c(
+                  "div",
+                  { staticClass: "modal-header" },
+                  [
+                    _vm.views.changeTaskName
+                      ? [_c("ChangeTaskName", { attrs: { task: _vm.task } })]
+                      : [
+                          _c(
+                            "h5",
+                            {
+                              staticClass: "modal-title",
+                              on: {
+                                click: function ($event) {
+                                  _vm.views.changeTaskName = true
                                 },
                               },
-                              [_vm._v(_vm._s(_vm.task.name))]
-                            ),
-                          ],
-                    ],
-                    2
-                  ),
-                  _vm._v(" "),
-                  _c("button", {
-                    staticClass: "btn-close",
-                    attrs: {
-                      type: "button",
-                      "data-bs-dismiss": "modal",
-                      "aria-label": "Close",
-                    },
-                    on: {
-                      click: function ($event) {
-                        return _vm.closeModal()
+                            },
+                            [_vm._v(_vm._s(_vm.task.name))]
+                          ),
+                        ],
+                    _vm._v(" "),
+                    _c("button", {
+                      staticClass: "btn-close",
+                      attrs: {
+                        type: "button",
+                        "data-bs-dismiss": "modal",
+                        "aria-label": "Close",
                       },
-                    },
-                  }),
-                ]),
+                      on: {
+                        click: function ($event) {
+                          return _vm.closeModal()
+                        },
+                      },
+                    }),
+                  ],
+                  2
+                ),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body m-3" }, [
                   _vm.views.changeTaskName == false

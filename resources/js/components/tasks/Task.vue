@@ -3,14 +3,12 @@
         <div v-if="task && task.id > 0" class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <div id="task_name" class="w-100">
                     <template v-if="views.changeTaskName">
                         <ChangeTaskName :task="task"></ChangeTaskName>
                     </template>
                     <template v-else>
                         <h5 @click="views.changeTaskName = true" class="modal-title">{{ task.name }}</h5>
                     </template>
-                    </div>
 
                     <button @click="closeModal()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -131,14 +129,6 @@
         mounted() {
             document.getElementsByClassName('modal')[0].focus()
             document.body.style.overflow = "hidden"
-
-            var modal = document.getElementsByClassName('modal')[0]
-            
-            window.onclick = (event) => {
-                if (event.target == modal) {
-                    this.closeModal()
-                }
-            }
         },
         methods: {
             getTask() {
