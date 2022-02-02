@@ -28,7 +28,7 @@ export default {
             .then(response => (
                 this.$parent.getTask(),
                 this.$parent.$parent.getColumns(),
-                this.$parent.views.changeDescription = false
+                this.$parent.views.changeTaskDescription = false
             ))
         }
     },

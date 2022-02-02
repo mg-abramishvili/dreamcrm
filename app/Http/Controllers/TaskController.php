@@ -43,6 +43,10 @@ class TaskController extends Controller
             $task->column_id = $request->column_id;
         }
 
+        if(isset($request->name)) {
+            $task->name = $request->name;
+        }
+
         if(isset($request->description)) {
             $task->description = $request->description;
         }

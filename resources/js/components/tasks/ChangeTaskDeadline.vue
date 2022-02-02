@@ -28,7 +28,7 @@ export default {
             .then(response => (
                 this.$parent.getTask(),
                 this.$parent.$parent.getColumns(),
-                this.$parent.views.changeDeadline = false
+                this.$parent.views.changeTaskDeadline = false
             ))
         }
     },

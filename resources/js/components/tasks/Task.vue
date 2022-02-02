@@ -3,21 +3,27 @@
         <div v-if="task && task.id > 0" class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">{{ task.name }}</h5>
+                    <template v-if="views.changeTaskName">
+                        <ChangeTaskName :task="task"></ChangeTaskName>
+                    </template>
+                    <template v-else>
+                        <h5 @click="views.changeTaskName = true" class="modal-title">{{ task.name }}</h5>
+                    </template>
+
                     <button @click="closeModal()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body m-3">
-                    <span class="text-muted">{{ task.column.name }}</span>
+                    <span v-if="views.changeTaskName == false" class="text-muted">{{ task.column.name }}</span>
                     <div class="row mt-4">
                         <div class="col-12 col-lg-9">
                             <div class="mb-4">
                                 <div class="mb-1">
                                     <span class="text-muted"><strong>Срок</strong></span>
-                                    <button v-if="task.column.board.admin == $parent.$parent.user.id" @click="changeDeadline()" class="btn btn-sm btn-outline-secondary">Изменить</button>
+                                    <button v-if="task.column.board.admin == $parent.$parent.user.id" @click="changeTaskDeadline()" class="btn btn-sm btn-outline-secondary">Изменить</button>
                                 </div>
 
-                                <template v-if="views.changeDeadline">
-                                    <ChangeDeadline :task="task"></ChangeDeadline>
+                                <template v-if="views.changeTaskDeadline">
+                                    <ChangeTaskDeadline :task="task"></ChangeTaskDeadline>
                                 </template>
                                 <template v-else>
                                     <p v-if="task.deadline" class="mb-0">{{ task.deadline | formatDateLong }}</p>
@@ -28,11 +34,11 @@
                             <div class="mb-4">
                                 <div class="mb-1">
                                     <span class="text-muted"><strong>Описание</strong></span>
-                                    <button v-if="task.column.board.admin == $parent.$parent.user.id" @click="changeDescription()" class="btn btn-sm btn-outline-secondary">Изменить</button>
+                                    <button v-if="task.column.board.admin == $parent.$parent.user.id" @click="changeTaskDescription()" class="btn btn-sm btn-outline-secondary">Изменить</button>
                                 </div>
 
-                                <template v-if="views.changeDescription">
-                                    <ChangeDescription :task="task"></ChangeDescription>
+                                <template v-if="views.changeTaskDescription">
+                                    <ChangeTaskDescription :task="task"></ChangeTaskDescription>
                                 </template>
                                 <template v-else>
                                     <p v-if="task.description" class="mb-0">{{ task.description }}</p>
@@ -96,8 +102,9 @@
 
 <script>
     import Comments from './Comments.vue'
-    import ChangeDescription from './ChangeDescription.vue'
-    import ChangeDeadline from './ChangeDeadline.vue'
+    import ChangeTaskName from './ChangeTaskName.vue'
+    import ChangeTaskDescription from './ChangeTaskDescription.vue'
+    import ChangeTaskDeadline from './ChangeTaskDeadline.vue'
     import FileUpload from './FileUpload.vue'
     import AddUser from './AddUser.vue'
     
@@ -108,8 +115,9 @@
                 task: {},
 
                 views: {
-                    changeDescription: false,
-                    changeDeadline: false,
+                    changeTaskName: false,
+                    changeTaskDescription: false,
+                    changeTaskDeadline: false,
                     openFileUpload: false,
                     addUser: false,
                 },
@@ -166,18 +174,18 @@
                     ))
                 }
             },
-            changeDescription() {
-                if(this.views.changeDescription == true) {
-                    this.views.changeDescription = false
+            changeTaskDescription() {
+                if(this.views.changeTaskDescription == true) {
+                    this.views.changeTaskDescription = false
                 } else {
-                    this.views.changeDescription = true
+                    this.views.changeTaskDescription = true
                 }
             },
-            changeDeadline() {
-                if(this.views.changeDeadline == true) {
-                    this.views.changeDeadline = false
+            changeTaskDeadline() {
+                if(this.views.changeTaskDeadline == true) {
+                    this.views.changeTaskDeadline = false
                 } else {
-                    this.views.changeDeadline = true
+                    this.views.changeTaskDeadline = true
                 }
             },
             openFileUpload() {
@@ -197,8 +205,9 @@
         },
         components: {
             Comments,
-            ChangeDescription,
-            ChangeDeadline,
+            ChangeTaskName,
+            ChangeTaskDescription,
+            ChangeTaskDeadline,
             FileUpload,
             AddUser
         },
