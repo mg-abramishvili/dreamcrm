@@ -51912,9 +51912,14 @@ var render = function () {
                                     },
                                   }),
                               _vm._v(" "),
-                              _c("div", { staticClass: "flex-grow-1" }, [
-                                _c("strong", [_vm._v(_vm._s(user.name))]),
-                              ]),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "flex-grow-1",
+                                  staticStyle: { "line-height": "1.1" },
+                                },
+                                [_c("strong", [_vm._v(_vm._s(user.name))])]
+                              ),
                             ]
                           )
                         }),

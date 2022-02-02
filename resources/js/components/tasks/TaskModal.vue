@@ -73,7 +73,7 @@
                             <div v-for="user in task.users" :key="'task_user_' + user.id" class="d-flex align-items-center mb-1">
                                 <img v-if="user.avatar" :src="user.avatar" width="36" height="36" class="rounded-circle me-2" alt="">
                                 <img v-else src="/img/no-image.jpg" width="36" height="36" class="rounded-circle me-2" alt="">
-                                <div class="flex-grow-1">
+                                <div class="flex-grow-1" style="line-height: 1.1;">
                                     <strong>{{ user.name }}</strong>
                                 </div>
                             </div>
