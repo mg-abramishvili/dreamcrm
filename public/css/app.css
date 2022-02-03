@@ -274,7 +274,7 @@ table.dataTable {
 
 /* TASK MODAL */
 .tasks-page {
-    height: calc(100vh - 3rem);
+    height: calc(100vh - 50px);
     position: relative;
 }
 .tasks-page-header {
@@ -283,11 +283,13 @@ table.dataTable {
 }
 .tasks-page-board {
     overflow-x: auto;
+    overflow-y: hidden;
 	white-space: nowrap;
     margin-left: -2.5rem;
     width: calc(100% + 5rem);
-    height: calc(100% - 75px);
+    height: calc(100vh - 100px);
     padding: 0 2.5rem;
+    padding-bottom: 15px;
 }
 .tasks-page-board::-webkit-scrollbar {
     height: 8px;
@@ -314,6 +316,7 @@ table.dataTable {
     padding-bottom: 10px;
     border-radius: 6px;
     margin-top: 25px;
+    margin-bottom: 25px;
 }
 .tasks-page-board .card-header {
     padding: 5px;
@@ -323,7 +326,7 @@ table.dataTable {
     flex-direction: column;
     gap: 10px;
     overflow-y: auto;
-    max-height: calc(84vh - 75px);
+    max-height: calc(70vh);
     padding: 10px 5px;
     padding-bottom: 40px;
 }
