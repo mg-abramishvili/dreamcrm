@@ -54299,11 +54299,11 @@ var render = function () {
                             _c(
                               "div",
                               {
-                                staticClass:
-                                  "card-body bg-light cursor-pointer p-3",
+                                staticClass: "card-body cursor-pointer p-3",
                                 class: {
                                   "bg-success text-white":
                                     task.status == "completed",
+                                  "bg-light": task.status == "active",
                                 },
                                 staticStyle: { "white-space": "normal" },
                               },

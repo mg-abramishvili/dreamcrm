@@ -34,7 +34,7 @@
                     <CreateTask v-if="views.createTask && selected.column == column.id" :column_id="selected.column"></CreateTask>
                     <draggable v-model="column.tasks" group="tasks" :move="detectMove" @change="moveTask($event, column.id)" :disabled="views.draggable == false" class="task-column-body">
                         <div @click="openTask(task)" v-for="task in column.tasks" :key="task.id" class="card m-0" style="box-shadow: none;">
-                            <div class="card-body bg-light cursor-pointer p-3" :class="{ 'bg-success text-white': task.status == 'completed' }" style="white-space:normal">
+                            <div class="card-body cursor-pointer p-3" :class="{ 'bg-success text-white': task.status == 'completed', 'bg-light': task.status == 'active' }" style="white-space:normal">
                                 <p>{{ task.name }}</p>
                                 <div class="mt-n1">
                                     <div class="d-inline-flex me-2">
