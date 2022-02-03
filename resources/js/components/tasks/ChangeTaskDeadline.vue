@@ -1,6 +1,6 @@
 <template>
     <div>
-        <input type="date" v-model="deadline" class="form-control w-25 d-inline-flex">
+        <input type="date" data-date-inline-picker="true" v-model="deadline" class="form-control w-25 d-inline-flex">
         <button @click="updateDeadline()" class="btn btn-primary">Сохранить</button>
     </div>
 </template>
