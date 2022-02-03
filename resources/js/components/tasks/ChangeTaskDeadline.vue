@@ -17,7 +17,7 @@ export default {
         this.getDeadline()
     },
     mounted() {
-        document.getElementsByClassName('form-control')[0].focus()
+        document.getElementsByClassName('form-control')[0].click()
     },
     methods: {
         getDeadline() {
