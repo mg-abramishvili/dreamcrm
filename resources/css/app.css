@@ -197,6 +197,13 @@ table.dataTable {
 .filepond--item {
     width: calc(25% - 0.5em);
 }
+.filepond--root .filepond--credits {
+    display: none !important;
+}
+
+.user-page-avatar .filepond--item {
+    width: 100%;
+}
 /* FILEPOND */
 
 

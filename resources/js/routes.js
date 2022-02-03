@@ -20,6 +20,7 @@ import Offer from './components/offers/Offer.vue';
 import Tasks from './components/tasks/Tasks.vue';
 
 import Users from './components/users/Users.vue';
+import User from './components/users/User.vue';
 
 export const routes = [
     {
@@ -106,5 +107,10 @@ export const routes = [
         path: '/users',
         name: 'Users',
         component: Users
+    },
+    {
+        path: '/user/:uid',
+        name: 'User',
+        component: User
     },
 ];

@@ -56,6 +56,8 @@ Route::get('usd', [DollarController::class, 'index']);
 Route::get('usd/update', [DollarController::class, 'update']);
 
 Route::get('users', [UserController::class, 'index']);
+Route::get('user/{uid}', [UserController::class, 'user']);
+Route::put('user/{uid}/update', [UserController::class, 'update']);
 
 Route::get('tasks/boards', [TaskBoardController::class, 'index']);
 Route::post('tasks/boards', [TaskBoardController::class, 'store']);

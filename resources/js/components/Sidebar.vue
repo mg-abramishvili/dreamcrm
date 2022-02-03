@@ -2,12 +2,13 @@
     <nav class="sidebar">
         <div class="sidebar-content">
             <div class="sidebar-user">
-                <a>
+                <router-link :to="{name: 'User', params: {uid: $parent.user.uid}}">
                     <div class="sidebar-user-avatar">
-                        <img src="https://eu.ui-avatars.com/api/?background=0D8ABC&color=fff" />
+                        <img v-if="$parent.user.avatar" :src="$parent.user.avatar" />
+                        <img v-else src="/img/no-image.jpg" />
                     </div>
                     {{ $parent.user.name }}
-                </a>
+                </router-link>
             </div>
             <ul class="sidebar-nav">
                 <li v-if="this.$parent.user.permissions && this.$parent.user.permissions.can_create_calculations" class="sidebar-item">

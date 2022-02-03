@@ -4,11 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Models\File;
 use Illuminate\Http\Request;
+use Image;
 
 class FileController extends Controller
 {
     public function store(Request $request)
     {
+        if (request()->file('avatar')) {
+            $file = request()->file('avatar');
+
+            $filename = time().'.'.$file->extension();
+            $img = Image::make($file->path());
+            $img->resize(600, 600, function ($const) {
+                $const->aspectRatio();
+            })->save(public_path() . '/uploads/avatars/' . $filename);
+
+            return \Response::make('/uploads/' . $filename, 200, [
+                'Content-Disposition' => 'inline',
+            ]);
+        }
+
         if (request()->file('task_files')) {
             $task_files = request()->file('task_files');
             for ($i = 0; $i < count($task_files); $i++) {
