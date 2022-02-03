@@ -19,6 +19,8 @@ import Offer from './components/offers/Offer.vue';
 
 import Tasks from './components/tasks/Tasks.vue';
 
+import Users from './components/users/Users.vue';
+
 export const routes = [
     {
         path: '/',
@@ -99,5 +101,10 @@ export const routes = [
         path: '/tasks/:board_id?',
         name: 'Tasks',
         component: Tasks
+    },
+    {
+        path: '/users',
+        name: 'Users',
+        component: Users
     },
 ];
