@@ -92,6 +92,7 @@
 
                             <button v-if="task.status !== 'completed'" @click="completeTask()" class="w-100 btn btn-success">Отметить как выполненную</button>
                             <button v-if="task.status == 'completed'" @click="returnTask()" class="w-100 btn btn-warning">Вернуть в работу</button>
+                            <button v-if="task.column.board.admin == $parent.$parent.user.id" @click="deleteTask()" class="w-100 btn btn-outline-danger mt-2">Удалить задачу</button>
                         </div>
                     </div>
                 </div>
@@ -161,6 +162,16 @@
                     .put(`/api/task/${this.task.id}/update`, {
                         status: 'active'
                     })
+                    .then(response => (
+                        this.$parent.getColumns(),
+                        this.closeModal()
+                    ))
+                }
+            },
+            deleteTask() {
+                if (confirm("Точно удалить задачу?")) {
+                    axios
+                    .delete(`/api/task/${this.task.id}/delete`)
                     .then(response => (
                         this.$parent.getColumns(),
                         this.closeModal()

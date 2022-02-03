@@ -96,7 +96,7 @@ export const routes = [
         component: Offer
     },
     {
-        path: '/tasks',
+        path: '/tasks/:board_id?',
         name: 'Tasks',
         component: Tasks
     },

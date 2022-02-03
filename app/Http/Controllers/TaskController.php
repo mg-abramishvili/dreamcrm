@@ -69,4 +69,13 @@ class TaskController extends Controller
 
         $task->save();
     }
+
+    public function delete($id)
+    {
+        $task = Task::find($id);
+        $task->users()->detach();
+        $task->comments()->delete();
+        $task->files()->delete();
+        $task->delete();
+    }
 }

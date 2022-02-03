@@ -67,5 +67,6 @@ Route::get('task/{id}/comments', [TaskCommentController::class, 'index']);
 Route::get('task/{id}', [TaskController::class, 'task']);
 Route::post('task/{id}/comments', [TaskCommentController::class, 'store']);
 Route::put('task/{id}/update', [TaskController::class, 'update']);
+Route::delete('task/{id}/delete', [TaskController::class, 'delete']);
 
 Route::post('file/upload', [FileController::class, 'store']);

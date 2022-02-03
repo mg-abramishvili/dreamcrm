@@ -5401,6 +5401,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -5460,6 +5461,15 @@ __webpack_require__.r(__webpack_exports__);
           status: 'active'
         }).then(function (response) {
           return _this3.$parent.getColumns(), _this3.closeModal();
+        });
+      }
+    },
+    deleteTask: function deleteTask() {
+      var _this4 = this;
+
+      if (confirm("Точно удалить задачу?")) {
+        axios["delete"]("/api/task/".concat(this.task.id, "/delete")).then(function (response) {
+          return _this4.$parent.getColumns(), _this4.closeModal();
         });
       }
     },
@@ -5894,7 +5904,7 @@ var routes = [{
   name: 'Offer',
   component: _components_offers_Offer_vue__WEBPACK_IMPORTED_MODULE_14__["default"]
 }, {
-  path: '/tasks',
+  path: '/tasks/:board_id?',
   name: 'Tasks',
   component: _components_tasks_Tasks_vue__WEBPACK_IMPORTED_MODULE_15__["default"]
 }];
@@ -53546,6 +53556,23 @@ var render = function () {
                                 },
                               },
                               [_vm._v("Вернуть в работу")]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.task.column.board.admin ==
+                        _vm.$parent.$parent.user.id
+                          ? _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "w-100 btn btn-outline-danger mt-2",
+                                on: {
+                                  click: function ($event) {
+                                    return _vm.deleteTask()
+                                  },
+                                },
+                              },
+                              [_vm._v("Удалить задачу")]
                             )
                           : _vm._e(),
                       ],
