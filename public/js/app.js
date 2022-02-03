@@ -53835,7 +53835,7 @@ var render = function () {
                                     0
                                   )
                                 : _c("p", { staticClass: "mb-0" }, [
-                                    _vm._v("Нет описания"),
+                                    _vm._v("Нет файлов"),
                                   ]),
                             ],
                           ],

@@ -64,7 +64,7 @@
                                             </a>
                                         </li>
                                     </ul>
-                                    <p v-else class="mb-0">Нет описания</p>
+                                    <p v-else class="mb-0">Нет файлов</p>
                                 </template>
                             </div>
 
