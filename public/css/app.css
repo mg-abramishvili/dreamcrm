@@ -326,7 +326,7 @@ table.dataTable {
     flex-direction: column;
     gap: 10px;
     overflow-y: auto;
-    max-height: calc(70vh);
+    max-height: 75vh;
     padding: 10px 5px;
     padding-bottom: 40px;
 }
