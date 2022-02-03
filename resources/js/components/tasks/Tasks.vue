@@ -24,7 +24,7 @@
                     <div class="card-header">
                         <div class="row align-items-center mb-2">
                             <div class="col-9">
-                                <h5 class="card-title mb-0">{{ column.name }}</h5>
+                                <h5 v-if="views.modals.changeColumnName == false" @click="openChangeColumnName(column)" class="card-title mb-0">{{ column.name }}</h5>
                             </div>
                             <div class="col-3 text-end">
                                 <button v-if="column.board && column.board.admin == $parent.user.id || $parent.user.permissions && $parent.user.permissions.can_see_all_boards" @click="openCreateTask(column.id)" class="btn btn-sm btn-outline-primary">+</button>
@@ -61,6 +61,8 @@
         
         <CreateColumn v-if="views.modals.createColumn" :board_id="selected.board.id"></CreateColumn>
         
+        <ChangeColumnName v-if="views.modals.changeColumnName" :column="selected.column"></ChangeColumnName>
+
         <div v-if="views.modals.showBackdrop" class="modal-backdrop fade show"></div>
     </div>
 </template>
@@ -68,6 +70,7 @@
 <script>
     import TaskItem from './Task.vue'
     import CreateColumn from './CreateColumn.vue'
+    import ChangeColumnName from './ChangeColumnName.vue'
     import CreateTask from './CreateTask.vue'
     import CreateTaskBoard from './CreateTaskBoard.vue'
 
@@ -95,6 +98,7 @@
                     modals: {
                         openTask: false,
                         createColumn: false,
+                        changeColumnName: false,
                         showBackdrop: false,
                     },
                 },
@@ -144,6 +148,11 @@
             },
             openCreateColumn() {
                 this.views.modals.createColumn = true
+                this.views.modals.showBackdrop = true
+            },
+            openChangeColumnName(column) {
+                this.selected.column = column
+                this.views.modals.changeColumnName = true
                 this.views.modals.showBackdrop = true
             },
             openCreateTaskBoard() {
@@ -196,6 +205,7 @@
         components: {
             TaskItem,
             CreateColumn,
+            ChangeColumnName,
             CreateTask,
             CreateTaskBoard,
             draggable

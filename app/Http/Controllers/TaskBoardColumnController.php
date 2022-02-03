@@ -45,6 +45,15 @@ class TaskBoardColumnController extends Controller
         $column->save();
     }
 
+    public function rename($id, Request $request)
+    {
+        $column = TaskBoardColumn::find($id);
+
+        $column->name = $request->name;
+
+        $column->save();
+    }
+
     public function reorder(Request $request)
     {
         $columns = $request->columns;
