@@ -22,4 +22,14 @@ class CategoryController extends Controller
     {
         return Element::where('category_id', $id)->get();
     }
+
+    public function store(Request $request)
+    {
+        $category = new Category();
+
+        $category->name = $request->name;
+        $category->slug = $request->slug;
+
+        $category->save();
+    }
 }

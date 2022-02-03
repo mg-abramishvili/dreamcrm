@@ -7,7 +7,7 @@
                 </h1>    
                 <span v-if="calculation.user" class="text-sm">автор: {{ calculation.user.name }}</span>
             </div>
-            <div class="col-12 col-lg-6 text-end">
+            <!-- <div class="col-12 col-lg-6 text-end">
                 <template v-if="calculation.offers && calculation.offers.length">
                     <div class="text-sm">У расчета есть КП: </div>
                     <template v-for="offer in calculation.offers">
@@ -17,7 +17,7 @@
                 <template v-if="calculation.offers && calculation.offers.length == 0">
                     <router-link :to="{name: 'OfferCreate', params: {calculation_id: calculation.id}}" class="btn btn-primary">Создать КП из расчета</router-link>
                 </template>
-            </div>
+            </div> -->
         </div>
 
         <div v-if="calculation && calculation.id > 0" class="card">

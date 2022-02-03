@@ -1,5 +1,5 @@
 <template>
-    <div v-if="usd.kurs && usd.kurs > 0 && box && box.id && box.id > 0">
+    <div v-if="usd.kurs && usd.kurs > 0">
         <div class="row align-items-center mb-4">
             <div class="col-12 col-lg-6">
                 <h1 class="h3 m-0">
@@ -7,7 +7,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left align-middle me-2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                     </router-link>
                     <strong>
-                        {{ box.name }}
+                        Новый корпус
                     </strong>
                 </h1>
             </div>
@@ -87,7 +87,7 @@
                     <textarea v-model="manager_description" class="form-control" style="resize: vertical"></textarea>
                 </div>
 
-                <button @click="updateBox(box.id)" class="btn btn-primary">Сохранить</button>
+                <button @click="saveBox()" class="btn btn-primary">Сохранить</button>
             </div>
         </div>
     </div>
@@ -178,12 +178,6 @@
                     this.pre_usd = response.data.pre_usd
                     this.sborka = response.data.sborka
                     this.marzha = response.data.marzha
-                    this.length = response.data.length
-                    this.width = response.data.width
-                    this.height = response.data.height
-                    this.weight = response.data.weight
-                    this.description = response.data.description
-                    this.manager_description = response.data.manager_description
 
                     this.selected.types = response.data.types.map(type => type.id)
                 }))
@@ -191,7 +185,7 @@
             selectAllBoxes() {
                 this.selected.boxes = this.boxes.map(box => box.id)
             },
-            updateBox(id) {
+            saveBox() {
                 this.errors = []
 
                 if (!this.name) {
@@ -220,7 +214,7 @@
                     return
                 }
 
-                axios.put(`/api/box/${id}/update`,
+                axios.post('/api/boxes',
                 {
                     name: this.name,
                     pre_rub: this.pre_rub,

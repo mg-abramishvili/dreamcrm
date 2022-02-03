@@ -31,10 +31,13 @@ Route::get('elements-prices-update', [ElementController::class, 'updatePrices'])
 Route::get('types', [TypeController::class, 'index']);
 
 Route::get('boxes', [BoxController::class, 'index']);
+Route::post('boxes', [BoxController::class, 'store']);
 Route::get('boxes/type/{id}', [BoxController::class, 'indexByType']);
 Route::get('box/{id}', [BoxController::class, 'box']);
+Route::put('box/{id}/update', [BoxController::class, 'update']);
 
 Route::get('categories', [CategoryController::class, 'index']);
+Route::post('categories', [CategoryController::class, 'store']);
 Route::get('category/{id}', [CategoryController::class, 'category']);
 Route::get('category/{id}/elements', [CategoryController::class, 'categoryElements']);
 

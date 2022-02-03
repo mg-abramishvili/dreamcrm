@@ -1,10 +1,12 @@
 import Home from './components/Home.vue';
 
 import Catalog from './components/catalog/Catalog.vue';
+import CategoryCreate from './components/catalog/CategoryCreate.vue';
 import CategoryElements from './components/catalog/CategoryElements.vue';
 import ElementCreate from './components/catalog/ElementCreate.vue';
 import ElementEdit from './components/catalog/ElementEdit.vue';
 import Boxes from './components/catalog/Boxes.vue';
+import BoxCreate from './components/catalog/BoxCreate.vue';
 import BoxEdit from './components/catalog/BoxEdit.vue';
 import CatalogSearch from './components/catalog/CatalogSearch.vue';
 
@@ -29,6 +31,11 @@ export const routes = [
         component: Catalog
     },
     {
+        path: '/catalog/category/create',
+        name: 'CategoryCreate',
+        component: CategoryCreate
+    },
+    {
         path: '/catalog/:category/elements',
         name: 'CategoryElements',
         component: CategoryElements
@@ -47,6 +54,11 @@ export const routes = [
         path: '/catalog/boxes',
         name: 'Boxes',
         component: Boxes
+    },
+    {
+        path: '/box/create',
+        name: 'BoxCreate',
+        component: BoxCreate
     },
     {
         path: '/box/:id/edit',
