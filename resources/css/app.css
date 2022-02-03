@@ -287,7 +287,7 @@ table.dataTable {
     flex-direction: column;
     gap: 10px;
     overflow-y: auto;
-    max-height: calc(85vh - 75px);
+    max-height: calc(90vh - 75px);
     padding: 10px 5px;
     padding-bottom: 40px;
 }
