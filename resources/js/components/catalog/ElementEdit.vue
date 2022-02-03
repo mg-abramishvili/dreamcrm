@@ -29,24 +29,20 @@
                 <label id="name_label">Название</label>
                 <input v-model="name" id="name_input" type="text" class="form-control mb-3">
 
-                <label>Курс USD <small>(на {{ usd.date | formatDate}})</small></label>
-                <input v-model="usd.kurs" type="text" class="form-control mb-3" disabled>
-
-                <div class="row" style="position: relative">
-                    <div class="col-6">
-                        <label id="pre_rub_label">Цена RUB</label>
-                        <input v-model="pre_rub" id="pre_rub_input" type="number" class="form-control mb-3">
+                <div class="row">
+                    <div class="col">
+                        <label>Цена RUB</label>
+                        <input v-model="pre_rub" type="number" min="0" class="form-control">
                     </div>
-                    <div class="col-6">
-                        <label id="pre_usd_label">Цена USD</label>
-                        <input v-model="pre_usd" id="pre_usd_input" type="number" class="form-control mb-3">
+                    <div class="col">
+                        <label>Цена USD </label>
+                        <input v-model="pre_usd" type="number" min="0" class="form-control">
+                        <small>{{ usd.kurs }} ₽ от {{ usd.date | formatDateShort }}</small>
                     </div>
-                    <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: block; width: 10px; padding: 0; margin: 0; margin-top: 2px;">+</span>
-                </div>
-
-                <div class="form-group" style="position: relative;">
-                    <label id="price_label">Цена (финальная)</label>
-                    <input v-model="price" id="price_input" type="text" class="form-control mb-3">
+                    <div class="col">
+                        <label>Цена (финальная)</label>
+                        <input v-model="price" disabled type="number" class="form-control">
+                    </div>
                 </div>
 
                 <label>Категория</label>
@@ -61,6 +57,7 @@
                 <select v-model="selected.boxes" class="form-control mb-3" style="height: 300px;" multiple>
                     <option v-for="box in boxes" :key="'box_' + box.id" :value="box.id">{{ box.name }}</option>
                 </select>
+
                 <button @click="updateElement(element.id)" class="btn btn-primary">Сохранить</button>
             </div>
         </div>
@@ -180,7 +177,7 @@
                     return
                 }
 
-                axios.post('/api/elements',
+                axios.put(`/api/element/${id}/update`,
                 {
                     name: this.name,
                     pre_rub: this.pre_rub,

@@ -25,6 +25,7 @@ Route::post('/me', [AuthController::class, 'me']);
 Route::get('elements', [ElementController::class, 'index']);
 Route::get('elements/box/{id}', [ElementController::class, 'indexByBox']);
 Route::get('element/{id}', [ElementController::class, 'element']);
+Route::put('element/{id}/update', [ElementController::class, 'update']);
 Route::post('elements', [ElementController::class, 'store']);
 Route::get('elements-prices-update', [ElementController::class, 'updatePrices']);
 

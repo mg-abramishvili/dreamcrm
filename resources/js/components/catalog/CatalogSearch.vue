@@ -27,9 +27,14 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <tr v-for="box in filteredBoxes" :key="'box_' + box.id">
+                        <td class="align-middle">
+                            <router-link :to="{name: 'BoxEdit', params: {id: box.id}}">{{ box.name }}</router-link>
+                        </td>
+                    </tr>
                     <tr v-for="element in filteredElements" :key="'element_' + element.id">
                         <td class="align-middle">
-                            <a>{{ element.name }}</a>
+                            <router-link :to="{name: 'ElementEdit', params: {id: element.id}}">{{ element.name }}</router-link>
                         </td>
                     </tr>
                 </tbody>
@@ -44,17 +49,24 @@
         data() {
             return {
                 elements: [],
+                boxes: [],
 
                 input: '',
             }
         },
         created() {
+            this.loadBoxes()
             this.loadElements()
         },
         mounted() {
             document.getElementById("input").focus();
         },
         computed: {
+            filteredBoxes() {
+                return this.boxes.filter(box => {
+                    return box.name.toLowerCase().includes(this.input.toLowerCase())
+                })
+            },
             filteredElements() {
                 return this.elements.filter(element => {
                     return element.name.toLowerCase().includes(this.input.toLowerCase())
@@ -62,6 +74,13 @@
             }
         },
         methods: {
+            loadBoxes() {
+                axios
+                .get(`/api/boxes`)
+                .then(response => (
+                    this.boxes = response.data
+                ));
+            },
             loadElements() {
                 axios
                 .get(`/api/elements`)

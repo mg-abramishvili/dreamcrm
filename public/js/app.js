@@ -3942,34 +3942,55 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       elements: [],
+      boxes: [],
       input: ''
     };
   },
   created: function created() {
+    this.loadBoxes();
     this.loadElements();
   },
   mounted: function mounted() {
     document.getElementById("input").focus();
   },
   computed: {
-    filteredElements: function filteredElements() {
+    filteredBoxes: function filteredBoxes() {
       var _this = this;
 
+      return this.boxes.filter(function (box) {
+        return box.name.toLowerCase().includes(_this.input.toLowerCase());
+      });
+    },
+    filteredElements: function filteredElements() {
+      var _this2 = this;
+
       return this.elements.filter(function (element) {
-        return element.name.toLowerCase().includes(_this.input.toLowerCase());
+        return element.name.toLowerCase().includes(_this2.input.toLowerCase());
       });
     }
   },
   methods: {
+    loadBoxes: function loadBoxes() {
+      var _this3 = this;
+
+      axios.get("/api/boxes").then(function (response) {
+        return _this3.boxes = response.data;
+      });
+    },
     loadElements: function loadElements() {
-      var _this2 = this;
+      var _this4 = this;
 
       axios.get("/api/elements").then(function (response) {
-        return _this2.elements = response.data;
+        return _this4.elements = response.data;
       });
     }
   }
@@ -4254,9 +4275,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -4458,9 +4476,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -4572,7 +4587,7 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      axios.post('/api/elements', {
+      axios.put("/api/element/".concat(id, "/update"), {
         name: this.name,
         pre_rub: this.pre_rub,
         pre_usd: this.pre_usd,
@@ -51086,14 +51101,53 @@ var render = function () {
             _vm._v(" "),
             _c(
               "tbody",
-              _vm._l(_vm.filteredElements, function (element) {
-                return _c("tr", { key: "element_" + element.id }, [
-                  _c("td", { staticClass: "align-middle" }, [
-                    _c("a", [_vm._v(_vm._s(element.name))]),
-                  ]),
-                ])
-              }),
-              0
+              [
+                _vm._l(_vm.filteredBoxes, function (box) {
+                  return _c("tr", { key: "box_" + box.id }, [
+                    _c(
+                      "td",
+                      { staticClass: "align-middle" },
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            attrs: {
+                              to: { name: "BoxEdit", params: { id: box.id } },
+                            },
+                          },
+                          [_vm._v(_vm._s(box.name))]
+                        ),
+                      ],
+                      1
+                    ),
+                  ])
+                }),
+                _vm._v(" "),
+                _vm._l(_vm.filteredElements, function (element) {
+                  return _c("tr", { key: "element_" + element.id }, [
+                    _c(
+                      "td",
+                      { staticClass: "align-middle" },
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            attrs: {
+                              to: {
+                                name: "ElementEdit",
+                                params: { id: element.id },
+                              },
+                            },
+                          },
+                          [_vm._v(_vm._s(element.name))]
+                        ),
+                      ],
+                      1
+                    ),
+                  ])
+                }),
+              ],
+              2
             ),
           ]),
         ])
@@ -51517,7 +51571,7 @@ var render = function () {
                 ])
               : _vm._e(),
             _vm._v(" "),
-            _c("label", { attrs: { id: "name_label" } }, [_vm._v("Название")]),
+            _c("label", [_vm._v("Название")]),
             _vm._v(" "),
             _c("input", {
               directives: [
@@ -51529,7 +51583,7 @@ var render = function () {
                 },
               ],
               staticClass: "form-control mb-3",
-              attrs: { id: "name_input", type: "text" },
+              attrs: { type: "text" },
               domProps: { value: _vm.name },
               on: {
                 input: function ($event) {
@@ -51541,127 +51595,69 @@ var render = function () {
               },
             }),
             _vm._v(" "),
-            _c("label", [
-              _vm._v("Курс USD "),
-              _c("small", [
-                _vm._v(
-                  "(на " + _vm._s(_vm._f("formatDate")(_vm.usd.date)) + ")"
-                ),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.usd.kurs,
-                  expression: "usd.kurs",
-                },
-              ],
-              staticClass: "form-control mb-3",
-              attrs: { type: "text", disabled: "" },
-              domProps: { value: _vm.usd.kurs },
-              on: {
-                input: function ($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.usd, "kurs", $event.target.value)
-                },
-              },
-            }),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "row", staticStyle: { position: "relative" } },
-              [
-                _c("div", { staticClass: "col-6" }, [
-                  _c("label", { attrs: { id: "pre_rub_label" } }, [
-                    _vm._v("Цена RUB"),
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.pre_rub,
-                        expression: "pre_rub",
-                      },
-                    ],
-                    staticClass: "form-control mb-3",
-                    attrs: { id: "pre_rub_input", type: "number" },
-                    domProps: { value: _vm.pre_rub },
-                    on: {
-                      input: function ($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.pre_rub = $event.target.value
-                      },
-                    },
-                  }),
-                ]),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col" }, [
+                _c("label", [_vm._v("Цена RUB")]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-6" }, [
-                  _c("label", { attrs: { id: "pre_usd_label" } }, [
-                    _vm._v("Цена USD"),
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.pre_usd,
-                        expression: "pre_usd",
-                      },
-                    ],
-                    staticClass: "form-control mb-3",
-                    attrs: { id: "pre_usd_input", type: "number" },
-                    domProps: { value: _vm.pre_usd },
-                    on: {
-                      input: function ($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.pre_usd = $event.target.value
-                      },
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.pre_rub,
+                      expression: "pre_rub",
                     },
-                  }),
-                ]),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticStyle: {
-                      position: "absolute",
-                      top: "50%",
-                      left: "50%",
-                      transform: "translate(-50%, -50%)",
-                      display: "block",
-                      width: "10px",
-                      padding: "0",
-                      margin: "0",
-                      "margin-top": "2px",
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "number", min: "0" },
+                  domProps: { value: _vm.pre_rub },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.pre_rub = $event.target.value
                     },
                   },
-                  [_vm._v("+")]
-                ),
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "form-group",
-                staticStyle: { position: "relative" },
-              },
-              [
-                _c("label", { attrs: { id: "price_label" } }, [
-                  _vm._v("Цена (финальная)"),
+                }),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col" }, [
+                _c("label", [_vm._v("Цена USD ")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.pre_usd,
+                      expression: "pre_usd",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "number", min: "0" },
+                  domProps: { value: _vm.pre_usd },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.pre_usd = $event.target.value
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _c("small", [
+                  _vm._v(
+                    _vm._s(_vm.usd.kurs) +
+                      " ₽ от " +
+                      _vm._s(_vm._f("formatDateShort")(_vm.usd.date))
+                  ),
                 ]),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col" }, [
+                _c("label", [_vm._v("Цена (финальная)")]),
                 _vm._v(" "),
                 _c("input", {
                   directives: [
@@ -51672,8 +51668,8 @@ var render = function () {
                       expression: "price",
                     },
                   ],
-                  staticClass: "form-control mb-3",
-                  attrs: { id: "price_input", type: "text" },
+                  staticClass: "form-control",
+                  attrs: { disabled: "", type: "number" },
                   domProps: { value: _vm.price },
                   on: {
                     input: function ($event) {
@@ -51684,8 +51680,8 @@ var render = function () {
                     },
                   },
                 }),
-              ]
-            ),
+              ]),
+            ]),
             _vm._v(" "),
             _c("label", [_vm._v("Категория")]),
             _vm._v(" "),
@@ -51761,7 +51757,7 @@ var render = function () {
                   },
                 ],
                 staticClass: "form-control mb-3",
-                staticStyle: { height: "300px" },
+                staticStyle: { height: "250px" },
                 attrs: { multiple: "" },
                 on: {
                   change: function ($event) {
@@ -51992,127 +51988,69 @@ var render = function () {
               },
             }),
             _vm._v(" "),
-            _c("label", [
-              _vm._v("Курс USD "),
-              _c("small", [
-                _vm._v(
-                  "(на " + _vm._s(_vm._f("formatDate")(_vm.usd.date)) + ")"
-                ),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.usd.kurs,
-                  expression: "usd.kurs",
-                },
-              ],
-              staticClass: "form-control mb-3",
-              attrs: { type: "text", disabled: "" },
-              domProps: { value: _vm.usd.kurs },
-              on: {
-                input: function ($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.usd, "kurs", $event.target.value)
-                },
-              },
-            }),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "row", staticStyle: { position: "relative" } },
-              [
-                _c("div", { staticClass: "col-6" }, [
-                  _c("label", { attrs: { id: "pre_rub_label" } }, [
-                    _vm._v("Цена RUB"),
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.pre_rub,
-                        expression: "pre_rub",
-                      },
-                    ],
-                    staticClass: "form-control mb-3",
-                    attrs: { id: "pre_rub_input", type: "number" },
-                    domProps: { value: _vm.pre_rub },
-                    on: {
-                      input: function ($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.pre_rub = $event.target.value
-                      },
-                    },
-                  }),
-                ]),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col" }, [
+                _c("label", [_vm._v("Цена RUB")]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-6" }, [
-                  _c("label", { attrs: { id: "pre_usd_label" } }, [
-                    _vm._v("Цена USD"),
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.pre_usd,
-                        expression: "pre_usd",
-                      },
-                    ],
-                    staticClass: "form-control mb-3",
-                    attrs: { id: "pre_usd_input", type: "number" },
-                    domProps: { value: _vm.pre_usd },
-                    on: {
-                      input: function ($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.pre_usd = $event.target.value
-                      },
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.pre_rub,
+                      expression: "pre_rub",
                     },
-                  }),
-                ]),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticStyle: {
-                      position: "absolute",
-                      top: "50%",
-                      left: "50%",
-                      transform: "translate(-50%, -50%)",
-                      display: "block",
-                      width: "10px",
-                      padding: "0",
-                      margin: "0",
-                      "margin-top": "2px",
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "number", min: "0" },
+                  domProps: { value: _vm.pre_rub },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.pre_rub = $event.target.value
                     },
                   },
-                  [_vm._v("+")]
-                ),
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "form-group",
-                staticStyle: { position: "relative" },
-              },
-              [
-                _c("label", { attrs: { id: "price_label" } }, [
-                  _vm._v("Цена (финальная)"),
+                }),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col" }, [
+                _c("label", [_vm._v("Цена USD ")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.pre_usd,
+                      expression: "pre_usd",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "number", min: "0" },
+                  domProps: { value: _vm.pre_usd },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.pre_usd = $event.target.value
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _c("small", [
+                  _vm._v(
+                    _vm._s(_vm.usd.kurs) +
+                      " ₽ от " +
+                      _vm._s(_vm._f("formatDateShort")(_vm.usd.date))
+                  ),
                 ]),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col" }, [
+                _c("label", [_vm._v("Цена (финальная)")]),
                 _vm._v(" "),
                 _c("input", {
                   directives: [
@@ -52123,8 +52061,8 @@ var render = function () {
                       expression: "price",
                     },
                   ],
-                  staticClass: "form-control mb-3",
-                  attrs: { id: "price_input", type: "text" },
+                  staticClass: "form-control",
+                  attrs: { disabled: "", type: "number" },
                   domProps: { value: _vm.price },
                   on: {
                     input: function ($event) {
@@ -52135,8 +52073,8 @@ var render = function () {
                     },
                   },
                 }),
-              ]
-            ),
+              ]),
+            ]),
             _vm._v(" "),
             _c("label", [_vm._v("Категория")]),
             _vm._v(" "),
