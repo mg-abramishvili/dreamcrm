@@ -10,7 +10,7 @@
                         </option>
                     </select>
                     <CreateTaskBoard v-if="views.createTaskBoard"></CreateTaskBoard>
-                    <button v-if="$parent.user.permissions && $parent.user.permissions.can_see_all_boards && views.createTaskBoard == false" @click="openCreateTaskBoard()" class="btn btn-outline-primary mx-1">Создать доску</button>
+                    <button v-if="$parent.user.permissions && $parent.user.permissions.can_see_all_boards == true && views.createTaskBoard == false" @click="openCreateTaskBoard()" class="btn btn-outline-primary mx-1">Создать доску</button>
                 </div>
             </div>
             <div class="col-12 col-lg-3 text-end">
@@ -27,7 +27,7 @@
                                 <h5 v-if="views.modals.changeColumnName == false" @click="openChangeColumnName(column)" class="card-title mb-0">{{ column.name }}</h5>
                             </div>
                             <div class="col-3 text-end">
-                                <button v-if="column.board && column.board.admin == $parent.user.id || $parent.user.permissions && $parent.user.permissions.can_see_all_boards" @click="openCreateTask(column.id)" class="btn btn-sm btn-outline-primary">+</button>
+                                <button v-if="column.board && column.board.admin == $parent.user.id || $parent.user.permissions && $parent.user.permissions.can_see_all_boards == true" @click="openCreateTask(column.id)" class="btn btn-sm btn-outline-primary">+</button>
                             </div>
                         </div>
                     </div>

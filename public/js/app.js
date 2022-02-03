@@ -53928,7 +53928,7 @@ var render = function () {
               _vm.views.createTaskBoard ? _c("CreateTaskBoard") : _vm._e(),
               _vm._v(" "),
               _vm.$parent.user.permissions &&
-              _vm.$parent.user.permissions.can_see_all_boards &&
+              _vm.$parent.user.permissions.can_see_all_boards == true &&
               _vm.views.createTaskBoard == false
                 ? _c(
                     "button",
@@ -54027,7 +54027,8 @@ var render = function () {
                             (column.board &&
                               column.board.admin == _vm.$parent.user.id) ||
                             (_vm.$parent.user.permissions &&
-                              _vm.$parent.user.permissions.can_see_all_boards)
+                              _vm.$parent.user.permissions.can_see_all_boards ==
+                                true)
                               ? _c(
                                   "button",
                                   {
