@@ -52935,7 +52935,7 @@ var render = function () {
         },
       ],
       staticClass: "form-control w-25 d-inline-flex",
-      attrs: { type: "date", "data-date-inline-picker": "true" },
+      attrs: { type: "date" },
       domProps: { value: _vm.deadline },
       on: {
         input: function ($event) {
