@@ -54301,6 +54301,7 @@ var render = function () {
                               {
                                 staticClass:
                                   "card-body bg-light cursor-pointer p-3",
+                                staticStyle: { "white-space": "normal" },
                               },
                               [
                                 _c("p", [_vm._v(_vm._s(task.name))]),
