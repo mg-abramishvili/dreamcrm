@@ -4856,10 +4856,6 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     this.getDeadline();
   },
-  mounted: function mounted() {
-    document.getElementsByClassName('form-control')[0].focus();
-    document.getElementsByClassName('form-control')[0].click();
-  },
   methods: {
     getDeadline: function getDeadline() {
       this.deadline = this.task.deadline;

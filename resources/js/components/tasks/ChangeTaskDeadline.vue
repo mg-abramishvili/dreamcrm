@@ -16,10 +16,6 @@ export default {
     created() {
         this.getDeadline()
     },
-    mounted() {
-        document.getElementsByClassName('form-control')[0].focus()
-        document.getElementsByClassName('form-control')[0].click()
-    },
     methods: {
         getDeadline() {
             this.deadline = this.task.deadline
