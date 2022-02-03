@@ -7,7 +7,7 @@
                         <ChangeTaskName :task="task"></ChangeTaskName>
                     </template>
                     <template v-else>
-                        <h5 @click="views.changeTaskName = true" class="modal-title">{{ task.name }}</h5>
+                        <h5 @click="changeTaskName()" class="modal-title">{{ task.name }}</h5>
                     </template>
 
                     <button @click="closeModal()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -176,6 +176,11 @@
                         this.$parent.getColumns(),
                         this.closeModal()
                     ))
+                }
+            },
+            changeTaskName() {
+                if(this.task.column.board.admin == this.$parent.$parent.user.id) {
+                    this.views.changeTaskName = true
                 }
             },
             changeTaskDescription() {

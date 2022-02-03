@@ -5539,6 +5539,11 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
+    changeTaskName: function changeTaskName() {
+      if (this.task.column.board.admin == this.$parent.$parent.user.id) {
+        this.views.changeTaskName = true;
+      }
+    },
     changeTaskDescription: function changeTaskDescription() {
       if (this.views.changeTaskDescription == true) {
         this.views.changeTaskDescription = false;
@@ -5750,9 +5755,11 @@ __webpack_require__.r(__webpack_exports__);
       this.views.modals.showBackdrop = true;
     },
     openChangeColumnName: function openChangeColumnName(column) {
-      this.selected.column = column;
-      this.views.modals.changeColumnName = true;
-      this.views.modals.showBackdrop = true;
+      if (column.board.admin == this.$parent.user.id) {
+        this.selected.column = column;
+        this.views.modals.changeColumnName = true;
+        this.views.modals.showBackdrop = true;
+      }
     },
     openCreateTaskBoard: function openCreateTaskBoard() {
       this.views.createTaskBoard = true;
@@ -53443,7 +53450,7 @@ var render = function () {
                               staticClass: "modal-title",
                               on: {
                                 click: function ($event) {
-                                  _vm.views.changeTaskName = true
+                                  return _vm.changeTaskName()
                                 },
                               },
                             },

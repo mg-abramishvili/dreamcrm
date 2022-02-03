@@ -151,9 +151,11 @@
                 this.views.modals.showBackdrop = true
             },
             openChangeColumnName(column) {
-                this.selected.column = column
-                this.views.modals.changeColumnName = true
-                this.views.modals.showBackdrop = true
+                if(column.board.admin == this.$parent.user.id) {
+                    this.selected.column = column
+                    this.views.modals.changeColumnName = true
+                    this.views.modals.showBackdrop = true
+                }
             },
             openCreateTaskBoard() {
                 this.views.createTaskBoard = true
