@@ -54302,7 +54302,7 @@ var render = function () {
                                 staticClass:
                                   "card-body bg-light cursor-pointer p-3",
                                 class: {
-                                  "bg-success, text-white":
+                                  "bg-success text-white":
                                     task.status == "completed",
                                 },
                                 staticStyle: { "white-space": "normal" },
