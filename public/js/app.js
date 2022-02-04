@@ -5252,7 +5252,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -57652,7 +57651,6 @@ var render = function () {
           "label-idle": "Выбрать файлы...",
           "allow-multiple": true,
           "allow-reorder": false,
-          "accepted-file-types": "image/jpeg, image/png",
           server: _vm.server,
         },
       }),

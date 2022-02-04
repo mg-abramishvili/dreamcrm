@@ -6,7 +6,6 @@
             label-idle="Выбрать файлы..."
             v-bind:allow-multiple="true"
             v-bind:allow-reorder="false"
-            accepted-file-types="image/jpeg, image/png"
             :server="server"
         />
     </div>
