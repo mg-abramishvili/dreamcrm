@@ -19,7 +19,7 @@ class FileController extends Controller
                 $const->aspectRatio();
             })->save(public_path() . '/uploads/avatars/' . $filename);
 
-            return \Response::make('/uploads/' . $filename, 200, [
+            return \Response::make('/uploads/avatars' . $filename, 200, [
                 'Content-Disposition' => 'inline',
             ]);
         }
