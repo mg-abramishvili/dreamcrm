@@ -55,9 +55,9 @@ Route::get('offer/{id}/pdf', [OfferController::class, 'offerPDF']);
 Route::get('usd', [DollarController::class, 'index']);
 Route::get('usd/update', [DollarController::class, 'update']);
 
-Route::get('users', [UserController::class, 'index']);
-Route::get('user/{uid}', [UserController::class, 'user']);
-Route::put('user/{uid}/update', [UserController::class, 'update']);
+Route::get('users', [UserController::class, 'index'])->middleware('auth:sanctum');
+Route::get('user/{uid}', [UserController::class, 'user'])->middleware('auth:sanctum');
+Route::put('user/{uid}/update', [UserController::class, 'update'])->middleware('auth:sanctum');
 
 Route::get('tasks/boards', [TaskBoardController::class, 'index']);
 Route::post('tasks/boards', [TaskBoardController::class, 'store']);
