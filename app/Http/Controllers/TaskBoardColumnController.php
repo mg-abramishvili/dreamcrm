@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Task;
 use App\Models\TaskBoard;
 use App\Models\TaskBoardColumn;
 use App\Models\User;
@@ -65,5 +66,20 @@ class TaskBoardColumnController extends Controller
         }
 
         // return 'OK';
+    }
+
+    public function delete($id)
+    {
+        $column = TaskBoardColumn::find($id);
+
+        foreach($column->tasks as $tsk) {
+            $task = Task::find($tsk->id);
+            $task->users()->detach();
+            $task->comments()->delete();
+            $task->files()->delete();
+            $task->delete();
+        }
+
+        $column->delete();
     }
 }

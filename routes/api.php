@@ -65,6 +65,7 @@ Route::get('tasks/board/{id}/columns', [TaskBoardColumnController::class, 'index
 Route::post('tasks/columns', [TaskBoardColumnController::class, 'store']);
 Route::put('tasks/columns/reorder', [TaskBoardColumnController::class, 'reorder']);
 Route::put('tasks/column/{id}/rename', [TaskBoardColumnController::class, 'rename']);
+Route::delete('tasks/column/{id}/delete', [TaskBoardColumnController::class, 'delete']);
 Route::post('tasks', [TaskController::class, 'store']);
 Route::get('task/{id}/comments', [TaskCommentController::class, 'index']);
 Route::get('task/{id}', [TaskController::class, 'task']);

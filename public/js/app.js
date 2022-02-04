@@ -4794,6 +4794,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['column'],
   data: function data() {
@@ -4824,6 +4832,15 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         return _this.name = '', _this.$parent.getColumns(), _this.closeModal();
       });
+    },
+    deleteColumn: function deleteColumn() {
+      var _this2 = this;
+
+      if (confirm("Точно удалить?")) {
+        axios["delete"]("/api/tasks/column/".concat(this.column.id, "/delete")).then(function (response) {
+          return _this2.$parent.getColumns(), _this2.closeModal();
+        });
+      }
     }
   }
 });
@@ -56917,7 +56934,7 @@ var render = function () {
           _c("div", { staticClass: "modal-content" }, [
             _c("div", { staticClass: "modal-header" }, [
               _c("h5", { staticClass: "modal-title" }, [
-                _vm._v("Переименовать колонку"),
+                _vm._v("Изменить колонку"),
               ]),
               _vm._v(" "),
               _c("button", {
@@ -56960,18 +56977,37 @@ var render = function () {
                 }),
               ]),
               _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary",
-                  on: {
-                    click: function ($event) {
-                      return _vm.updateColumn()
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-12 col-lg-6" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      on: {
+                        click: function ($event) {
+                          return _vm.updateColumn()
+                        },
+                      },
                     },
-                  },
-                },
-                [_vm._v("Сохранить")]
-              ),
+                    [_vm._v("Сохранить")]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-12 col-lg-6 text-end" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-outline-danger",
+                      on: {
+                        click: function ($event) {
+                          return _vm.deleteColumn()
+                        },
+                      },
+                    },
+                    [_vm._v("Удалить колонку")]
+                  ),
+                ]),
+              ]),
             ]),
           ]),
         ]

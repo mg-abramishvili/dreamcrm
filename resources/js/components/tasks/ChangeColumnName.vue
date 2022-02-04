@@ -3,14 +3,22 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Переименовать колонку</h5>
+                    <h5 class="modal-title">Изменить колонку</h5>
                     <button @click="closeModal()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body m-3">
                     <div class="mb-3">
                         <input v-model="name" type="text" class="form-control" placeholder="Название колонки">
                     </div>
-                    <button @click="updateColumn()" class="btn btn-primary">Сохранить</button>
+
+                    <div class="row">
+                        <div class="col-12 col-lg-6">
+                            <button @click="updateColumn()" class="btn btn-primary">Сохранить</button>
+                        </div>
+                        <div class="col-12 col-lg-6 text-end">
+                            <button @click="deleteColumn()" class="btn btn-outline-danger">Удалить колонку</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -52,6 +60,16 @@
                     this.closeModal()
                 ))
             },
+            deleteColumn() {
+                if (confirm("Точно удалить?")) {
+                    axios
+                    .delete(`/api/tasks/column/${this.column.id}/delete`)
+                    .then(response => (
+                        this.$parent.getColumns(),
+                        this.closeModal()
+                    ))
+                }
+            }
         },
     }
 </script>
