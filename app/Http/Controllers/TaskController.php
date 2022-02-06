@@ -70,6 +70,19 @@ class TaskController extends Controller
         $task->save();
     }
 
+    public function reorder(Request $request)
+    {
+        $tasks = $request->tasks;
+
+        foreach($tasks as $tsk) {
+            $task = Task::find($tsk["id"]);
+            $task->order = $tsk["index"];
+            $task->save();
+        }
+
+        // return 'OK';
+    }
+
     public function delete($id)
     {
         $task = Task::find($id);

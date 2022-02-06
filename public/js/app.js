@@ -5740,18 +5740,30 @@ __webpack_require__.r(__webpack_exports__);
       this.selected.column = column;
       this.views.createTask = true;
     },
-    moveTask: function moveTask(event, column_id) {
-      console.log(event, column_id);
-
+    moveTask: function moveTask(event, column) {
       if (event.added) {
-        var task_id = event.added.element.id;
         axios.put("/api/task/".concat(event.added.element.id, "/update"), {
-          column_id: column_id
+          column_id: column.id
         }).then(function (response) {//
         })["catch"](function (error) {
           alert('Ошибка сервера');
         });
       }
+
+      var reorderedTasks = column.tasks.map(function (task, index) {
+        {
+          return {
+            id: task.id,
+            index: index
+          };
+        }
+      });
+      axios.put("/api/tasks/reorder", {
+        tasks: reorderedTasks
+      }).then(function (response) {//
+      })["catch"](function (error) {
+        alert('Ошибка сервера');
+      });
     },
     moveColumn: function moveColumn(event) {
       var reorderedColumns = this.columns.map(function (column, index) {
@@ -58386,7 +58398,7 @@ var render = function () {
                         },
                         on: {
                           change: function ($event) {
-                            return _vm.moveTask($event, column.id)
+                            return _vm.moveTask($event, column)
                           },
                         },
                         model: {

@@ -32,7 +32,7 @@
                         </div>
                     </div>
                     <CreateTask v-if="views.createTask && selected.column == column.id" :column_id="selected.column"></CreateTask>
-                    <draggable v-model="column.tasks" group="tasks" :move="detectMove" @change="moveTask($event, column.id)" :disabled="views.draggable == false" class="task-column-body">
+                    <draggable v-model="column.tasks" group="tasks" :move="detectMove" @change="moveTask($event, column)" :disabled="views.draggable == false" class="task-column-body">
                         <div @click="openTask(task)" v-for="task in column.tasks" :key="task.id" class="card m-0" style="box-shadow: none;">
                             <div class="card-body cursor-pointer p-3" :class="{ 'bg-success text-white': task.status == 'completed', 'bg-light': task.status == 'active' }" style="white-space:normal">
                                 <p>{{ task.name }}</p>
@@ -164,14 +164,11 @@
                 this.selected.column = column
                 this.views.createTask = true
             },
-            moveTask(event, column_id) {
-                console.log(event, column_id)
+            moveTask(event, column) {
                 if(event.added) {
-                    var task_id = event.added.element.id
-                    
                     axios
                     .put(`/api/task/${event.added.element.id}/update`, {
-                        column_id: column_id
+                        column_id: column.id
                     })
                     .then((response => {
                         //
@@ -180,6 +177,23 @@
                         alert('Ошибка сервера')
                     })
                 }
+                
+                var reorderedTasks = column.tasks.map(function(task, index) {
+                    {
+                        return {
+                            id: task.id,
+                            index: index,
+                        } 
+                    }
+                })
+                axios
+                .put(`/api/tasks/reorder`, { tasks: reorderedTasks })
+                .then((response => {
+                    //
+                }))
+                .catch((error) => {
+                    alert('Ошибка сервера')
+                })
             },
             moveColumn(event) {
                 var reorderedColumns = this.columns.map(function(column, index){

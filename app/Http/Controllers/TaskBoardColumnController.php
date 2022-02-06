@@ -17,14 +17,23 @@ class TaskBoardColumnController extends Controller
         $user = User::find($request->user()->id);
 
         if($user->permissions && $user->permissions->can_see_all_boards == 1 || $board->admin == $user->id) {
-            return TaskBoardColumn::where('board_id', $board->id)->with('board', 'tasks.users', 'tasks.comments')->orderBy('order', 'asc')->get();
+            return TaskBoardColumn::where('board_id', $board->id)->with(
+                [
+                    'board',
+                    'tasks' => function ($q) {
+                        $q->with('users', 'comments')->orderBy('status', 'asc')->orderBy('order', 'asc');
+                    },
+                ]
+            )
+            ->orderBy('order', 'asc')
+            ->get();
         }
 
         return TaskBoardColumn::where('board_id', $board->id)->with(
             [
                 'board',
                 'tasks' => function ($q) use($user) {
-                    $q->with('users', 'comments')->whereRelation('users', 'user_id', $user->id);
+                    $q->with('users', 'comments')->whereRelation('users', 'user_id', $user->id)->orderBy('status', 'asc')->orderBy('order', 'asc');
                 },
             ],
         )
