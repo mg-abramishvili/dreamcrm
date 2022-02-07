@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use App\Models\User;
 use App\Models\TaskBoard;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -58,13 +59,22 @@ class TaskController extends Controller
                 $task->users()->attach($request->user_id);
             }
         }
-        
-        if(isset($request->status)) {
-            $task->status = $request->status;
-        }
 
         if(isset($request->deadline)) {
             $task->deadline = $request->deadline;
+        }
+        
+        if(isset($request->status)) {
+            $task->status = $request->status;
+
+            if($request->status == 'completed') {
+                $notification = new Notification();
+                $notification->task_id = $task->id;
+                $notification->user_id = $task->column->board->admin;
+                $notification->is_marked_as_read = false;
+                $notification->name = 'Задача выполнена';
+                $notification->save();
+            }
         }
 
         $task->save();
