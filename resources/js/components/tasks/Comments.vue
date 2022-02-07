@@ -11,7 +11,7 @@
             </div>
             <div class="w-100 flex-shrink-1 bg-light rounded py-2 px-3 ms-3">
                 <div class="fw-bold mb-1">{{ comment.user.name }}</div>
-                {{ comment.text }}
+                <div v-html="$options.filters.findLinks(comment.text)"></div>
             </div>
         </div>
 
@@ -62,6 +62,14 @@ export default {
                     this.$parent.$parent.getColumns()
                 ))
             }
+        }
+    },
+    filters: {
+        findLinks(value) {
+            return value.replace(
+                /((http|https)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?)/g,
+                '<a href="$1" target="_blank">$1</a>'
+            );
         }
     },
 }

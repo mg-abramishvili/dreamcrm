@@ -5052,6 +5052,11 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     }
+  },
+  filters: {
+    findLinks: function findLinks(value) {
+      return value.replace(/((http|https)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?)/g, '<a href="$1" target="_blank">$1</a>');
+    }
   }
 });
 
@@ -57297,9 +57302,14 @@ var render = function () {
                     _c("div", { staticClass: "fw-bold mb-1" }, [
                       _vm._v(_vm._s(comment.user.name)),
                     ]),
-                    _vm._v(
-                      "\n            " + _vm._s(comment.text) + "\n        "
-                    ),
+                    _vm._v(" "),
+                    _c("div", {
+                      domProps: {
+                        innerHTML: _vm._s(
+                          _vm.$options.filters.findLinks(comment.text)
+                        ),
+                      },
+                    }),
                   ]
                 ),
               ]
