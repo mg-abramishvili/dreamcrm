@@ -19,6 +19,10 @@ import Offer from './components/offers/Offer.vue';
 
 import Tasks from './components/tasks/Tasks.vue';
 
+import Clients from './components/clients/Clients.vue';
+import ClientCreate from './components/clients/ClientCreate.vue';
+import Client from './components/clients/Client.vue';
+
 import Users from './components/users/Users.vue';
 import User from './components/users/User.vue';
 
@@ -102,6 +106,21 @@ export const routes = [
         path: '/tasks/:board_id?',
         name: 'Tasks',
         component: Tasks
+    },
+    {
+        path: '/clients',
+        name: 'Clients',
+        component: Clients
+    },
+    {
+        path: '/clients/create',
+        name: 'ClientCreate',
+        component: ClientCreate
+    },
+    {
+        path: '/client/:id',
+        name: 'Client',
+        component: Client
     },
     {
         path: '/users',

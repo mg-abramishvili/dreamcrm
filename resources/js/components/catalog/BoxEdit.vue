@@ -39,12 +39,12 @@
                         <small>{{ usd.kurs }} ₽ от {{ usd.date | formatDateShort }}</small>
                     </div>
                     <div class="col">
-                        <label>Цена Сборка</label>
-                        <input v-model="sborka" type="number" min="0" class="form-control">
-                    </div>
-                    <div class="col">
                         <label>Цена Маржа</label>
                         <input v-model="marzha" type="number" min="0" class="form-control">
+                    </div>
+                    <div class="col">
+                        <label>Цена Сборка</label>
+                        <input v-model="sborka" type="number" min="0" class="form-control">
                     </div>
                     <div class="col">
                         <label>Цена (финальная)</label>

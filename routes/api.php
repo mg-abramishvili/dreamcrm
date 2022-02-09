@@ -13,6 +13,7 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TaskCommentController;
 use App\Http\Controllers\TaskBoardController;
 use App\Http\Controllers\TaskBoardColumnController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FileController;
 
@@ -58,6 +59,11 @@ Route::get('usd/update', [DollarController::class, 'update']);
 Route::get('users', [UserController::class, 'index'])->middleware('auth:sanctum');
 Route::get('user/{uid}', [UserController::class, 'user'])->middleware('auth:sanctum');
 Route::put('user/{uid}/update', [UserController::class, 'update'])->middleware('auth:sanctum');
+
+Route::get('clients', [ClientController::class, 'index'])->middleware('auth:sanctum');
+Route::get('client/{id}', [ClientController::class, 'client'])->middleware('auth:sanctum');
+Route::post('clients', [ClientController::class, 'store'])->middleware('auth:sanctum');
+Route::put('client/{id}/update', [ClientController::class, 'update'])->middleware('auth:sanctum');
 
 Route::get('tasks/boards', [TaskBoardController::class, 'index']);
 Route::post('tasks/boards', [TaskBoardController::class, 'store']);
