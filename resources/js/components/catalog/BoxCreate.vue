@@ -86,6 +86,10 @@
                     <label>Описание для менеджеров</label>
                     <textarea v-model="manager_description" class="form-control" style="resize: vertical"></textarea>
                 </div>
+                <div class="mb-4">
+                    <label>Коммент</label>
+                    <textarea v-model="comment" class="form-control" style="resize: vertical"></textarea>
+                </div>
 
                 <button @click="saveBox()" class="btn btn-primary">Сохранить</button>
             </div>
@@ -102,8 +106,6 @@
     export default {
         data() {
             return {
-                box: {},
-
                 name: '',
                 pre_rub: 0,
                 pre_usd: 0,
@@ -115,6 +117,7 @@
                 weight: 0,
                 description: '',
                 manager_description: '',
+                comment: '',
 
                 selected: {
                     types: [],
@@ -151,7 +154,6 @@
         created() {        
             this.loadTypes()
             this.loadUsd()
-            this.loadBox()
         },
         methods: {
             loadTypes() {
@@ -166,20 +168,6 @@
                 .then((response => {
                     this.usd.kurs = response.data.kurs,
                     this.usd.date = response.data.updated_at
-                }))
-            },
-            loadBox() {
-                axios
-                .get(`/api/box/${this.$route.params.id}`)
-                .then((response => {
-                    this.box = response.data
-                    this.name = response.data.name
-                    this.pre_rub = response.data.pre_rub
-                    this.pre_usd = response.data.pre_usd
-                    this.sborka = response.data.sborka
-                    this.marzha = response.data.marzha
-
-                    this.selected.types = response.data.types.map(type => type.id)
                 }))
             },
             selectAllBoxes() {
@@ -229,6 +217,7 @@
                     weight: this.weight,
                     description: this.description,
                     manager_description: this.manager_description,
+                    comment: this.comment,
                 })
                 .then(response => (
                     this.$router.push({name: 'Boxes'}) 

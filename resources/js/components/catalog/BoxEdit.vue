@@ -86,6 +86,10 @@
                     <label>Описание для менеджеров</label>
                     <textarea v-model="manager_description" class="form-control" style="resize: vertical"></textarea>
                 </div>
+                <div class="mb-4">
+                    <label>Коммент</label>
+                    <textarea v-model="comment" class="form-control" style="resize: vertical"></textarea>
+                </div>
 
                 <button @click="updateBox(box.id)" class="btn btn-primary">Сохранить</button>
             </div>
@@ -115,6 +119,7 @@
                 weight: 0,
                 description: '',
                 manager_description: '',
+                comment: '',
 
                 selected: {
                     types: [],
@@ -184,6 +189,7 @@
                     this.weight = response.data.weight
                     this.description = response.data.description
                     this.manager_description = response.data.manager_description
+                    this.comment = response.data.comment
 
                     this.selected.types = response.data.types.map(type => type.id)
                 }))
@@ -235,6 +241,7 @@
                     weight: this.weight,
                     description: this.description,
                     manager_description: this.manager_description,
+                    comment: this.comment,
                 })
                 .then(response => (
                     this.$router.push({name: 'Boxes'}) 

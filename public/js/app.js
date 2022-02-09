@@ -3262,10 +3262,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      box: {},
       name: '',
       pre_rub: 0,
       pre_usd: 0,
@@ -3277,6 +3280,7 @@ __webpack_require__.r(__webpack_exports__);
       weight: 0,
       description: '',
       manager_description: '',
+      comment: '',
       selected: {
         types: []
       },
@@ -3312,7 +3316,6 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     this.loadTypes();
     this.loadUsd();
-    this.loadBox();
   },
   methods: {
     loadTypes: function loadTypes() {
@@ -3329,28 +3332,13 @@ __webpack_require__.r(__webpack_exports__);
         _this2.usd.kurs = response.data.kurs, _this2.usd.date = response.data.updated_at;
       });
     },
-    loadBox: function loadBox() {
-      var _this3 = this;
-
-      axios.get("/api/box/".concat(this.$route.params.id)).then(function (response) {
-        _this3.box = response.data;
-        _this3.name = response.data.name;
-        _this3.pre_rub = response.data.pre_rub;
-        _this3.pre_usd = response.data.pre_usd;
-        _this3.sborka = response.data.sborka;
-        _this3.marzha = response.data.marzha;
-        _this3.selected.types = response.data.types.map(function (type) {
-          return type.id;
-        });
-      });
-    },
     selectAllBoxes: function selectAllBoxes() {
       this.selected.boxes = this.boxes.map(function (box) {
         return box.id;
       });
     },
     saveBox: function saveBox() {
-      var _this4 = this;
+      var _this3 = this;
 
       this.errors = [];
 
@@ -3399,9 +3387,10 @@ __webpack_require__.r(__webpack_exports__);
         height: this.height,
         weight: this.weight,
         description: this.description,
-        manager_description: this.manager_description
+        manager_description: this.manager_description,
+        comment: this.comment
       }).then(function (response) {
-        return _this4.$router.push({
+        return _this3.$router.push({
           name: 'Boxes'
         });
       })["catch"](function (error) {
@@ -3528,6 +3517,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -3543,6 +3536,7 @@ __webpack_require__.r(__webpack_exports__);
       weight: 0,
       description: '',
       manager_description: '',
+      comment: '',
       selected: {
         types: []
       },
@@ -3611,6 +3605,7 @@ __webpack_require__.r(__webpack_exports__);
         _this3.weight = response.data.weight;
         _this3.description = response.data.description;
         _this3.manager_description = response.data.manager_description;
+        _this3.comment = response.data.comment;
         _this3.selected.types = response.data.types.map(function (type) {
           return type.id;
         });
@@ -3671,7 +3666,8 @@ __webpack_require__.r(__webpack_exports__);
         height: this.height,
         weight: this.weight,
         description: this.description,
-        manager_description: this.manager_description
+        manager_description: this.manager_description,
+        comment: this.comment
       }).then(function (response) {
         return _this4.$router.push({
           name: 'Boxes'
@@ -54559,6 +54555,32 @@ var render = function () {
               }),
             ]),
             _vm._v(" "),
+            _c("div", { staticClass: "mb-4" }, [
+              _c("label", [_vm._v("Коммент")]),
+              _vm._v(" "),
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.comment,
+                    expression: "comment",
+                  },
+                ],
+                staticClass: "form-control",
+                staticStyle: { resize: "vertical" },
+                domProps: { value: _vm.comment },
+                on: {
+                  input: function ($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.comment = $event.target.value
+                  },
+                },
+              }),
+            ]),
+            _vm._v(" "),
             _c(
               "button",
               {
@@ -55061,6 +55083,32 @@ var render = function () {
                       return
                     }
                     _vm.manager_description = $event.target.value
+                  },
+                },
+              }),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "mb-4" }, [
+              _c("label", [_vm._v("Коммент")]),
+              _vm._v(" "),
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.comment,
+                    expression: "comment",
+                  },
+                ],
+                staticClass: "form-control",
+                staticStyle: { resize: "vertical" },
+                domProps: { value: _vm.comment },
+                on: {
+                  input: function ($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.comment = $event.target.value
                   },
                 },
               }),

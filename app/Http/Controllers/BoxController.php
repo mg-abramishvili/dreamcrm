@@ -53,6 +53,7 @@ class BoxController extends Controller
         $box->weight = $request->weight;
         $box->description = $request->description;
         $box->manager_description = $request->manager_description;
+        $box->comment = $request->comment;
         $box->save();
         $box->types()->attach($request->types, ['box_id' => $box->id]);
     }
@@ -88,6 +89,7 @@ class BoxController extends Controller
         $box->weight = $request->weight;
         $box->description = $request->description;
         $box->manager_description = $request->manager_description;
+        $box->comment = $request->comment;
         $box->save();
         $box->types()->detach();
         $box->types()->attach($request->types, ['box_id' => $box->id]);
