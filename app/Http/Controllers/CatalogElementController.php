@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Element;
+use App\Models\CatalogElement;
 use Illuminate\Http\Request;
 
-class ElementController extends Controller
+class CatalogElementController extends Controller
 {
     public function index()
     {
-        return Element::orderBy('price', 'asc')->get();
+        return CatalogElement::orderBy('price', 'asc')->get();
     }
 
     public function indexByBox($id)
     {
-        return Element::whereRelation('boxes', 'box_id', $id)->get();
+        return CatalogElement::whereRelation('boxes', 'box_id', $id)->get();
     }
 
     public function element($id)
     {
-        return Element::where('id', $id)->with('boxes', 'category')->first();
+        return CatalogElement::where('id', $id)->with('boxes', 'category')->first();
     }
 
     public function store(Request $request)
@@ -35,7 +35,7 @@ class ElementController extends Controller
 
         $this->validate($request, $rules);
 
-        $element = new Element();
+        $element = new CatalogElement();
         $element->name = $request->name;
         $element->category_id = $request->category;
         $element->pre_rub = $request->pre_rub;
@@ -58,7 +58,7 @@ class ElementController extends Controller
 
         $this->validate($request, $rules);
 
-        $element = Element::find($id);
+        $element = CatalogElement::find($id);
         $element->name = $request->name;
         $element->category_id = $request->category;
         $element->pre_rub = $request->pre_rub;
@@ -80,7 +80,7 @@ class ElementController extends Controller
         }
 
         if($kurs && $kurs > 0) {
-            $elements = Element::get();
+            $elements = CatalogElement::get();
             foreach ($elements as $element) {
                 $element->price = ceil((($element->pre_usd * $kurs) + $element->pre_rub) / 50) * 50;
                 $element->save();

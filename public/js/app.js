@@ -54041,7 +54041,8 @@ var render = function () {
                     _c(
                       "svg",
                       {
-                        staticClass: "feather feather-list align-middle",
+                        staticClass:
+                          "feather feather-monitor align-middle me-2",
                         attrs: {
                           xmlns: "http://www.w3.org/2000/svg",
                           width: "24",
@@ -54055,23 +54056,21 @@ var render = function () {
                         },
                       },
                       [
-                        _c("line", {
-                          attrs: { x1: "8", y1: "6", x2: "21", y2: "6" },
+                        _c("rect", {
+                          attrs: {
+                            x: "2",
+                            y: "3",
+                            width: "20",
+                            height: "14",
+                            rx: "2",
+                            ry: "2",
+                          },
                         }),
                         _c("line", {
-                          attrs: { x1: "8", y1: "12", x2: "21", y2: "12" },
+                          attrs: { x1: "8", y1: "21", x2: "16", y2: "21" },
                         }),
                         _c("line", {
-                          attrs: { x1: "8", y1: "18", x2: "21", y2: "18" },
-                        }),
-                        _c("line", {
-                          attrs: { x1: "3", y1: "6", x2: "3.01", y2: "6" },
-                        }),
-                        _c("line", {
-                          attrs: { x1: "3", y1: "12", x2: "3.01", y2: "12" },
-                        }),
-                        _c("line", {
-                          attrs: { x1: "3", y1: "18", x2: "3.01", y2: "18" },
+                          attrs: { x1: "12", y1: "17", x2: "12", y2: "21" },
                         }),
                       ]
                     ),
@@ -54102,7 +54101,8 @@ var render = function () {
                     _c(
                       "svg",
                       {
-                        staticClass: "feather feather-list align-middle",
+                        staticClass:
+                          "feather feather-package align-middle me-2",
                         attrs: {
                           xmlns: "http://www.w3.org/2000/svg",
                           width: "24",
@@ -54117,22 +54117,23 @@ var render = function () {
                       },
                       [
                         _c("line", {
-                          attrs: { x1: "8", y1: "6", x2: "21", y2: "6" },
+                          attrs: {
+                            x1: "16.5",
+                            y1: "9.4",
+                            x2: "7.5",
+                            y2: "4.21",
+                          },
+                        }),
+                        _c("path", {
+                          attrs: {
+                            d: "M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z",
+                          },
+                        }),
+                        _c("polyline", {
+                          attrs: { points: "3.27 6.96 12 12.01 20.73 6.96" },
                         }),
                         _c("line", {
-                          attrs: { x1: "8", y1: "12", x2: "21", y2: "12" },
-                        }),
-                        _c("line", {
-                          attrs: { x1: "8", y1: "18", x2: "21", y2: "18" },
-                        }),
-                        _c("line", {
-                          attrs: { x1: "3", y1: "6", x2: "3.01", y2: "6" },
-                        }),
-                        _c("line", {
-                          attrs: { x1: "3", y1: "12", x2: "3.01", y2: "12" },
-                        }),
-                        _c("line", {
-                          attrs: { x1: "3", y1: "18", x2: "3.01", y2: "18" },
+                          attrs: { x1: "12", y1: "22.08", x2: "12", y2: "12" },
                         }),
                       ]
                     ),
@@ -54163,7 +54164,8 @@ var render = function () {
                     _c(
                       "svg",
                       {
-                        staticClass: "feather feather-users align-middle",
+                        staticClass:
+                          "feather feather-briefcase align-middle me-2",
                         attrs: {
                           xmlns: "http://www.w3.org/2000/svg",
                           width: "24",
@@ -54177,17 +54179,20 @@ var render = function () {
                         },
                       },
                       [
-                        _c("path", {
+                        _c("rect", {
                           attrs: {
-                            d: "M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2",
+                            x: "2",
+                            y: "7",
+                            width: "20",
+                            height: "14",
+                            rx: "2",
+                            ry: "2",
                           },
                         }),
-                        _c("circle", { attrs: { cx: "9", cy: "7", r: "4" } }),
                         _c("path", {
-                          attrs: { d: "M23 21v-2a4 4 0 0 0-3-3.87" },
-                        }),
-                        _c("path", {
-                          attrs: { d: "M16 3.13a4 4 0 0 1 0 7.75" },
+                          attrs: {
+                            d: "M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16",
+                          },
                         }),
                       ]
                     ),
