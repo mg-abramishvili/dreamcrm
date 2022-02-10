@@ -20,9 +20,9 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th @click="orderByName()">Наименование</th>
-                        <th @click="orderByAmount()" class="text-center">Остаток</th>
-                        <th @click="orderByPrice()">Цена</th>
+                        <th @click="orderBy('name')">Наименование</th>
+                        <th @click="orderBy('amount')" class="text-center">Остаток</th>
+                        <th @click="orderBy('price')">Цена</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -69,14 +69,19 @@
             goTo(id) {
                 this.$router.push({name: 'StockItemEdit', params: {id: id}})
             },
-            orderByName() {
-                this.items = this.items.sort((a, b) => a.name.localeCompare(b.name))
-            },
-            orderByAmount() {
-                this.items = this.items.sort((a, b) => a.amount - b.amount)
-            },
-            orderByPrice() {
-                this.items = this.items.sort((a, b) => a.price - b.price)
+            orderBy(field) {
+                if(field == 'name') {
+                    this.items = this.items.sort((a, b) => a.name.localeCompare(b.name))
+                    return
+                }
+                if(field == 'amount') {
+                    this.items = this.items.sort((a, b) => a.amount - b.amount)
+                    return
+                }
+                if(field == 'price') {
+                    this.items = this.items.sort((a, b) => a.price - b.price)
+                    return
+                }
             },
         },
     }

@@ -5507,20 +5507,27 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    orderByName: function orderByName() {
-      this.items = this.items.sort(function (a, b) {
-        return a.name.localeCompare(b.name);
-      });
-    },
-    orderByAmount: function orderByAmount() {
-      this.items = this.items.sort(function (a, b) {
-        return a.amount - b.amount;
-      });
-    },
-    orderByPrice: function orderByPrice() {
-      this.items = this.items.sort(function (a, b) {
-        return a.price - b.price;
-      });
+    orderBy: function orderBy(field) {
+      if (field == 'name') {
+        this.items = this.items.sort(function (a, b) {
+          return a.name.localeCompare(b.name);
+        });
+        return;
+      }
+
+      if (field == 'amount') {
+        this.items = this.items.sort(function (a, b) {
+          return a.amount - b.amount;
+        });
+        return;
+      }
+
+      if (field == 'price') {
+        this.items = this.items.sort(function (a, b) {
+          return a.price - b.price;
+        });
+        return;
+      }
     }
   }
 });
@@ -59887,7 +59894,7 @@ var render = function () {
                   {
                     on: {
                       click: function ($event) {
-                        return _vm.orderByName()
+                        return _vm.orderBy("name")
                       },
                     },
                   },
@@ -59900,7 +59907,7 @@ var render = function () {
                     staticClass: "text-center",
                     on: {
                       click: function ($event) {
-                        return _vm.orderByAmount()
+                        return _vm.orderBy("amount")
                       },
                     },
                   },
@@ -59912,7 +59919,7 @@ var render = function () {
                   {
                     on: {
                       click: function ($event) {
-                        return _vm.orderByPrice()
+                        return _vm.orderBy("price")
                       },
                     },
                   },
