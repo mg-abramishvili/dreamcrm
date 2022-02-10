@@ -20,9 +20,9 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Наименование</th>
-                        <th class="text-center">Остаток</th>
-                        <th>Цена</th>
+                        <th @click="orderByName()">Наименование</th>
+                        <th @click="orderByAmount()" class="text-center">Остаток</th>
+                        <th @click="orderByPrice()">Цена</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,7 +31,7 @@
                             <a>{{ item.name }}</a>
                         </td>
                         <td class="align-middle text-center">
-                            <span :class="{'text-danger': item.amount < 0}">
+                            <span class="fw-bold" :class="{'text-danger': item.amount < 0, 'text-success': item.amount > 0}">
                                 {{ item.amount }}
                             </span>
                         </td>
@@ -68,6 +68,15 @@
             },
             goTo(id) {
                 this.$router.push({name: 'StockItemEdit', params: {id: id}})
+            },
+            orderByName() {
+                this.items = this.items.sort((a, b) => a.name.localeCompare(b.name))
+            },
+            orderByAmount() {
+                this.items = this.items.sort((a, b) => a.amount - b.amount)
+            },
+            orderByPrice() {
+                this.items = this.items.sort((a, b) => a.price - b.price)
             },
         },
     }

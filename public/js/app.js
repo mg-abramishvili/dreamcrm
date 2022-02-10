@@ -5506,6 +5506,21 @@ __webpack_require__.r(__webpack_exports__);
           id: id
         }
       });
+    },
+    orderByName: function orderByName() {
+      this.items = this.items.sort(function (a, b) {
+        return a.name.localeCompare(b.name);
+      });
+    },
+    orderByAmount: function orderByAmount() {
+      this.items = this.items.sort(function (a, b) {
+        return a.amount - b.amount;
+      });
+    },
+    orderByPrice: function orderByPrice() {
+      this.items = this.items.sort(function (a, b) {
+        return a.price - b.price;
+      });
     }
   }
 });
@@ -59561,7 +59576,7 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "catalog-page stock-page" }, [
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-12 col-sm-6 col-xxl-3 d-flex" }, [
+      _c("div", { staticClass: "col-12 col-lg-3 d-flex" }, [
         _c("div", { staticClass: "card flex-fill" }, [
           _c("div", { staticClass: "card-body py-4" }, [
             _c("div", { staticClass: "d-flex align-items-center h-100" }, [
@@ -59610,7 +59625,7 @@ var render = function () {
         ]),
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-12 col-sm-6 col-xxl-3 d-flex" }, [
+      _c("div", { staticClass: "col-12 col-lg-3 d-flex" }, [
         _c("div", { staticClass: "card flex-fill" }, [
           _c("div", { staticClass: "card-body py-4" }, [
             _c("div", { staticClass: "d-flex align-items-center h-100" }, [
@@ -59860,7 +59875,46 @@ var render = function () {
         _vm._v(" "),
         _c("div", { staticClass: "card" }, [
           _c("table", { staticClass: "table" }, [
-            _vm._m(0),
+            _c("thead", [
+              _c("tr", [
+                _c(
+                  "th",
+                  {
+                    on: {
+                      click: function ($event) {
+                        return _vm.orderByName()
+                      },
+                    },
+                  },
+                  [_vm._v("Наименование")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass: "text-center",
+                    on: {
+                      click: function ($event) {
+                        return _vm.orderByAmount()
+                      },
+                    },
+                  },
+                  [_vm._v("Остаток")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    on: {
+                      click: function ($event) {
+                        return _vm.orderByPrice()
+                      },
+                    },
+                  },
+                  [_vm._v("Цена")]
+                ),
+              ]),
+            ]),
             _vm._v(" "),
             _c(
               "tbody",
@@ -59883,7 +59937,13 @@ var render = function () {
                     _c("td", { staticClass: "align-middle text-center" }, [
                       _c(
                         "span",
-                        { class: { "text-danger": item.amount < 0 } },
+                        {
+                          staticClass: "fw-bold",
+                          class: {
+                            "text-danger": item.amount < 0,
+                            "text-success": item.amount > 0,
+                          },
+                        },
                         [
                           _vm._v(
                             "\n                            " +
@@ -59911,22 +59971,7 @@ var render = function () {
       ])
     : _vm._e()
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("Наименование")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-center" }, [_vm._v("Остаток")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Цена")]),
-      ]),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
