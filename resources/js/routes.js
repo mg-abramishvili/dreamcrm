@@ -26,6 +26,10 @@ import Client from './components/clients/Client.vue';
 import Users from './components/users/Users.vue';
 import User from './components/users/User.vue';
 
+import Stock from './components/stock/Stock.vue';
+import StockCategory from './components/stock/StockCategory.vue';
+import StockItem from './components/stock/StockItem.vue';
+
 export const routes = [
     {
         path: '/',
@@ -131,5 +135,20 @@ export const routes = [
         path: '/user/:uid',
         name: 'User',
         component: User
+    },
+    {
+        path: '/stock',
+        name: 'Stock',
+        component: Stock
+    },
+    {
+        path: '/stock/category/:category_id',
+        name: 'StockCategory',
+        component: StockCategory
+    },
+    {
+        path: '/stock/item/:id',
+        name: 'StockItem',
+        component: StockItem
     },
 ];

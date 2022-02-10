@@ -16,9 +16,14 @@ use App\Http\Controllers\TaskBoardColumnController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\StockCategoryController;
+use App\Http\Controllers\StockItemController;
+use App\Http\Controllers\DateController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/date', [DateController::class, 'date']);
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/me', [AuthController::class, 'me']);
@@ -64,6 +69,11 @@ Route::get('clients', [ClientController::class, 'index'])->middleware('auth:sanc
 Route::get('client/{id}', [ClientController::class, 'client'])->middleware('auth:sanctum');
 Route::post('clients', [ClientController::class, 'store'])->middleware('auth:sanctum');
 Route::put('client/{id}/update', [ClientController::class, 'update'])->middleware('auth:sanctum');
+
+Route::get('stock/categories', [StockCategoryController::class, 'index'])->middleware('auth:sanctum');
+Route::get('stock/category/{id}', [StockCategoryController::class, 'category'])->middleware('auth:sanctum');
+Route::get('stock/item/{id}', [StockItemController::class, 'item'])->middleware('auth:sanctum');
+Route::get('stock/items-to-buy', [StockItemController::class, 'itemsToBuy'])->middleware('auth:sanctum');
 
 Route::get('tasks/boards', [TaskBoardController::class, 'index']);
 Route::post('tasks/boards', [TaskBoardController::class, 'store']);

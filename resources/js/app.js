@@ -36,7 +36,7 @@ Vue.filter('formatDateTimeOnly', function (value) {
 })
 Vue.filter('formatDateLong', function (value) {
     if (!value) return ''
-    return moment(value).format('dddd, D MMMM')
+    return moment(value).utcOffset(180).format('dddd, D MMMM')
 })
 
 const router = new VueRouter({

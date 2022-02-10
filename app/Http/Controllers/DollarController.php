@@ -15,6 +15,7 @@ class DollarController extends Controller
     public function update()
     {
         $kurs = 0;
+        $date = '';
         
         $currencies = simplexml_load_file("http://www.cbr.ru/scripts/XML_daily.asp");
         
@@ -24,9 +25,12 @@ class DollarController extends Controller
             }
         }
 
+        $date = date("Y-m-d", strtotime($currencies["Date"]));
+
         if($kurs && $kurs > 0) {
             $dollar = Dollar::find(1);
             $dollar->kurs = $kurs;
+            $dollar->date = $date;
             $dollar->save();
         }
     }

@@ -452,3 +452,10 @@ table.dataTable {
     padding: 5px;
 }
 /* NOTIFICATION */
+
+
+/* DASHBOARD */
+.stat svg {
+    display: block;
+}
+/* DASHBOARD */

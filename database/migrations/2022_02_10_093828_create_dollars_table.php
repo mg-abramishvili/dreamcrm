@@ -11,6 +11,7 @@ class CreateDollarsTable extends Migration
         Schema::create('dollars', function (Blueprint $table) {
             $table->id();
             $table->decimal('kurs');
+            $table->date('date');
             $table->timestamps();
         });
     }
