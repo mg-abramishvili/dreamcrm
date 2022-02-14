@@ -96,6 +96,9 @@ Route::put('client/{id}/update', [ClientController::class, 'update'])->middlewar
 Route::get('stock/categories', [StockCategoryController::class, 'index'])->middleware('auth:sanctum');
 Route::get('stock/category/{id}', [StockCategoryController::class, 'category'])->middleware('auth:sanctum');
 Route::get('stock/item/{id}', [StockItemController::class, 'item'])->middleware('auth:sanctum');
+Route::put('stock/item/{id}/update', [StockItemController::class, 'update'])->middleware('auth:sanctum');
+Route::get('stock/item/{id}/balance', [StockBalanceController::class, 'balance'])->middleware('auth:sanctum');
+Route::put('stock/item/{id}/balance/update', [StockBalanceController::class, 'update'])->middleware('auth:sanctum');
 Route::get('stock/items-to-buy', [StockItemController::class, 'itemsToBuy'])->middleware('auth:sanctum');
 
 

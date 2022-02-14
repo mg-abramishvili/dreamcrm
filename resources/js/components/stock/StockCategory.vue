@@ -77,7 +77,7 @@
                 ));
             },
             goTo(id) {
-                this.$router.push({name: 'StockItemEdit', params: {id: id}})
+                this.$router.push({name: 'StockItem', params: {id: id}})
             },
             orderBy(field) {
                 if(field == 'name') {
