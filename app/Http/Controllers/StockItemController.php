@@ -9,7 +9,7 @@ class StockItemController extends Controller
 {
     public function item($id)
     {
-        return StockItem::with('balamces')->find($id);
+        return StockItem::with('balances')->find($id);
     }
 
     public function itemsToBuy()
