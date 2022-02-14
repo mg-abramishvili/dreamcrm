@@ -60228,7 +60228,9 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("h2", { staticClass: "h3 mt-0 mb-2 text-center" }, [
       _vm._v("\n        Остатки\n        "),
-      _c("button", { staticClass: "btn-primary" }, [_vm._v("Добавить")]),
+      _c("button", { staticClass: "btn btn-primary ms-1" }, [
+        _vm._v("Добавить"),
+      ]),
     ])
   },
   function () {
