@@ -21,98 +21,15 @@
                 </div>
 
                 <div class="mb-3">
-                    <label>Имя</label>
+                    <label>Название</label>
                     <input v-model="name" type="text" class="form-control">
                 </div>
 
-                <div class="row">
-                    <div class="col-12 col-lg-4">
-                        <div class="mb-3">
-                            <label>Телефон</label>
-                            <input v-model="tel" type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-4">
-                        <div class="mb-3">
-                            <label>E-mail</label>
-                            <input v-model="email" type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-4">
-                        <div class="mb-3">
-                            <label>Контактное лицо</label>
-                            <input v-model="kont_litso" type="text" class="form-control">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-12 col-lg-4">
-                        <div class="mb-3">
-                            <label>ИНН</label>
-                            <input v-model="inn" type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-4">
-                        <div class="mb-3">
-                            <label>КПП</label>
-                            <input v-model="kpp" type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-4">
-                        <div class="mb-3">
-                            <label>ОГРН</label>
-                            <input v-model="ogrn" type="text" class="form-control">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-12 col-lg-4">
-                        <div class="mb-3">
-                            <label>Юридический адрес</label>
-                            <input v-model="yur_address" type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-4">
-                        <div class="mb-3">
-                            <label>Почтовый адрес</label>
-                            <input v-model="pocht_address" type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-4">
-                        <div class="mb-3">
-                            <label>Фактический адрес</label>
-                            <input v-model="fakt_address" type="text" class="form-control">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-12 col-lg-3">
-                        <div class="mb-3">
-                            <label>Расчетный счет</label>
-                            <input v-model="ras_schet" type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-3">
-                        <div class="mb-3">
-                            <label>Корр.счет</label>
-                            <input v-model="korr_schet" type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-3">
-                        <div class="mb-3">
-                            <label>БИК</label>
-                            <input v-model="bik" type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-3">
-                        <div class="mb-3">
-                            <label>Банк</label>
-                            <input v-model="bank" type="text" class="form-control">
-                        </div>
-                    </div>
+                <div class="mb-3">
+                    <label>Категория</label>
+                    <select v-model="category" type="text" class="form-select">
+                        <option v-for="categoryItem in categories" :key="categoryItem.id" :value="categoryItem.id">{{ categoryItem.name }}</option>
+                    </select>
                 </div>
 
                 <button @click="updateItem(item.id)" class="btn btn-primary">Сохранить</button>
@@ -133,21 +50,30 @@
                 item: {},
 
                 name: '',
-                category_id: '',
+                category: '',
+
+                categories: [],
 
                 errors: [],
             }
         },
         created() {
+            this.loadCategories()
             this.loadItem()
         },
         methods: {
+            loadCategories() {
+                axios.get(`/api/stock/categories`)
+                    .then((response => {
+                        this.categories = response.data
+                    }))
+            },
             loadItem() {
                 axios.get(`/api/stock/item/${this.$route.params.id}`)
                     .then((response => {
                         this.item = response.data
 
-                        this.category_id = response.data.category_id
+                        this.category = response.data.category_id
                     }))
             },
             updateItem(id) {
@@ -164,7 +90,7 @@
                 axios.put(`/api/stock/item/${id}/update`,
                 {
                     name: this.name,
-                    category_id: this.category_id,
+                    category_id: this.category,
                 })
                 .then(response => (
                     this.$router.push({name: 'Stock'})
