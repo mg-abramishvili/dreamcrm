@@ -59611,13 +59611,13 @@ var render = function () {
                         ? _c(
                             "span",
                             {
-                              staticClass: "fw-bold",
+                              staticClass: "badge rounded-pill",
                               class: {
-                                "text-danger":
+                                "bg-danger":
                                   item.balances.reduce(function (acc, balance) {
                                     return acc + parseInt(balance.quantity)
                                   }, 0) < 0,
-                                "text-success":
+                                "bg-success":
                                   item.balances.reduce(function (acc, balance) {
                                     return acc + parseInt(balance.quantity)
                                   }, 0) > 0,
