@@ -42,6 +42,8 @@
             </div>
         </div>
         
+        <h2 class="h3">Остатки</h2>
+
         <div v-for="balance in item.balances" :key="balance.id" class="card w-50 mb-1">
             <div class="card-body">
                 <div class="row align-items-center">
