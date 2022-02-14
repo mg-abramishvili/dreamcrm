@@ -94,6 +94,7 @@ Route::put('client/{id}/update', [ClientController::class, 'update'])->middlewar
 
 
 Route::get('stock/categories', [StockCategoryController::class, 'index'])->middleware('auth:sanctum');
+Route::post('stock/categories', [StockCategoryController::class, 'store'])->middleware('auth:sanctum');
 Route::get('stock/category/{id}', [StockCategoryController::class, 'category'])->middleware('auth:sanctum');
 Route::get('stock/item/{id}', [StockItemController::class, 'item'])->middleware('auth:sanctum');
 Route::put('stock/item/{id}/update', [StockItemController::class, 'update'])->middleware('auth:sanctum');
