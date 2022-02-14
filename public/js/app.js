@@ -60150,9 +60150,13 @@ var render = function () {
                     _c("div", { staticClass: "col-2 text-center" }, [
                       _c(
                         "span",
-                        { staticClass: "badge bg-primary rounded-pill" },
-                        [_vm._v(_vm._s(balance.quantity) + " шт.")]
+                        {
+                          staticClass: "text-xl badge bg-primary rounded-pill",
+                        },
+                        [_vm._v(_vm._s(balance.quantity))]
                       ),
+                      _c("br"),
+                      _vm._v(" шт.\n                "),
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-10" }, [
