@@ -48,14 +48,20 @@
             <div class="card-body">
                 <div class="row align-items-center">
                     <div class="col-2 text-center">
-                        <span class="text-lg badge bg-primary rounded-pill">{{ balance.quantity }}</span>
-                        <br><small class="text-muted">шт.</small>
+                        <span class="text-lg fw-bold text-primary" style="font-size: 30px; line-height: 1;">
+                            {{ balance.quantity }}
+                        </span>
+                        <small class="text-muted">шт.</small>
                     </div>
-                    <div class="col-10">
-                        <div class="fw-bold">{{ balance.created_at | formatDate }}</div>
-                        <div>
-                            {{ balance.price | currency }} ₽, курс доллара на момент закупки {{ balance.usd_kurs }} ₽.
-                        </div>
+                    <div class="col-5 text-center fw-bold">
+                        {{ balance.created_at | formatDate }}
+                    </div>
+                    <div class="col-3 text-center fw-bold">
+                        {{ balance.price | currency }} ₽
+                    </div>
+                    <div class="col-2 text-center fw-bold">
+                        {{ balance.usd_kurs }} ₽
+                        <small class="d-block text-muted" style="line-height: 1; color: #999 !important;">курс</small>
                     </div>
                 </div>
             </div>

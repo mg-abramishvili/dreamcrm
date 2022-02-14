@@ -5622,6 +5622,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -60158,33 +60164,59 @@ var render = function () {
                       _c(
                         "span",
                         {
-                          staticClass: "text-lg badge bg-primary rounded-pill",
+                          staticClass: "text-lg fw-bold text-primary",
+                          staticStyle: {
+                            "font-size": "30px",
+                            "line-height": "1",
+                          },
                         },
-                        [_vm._v(_vm._s(balance.quantity))]
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(balance.quantity) +
+                              "\n                    "
+                          ),
+                        ]
                       ),
                       _vm._v(" "),
-                      _c("br"),
                       _c("small", { staticClass: "text-muted" }, [
                         _vm._v("шт."),
                       ]),
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-10" }, [
-                      _c("div", { staticClass: "fw-bold" }, [
-                        _vm._v(
-                          _vm._s(_vm._f("formatDate")(balance.created_at))
-                        ),
-                      ]),
-                      _vm._v(" "),
-                      _c("div", [
-                        _vm._v(
-                          "\n                        " +
-                            _vm._s(_vm._f("currency")(balance.price)) +
-                            " ₽, курс доллара на момент закупки " +
-                            _vm._s(balance.usd_kurs) +
-                            " ₽.\n                    "
-                        ),
-                      ]),
+                    _c("div", { staticClass: "col-5 text-center fw-bold" }, [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm._f("formatDate")(balance.created_at)) +
+                          "\n                "
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-3 text-center fw-bold" }, [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm._f("currency")(balance.price)) +
+                          " ₽\n                "
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-2 text-center fw-bold" }, [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(balance.usd_kurs) +
+                          " ₽\n                    "
+                      ),
+                      _c(
+                        "small",
+                        {
+                          staticClass: "d-block text-muted",
+                          staticStyle: {
+                            "line-height": "1",
+                            color: "#999 !important",
+                          },
+                        },
+                        [_vm._v("курс")]
+                      ),
                     ]),
                   ]),
                 ]),
