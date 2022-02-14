@@ -5682,7 +5682,10 @@ __webpack_require__.r(__webpack_exports__);
         category_id: this.category
       }).then(function (response) {
         return _this3.$router.push({
-          name: 'Stock'
+          name: 'StockCategory',
+          params: {
+            category_id: _this3.category
+          }
         });
       })["catch"](function (error) {
         if (error.response) {

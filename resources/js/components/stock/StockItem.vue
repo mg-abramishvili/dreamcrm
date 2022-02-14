@@ -129,7 +129,7 @@
                     category_id: this.category,
                 })
                 .then(response => (
-                    this.$router.push({name: 'Stock'})
+                    this.$router.push({name: 'StockCategory', params: {category_id: this.category }})
                 ))
                 .catch((error) => {
                     if(error.response) {
