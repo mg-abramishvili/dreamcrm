@@ -28,4 +28,18 @@ class StockCategoryController extends Controller
 
         return $category->id;
     }
+
+    public function update($id, Request $request)
+    {
+        $category = StockCategory::find($id);
+        
+        if(isset($request->name)) {
+            $category->name = $request->name;
+        }
+        if(isset($request->slug)) {
+            $category->slug = $request->slug;
+        }
+        
+        $category->save();
+    }
 }

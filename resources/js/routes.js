@@ -28,7 +28,8 @@ import User from './components/users/User.vue';
 
 import Stock from './components/stock/Index.vue';
 import StockCategory from './components/stock/Category.vue';
-import StockCreateCategory from './components/stock/CreateCategory.vue';
+import StockCategoryCreate from './components/stock/CategoryCreate.vue';
+import StockCategoryEdit from './components/stock/CategoryEdit.vue';
 import StockItem from './components/stock/Item.vue';
 
 export const routes = [
@@ -149,8 +150,13 @@ export const routes = [
     },
     {
         path: '/stock/:category?/create',
-        name: 'StockCreateCategory',
-        component: StockCreateCategory
+        name: 'StockCategoryCreate',
+        component: StockCategoryCreate
+    },
+    {
+        path: '/stock/category/:category_id/edit',
+        name: 'StockCategoryEdit',
+        component: StockCategoryEdit
     },
     {
         path: '/stock/item/:id',
