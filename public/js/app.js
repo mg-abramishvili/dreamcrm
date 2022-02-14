@@ -60151,7 +60151,7 @@ var render = function () {
                       _c(
                         "span",
                         {
-                          staticClass: "text-xl badge bg-primary rounded-pill",
+                          staticClass: "text-lg badge bg-primary rounded-pill",
                         },
                         [_vm._v(_vm._s(balance.quantity))]
                       ),
