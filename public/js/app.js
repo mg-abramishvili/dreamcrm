@@ -5597,6 +5597,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -59912,15 +59918,89 @@ var render = function () {
     ? _c("div", { staticClass: "stock-item-page" }, [
         _c("div", { staticClass: "row align-items-center mb-4" }, [
           _c("div", { staticClass: "col-12 col-lg-6" }, [
-            _c("h1", { staticClass: "h3 m-0" }, [
-              _c("strong", [
-                _vm._v(
-                  "\n                    " +
-                    _vm._s(_vm.item.name) +
-                    "\n                "
-                ),
-              ]),
-            ]),
+            _c(
+              "h1",
+              { staticClass: "h3 m-0" },
+              [
+                _vm.item.category_id && _vm.item.category_id > 0
+                  ? _c(
+                      "router-link",
+                      {
+                        attrs: {
+                          to: {
+                            name: "StockCategory",
+                            params: { category_id: _vm.item.category_id },
+                          },
+                        },
+                      },
+                      [
+                        _c(
+                          "svg",
+                          {
+                            staticClass:
+                              "feather feather-arrow-left align-middle me-2",
+                            attrs: {
+                              xmlns: "http://www.w3.org/2000/svg",
+                              width: "24",
+                              height: "24",
+                              viewBox: "0 0 24 24",
+                              fill: "none",
+                              stroke: "currentColor",
+                              "stroke-width": "2",
+                              "stroke-linecap": "round",
+                              "stroke-linejoin": "round",
+                            },
+                          },
+                          [
+                            _c("line", {
+                              attrs: { x1: "19", y1: "12", x2: "5", y2: "12" },
+                            }),
+                            _c("polyline", {
+                              attrs: { points: "12 19 5 12 12 5" },
+                            }),
+                          ]
+                        ),
+                      ]
+                    )
+                  : _c("router-link", { attrs: { to: { name: "Stock" } } }, [
+                      _c(
+                        "svg",
+                        {
+                          staticClass:
+                            "feather feather-arrow-left align-middle me-2",
+                          attrs: {
+                            xmlns: "http://www.w3.org/2000/svg",
+                            width: "24",
+                            height: "24",
+                            viewBox: "0 0 24 24",
+                            fill: "none",
+                            stroke: "currentColor",
+                            "stroke-width": "2",
+                            "stroke-linecap": "round",
+                            "stroke-linejoin": "round",
+                          },
+                        },
+                        [
+                          _c("line", {
+                            attrs: { x1: "19", y1: "12", x2: "5", y2: "12" },
+                          }),
+                          _c("polyline", {
+                            attrs: { points: "12 19 5 12 12 5" },
+                          }),
+                        ]
+                      ),
+                    ]),
+                _vm._v(" "),
+                _c("strong", [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.item.name) +
+                      "\n                "
+                  ),
+                ]),
+              ],
+              1
+            ),
           ]),
         ]),
         _vm._v(" "),
