@@ -73,6 +73,7 @@
                     .then((response => {
                         this.item = response.data
 
+                        this.name = response.data.name
                         this.category = response.data.category_id
                     }))
             },

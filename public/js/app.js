@@ -5624,6 +5624,7 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get("/api/stock/item/".concat(this.$route.params.id)).then(function (response) {
         _this2.item = response.data;
+        _this2.name = response.data.name;
         _this2.category = response.data.category_id;
       });
     },
