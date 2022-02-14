@@ -5626,6 +5626,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -60147,9 +60150,7 @@ var render = function () {
             ]),
           ]),
           _vm._v(" "),
-          _c("h2", { staticClass: "h3 mt-0 mb-2 text-center" }, [
-            _vm._v("Остатки"),
-          ]),
+          _vm._m(0),
           _vm._v(" "),
           _vm._l(_vm.item.balances, function (balance) {
             return _c(
@@ -60218,9 +60219,18 @@ var render = function () {
         ],
         2
       )
-    : _c("div", [_vm._m(0)])
+    : _c("div", [_vm._m(1)])
 }
 var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h2", { staticClass: "h3 mt-0 mb-2 text-center" }, [
+      _vm._v("\n        Остатки\n        "),
+      _c("button", { staticClass: "btn-primary" }, [_vm._v("Добавить")]),
+    ])
+  },
   function () {
     var _vm = this
     var _h = _vm.$createElement

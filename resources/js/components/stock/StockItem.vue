@@ -42,7 +42,10 @@
             </div>
         </div>
         
-        <h2 class="h3 mt-0 mb-2 text-center">Остатки</h2>
+        <h2 class="h3 mt-0 mb-2 text-center">
+            Остатки
+            <button class="btn-primary">Добавить</button>
+        </h2>
 
         <div v-for="balance in item.balances" :key="balance.id" class="card w-50 m-0 m-auto mb-1">
             <div class="card-body">
