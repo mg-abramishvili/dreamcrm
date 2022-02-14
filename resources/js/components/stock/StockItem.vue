@@ -46,7 +46,7 @@
                         <ol class="list-group list-group-numbered">
                             <li v-for="balance in item.balances" :key="balance.id" class="list-group-item d-flex justify-content-between align-items-start">
                                 <div class="ms-2 me-auto">
-                                    <div class="fw-bold">{{ balance.created_at }}</div>
+                                    <div class="fw-bold">{{ balance.created_at | formatDate }}</div>
                                     {{ balance.price | currency }} ₽, курс доллара на момент закупки {{ balance.usd_kurs }} ₽.
                                 </div>
                                 <span class="badge bg-primary rounded-pill">{{ balance.quantity }} шт.</span>

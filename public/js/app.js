@@ -60147,7 +60147,9 @@ var render = function () {
                       [
                         _c("div", { staticClass: "ms-2 me-auto" }, [
                           _c("div", { staticClass: "fw-bold" }, [
-                            _vm._v(_vm._s(balance.created_at)),
+                            _vm._v(
+                              _vm._s(_vm._f("formatDate")(balance.created_at))
+                            ),
                           ]),
                           _vm._v(
                             "\n                                " +
