@@ -31,6 +31,7 @@ import StockCategory from './components/stock/Category.vue';
 import StockCategoryCreate from './components/stock/CategoryCreate.vue';
 import StockCategoryEdit from './components/stock/CategoryEdit.vue';
 import StockItem from './components/stock/Item.vue';
+import StockItemCreate from './components/stock/ItemCreate.vue';
 
 export const routes = [
     {
@@ -162,5 +163,10 @@ export const routes = [
         path: '/stock/item/:id',
         name: 'StockItem',
         component: StockItem
+    },
+    {
+        path: '/stock/items/create',
+        name: 'StockItemCreate',
+        component: StockItemCreate
     },
 ];

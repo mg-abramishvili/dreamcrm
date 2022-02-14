@@ -12,6 +12,16 @@ class StockItemController extends Controller
         return StockItem::with('balances')->find($id);
     }
 
+    public function store(Request $request)
+    {
+        $item = new StockItem();
+
+        $item->name = $request->name;
+        $item->category_id = $request->category_id;
+        
+        $item->save();
+    }
+
     public function update($id, Request $request)
     {
         $item = StockItem::find($id);
