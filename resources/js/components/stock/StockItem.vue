@@ -26,36 +26,31 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-12 col-lg-6">
-                        <div class="mb-3">
-                            <label>Название</label>
-                            <input v-model="name" type="text" class="form-control">
-                        </div>
-
-                        <div class="mb-3">
-                            <label>Категория</label>
-                            <select v-model="category" type="text" class="form-select">
-                                <option v-for="categoryItem in categories" :key="categoryItem.id" :value="categoryItem.id">{{ categoryItem.name }}</option>
-                            </select>
-                        </div>
-
-                        <button @click="updateItem(item.id)" class="btn btn-primary">Сохранить</button>
-                    </div>
-                    <div class="col-12 col-lg-6">
-                        <ul class="list-group">
-                            <li v-for="balance in item.balances" :key="balance.id" class="list-group-item d-flex justify-content-between align-items-start">
-                                <div class="ms-2 me-auto">
-                                    <div class="fw-bold">{{ balance.created_at | formatDate }}</div>
-                                    {{ balance.price | currency }} ₽, курс доллара на момент закупки {{ balance.usd_kurs }} ₽.
-                                </div>
-                                <span class="badge bg-primary rounded-pill">{{ balance.quantity }} шт.</span>
-                            </li>
-                        </ul>
-                    </div>
+                <div class="mb-3">
+                    <label>Название</label>
+                    <input v-model="name" type="text" class="form-control">
                 </div>
+
+                <div class="mb-3">
+                    <label>Категория</label>
+                    <select v-model="category" type="text" class="form-select">
+                        <option v-for="categoryItem in categories" :key="categoryItem.id" :value="categoryItem.id">{{ categoryItem.name }}</option>
+                    </select>
+                </div>
+
+                <button @click="updateItem(item.id)" class="btn btn-primary">Сохранить</button>
             </div>
         </div>
+
+        <ul class="list-group">
+            <li v-for="balance in item.balances" :key="balance.id" class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">{{ balance.created_at | formatDate }}</div>
+                    {{ balance.price | currency }} ₽, курс доллара на момент закупки {{ balance.usd_kurs }} ₽.
+                </div>
+                <span class="badge bg-primary rounded-pill">{{ balance.quantity }} шт.</span>
+            </li>
+        </ul>
     </div>
     <div v-else>
         <div class="spinner-border text-primary me-2" role="status">
