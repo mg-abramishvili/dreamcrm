@@ -5613,6 +5613,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -59925,25 +59931,62 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.item && _vm.item.id && _vm.item.id > 0
-    ? _c("div", { staticClass: "stock-item-page" }, [
-        _c("div", { staticClass: "row align-items-center mb-4" }, [
-          _c("div", { staticClass: "col-12 col-lg-6" }, [
-            _c(
-              "h1",
-              { staticClass: "h3 m-0" },
-              [
-                _vm.item.category_id && _vm.item.category_id > 0
-                  ? _c(
-                      "router-link",
-                      {
-                        attrs: {
-                          to: {
-                            name: "StockCategory",
-                            params: { category_id: _vm.item.category_id },
+    ? _c(
+        "div",
+        { staticClass: "stock-item-page" },
+        [
+          _c("div", { staticClass: "row align-items-center mb-4" }, [
+            _c("div", { staticClass: "col-12 col-lg-6" }, [
+              _c(
+                "h1",
+                { staticClass: "h3 m-0" },
+                [
+                  _vm.item.category_id && _vm.item.category_id > 0
+                    ? _c(
+                        "router-link",
+                        {
+                          attrs: {
+                            to: {
+                              name: "StockCategory",
+                              params: { category_id: _vm.item.category_id },
+                            },
                           },
                         },
-                      },
-                      [
+                        [
+                          _c(
+                            "svg",
+                            {
+                              staticClass:
+                                "feather feather-arrow-left align-middle me-2",
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "24",
+                                height: "24",
+                                viewBox: "0 0 24 24",
+                                fill: "none",
+                                stroke: "currentColor",
+                                "stroke-width": "2",
+                                "stroke-linecap": "round",
+                                "stroke-linejoin": "round",
+                              },
+                            },
+                            [
+                              _c("line", {
+                                attrs: {
+                                  x1: "19",
+                                  y1: "12",
+                                  x2: "5",
+                                  y2: "12",
+                                },
+                              }),
+                              _c("polyline", {
+                                attrs: { points: "12 19 5 12 12 5" },
+                              }),
+                            ]
+                          ),
+                        ]
+                      )
+                    : _c("router-link", { attrs: { to: { name: "Stock" } } }, [
                         _c(
                           "svg",
                           {
@@ -59970,196 +60013,167 @@ var render = function () {
                             }),
                           ]
                         ),
-                      ]
-                    )
-                  : _c("router-link", { attrs: { to: { name: "Stock" } } }, [
-                      _c(
-                        "svg",
-                        {
-                          staticClass:
-                            "feather feather-arrow-left align-middle me-2",
-                          attrs: {
-                            xmlns: "http://www.w3.org/2000/svg",
-                            width: "24",
-                            height: "24",
-                            viewBox: "0 0 24 24",
-                            fill: "none",
-                            stroke: "currentColor",
-                            "stroke-width": "2",
-                            "stroke-linecap": "round",
-                            "stroke-linejoin": "round",
-                          },
-                        },
-                        [
-                          _c("line", {
-                            attrs: { x1: "19", y1: "12", x2: "5", y2: "12" },
-                          }),
-                          _c("polyline", {
-                            attrs: { points: "12 19 5 12 12 5" },
-                          }),
-                        ]
-                      ),
-                    ]),
-                _vm._v(" "),
-                _c("strong", [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(_vm.item.name) +
-                      "\n                "
-                  ),
-                ]),
-              ],
-              1
-            ),
-          ]),
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-body" }, [
-            _vm.errors && _vm.errors.length > 0
-              ? _c("div", { staticClass: "alert alert-danger" }, [
-                  _c(
-                    "div",
-                    { staticClass: "alert-message" },
-                    _vm._l(_vm.errors, function (error, index) {
-                      return _c(
-                        "strong",
-                        { key: "error_" + index, staticClass: "d-block" },
-                        [
-                          _vm._v(
-                            "\n                        " +
-                              _vm._s(error) +
-                              "\n                    "
-                          ),
-                        ]
-                      )
-                    }),
-                    0
-                  ),
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _c("div", { staticClass: "mb-3" }, [
-              _c("label", [_vm._v("Название")]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.name,
-                    expression: "name",
-                  },
+                      ]),
+                  _vm._v(" "),
+                  _c("strong", [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(_vm.item.name) +
+                        "\n                "
+                    ),
+                  ]),
                 ],
-                staticClass: "form-control",
-                attrs: { type: "text" },
-                domProps: { value: _vm.name },
-                on: {
-                  input: function ($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.name = $event.target.value
-                  },
-                },
-              }),
+                1
+              ),
             ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "mb-3" }, [
-              _c("label", [_vm._v("Категория")]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "card-body" }, [
+              _vm.errors && _vm.errors.length > 0
+                ? _c("div", { staticClass: "alert alert-danger" }, [
+                    _c(
+                      "div",
+                      { staticClass: "alert-message" },
+                      _vm._l(_vm.errors, function (error, index) {
+                        return _c(
+                          "strong",
+                          { key: "error_" + index, staticClass: "d-block" },
+                          [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(error) +
+                                "\n                    "
+                            ),
+                          ]
+                        )
+                      }),
+                      0
+                    ),
+                  ])
+                : _vm._e(),
               _vm._v(" "),
-              _c(
-                "select",
-                {
+              _c("div", { staticClass: "mb-3" }, [
+                _c("label", [_vm._v("Название")]),
+                _vm._v(" "),
+                _c("input", {
                   directives: [
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.category,
-                      expression: "category",
+                      value: _vm.name,
+                      expression: "name",
                     },
                   ],
-                  staticClass: "form-select",
+                  staticClass: "form-control",
                   attrs: { type: "text" },
+                  domProps: { value: _vm.name },
                   on: {
-                    change: function ($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function (o) {
-                          return o.selected
-                        })
-                        .map(function (o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.category = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.name = $event.target.value
+                    },
+                  },
+                }),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "mb-3" }, [
+                _c("label", [_vm._v("Категория")]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.category,
+                        expression: "category",
+                      },
+                    ],
+                    staticClass: "form-select",
+                    attrs: { type: "text" },
+                    on: {
+                      change: function ($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function (o) {
+                            return o.selected
+                          })
+                          .map(function (o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.category = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      },
+                    },
+                  },
+                  _vm._l(_vm.categories, function (categoryItem) {
+                    return _c(
+                      "option",
+                      {
+                        key: categoryItem.id,
+                        domProps: { value: categoryItem.id },
+                      },
+                      [_vm._v(_vm._s(categoryItem.name))]
+                    )
+                  }),
+                  0
+                ),
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  on: {
+                    click: function ($event) {
+                      return _vm.updateItem(_vm.item.id)
                     },
                   },
                 },
-                _vm._l(_vm.categories, function (categoryItem) {
-                  return _c(
-                    "option",
-                    {
-                      key: categoryItem.id,
-                      domProps: { value: categoryItem.id },
-                    },
-                    [_vm._v(_vm._s(categoryItem.name))]
-                  )
-                }),
-                0
+                [_vm._v("Сохранить")]
               ),
             ]),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                on: {
-                  click: function ($event) {
-                    return _vm.updateItem(_vm.item.id)
-                  },
-                },
-              },
-              [_vm._v("Сохранить")]
-            ),
           ]),
-        ]),
-        _vm._v(" "),
-        _c(
-          "ul",
-          { staticClass: "list-group" },
+          _vm._v(" "),
           _vm._l(_vm.item.balances, function (balance) {
-            return _c(
-              "li",
-              {
-                key: balance.id,
-                staticClass:
-                  "list-group-item d-flex justify-content-between align-items-start",
-              },
-              [
-                _c("div", { staticClass: "ms-2 me-auto" }, [
-                  _c("div", { staticClass: "fw-bold" }, [
-                    _vm._v(_vm._s(_vm._f("formatDate")(balance.created_at))),
+            return _c("div", { key: balance.id, staticClass: "card mb-1" }, [
+              _c("div", { staticClass: "card-body" }, [
+                _c("div", { staticClass: "row align-items-center" }, [
+                  _c("div", { staticClass: "col-4" }, [
+                    _c(
+                      "span",
+                      { staticClass: "badge bg-primary rounded-pill" },
+                      [_vm._v(_vm._s(balance.quantity) + " шт.")]
+                    ),
                   ]),
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(_vm._f("currency")(balance.price)) +
-                      " ₽, курс доллара на момент закупки " +
-                      _vm._s(balance.usd_kurs) +
-                      " ₽.\n            "
-                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-8" }, [
+                    _c("div", { staticClass: "fw-bold" }, [
+                      _vm._v(_vm._s(_vm._f("formatDate")(balance.created_at))),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(_vm._f("currency")(balance.price)) +
+                          " ₽, курс доллара на момент закупки " +
+                          _vm._s(balance.usd_kurs) +
+                          " ₽.\n                    "
+                      ),
+                    ]),
+                  ]),
                 ]),
-                _vm._v(" "),
-                _c("span", { staticClass: "badge bg-primary rounded-pill" }, [
-                  _vm._v(_vm._s(balance.quantity) + " шт."),
-                ]),
-              ]
-            )
+              ]),
+            ])
           }),
-          0
-        ),
-      ])
+        ],
+        2
+      )
     : _c("div", [_vm._m(0)])
 }
 var staticRenderFns = [

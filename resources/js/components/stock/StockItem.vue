@@ -41,16 +41,22 @@
                 <button @click="updateItem(item.id)" class="btn btn-primary">Сохранить</button>
             </div>
         </div>
-
-        <ul class="list-group">
-            <li v-for="balance in item.balances" :key="balance.id" class="list-group-item d-flex justify-content-between align-items-start">
-                <div class="ms-2 me-auto">
-                    <div class="fw-bold">{{ balance.created_at | formatDate }}</div>
-                    {{ balance.price | currency }} ₽, курс доллара на момент закупки {{ balance.usd_kurs }} ₽.
+        
+        <div v-for="balance in item.balances" :key="balance.id" class="card mb-1">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-4">
+                        <span class="badge bg-primary rounded-pill">{{ balance.quantity }} шт.</span>
+                    </div>
+                    <div class="col-8">
+                        <div class="fw-bold">{{ balance.created_at | formatDate }}</div>
+                        <div>
+                            {{ balance.price | currency }} ₽, курс доллара на момент закупки {{ balance.usd_kurs }} ₽.
+                        </div>
+                    </div>
                 </div>
-                <span class="badge bg-primary rounded-pill">{{ balance.quantity }} шт.</span>
-            </li>
-        </ul>
+            </div>
+        </div>
     </div>
     <div v-else>
         <div class="spinner-border text-primary me-2" role="status">
