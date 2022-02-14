@@ -5626,8 +5626,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -60170,13 +60168,7 @@ var render = function () {
                             "line-height": "1",
                           },
                         },
-                        [
-                          _vm._v(
-                            "\n                        " +
-                              _vm._s(balance.quantity) +
-                              "\n                    "
-                          ),
-                        ]
+                        [_vm._v(_vm._s(balance.quantity))]
                       ),
                       _vm._v(" "),
                       _c("small", { staticClass: "text-muted" }, [
@@ -60200,7 +60192,7 @@ var render = function () {
                       ),
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-2 text-center fw-bold" }, [
+                    _c("div", { staticClass: "col-2 text-center" }, [
                       _vm._v(
                         "\n                    " +
                           _vm._s(balance.usd_kurs) +
