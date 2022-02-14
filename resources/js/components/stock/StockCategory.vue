@@ -32,7 +32,7 @@
                             <a>{{ item.name }}</a>
                         </td>
                         <td class="align-middle text-center">
-                            <span v-if="item.balances.length" class="badge rounded-pill" :class="{'bg-danger': item.balances.reduce((acc, balance) => acc + parseInt(balance.quantity), 0) < 0, 'bg-success': item.balances.reduce((acc, balance) => acc + parseInt(balance.quantity), 0) > 0}">
+                            <span v-if="item.balances.length" class="badge rounded-pill" :class="{'bg-danger': item.balances.reduce((acc, balance) => acc + parseInt(balance.quantity), 0) < 0, 'bg-secondary': item.balances.reduce((acc, balance) => acc + parseInt(balance.quantity), 0) == 0, 'bg-success': item.balances.reduce((acc, balance) => acc + parseInt(balance.quantity), 0) > 0}">
                                 {{ item.balances.reduce((acc, balance) => acc + parseInt(balance.quantity), 0) }}
                             </span>
                         </td>

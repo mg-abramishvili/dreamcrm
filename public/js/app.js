@@ -59617,6 +59617,10 @@ var render = function () {
                                   item.balances.reduce(function (acc, balance) {
                                     return acc + parseInt(balance.quantity)
                                   }, 0) < 0,
+                                "bg-secondary":
+                                  item.balances.reduce(function (acc, balance) {
+                                    return acc + parseInt(balance.quantity)
+                                  }, 0) == 0,
                                 "bg-success":
                                   item.balances.reduce(function (acc, balance) {
                                     return acc + parseInt(balance.quantity)
