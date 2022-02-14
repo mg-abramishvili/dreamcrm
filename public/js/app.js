@@ -5603,6 +5603,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -60115,10 +60139,72 @@ var render = function () {
             ),
           ]),
         ]),
+        _vm._v(" "),
+        _vm._m(0),
       ])
-    : _c("div", [_vm._m(0)])
+    : _c("div", [_vm._m(1)])
 }
 var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("ol", { staticClass: "list-group list-group-numbered" }, [
+      _c(
+        "li",
+        {
+          staticClass:
+            "list-group-item d-flex justify-content-between align-items-start",
+        },
+        [
+          _c("div", { staticClass: "ms-2 me-auto" }, [
+            _c("div", { staticClass: "fw-bold" }, [_vm._v("Subheading")]),
+            _vm._v("\n            Cras justo odio\n            "),
+          ]),
+          _vm._v(" "),
+          _c("span", { staticClass: "badge bg-primary rounded-pill" }, [
+            _vm._v("14"),
+          ]),
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "li",
+        {
+          staticClass:
+            "list-group-item d-flex justify-content-between align-items-start",
+        },
+        [
+          _c("div", { staticClass: "ms-2 me-auto" }, [
+            _c("div", { staticClass: "fw-bold" }, [_vm._v("Subheading")]),
+            _vm._v("\n            Cras justo odio\n            "),
+          ]),
+          _vm._v(" "),
+          _c("span", { staticClass: "badge bg-primary rounded-pill" }, [
+            _vm._v("14"),
+          ]),
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "li",
+        {
+          staticClass:
+            "list-group-item d-flex justify-content-between align-items-start",
+        },
+        [
+          _c("div", { staticClass: "ms-2 me-auto" }, [
+            _c("div", { staticClass: "fw-bold" }, [_vm._v("Subheading")]),
+            _vm._v("\n            Cras justo odio\n            "),
+          ]),
+          _vm._v(" "),
+          _c("span", { staticClass: "badge bg-primary rounded-pill" }, [
+            _vm._v("14"),
+          ]),
+        ]
+      ),
+    ])
+  },
   function () {
     var _vm = this
     var _h = _vm.$createElement
