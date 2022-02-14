@@ -4,11 +4,11 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateElementsTable extends Migration
+class CreateCatalogItemsTable extends Migration
 {
     public function up()
     {
-        Schema::create('elements', function (Blueprint $table) {
+        Schema::create('catalog_items', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->integer('category_id');
@@ -21,6 +21,6 @@ class CreateElementsTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('elements');
+        Schema::dropIfExists('catalog_items');
     }
 }

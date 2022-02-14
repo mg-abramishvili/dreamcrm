@@ -8,7 +8,7 @@ class CreateTaskBoardUserTable extends Migration
 {
     public function up()
     {
-        Schema::create('task_board_user', function (Blueprint $table) {
+        Schema::create('task_board__user', function (Blueprint $table) {
             $table->id();
             $table->integer('task_board_id');
             $table->integer('user_id');
@@ -17,6 +17,6 @@ class CreateTaskBoardUserTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('task_board_user');
+        Schema::dropIfExists('task_board__user');
     }
 }

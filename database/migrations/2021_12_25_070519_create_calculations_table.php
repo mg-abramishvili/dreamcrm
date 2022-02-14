@@ -10,10 +10,9 @@ class CreateCalculationsTable extends Migration
     {
         Schema::create('calculations', function (Blueprint $table) {
             $table->id();
-            $table->integer('type_id');
+            $table->integer('catalog_type_id');
             $table->decimal('price');
             $table->integer('quantity');
-            $table->integer('production_days');
             $table->integer('user_id');
             $table->timestamps();
         });

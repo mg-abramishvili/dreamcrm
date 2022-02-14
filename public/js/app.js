@@ -5481,6 +5481,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -59587,110 +59595,7 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "catalog-page stock-page" }, [
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-12 col-lg-3 d-flex" }, [
-        _c("div", { staticClass: "card flex-fill" }, [
-          _c("div", { staticClass: "card-body py-4" }, [
-            _c("div", { staticClass: "d-flex align-items-center h-100" }, [
-              _vm._m(0),
-              _vm._v(" "),
-              _c("div", { staticClass: "d-inline-block ms-3" }, [
-                _c("div", { staticClass: "stat" }, [
-                  _c(
-                    "svg",
-                    {
-                      staticClass:
-                        "feather feather-shopping-bag align-middle text-danger",
-                      attrs: {
-                        xmlns: "http://www.w3.org/2000/svg",
-                        width: "24",
-                        height: "24",
-                        viewBox: "0 0 24 24",
-                        fill: "none",
-                        stroke: "currentColor",
-                        "stroke-width": "2",
-                        "stroke-linecap": "round",
-                        "stroke-linejoin": "round",
-                      },
-                    },
-                    [
-                      _c("line", {
-                        attrs: { x1: "16.5", y1: "9.4", x2: "7.5", y2: "4.21" },
-                      }),
-                      _c("path", {
-                        attrs: {
-                          d: "M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z",
-                        },
-                      }),
-                      _c("polyline", {
-                        attrs: { points: "3.27 6.96 12 12.01 20.73 6.96" },
-                      }),
-                      _c("line", {
-                        attrs: { x1: "12", y1: "22.08", x2: "12", y2: "12" },
-                      }),
-                    ]
-                  ),
-                ]),
-              ]),
-            ]),
-          ]),
-        ]),
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-12 col-lg-3 d-flex" }, [
-        _c("div", { staticClass: "card flex-fill" }, [
-          _c("div", { staticClass: "card-body py-4" }, [
-            _c("div", { staticClass: "d-flex align-items-center h-100" }, [
-              _vm._m(1),
-              _vm._v(" "),
-              _c("div", { staticClass: "d-inline-block ms-3" }, [
-                _vm.itemsToBuy.length > 0
-                  ? _c("div", { staticClass: "stat" }, [
-                      _c(
-                        "h2",
-                        { staticClass: " text-center text-danger lh-1 m-0" },
-                        [_vm._v(_vm._s(_vm.itemsToBuy.length))]
-                      ),
-                    ])
-                  : _c("div", { staticClass: "stat" }, [
-                      _c(
-                        "svg",
-                        {
-                          staticClass:
-                            "feather feather-shopping-bag align-middle text-danger",
-                          attrs: {
-                            xmlns: "http://www.w3.org/2000/svg",
-                            width: "24",
-                            height: "24",
-                            viewBox: "0 0 24 24",
-                            fill: "none",
-                            stroke: "currentColor",
-                            "stroke-width": "2",
-                            "stroke-linecap": "round",
-                            "stroke-linejoin": "round",
-                          },
-                        },
-                        [
-                          _c("path", {
-                            attrs: {
-                              d: "M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z",
-                            },
-                          }),
-                          _c("line", {
-                            attrs: { x1: "3", y1: "6", x2: "21", y2: "6" },
-                          }),
-                          _c("path", { attrs: { d: "M16 10a4 4 0 0 1-8 0" } }),
-                        ]
-                      ),
-                    ]),
-              ]),
-            ]),
-          ]),
-        ]),
-      ]),
-    ]),
-    _vm._v(" "),
-    _vm._m(2),
+    _vm._m(0),
     _vm._v(" "),
     _c(
       "div",
@@ -59757,26 +59662,6 @@ var render = function () {
   ])
 }
 var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex-grow-1" }, [
-      _c("h2", { staticClass: "mb-0" }, [_vm._v("Склад")]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex-grow-1" }, [
-      _c("h2", { staticClass: "mb-0" }, [
-        _vm._v(
-          "\n                                    Закупка\n                                "
-        ),
-      ]),
-    ])
-  },
   function () {
     var _vm = this
     var _h = _vm.$createElement
@@ -59887,46 +59772,7 @@ var render = function () {
         _vm._v(" "),
         _c("div", { staticClass: "card" }, [
           _c("table", { staticClass: "table" }, [
-            _c("thead", [
-              _c("tr", [
-                _c(
-                  "th",
-                  {
-                    on: {
-                      click: function ($event) {
-                        return _vm.orderBy("name")
-                      },
-                    },
-                  },
-                  [_vm._v("Наименование")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "th",
-                  {
-                    staticClass: "text-center",
-                    on: {
-                      click: function ($event) {
-                        return _vm.orderBy("amount")
-                      },
-                    },
-                  },
-                  [_vm._v("Остаток")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "th",
-                  {
-                    on: {
-                      click: function ($event) {
-                        return _vm.orderBy("price")
-                      },
-                    },
-                  },
-                  [_vm._v("Цена")]
-                ),
-              ]),
-            ]),
+            _vm._m(0),
             _vm._v(" "),
             _c(
               "tbody",
@@ -59952,14 +59798,24 @@ var render = function () {
                         {
                           staticClass: "fw-bold",
                           class: {
-                            "text-danger": item.amount < 0,
-                            "text-success": item.amount > 0,
+                            "text-danger":
+                              item.balances.reduce(function (acc, balance) {
+                                return acc + parseInt(balance.quantity)
+                              }, 0) < 0,
+                            "text-success":
+                              item.balances.reduce(function (acc, balance) {
+                                return acc + parseInt(balance.quantity)
+                              }, 0) > 0,
                           },
                         },
                         [
                           _vm._v(
                             "\n                            " +
-                              _vm._s(item.amount) +
+                              _vm._s(
+                                item.balances.reduce(function (acc, balance) {
+                                  return acc + parseInt(balance.quantity)
+                                }, 0)
+                              ) +
                               "\n                        "
                           ),
                         ]
@@ -59967,9 +59823,35 @@ var render = function () {
                     ]),
                     _vm._v(" "),
                     _c("td", { staticClass: "align-middle" }, [
+                      _c(
+                        "ul",
+                        {
+                          staticClass: "m-0 p-0",
+                          staticStyle: { "list-style": "none" },
+                        },
+                        _vm._l(item.balances, function (balance) {
+                          return _c("li", { key: "balance_" + balance.id }, [
+                            _vm._v(
+                              "\n                                " +
+                                _vm._s(balance.quantity) +
+                                " шт. | " +
+                                _vm._s(_vm._f("currency")(balance.price)) +
+                                " ₽ | " +
+                                _vm._s(
+                                  _vm._f("formatDate")(balance.created_at)
+                                ) +
+                                "\n                            "
+                            ),
+                          ])
+                        }),
+                        0
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "align-middle" }, [
                       _vm._v(
                         "\n                        " +
-                          _vm._s(_vm._f("currency")(item.price)) +
+                          _vm._s(_vm._f("currency")(item.balances[0].price)) +
                           " ₽\n                    "
                       ),
                     ]),
@@ -59983,7 +59865,24 @@ var render = function () {
       ])
     : _vm._e()
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Наименование")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center" }, [_vm._v("Общий остаток")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Остатки")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Мин. цена")]),
+      ]),
+    ])
+  },
+]
 render._withStripped = true
 
 

@@ -12,10 +12,7 @@ class CreateStockItemsTable extends Migration
             $table->id();
             $table->string('name');
             $table->integer('category_id');
-            $table->decimal('pre_rub')->default(0);
-            $table->decimal('pre_usd')->default(0);
-            $table->decimal('price')->default(0);
-            $table->integer('amount');
+            $table->string('comment')->nullable();
             $table->timestamps();
         });
     }

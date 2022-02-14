@@ -8,7 +8,7 @@ class CalculationOfferTable extends Migration
 {
     public function up()
     {
-        Schema::create('calculation_offer', function (Blueprint $table) {
+        Schema::create('calculation__offer', function (Blueprint $table) {
             $table->id();
             $table->integer('calculation_id');
             $table->integer('offer_id');
@@ -17,6 +17,6 @@ class CalculationOfferTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('calculation_offer');
+        Schema::dropIfExists('calculation__offer');
     }
 }

@@ -14,6 +14,6 @@ class StockCategoryController extends Controller
 
     public function category($id)
     {
-        return StockCategory::with('items')->find($id);
+        return StockCategory::with('items.balances')->find($id);
     }
 }

@@ -20,9 +20,10 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th @click="orderBy('name')">Наименование</th>
-                        <th @click="orderBy('amount')" class="text-center">Остаток</th>
-                        <th @click="orderBy('price')">Цена</th>
+                        <th>Наименование</th>
+                        <th class="text-center">Общий остаток</th>
+                        <th>Остатки</th>
+                        <th>Мин. цена</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,12 +32,19 @@
                             <a>{{ item.name }}</a>
                         </td>
                         <td class="align-middle text-center">
-                            <span class="fw-bold" :class="{'text-danger': item.amount < 0, 'text-success': item.amount > 0}">
-                                {{ item.amount }}
+                            <span class="fw-bold" :class="{'text-danger': item.balances.reduce((acc, balance) => acc + parseInt(balance.quantity), 0) < 0, 'text-success': item.balances.reduce((acc, balance) => acc + parseInt(balance.quantity), 0) > 0}">
+                                {{ item.balances.reduce((acc, balance) => acc + parseInt(balance.quantity), 0) }}
                             </span>
                         </td>
                         <td class="align-middle">
-                            {{ item.price | currency }} ₽
+                            <ul class="m-0 p-0" style="list-style: none;">
+                                <li v-for="balance in item.balances" :key="'balance_' + balance.id">
+                                    {{ balance.quantity }} шт. | {{ balance.price | currency }} ₽ | {{ balance.created_at | formatDate }}
+                                </li>
+                            </ul>
+                        </td>
+                        <td class="align-middle">
+                            {{ item.balances[0].price | currency }} ₽
                         </td>
                     </tr>
                 </tbody>

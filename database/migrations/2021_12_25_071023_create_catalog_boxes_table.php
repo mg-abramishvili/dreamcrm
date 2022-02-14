@@ -4,11 +4,11 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBoxesTable extends Migration
+class CreateCatalogBoxesTable extends Migration
 {
     public function up()
     {
-        Schema::create('boxes', function (Blueprint $table) {
+        Schema::create('catalog_boxes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->decimal('pre_rub')->default(0);
@@ -17,6 +17,7 @@ class CreateBoxesTable extends Migration
             $table->longText('description')->nullable();
             $table->longText('manager_description')->nullable();
             $table->longtext('gallery')->nullable();
+            $table->text('comment')->nullable();
             $table->decimal('length')->nullable();
             $table->decimal('width')->nullable();
             $table->decimal('height')->nullable();
@@ -29,6 +30,6 @@ class CreateBoxesTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('boxes');
+        Schema::dropIfExists('catalog_boxes');
     }
 }
