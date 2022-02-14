@@ -2368,9 +2368,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {};
@@ -53971,136 +53968,6 @@ var render = function () {
         ),
         _vm._v(" "),
         this.$parent.user.permissions &&
-        this.$parent.user.permissions.can_see_calculations
-          ? _c(
-              "li",
-              { staticClass: "sidebar-item" },
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "sidebar-link",
-                    attrs: { to: { name: "Calculations" } },
-                  },
-                  [
-                    _c(
-                      "svg",
-                      {
-                        staticClass: "feather feather-sliders align-middle",
-                        attrs: {
-                          xmlns: "http://www.w3.org/2000/svg",
-                          width: "24",
-                          height: "24",
-                          viewBox: "0 0 24 24",
-                          fill: "none",
-                          stroke: "currentColor",
-                          "stroke-width": "2",
-                          "stroke-linecap": "round",
-                          "stroke-linejoin": "round",
-                        },
-                      },
-                      [
-                        _c("line", {
-                          attrs: { x1: "4", y1: "21", x2: "4", y2: "14" },
-                        }),
-                        _c("line", {
-                          attrs: { x1: "4", y1: "10", x2: "4", y2: "3" },
-                        }),
-                        _c("line", {
-                          attrs: { x1: "12", y1: "21", x2: "12", y2: "12" },
-                        }),
-                        _c("line", {
-                          attrs: { x1: "12", y1: "8", x2: "12", y2: "3" },
-                        }),
-                        _c("line", {
-                          attrs: { x1: "20", y1: "21", x2: "20", y2: "16" },
-                        }),
-                        _c("line", {
-                          attrs: { x1: "20", y1: "12", x2: "20", y2: "3" },
-                        }),
-                        _c("line", {
-                          attrs: { x1: "1", y1: "14", x2: "7", y2: "14" },
-                        }),
-                        _c("line", {
-                          attrs: { x1: "9", y1: "8", x2: "15", y2: "8" },
-                        }),
-                        _c("line", {
-                          attrs: { x1: "17", y1: "16", x2: "23", y2: "16" },
-                        }),
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "align-middle" }, [
-                      _vm._v("Расчеты"),
-                    ]),
-                  ]
-                ),
-              ],
-              1
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        this.$parent.user.permissions &&
-        this.$parent.user.permissions.can_see_catalog
-          ? _c(
-              "li",
-              { staticClass: "sidebar-item" },
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "sidebar-link",
-                    attrs: { to: { name: "Catalog" } },
-                  },
-                  [
-                    _c(
-                      "svg",
-                      {
-                        staticClass:
-                          "feather feather-monitor align-middle me-2",
-                        attrs: {
-                          xmlns: "http://www.w3.org/2000/svg",
-                          width: "24",
-                          height: "24",
-                          viewBox: "0 0 24 24",
-                          fill: "none",
-                          stroke: "currentColor",
-                          "stroke-width": "2",
-                          "stroke-linecap": "round",
-                          "stroke-linejoin": "round",
-                        },
-                      },
-                      [
-                        _c("rect", {
-                          attrs: {
-                            x: "2",
-                            y: "3",
-                            width: "20",
-                            height: "14",
-                            rx: "2",
-                            ry: "2",
-                          },
-                        }),
-                        _c("line", {
-                          attrs: { x1: "8", y1: "21", x2: "16", y2: "21" },
-                        }),
-                        _c("line", {
-                          attrs: { x1: "12", y1: "17", x2: "12", y2: "21" },
-                        }),
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "align-middle" }, [
-                      _vm._v("Каталог"),
-                    ]),
-                  ]
-                ),
-              ],
-              1
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        this.$parent.user.permissions &&
         this.$parent.user.permissions.can_see_stock
           ? _c(
               "li",
@@ -54262,61 +54129,6 @@ var render = function () {
           ],
           1
         ),
-        _vm._v(" "),
-        this.$parent.user.permissions &&
-        this.$parent.user.permissions.can_see_users
-          ? _c(
-              "li",
-              { staticClass: "sidebar-item" },
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "sidebar-link",
-                    attrs: { to: { name: "Users" } },
-                  },
-                  [
-                    _c(
-                      "svg",
-                      {
-                        staticClass: "feather feather-users align-middle",
-                        attrs: {
-                          xmlns: "http://www.w3.org/2000/svg",
-                          width: "24",
-                          height: "24",
-                          viewBox: "0 0 24 24",
-                          fill: "none",
-                          stroke: "currentColor",
-                          "stroke-width": "2",
-                          "stroke-linecap": "round",
-                          "stroke-linejoin": "round",
-                        },
-                      },
-                      [
-                        _c("path", {
-                          attrs: {
-                            d: "M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2",
-                          },
-                        }),
-                        _c("circle", { attrs: { cx: "9", cy: "7", r: "4" } }),
-                        _c("path", {
-                          attrs: { d: "M23 21v-2a4 4 0 0 0-3-3.87" },
-                        }),
-                        _c("path", {
-                          attrs: { d: "M16 3.13a4 4 0 0 1 0 7.75" },
-                        }),
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "align-middle" }, [
-                      _vm._v("Пользователи"),
-                    ]),
-                  ]
-                ),
-              ],
-              1
-            )
-          : _vm._e(),
       ]),
     ]),
   ])
