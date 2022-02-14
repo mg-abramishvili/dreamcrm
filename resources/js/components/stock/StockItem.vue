@@ -42,13 +42,13 @@
             </div>
         </div>
         
-        <div v-for="balance in item.balances" :key="balance.id" class="card mb-1">
+        <div v-for="balance in item.balances" :key="balance.id" class="card w-50 mb-1">
             <div class="card-body">
                 <div class="row align-items-center">
-                    <div class="col-4">
+                    <div class="col-2 text-center">
                         <span class="badge bg-primary rounded-pill">{{ balance.quantity }} шт.</span>
                     </div>
-                    <div class="col-8">
+                    <div class="col-10">
                         <div class="fw-bold">{{ balance.created_at | formatDate }}</div>
                         <div>
                             {{ balance.price | currency }} ₽, курс доллара на момент закупки {{ balance.usd_kurs }} ₽.

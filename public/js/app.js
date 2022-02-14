@@ -60141,35 +60141,41 @@ var render = function () {
           ]),
           _vm._v(" "),
           _vm._l(_vm.item.balances, function (balance) {
-            return _c("div", { key: balance.id, staticClass: "card mb-1" }, [
-              _c("div", { staticClass: "card-body" }, [
-                _c("div", { staticClass: "row align-items-center" }, [
-                  _c("div", { staticClass: "col-4" }, [
-                    _c(
-                      "span",
-                      { staticClass: "badge bg-primary rounded-pill" },
-                      [_vm._v(_vm._s(balance.quantity) + " шт.")]
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-8" }, [
-                    _c("div", { staticClass: "fw-bold" }, [
-                      _vm._v(_vm._s(_vm._f("formatDate")(balance.created_at))),
+            return _c(
+              "div",
+              { key: balance.id, staticClass: "card w-50 mb-1" },
+              [
+                _c("div", { staticClass: "card-body" }, [
+                  _c("div", { staticClass: "row align-items-center" }, [
+                    _c("div", { staticClass: "col-2 text-center" }, [
+                      _c(
+                        "span",
+                        { staticClass: "badge bg-primary rounded-pill" },
+                        [_vm._v(_vm._s(balance.quantity) + " шт.")]
+                      ),
                     ]),
                     _vm._v(" "),
-                    _c("div", [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(_vm._f("currency")(balance.price)) +
-                          " ₽, курс доллара на момент закупки " +
-                          _vm._s(balance.usd_kurs) +
-                          " ₽.\n                    "
-                      ),
+                    _c("div", { staticClass: "col-10" }, [
+                      _c("div", { staticClass: "fw-bold" }, [
+                        _vm._v(
+                          _vm._s(_vm._f("formatDate")(balance.created_at))
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", [
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(_vm._f("currency")(balance.price)) +
+                            " ₽, курс доллара на момент закупки " +
+                            _vm._s(balance.usd_kurs) +
+                            " ₽.\n                    "
+                        ),
+                      ]),
                     ]),
                   ]),
                 ]),
-              ]),
-            ])
+              ]
+            )
           }),
         ],
         2
