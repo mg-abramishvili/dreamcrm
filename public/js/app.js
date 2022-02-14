@@ -5619,6 +5619,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -60155,8 +60156,11 @@ var render = function () {
                         },
                         [_vm._v(_vm._s(balance.quantity))]
                       ),
+                      _vm._v(" "),
                       _c("br"),
-                      _vm._v(" шт.\n                "),
+                      _c("small", { staticClass: "text-muted" }, [
+                        _vm._v("шт."),
+                      ]),
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-10" }, [

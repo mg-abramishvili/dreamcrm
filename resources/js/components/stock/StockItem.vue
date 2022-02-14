@@ -46,7 +46,8 @@
             <div class="card-body">
                 <div class="row align-items-center">
                     <div class="col-2 text-center">
-                        <span class="text-lg badge bg-primary rounded-pill">{{ balance.quantity }}</span><br> шт.
+                        <span class="text-lg badge bg-primary rounded-pill">{{ balance.quantity }}</span>
+                        <br><small class="text-muted">шт.</small>
                     </div>
                     <div class="col-10">
                         <div class="fw-bold">{{ balance.created_at | formatDate }}</div>
