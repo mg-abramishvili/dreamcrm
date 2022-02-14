@@ -5669,6 +5669,10 @@ __webpack_require__.r(__webpack_exports__);
         this.errors.push('Укажите имя');
       }
 
+      if (!this.category) {
+        this.errors.push('Укажите категорию');
+      }
+
       if (this.errors && this.errors.length > 0) {
         return;
       }

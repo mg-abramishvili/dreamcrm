@@ -115,6 +115,9 @@
                 if (!this.name) {
                     this.errors.push('Укажите имя');
                 }
+                if (!this.category) {
+                    this.errors.push('Укажите категорию');
+                }
 
                 if(this.errors && this.errors.length > 0) {
                     return
