@@ -5618,15 +5618,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -60053,158 +60044,138 @@ var render = function () {
                 ])
               : _vm._e(),
             _vm._v(" "),
-            _c("div", { staticClass: "mb-3" }, [
-              _c("label", [_vm._v("Название")]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-12 col-lg-6" }, [
+                _c("div", { staticClass: "mb-3" }, [
+                  _c("label", [_vm._v("Название")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.name,
+                        expression: "name",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.name },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.name = $event.target.value
+                      },
+                    },
+                  }),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "mb-3" }, [
+                  _c("label", [_vm._v("Категория")]),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.category,
+                          expression: "category",
+                        },
+                      ],
+                      staticClass: "form-select",
+                      attrs: { type: "text" },
+                      on: {
+                        change: function ($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function (o) {
+                              return o.selected
+                            })
+                            .map(function (o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.category = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        },
+                      },
+                    },
+                    _vm._l(_vm.categories, function (categoryItem) {
+                      return _c(
+                        "option",
+                        {
+                          key: categoryItem.id,
+                          domProps: { value: categoryItem.id },
+                        },
+                        [_vm._v(_vm._s(categoryItem.name))]
+                      )
+                    }),
+                    0
+                  ),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "button",
                   {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.name,
-                    expression: "name",
+                    staticClass: "btn btn-primary",
+                    on: {
+                      click: function ($event) {
+                        return _vm.updateItem(_vm.item.id)
+                      },
+                    },
                   },
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text" },
-                domProps: { value: _vm.name },
-                on: {
-                  input: function ($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.name = $event.target.value
-                  },
-                },
-              }),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "mb-3" }, [
-              _c("label", [_vm._v("Категория")]),
+                  [_vm._v("Сохранить")]
+                ),
+              ]),
               _vm._v(" "),
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.category,
-                      expression: "category",
-                    },
-                  ],
-                  staticClass: "form-select",
-                  attrs: { type: "text" },
-                  on: {
-                    change: function ($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function (o) {
-                          return o.selected
-                        })
-                        .map(function (o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.category = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    },
-                  },
-                },
-                _vm._l(_vm.categories, function (categoryItem) {
-                  return _c(
-                    "option",
-                    {
-                      key: categoryItem.id,
-                      domProps: { value: categoryItem.id },
-                    },
-                    [_vm._v(_vm._s(categoryItem.name))]
-                  )
-                }),
-                0
-              ),
+              _c("div", { staticClass: "col-12 col-lg-6" }, [
+                _c(
+                  "ol",
+                  { staticClass: "list-group list-group-numbered" },
+                  _vm._l(_vm.item.balances, function (balance) {
+                    return _c(
+                      "li",
+                      {
+                        key: balance.id,
+                        staticClass:
+                          "list-group-item d-flex justify-content-between align-items-start",
+                      },
+                      [
+                        _c("div", { staticClass: "ms-2 me-auto" }, [
+                          _c("div", { staticClass: "fw-bold" }, [
+                            _vm._v(_vm._s(balance.created_at)),
+                          ]),
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(_vm._f("currency")(balance.price)) +
+                              " ₽, курс доллара на момент закупки " +
+                              _vm._s(balance.usd_kurs) +
+                              " ₽.\n                            "
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          { staticClass: "badge bg-primary rounded-pill" },
+                          [_vm._v(_vm._s(balance.quantity) + " шт.")]
+                        ),
+                      ]
+                    )
+                  }),
+                  0
+                ),
+              ]),
             ]),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                on: {
-                  click: function ($event) {
-                    return _vm.updateItem(_vm.item.id)
-                  },
-                },
-              },
-              [_vm._v("Сохранить")]
-            ),
           ]),
         ]),
-        _vm._v(" "),
-        _vm._m(0),
       ])
-    : _c("div", [_vm._m(1)])
+    : _c("div", [_vm._m(0)])
 }
 var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("ol", { staticClass: "list-group list-group-numbered" }, [
-      _c(
-        "li",
-        {
-          staticClass:
-            "list-group-item d-flex justify-content-between align-items-start",
-        },
-        [
-          _c("div", { staticClass: "ms-2 me-auto" }, [
-            _c("div", { staticClass: "fw-bold" }, [_vm._v("Subheading")]),
-            _vm._v("\n            Cras justo odio\n            "),
-          ]),
-          _vm._v(" "),
-          _c("span", { staticClass: "badge bg-primary rounded-pill" }, [
-            _vm._v("14"),
-          ]),
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "li",
-        {
-          staticClass:
-            "list-group-item d-flex justify-content-between align-items-start",
-        },
-        [
-          _c("div", { staticClass: "ms-2 me-auto" }, [
-            _c("div", { staticClass: "fw-bold" }, [_vm._v("Subheading")]),
-            _vm._v("\n            Cras justo odio\n            "),
-          ]),
-          _vm._v(" "),
-          _c("span", { staticClass: "badge bg-primary rounded-pill" }, [
-            _vm._v("14"),
-          ]),
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "li",
-        {
-          staticClass:
-            "list-group-item d-flex justify-content-between align-items-start",
-        },
-        [
-          _c("div", { staticClass: "ms-2 me-auto" }, [
-            _c("div", { staticClass: "fw-bold" }, [_vm._v("Subheading")]),
-            _vm._v("\n            Cras justo odio\n            "),
-          ]),
-          _vm._v(" "),
-          _c("span", { staticClass: "badge bg-primary rounded-pill" }, [
-            _vm._v("14"),
-          ]),
-        ]
-      ),
-    ])
-  },
   function () {
     var _vm = this
     var _h = _vm.$createElement
