@@ -32,19 +32,21 @@
                             <a>{{ item.name }}</a>
                         </td>
                         <td class="align-middle text-center">
-                            <span class="fw-bold" :class="{'text-danger': item.balances.reduce((acc, balance) => acc + parseInt(balance.quantity), 0) < 0, 'text-success': item.balances.reduce((acc, balance) => acc + parseInt(balance.quantity), 0) > 0}">
+                            <span v-if="item.balances.length" class="fw-bold" :class="{'text-danger': item.balances.reduce((acc, balance) => acc + parseInt(balance.quantity), 0) < 0, 'text-success': item.balances.reduce((acc, balance) => acc + parseInt(balance.quantity), 0) > 0}">
                                 {{ item.balances.reduce((acc, balance) => acc + parseInt(balance.quantity), 0) }}
                             </span>
                         </td>
                         <td class="align-middle">
-                            <ul class="m-0 p-0" style="list-style: none;">
+                            <ul v-if="item.balances.length" class="m-0 p-0" style="list-style: none;">
                                 <li v-for="balance in item.balances" :key="'balance_' + balance.id">
                                     {{ balance.quantity }} шт. | {{ balance.price | currency }} ₽ | {{ balance.created_at | formatDate }}
                                 </li>
                             </ul>
                         </td>
                         <td class="align-middle">
-                            {{ item.balances[0].price | currency }} ₽
+                            <template v-if="item.balances.length">
+                                {{ item.balances[0].price | currency }} ₽
+                            </template>
                         </td>
                     </tr>
                 </tbody>

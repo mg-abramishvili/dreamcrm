@@ -5486,6 +5486,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -59605,68 +59607,93 @@ var render = function () {
                     ]),
                     _vm._v(" "),
                     _c("td", { staticClass: "align-middle text-center" }, [
-                      _c(
-                        "span",
-                        {
-                          staticClass: "fw-bold",
-                          class: {
-                            "text-danger":
-                              item.balances.reduce(function (acc, balance) {
-                                return acc + parseInt(balance.quantity)
-                              }, 0) < 0,
-                            "text-success":
-                              item.balances.reduce(function (acc, balance) {
-                                return acc + parseInt(balance.quantity)
-                              }, 0) > 0,
-                          },
-                        },
-                        [
-                          _vm._v(
-                            "\n                            " +
-                              _vm._s(
-                                item.balances.reduce(function (acc, balance) {
-                                  return acc + parseInt(balance.quantity)
-                                }, 0)
-                              ) +
-                              "\n                        "
-                          ),
-                        ]
-                      ),
+                      item.balances.length
+                        ? _c(
+                            "span",
+                            {
+                              staticClass: "fw-bold",
+                              class: {
+                                "text-danger":
+                                  item.balances.reduce(function (acc, balance) {
+                                    return acc + parseInt(balance.quantity)
+                                  }, 0) < 0,
+                                "text-success":
+                                  item.balances.reduce(function (acc, balance) {
+                                    return acc + parseInt(balance.quantity)
+                                  }, 0) > 0,
+                              },
+                            },
+                            [
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(
+                                    item.balances.reduce(function (
+                                      acc,
+                                      balance
+                                    ) {
+                                      return acc + parseInt(balance.quantity)
+                                    },
+                                    0)
+                                  ) +
+                                  "\n                        "
+                              ),
+                            ]
+                          )
+                        : _vm._e(),
                     ]),
                     _vm._v(" "),
                     _c("td", { staticClass: "align-middle" }, [
-                      _c(
-                        "ul",
-                        {
-                          staticClass: "m-0 p-0",
-                          staticStyle: { "list-style": "none" },
-                        },
-                        _vm._l(item.balances, function (balance) {
-                          return _c("li", { key: "balance_" + balance.id }, [
-                            _vm._v(
-                              "\n                                " +
-                                _vm._s(balance.quantity) +
-                                " шт. | " +
-                                _vm._s(_vm._f("currency")(balance.price)) +
-                                " ₽ | " +
-                                _vm._s(
-                                  _vm._f("formatDate")(balance.created_at)
-                                ) +
-                                "\n                            "
-                            ),
-                          ])
-                        }),
-                        0
-                      ),
+                      item.balances.length
+                        ? _c(
+                            "ul",
+                            {
+                              staticClass: "m-0 p-0",
+                              staticStyle: { "list-style": "none" },
+                            },
+                            _vm._l(item.balances, function (balance) {
+                              return _c(
+                                "li",
+                                { key: "balance_" + balance.id },
+                                [
+                                  _vm._v(
+                                    "\n                                " +
+                                      _vm._s(balance.quantity) +
+                                      " шт. | " +
+                                      _vm._s(
+                                        _vm._f("currency")(balance.price)
+                                      ) +
+                                      " ₽ | " +
+                                      _vm._s(
+                                        _vm._f("formatDate")(balance.created_at)
+                                      ) +
+                                      "\n                            "
+                                  ),
+                                ]
+                              )
+                            }),
+                            0
+                          )
+                        : _vm._e(),
                     ]),
                     _vm._v(" "),
-                    _c("td", { staticClass: "align-middle" }, [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(_vm._f("currency")(item.balances[0].price)) +
-                          " ₽\n                    "
-                      ),
-                    ]),
+                    _c(
+                      "td",
+                      { staticClass: "align-middle" },
+                      [
+                        item.balances.length
+                          ? [
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(
+                                    _vm._f("currency")(item.balances[0].price)
+                                  ) +
+                                  " ₽\n                        "
+                              ),
+                            ]
+                          : _vm._e(),
+                      ],
+                      2
+                    ),
                   ]
                 )
               }),
