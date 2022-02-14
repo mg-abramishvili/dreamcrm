@@ -43,7 +43,7 @@
                         <button @click="updateItem(item.id)" class="btn btn-primary">Сохранить</button>
                     </div>
                     <div class="col-12 col-lg-6">
-                        <ol class="list-group list-group-numbered">
+                        <ul class="list-group list-group-numbered">
                             <li v-for="balance in item.balances" :key="balance.id" class="list-group-item d-flex justify-content-between align-items-start">
                                 <div class="ms-2 me-auto">
                                     <div class="fw-bold">{{ balance.created_at | formatDate }}</div>
@@ -51,7 +51,7 @@
                                 </div>
                                 <span class="badge bg-primary rounded-pill">{{ balance.quantity }} шт.</span>
                             </li>
-                        </ol>
+                        </ul>
                     </div>
                 </div>
             </div>

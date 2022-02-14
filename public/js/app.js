@@ -60134,7 +60134,7 @@ var render = function () {
               _vm._v(" "),
               _c("div", { staticClass: "col-12 col-lg-6" }, [
                 _c(
-                  "ol",
+                  "ul",
                   { staticClass: "list-group list-group-numbered" },
                   _vm._l(_vm.item.balances, function (balance) {
                     return _c(
