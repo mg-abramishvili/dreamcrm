@@ -22,6 +22,10 @@ Vue.filter('currency', function (value) {
     if (!value) return ''
     return parseInt(value).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") 
 })
+Vue.filter('date', function (value) {
+    if (!value) return ''
+    return moment(value).format('DD.MM.YYYY')
+})
 Vue.filter('formatDate', function (value) {
     if (!value) return ''
     return moment(value).utcOffset(180).format('DD.MM.YYYY')

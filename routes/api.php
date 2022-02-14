@@ -19,6 +19,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\StockCategoryController;
 use App\Http\Controllers\StockItemController;
 use App\Http\Controllers\DateController;
+use App\Http\Controllers\StockBalanceController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -100,7 +101,7 @@ Route::put('stock/category/{id}/update', [StockCategoryController::class, 'updat
 Route::post('stock/items', [StockItemController::class, 'store'])->middleware('auth:sanctum');
 Route::get('stock/item/{id}', [StockItemController::class, 'item'])->middleware('auth:sanctum');
 Route::put('stock/item/{id}/update', [StockItemController::class, 'update'])->middleware('auth:sanctum');
-Route::get('stock/item/{id}/balance', [StockBalanceController::class, 'balance'])->middleware('auth:sanctum');
+Route::post('stock/item/{id}/balance', [StockBalanceController::class, 'store'])->middleware('auth:sanctum');
 Route::put('stock/item/{id}/balance/update', [StockBalanceController::class, 'update'])->middleware('auth:sanctum');
 Route::get('stock/items-to-buy', [StockItemController::class, 'itemsToBuy'])->middleware('auth:sanctum');
 

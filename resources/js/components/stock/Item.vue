@@ -44,20 +44,28 @@
         
         <h2 class="h3 mt-0 mb-2 text-center">
             Остатки
-            <button class="btn btn-primary ms-1">Добавить</button>
+            <button @click="openAddBalance()" class="btn btn-outline-primary ms-1">Добавить</button>
         </h2>
 
-        <div v-for="balance in item.balances" :key="balance.id" class="card w-50 m-0 m-auto mb-1">
+        <AddBalance v-if="views.addBalance" :item="item"></AddBalance>
+
+        <div v-for="balance in item.balances" :key="balance.id" class="card w-75 m-0 m-auto mb-1">
             <div class="card-body">
                 <div class="row align-items-center">
                     <div class="col-2 text-center">
                         <span class="text-lg fw-bold text-primary" style="font-size: 30px; line-height: 1;">{{ balance.quantity }}</span>
                         <small class="text-muted">шт.</small>
                     </div>
-                    <div class="col-5 text-center fw-bold">
-                        {{ balance.created_at | formatDate }}
+                    <div class="col-2 text-center fw-bold">
+                        {{ balance.date | date }}
                     </div>
-                    <div class="col-3 text-center fw-bold">
+                    <div class="col-2 text-center fw-bold">
+                        {{ balance.pre_rub | currency }} ₽
+                    </div>
+                    <div class="col-2 text-center fw-bold">
+                        ${{ balance.pre_usd | currency }}
+                    </div>
+                    <div class="col-2 text-center fw-bold">
                         {{ balance.price | currency }} ₽
                     </div>
                     <div class="col-2 text-center">
@@ -76,6 +84,8 @@
 </template>
 
 <script>
+    import AddBalance from './ItemAddBalance.vue'
+
     export default {
         data() {
             return {
@@ -85,6 +95,10 @@
                 category: '',
 
                 categories: [],
+
+                views: {
+                    addBalance: false,
+                },
 
                 errors: [],
             }
@@ -108,6 +122,12 @@
                         this.name = response.data.name
                         this.category = response.data.category_id
                     }))
+            },
+            openAddBalance() {
+                this.views.addBalance = true
+            },
+            closeAddBalance() {
+                this.views.addBalance = false
             },
             updateItem(id) {
                 this.errors = []
@@ -141,5 +161,8 @@
                 })
             },
         },
+        components: {
+            AddBalance
+        }
     }
 </script>

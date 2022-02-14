@@ -12,6 +12,7 @@ class CreateStockBalancesTable extends Migration
             $table->id();
             $table->integer('stock_item_id');
             $table->integer('quantity');
+            $table->date('date');
             $table->decimal('pre_rub')->default(0);
             $table->decimal('pre_usd')->default(0);
             $table->decimal('price')->default(0);
