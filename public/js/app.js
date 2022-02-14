@@ -60143,12 +60143,14 @@ var render = function () {
             ]),
           ]),
           _vm._v(" "),
-          _c("h2", { staticClass: "h3" }, [_vm._v("Остатки")]),
+          _c("h2", { staticClass: "h3 mt-0 mb-2 text-center" }, [
+            _vm._v("Остатки"),
+          ]),
           _vm._v(" "),
           _vm._l(_vm.item.balances, function (balance) {
             return _c(
               "div",
-              { key: balance.id, staticClass: "card w-50 mb-1" },
+              { key: balance.id, staticClass: "card w-50 m-0 m-auto mb-1" },
               [
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "row align-items-center" }, [

@@ -42,9 +42,9 @@
             </div>
         </div>
         
-        <h2 class="h3">Остатки</h2>
+        <h2 class="h3 mt-0 mb-2 text-center">Остатки</h2>
 
-        <div v-for="balance in item.balances" :key="balance.id" class="card w-50 mb-1">
+        <div v-for="balance in item.balances" :key="balance.id" class="card w-50 m-0 m-auto mb-1">
             <div class="card-body">
                 <div class="row align-items-center">
                     <div class="col-2 text-center">
