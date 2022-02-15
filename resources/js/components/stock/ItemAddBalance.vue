@@ -24,7 +24,7 @@
                 </div>
                 <div class="col-3 mb-4">
                     <label class="form-label">Курс USD</label>
-                    <input v-model="usd.kurs" type="number" class="form-control" disabled>
+                    <input v-model="usd.kurs" type="number" class="form-control">
                 </div>
             </div>
             <button @click="save()" class="btn btn-primary">Сохранить</button>

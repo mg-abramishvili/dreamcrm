@@ -61738,7 +61738,7 @@ var render = function () {
               },
             ],
             staticClass: "form-control",
-            attrs: { type: "number", disabled: "" },
+            attrs: { type: "number" },
             domProps: { value: _vm.usd.kurs },
             on: {
               input: function ($event) {
