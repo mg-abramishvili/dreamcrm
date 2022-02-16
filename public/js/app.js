@@ -2128,8 +2128,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -5697,6 +5695,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -5796,6 +5795,25 @@ __webpack_require__.r(__webpack_exports__);
           }
         }
       });
+    },
+    del: function del(id) {
+      var _this3 = this;
+
+      if (confirm("Точно удалить?")) {
+        axios["delete"]("/api/stock/category/".concat(id, "/delete")).then(function (response) {
+          return _this3.$router.push({
+            name: 'Stock'
+          });
+        })["catch"](function (error) {
+          if (error.response) {
+            _this3.errors = [];
+
+            for (var key in error.response.data.errors) {
+              _this3.errors.push(key);
+            }
+          }
+        });
+      }
     }
   }
 });
@@ -6008,6 +6026,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -6049,7 +6068,7 @@ __webpack_require__.r(__webpack_exports__);
     closeAddBalance: function closeAddBalance() {
       this.views.addBalance = false;
     },
-    updateItem: function updateItem(id) {
+    update: function update(id) {
       var _this3 = this;
 
       this.errors = [];
@@ -6090,14 +6109,36 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
 
       if (confirm("Точно удалить?")) {
-        axios["delete"]("/api/stock/balance/".concat(id, "/delete")).then(function (response) {
-          return _this4.loadItem();
+        axios["delete"]("/api/stock/item/".concat(id, "/delete")).then(function (response) {
+          return _this4.$router.push({
+            name: 'StockCategory',
+            params: {
+              category_id: _this4.category
+            }
+          });
         })["catch"](function (error) {
           if (error.response) {
             _this4.errors = [];
 
             for (var key in error.response.data.errors) {
               _this4.errors.push(key);
+            }
+          }
+        });
+      }
+    },
+    delBalance: function delBalance(id) {
+      var _this5 = this;
+
+      if (confirm("Точно удалить?")) {
+        axios["delete"]("/api/stock/balance/".concat(id, "/delete")).then(function (response) {
+          return _this5.loadItem();
+        })["catch"](function (error) {
+          if (error.response) {
+            _this5.errors = [];
+
+            for (var key in error.response.data.errors) {
+              _this5.errors.push(key);
             }
           }
         });
@@ -54791,14 +54832,12 @@ var render = function () {
                 }),
                 _vm._v(" "),
                 _c("div", { staticClass: "main" }, [
-                  _c("main", { staticClass: "content" }, [
-                    _c(
-                      "div",
-                      { staticClass: "container-fluid p-0" },
-                      [_c("router-view", { key: _vm.$route.path })],
-                      1
-                    ),
-                  ]),
+                  _c(
+                    "main",
+                    { staticClass: "content" },
+                    [_c("router-view", { key: _vm.$route.path })],
+                    1
+                  ),
                 ]),
               ],
               1
@@ -61339,6 +61378,19 @@ var render = function () {
                 },
                 [_vm._v("Сохранить")]
               ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-danger",
+                  on: {
+                    click: function ($event) {
+                      return _vm.del(_vm.category.id)
+                    },
+                  },
+                },
+                [_vm._v("Удалить")]
+              ),
             ]),
           ]),
         ])
@@ -61704,11 +61756,24 @@ var render = function () {
                   staticClass: "btn btn-primary",
                   on: {
                     click: function ($event) {
-                      return _vm.updateItem(_vm.item.id)
+                      return _vm.update(_vm.item.id)
                     },
                   },
                 },
                 [_vm._v("Сохранить")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-danger",
+                  on: {
+                    click: function ($event) {
+                      return _vm.del(_vm.item.id)
+                    },
+                  },
+                },
+                [_vm._v("Удалить")]
               ),
             ]),
           ]),
@@ -61797,7 +61862,7 @@ var render = function () {
                         staticClass: "btn btn-sm btn-outline-danger",
                         on: {
                           click: function ($event) {
-                            return _vm.del(balance.id)
+                            return _vm.delBalance(balance.id)
                           },
                         },
                       },

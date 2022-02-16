@@ -38,7 +38,8 @@
                     </select>
                 </div>
 
-                <button @click="updateItem(item.id)" class="btn btn-primary">Сохранить</button>
+                <button @click="update(item.id)" class="btn btn-primary">Сохранить</button>
+                <button @click="del(item.id)" class="btn btn-outline-danger">Удалить</button>
             </div>
         </div>
         
@@ -69,7 +70,7 @@
                         {{ balance.price | currency }} ₽
                     </div>
                     <div class="col-2 text-center">
-                        <button @click="del(balance.id)" class="btn btn-sm btn-outline-danger">&times;</button>
+                        <button @click="delBalance(balance.id)" class="btn btn-sm btn-outline-danger">&times;</button>
                     </div>
                 </div>
             </div>
@@ -128,7 +129,7 @@
             closeAddBalance() {
                 this.views.addBalance = false
             },
-            updateItem(id) {
+            update(id) {
                 this.errors = []
 
                 if (!this.name) {
@@ -160,6 +161,22 @@
                 })
             },
             del(id) {
+                if (confirm("Точно удалить?")) {
+                    axios.delete(`/api/stock/item/${id}/delete`)
+                    .then(response => (
+                        this.$router.push({name: 'StockCategory', params: {category_id: this.category }})
+                    ))
+                    .catch((error) => {
+                        if(error.response) {
+                            this.errors = []
+                            for(var key in error.response.data.errors){
+                                this.errors.push(key)
+                            }
+                        }
+                    })
+                }
+            },
+            delBalance(id) {
                 if (confirm("Точно удалить?")) {
                     axios.delete(`/api/stock/balance/${id}/delete`)
                     .then(response => (

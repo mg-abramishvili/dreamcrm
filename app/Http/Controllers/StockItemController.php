@@ -35,4 +35,15 @@ class StockItemController extends Controller
         
         $item->save();
     }
+
+    public function delete($id)
+    {
+        $item = StockItem::find($id);
+        
+        foreach($item->balances as $balance) {
+            $balance->delete();
+        }
+        
+        $item->delete();
+    }
 }

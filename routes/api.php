@@ -99,9 +99,11 @@ Route::get('stock/categories', [StockCategoryController::class, 'index'])->middl
 Route::post('stock/categories', [StockCategoryController::class, 'store'])->middleware('auth:sanctum');
 Route::get('stock/category/{id}', [StockCategoryController::class, 'category'])->middleware('auth:sanctum');
 Route::put('stock/category/{id}/update', [StockCategoryController::class, 'update'])->middleware('auth:sanctum');
+Route::delete('stock/category/{id}/delete', [StockCategoryController::class, 'delete'])->middleware('auth:sanctum');
 Route::post('stock/items', [StockItemController::class, 'store'])->middleware('auth:sanctum');
 Route::get('stock/item/{id}', [StockItemController::class, 'item'])->middleware('auth:sanctum');
 Route::put('stock/item/{id}/update', [StockItemController::class, 'update'])->middleware('auth:sanctum');
+Route::delete('stock/item/{id}/delete', [StockItemController::class, 'delete'])->middleware('auth:sanctum');
 Route::post('stock/item/{id}/balance', [StockBalanceController::class, 'store'])->middleware('auth:sanctum');
 Route::put('stock/item/{id}/balance/update', [StockBalanceController::class, 'update'])->middleware('auth:sanctum');
 Route::delete('stock/balance/{id}/delete', [StockBalanceController::class, 'delete'])->middleware('auth:sanctum');

@@ -42,4 +42,18 @@ class StockCategoryController extends Controller
         
         $category->save();
     }
+
+    public function delete($id)
+    {
+        $category = StockCategory::find($id);
+        
+        foreach($category->items as $item) {
+            foreach($item->balances as $balance) {
+                $balance->delete();
+            }
+            $item->delete();
+        }
+        
+        $category->delete();
+    }
 }

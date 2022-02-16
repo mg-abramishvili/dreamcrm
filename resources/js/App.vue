@@ -5,9 +5,7 @@
 
 			<div class="main">
 				<main class="content">
-					<div class="container-fluid p-0">
-						<router-view :key="$route.path" />
-					</div>
+					<router-view :key="$route.path" />
 				</main>
 			</div>
 		</div>
