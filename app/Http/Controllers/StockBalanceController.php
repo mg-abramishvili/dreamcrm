@@ -21,4 +21,10 @@ class StockBalanceController extends Controller
 
         $balance->save();
     }
+
+    public function delete($id)
+    {
+        $balance = StockBalance::find($id);
+        $balance->delete();
+    }
 }

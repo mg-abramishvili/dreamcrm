@@ -20,8 +20,16 @@ class TaskBoardColumnController extends Controller
             return TaskBoardColumn::where('board_id', $board->id)->with(
                 [
                     'board',
-                    'tasks' => function ($q) {
-                        $q->with('users', 'comments')->orderBy('status', 'asc')->orderBy('order', 'asc');
+                    'tasks' => function ($q) use($user) {
+                        $q->with(
+                            [
+                                'users',
+                                'comments',
+                                'notifications' => function ($q) use($user) { $q->where('user_id', $user->id); }
+                            ]
+                        )
+                        ->orderBy('status', 'asc')
+                        ->orderBy('order', 'asc');
                     },
                 ]
             )
@@ -33,7 +41,16 @@ class TaskBoardColumnController extends Controller
             [
                 'board',
                 'tasks' => function ($q) use($user) {
-                    $q->with('users', 'comments')->whereRelation('users', 'user_id', $user->id)->orderBy('status', 'asc')->orderBy('order', 'asc');
+                    $q->with(
+                        [
+                            'users',
+                            'comments',
+                            'notifications' => function ($q) use($user) { $q->where('user_id', $user->id); }
+                        ]
+                    )
+                    ->whereRelation('users', 'user_id', $user->id)
+                    ->orderBy('status', 'asc')
+                    ->orderBy('order', 'asc');
                 },
             ],
         )

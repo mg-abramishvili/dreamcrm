@@ -49,7 +49,7 @@
 
         <AddBalance v-if="views.addBalance" :item="item"></AddBalance>
 
-        <div v-for="balance in item.balances" :key="balance.id" class="card w-75 m-0 m-auto mb-1">
+        <div v-for="balance in item.balances" :key="balance.id" class="card mb-1">
             <div class="card-body">
                 <div class="row align-items-center">
                     <div class="col-2 text-center">
@@ -63,14 +63,13 @@
                         {{ balance.pre_rub | currency }} ₽
                     </div>
                     <div class="col-2 text-center fw-bold">
-                        ${{ balance.pre_usd | currency }}
+                        ${{ balance.pre_usd | currency }} <small class="fw-normal text-muted d-block">курс {{ balance.usd_kurs }}</small>
                     </div>
                     <div class="col-2 text-center fw-bold">
                         {{ balance.price | currency }} ₽
                     </div>
                     <div class="col-2 text-center">
-                        {{ balance.usd_kurs }} ₽
-                        <small class="d-block text-muted" style="line-height: 1; color: #999 !important;">курс</small>
+                        <button @click="del(balance.id)" class="btn btn-sm btn-outline-danger">&times;</button>
                     </div>
                 </div>
             </div>
@@ -160,6 +159,22 @@
                     }
                 })
             },
+            del(id) {
+                if (confirm("Точно удалить?")) {
+                    axios.delete(`/api/stock/balance/${id}/delete`)
+                    .then(response => (
+                        this.loadItem()
+                    ))
+                    .catch((error) => {
+                        if(error.response) {
+                            this.errors = []
+                            for(var key in error.response.data.errors){
+                                this.errors.push(key)
+                            }
+                        }
+                    })
+                }
+            }
         },
         components: {
             AddBalance

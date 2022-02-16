@@ -1,6 +1,14 @@
 <template>
     <div class="card w-50 m-0 m-auto mb-1">
         <div class="card-body">
+            <div v-if="errors && errors.length > 0" class="alert alert-danger">
+                <div class="alert-message">
+                    <strong v-for="(error, index) in errors" :key="'error_' + index" class="d-block">
+                        {{ error }}
+                    </strong>
+                </div>
+            </div>
+            
             <div class="row align-items-center">
                 <div class="col-6 mb-4">
                     <label class="form-label">Кол-во</label>
@@ -78,11 +86,11 @@
             save() {
                 this.errors = []
 
-                if (!this.quantity) {
+                if (this.quantity < 0) {
                     this.errors.push('Укажите количество');
                 }
-                if (!this.price) {
-                    this.errors.push('Укажите цену');
+                if (!this.date) {
+                    this.errors.push('Укажите дату');
                 }
 
                 if(this.errors && this.errors.length > 0) {

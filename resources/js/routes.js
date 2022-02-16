@@ -33,6 +33,8 @@ import StockCategoryEdit from './components/stock/CategoryEdit.vue';
 import StockItem from './components/stock/Item.vue';
 import StockItemCreate from './components/stock/ItemCreate.vue';
 
+import Notifications from './components/notifications/Index.vue';
+
 export const routes = [
     {
         path: '/',
@@ -168,5 +170,10 @@ export const routes = [
         path: '/stock/items/create',
         name: 'StockItemCreate',
         component: StockItemCreate
+    },
+    {
+        path: '/notifications',
+        name: 'Notifications',
+        component: Notifications
     },
 ];
