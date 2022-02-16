@@ -60965,7 +60965,18 @@ var render = function () {
                               _vm._v(
                                 "\n                            " +
                                   _vm._s(
-                                    _vm._f("currency")(item.balances[0].price)
+                                    _vm._f("currency")(
+                                      item.balances
+                                        .map(function (a) {
+                                          return a.price
+                                        })
+                                        .reduce(function (a, b) {
+                                          return parseInt(a) + parseInt(b)
+                                        }) /
+                                        item.balances.map(function (a) {
+                                          return a.price
+                                        }).length
+                                    )
                                   ) +
                                   " ₽\n                        "
                               ),
@@ -60997,7 +61008,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Остатки")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Мин. цена")]),
+        _c("th", [_vm._v("Средняя цена")]),
       ]),
     ])
   },

@@ -26,7 +26,7 @@
                         <th>Наименование</th>
                         <th class="text-center">Общий остаток</th>
                         <th>Остатки</th>
-                        <th>Мин. цена</th>
+                        <th>Средняя цена</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,7 +48,7 @@
                         </td>
                         <td class="align-middle">
                             <template v-if="item.balances.length">
-                                {{ item.balances[0].price | currency }} ₽
+                                {{ item.balances.map(a => a.price).reduce((a, b) => (parseInt(a) + parseInt(b))) / item.balances.map(a => a.price).length | currency }} ₽
                             </template>
                         </td>
                     </tr>
