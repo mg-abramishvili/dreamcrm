@@ -9,6 +9,6 @@ class DateController extends Controller
 {
     public function date()
     {
-        return Carbon::now();
+        return Carbon::now()->format('Y-m-d H:i:s.u e');
     }
 }
