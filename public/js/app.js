@@ -3797,6 +3797,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -4071,6 +4072,25 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
           }
         }
       });
+    },
+    del: function del(id) {
+      var _this7 = this;
+
+      if (confirm("Точно удалить?")) {
+        axios["delete"]("/api/catalog/box/".concat(id, "/delete")).then(function (response) {
+          return _this7.$router.push({
+            name: 'CatalogBoxes'
+          });
+        })["catch"](function (error) {
+          if (error.response) {
+            _this7.errors = [];
+
+            for (var key in error.response.data.errors) {
+              _this7.errors.push(key);
+            }
+          }
+        });
+      }
     }
   },
   components: {
@@ -64727,6 +64747,19 @@ var render = function () {
                 },
               },
               [_vm._v("Сохранить")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-outline-danger",
+                on: {
+                  click: function ($event) {
+                    return _vm.del(_vm.box.id)
+                  },
+                },
+              },
+              [_vm._v("Удалить")]
             ),
           ]),
         ]),

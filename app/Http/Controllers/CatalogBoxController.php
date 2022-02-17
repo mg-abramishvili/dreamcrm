@@ -113,4 +113,14 @@ class CatalogBoxController extends Controller
         $box->stockItems()->detach();
         $box->stockItems()->attach($request->stock_items, ['catalog_box_id' => $box->id]);
     }
+
+    public function delete($id)
+    {
+        $box = CatalogBox::find($id);
+
+        $box->types()->detach();
+        $box->stockItems()->detach();
+        
+        $box->delete();
+    }
 }

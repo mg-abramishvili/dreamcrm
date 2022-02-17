@@ -121,6 +121,7 @@
                 </div>
 
                 <button @click="save(box.id)" class="btn btn-primary">Сохранить</button>
+                <button @click="del(box.id)" class="btn btn-outline-danger">Удалить</button>
             </div>
         </div>
     </div>
@@ -369,7 +370,7 @@
                     gallery: this.gallery,
                 })
                 .then(response => (
-                    this.$router.push({name: 'CatalogBoxes'}) 
+                    this.$router.push({name: 'CatalogBoxes'})
                 ))
                 .catch((error) => {
                     if(error.response) {
@@ -378,6 +379,22 @@
                         }
                     }
                 })
+            },
+            del(id) {
+                if (confirm("Точно удалить?")) {
+                    axios.delete(`/api/catalog/box/${id}/delete`)
+                    .then(response => (
+                        this.$router.push({name: 'CatalogBoxes'})
+                    ))
+                    .catch((error) => {
+                        if(error.response) {
+                            this.errors = []
+                            for(var key in error.response.data.errors){
+                                this.errors.push(key)
+                            }
+                        }
+                    })
+                }
             },
         },
         components: {
