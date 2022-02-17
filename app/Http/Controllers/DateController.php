@@ -9,6 +9,10 @@ class DateController extends Controller
 {
     public function date()
     {
-        return Carbon::now();
+        
+        $t=time();
+        echo($t . "<br>");
+        echo(date("Y-m-d",$t));
+        // return Carbon::now();
     }
 }
