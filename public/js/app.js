@@ -4413,16 +4413,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       name: '',
-      slug: ''
+      slug: '',
+      errors: []
     };
   },
   methods: {
     save: function save() {
       var _this = this;
+
+      this.errors = [];
+
+      if (!this.name) {
+        this.errors.push('Укажите имя');
+      }
+
+      if (!this.slug) {
+        this.errors.push('Укажите символьный код');
+      }
+
+      if (this.errors && this.errors.length > 0) {
+        return;
+      }
 
       axios.post("/api/catalog/categories", {
         name: this.name,
@@ -4494,6 +4518,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _Loader_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Loader.vue */ "./resources/js/components/Loader.vue");
 //
 //
 //
@@ -4541,8 +4566,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -4662,6 +4686,9 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     }
+  },
+  components: {
+    Loader: _Loader_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
 });
 
@@ -65353,83 +65380,95 @@ var render = function () {
     _vm._v(" "),
     _c("div", { staticClass: "card" }, [
       _c("div", { staticClass: "card-body" }, [
-        _c("label", [_vm._v("Название")]),
+        _vm.errors && _vm.errors.length > 0
+          ? _c("div", { staticClass: "alert alert-danger" }, [
+              _c(
+                "div",
+                { staticClass: "alert-message" },
+                _vm._l(_vm.errors, function (error, index) {
+                  return _c(
+                    "strong",
+                    { key: "error_" + index, staticClass: "d-block" },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(error) +
+                          "\n                    "
+                      ),
+                    ]
+                  )
+                }),
+                0
+              ),
+            ])
+          : _vm._e(),
         _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.name,
-              expression: "name",
+        _c("div", { staticClass: "mb-3" }, [
+          _c("label", [_vm._v("Название")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.name,
+                expression: "name",
+              },
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text" },
+            domProps: { value: _vm.name },
+            on: {
+              change: function ($event) {
+                return _vm.slugify(_vm.name)
+              },
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.name = $event.target.value
+              },
             },
-          ],
-          staticClass: "form-control mb-3",
-          attrs: { type: "text" },
-          domProps: { value: _vm.name },
-          on: {
-            change: function ($event) {
-              return _vm.slugify(_vm.name)
-            },
-            input: function ($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.name = $event.target.value
-            },
-          },
-        }),
+          }),
+        ]),
         _vm._v(" "),
-        _c("label", [_vm._v("Код")]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.slug,
-              expression: "slug",
+        _c("div", { staticClass: "mb-3" }, [
+          _c("label", [_vm._v("Символьный код")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.slug,
+                expression: "slug",
+              },
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text" },
+            domProps: { value: _vm.slug },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.slug = $event.target.value
+              },
             },
-          ],
-          staticClass: "form-control mb-3",
-          attrs: { type: "text", disabled: "" },
-          domProps: { value: _vm.slug },
-          on: {
-            input: function ($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.slug = $event.target.value
-            },
-          },
-        }),
+          }),
+        ]),
         _vm._v(" "),
         _c(
-          "div",
-          [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                on: {
-                  click: function ($event) {
-                    return _vm.save()
-                  },
-                },
+          "button",
+          {
+            staticClass: "btn btn-primary",
+            on: {
+              click: function ($event) {
+                return _vm.save()
               },
-              [_vm._v("Сохранить")]
-            ),
-            _vm._v(" "),
-            _c(
-              "router-link",
-              {
-                staticClass: "btn btn-default",
-                attrs: { to: { name: "Catalog" } },
-              },
-              [_vm._v("Отмена")]
-            ),
-          ],
-          1
+            },
+          },
+          [_vm._v("Сохранить")]
         ),
       ]),
     ]),
@@ -65628,24 +65667,10 @@ var render = function () {
             ]),
           ]),
         ])
-      : _c("div", [_vm._m(0)]),
+      : _c("div", [_c("Loader")], 1),
   ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "spinner-border text-primary me-2",
-        attrs: { role: "status" },
-      },
-      [_c("span", { staticClass: "sr-only" }, [_vm._v("Загрузка...")])]
-    )
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

@@ -8,16 +8,25 @@
 
         <div class="card">
             <div class="card-body">
-                <label >Название</label>
-                <input v-model="name" @change="slugify(name)" type="text" class="form-control mb-3">
-
-                <label>Код</label>
-                <input v-model="slug" type="text" class="form-control mb-3" disabled>
-
-                <div>
-                    <button @click="save()" class="btn btn-primary">Сохранить</button>
-                    <router-link :to="{name: 'Catalog'}" class="btn btn-default">Отмена</router-link>
+                <div v-if="errors && errors.length > 0" class="alert alert-danger">
+                    <div class="alert-message">
+                        <strong v-for="(error, index) in errors" :key="'error_' + index" class="d-block">
+                            {{ error }}
+                        </strong>
+                    </div>
                 </div>
+
+                <div class="mb-3">
+                    <label>Название</label>
+                    <input v-model="name" @change="slugify(name)" type="text" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label>Символьный код</label>
+                    <input v-model="slug" type="text" class="form-control">
+                </div>
+
+                <button @click="save()" class="btn btn-primary">Сохранить</button>
             </div>
         </div>
     </div>
@@ -29,10 +38,25 @@
             return {
                 name: '',
                 slug: '',
+
+                errors: [],
             }
         },
         methods: {
             save() {
+                this.errors = []
+
+                if (!this.name) {
+                    this.errors.push('Укажите имя');
+                }
+                if (!this.slug) {
+                    this.errors.push('Укажите символьный код');
+                }
+
+                if(this.errors && this.errors.length > 0) {
+                    return
+                }
+                
                 axios
                 .post(`/api/catalog/categories`, {
                     name: this.name,

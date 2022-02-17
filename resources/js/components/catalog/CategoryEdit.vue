@@ -40,14 +40,14 @@
             </div>
         </div>
         <div v-else>
-            <div class="spinner-border text-primary me-2" role="status">
-                <span class="sr-only">Загрузка...</span>
-            </div>
+            <Loader></Loader>
         </div>
     </div>
 </template>
 
 <script>
+    import Loader from '../Loader.vue'
+
     export default {
         data() {
             return {
@@ -143,5 +143,8 @@
                 }
             },
         },
+        components: {
+            Loader
+        }
     }
 </script>
