@@ -20,7 +20,7 @@
                     <div class="card-body py-4">
                         <div class="d-flex align-items-center">
                             <div class="flex-grow-1">
-                                <p class="mb-3 lh-1">Курс доллара ({{ usd.date | formatDateShort }})</p>
+                                <p class="mb-3 lh-1">Курс доллара ({{ usd.date | dateMini }})</p>
                                 <h3 class="mb-0 lh-1">{{ usd.kurs }} ₽</h3>
                             </div>
                             <div class="d-inline-block ms-3">
@@ -71,7 +71,7 @@
                 .get('/api/usd')
                 .then((response => {
                     this.usd.kurs = response.data.kurs,
-                    this.usd.date = response.data.updated_at
+                    this.usd.date = response.data.date
                 }))
             },
             timeCurrent:function() {

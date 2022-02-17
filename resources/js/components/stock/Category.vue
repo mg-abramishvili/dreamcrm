@@ -42,7 +42,7 @@
                         <td class="align-middle">
                             <ul v-if="item.balances.length" class="m-0 p-0" style="list-style: none;">
                                 <li v-for="balance in item.balances" :key="'balance_' + balance.id">
-                                    {{ balance.quantity }} шт. | {{ balance.price | currency }} ₽ | {{ balance.created_at | formatDate }}
+                                    {{ balance.quantity }} шт. | {{ balance.price | currency }} ₽ | {{ balance.created_at | date }}
                                 </li>
                             </ul>
                         </td>

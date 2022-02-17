@@ -8,6 +8,11 @@ import moment from 'moment'
 Vue.prototype.$moment = moment;
 moment.locale('ru');
 
+import parse from 'date-fns/parse'
+import parseISO from 'date-fns/parseISO'
+import format from 'date-fns/format'
+import ru from 'date-fns/locale/ru'
+
 import axios from 'axios'
 window.axios = require('axios');
 //window.axios.defaults.withCredentials = true;
@@ -22,13 +27,15 @@ Vue.filter('currency', function (value) {
     if (!value) return ''
     return parseInt(value).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") 
 })
+Vue.filter('dateMini', function (value) {
+    if (!value) return ''
+    const date = parse(value, 'yyyy-MM-dd', new Date())
+    return format(date, "dd.MM")
+})
 Vue.filter('date', function (value) {
     if (!value) return ''
-    return moment(value, 'DD.MM.YYYY')
-})
-Vue.filter('formatDate', function (value) {
-    if (!value) return ''
-    return moment(value).format('DD.MM.YYYY')
+    const date = parseISO(value, new Date())
+    return format(date, "dd.MM.yyyy")
 })
 Vue.filter('formatDateShort', function (value) {
     if (!value) return ''
