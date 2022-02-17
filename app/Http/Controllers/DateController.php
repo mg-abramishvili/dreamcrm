@@ -9,6 +9,6 @@ class DateController extends Controller
 {
     public function date()
     {
-        return Carbon::now();
+        return Carbon::now('Europe/Moscow');
     }
 }
