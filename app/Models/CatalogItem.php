@@ -11,7 +11,7 @@ class CatalogElement extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(CatalogCategory::class);
     }
 
     public function stockItems()
@@ -21,7 +21,7 @@ class CatalogElement extends Model
 
     public function boxes()
     {
-        return $this->belongsToMany(Box::class);
+        return $this->belongsToMany(CatalogBox::class);
     }
 
     public function calculations()

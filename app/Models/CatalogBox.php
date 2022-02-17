@@ -13,12 +13,12 @@ class Box extends Model
 
     public function types()
     {
-        return $this->belongsToMany(Type::class);
+        return $this->belongsToMany(CatalogType::class);
     }
 
-    public function elements()
+    public function items()
     {
-        return $this->belongsToMany(Element::class);
+        return $this->belongsToMany(CatalogItem::class);
     }
 
     public function calculations()
