@@ -17,56 +17,61 @@ class CatalogItemController extends Controller
         return CatalogItem::whereRelation('boxes', 'box_id', $id)->get();
     }
 
-    public function element($id)
+    public function item($id)
     {
-        return CatalogItem::where('id', $id)->with('boxes', 'category')->first();
+        return CatalogItem::with('boxes', 'category', 'stockItems')->find($id);
     }
 
     public function store(Request $request)
     {
         $rules = [
             'name' => 'required',
-            'pre_rub' => 'required|numeric',
-            'pre_usd' => 'required|numeric',
             'price' => 'required|numeric',
-            'category' => 'required',
+            'category_id' => 'required',
             'boxes' => 'required',
         ];
 
         $this->validate($request, $rules);
 
-        $element = new CatalogItem();
-        $element->name = $request->name;
-        $element->category_id = $request->category;
-        $element->pre_rub = $request->pre_rub;
-        $element->pre_usd = $request->pre_usd;
-        $element->price = $request->price;
-        $element->save();
-        $element->boxes()->attach($request->boxes, ['element_id' => $element->id]);
+        $item = new CatalogItem();
+        $item->name = $request->name;
+        $item->price = $request->price;
+        $item->category_id = $request->category_id;
+        $item->save();
+        $item->boxes()->attach($request->boxes, ['catalog_item_id' => $item->id]);
+        $item->stockItems()->attach($request->stock_items, ['catalog_item_id' => $item->id]);
     }
 
     public function update($id, Request $request)
     {
         $rules = [
             'name' => 'required',
-            'pre_rub' => 'required|numeric',
-            'pre_usd' => 'required|numeric',
             'price' => 'required|numeric',
-            'category' => 'required',
+            'category_id' => 'required',
             'boxes' => 'required',
         ];
 
         $this->validate($request, $rules);
 
-        $element = CatalogItem::find($id);
-        $element->name = $request->name;
-        $element->category_id = $request->category;
-        $element->pre_rub = $request->pre_rub;
-        $element->pre_usd = $request->pre_usd;
-        $element->price = $request->price;
-        $element->save();
-        $element->boxes()->detach();
-        $element->boxes()->attach($request->boxes, ['element_id' => $element->id]);
+        $item = CatalogItem::find($id);
+        $item->name = $request->name;
+        $item->price = $request->price;
+        $item->category_id = $request->category_id;
+        $item->save();
+        $item->boxes()->detach();
+        $item->boxes()->attach($request->boxes, ['catalog_item_id' => $item->id]);
+        $item->stockItems()->detach();
+        $item->stockItems()->attach($request->stock_items, ['catalog_item_id' => $item->id]);
+    }
+
+    public function delete($id)
+    {
+        $item = CatalogItem::find($id);
+
+        $item->boxes()->detach();
+        $item->stockItems()->detach();
+        
+        $item->delete();
     }
 
     public function updatePrices()

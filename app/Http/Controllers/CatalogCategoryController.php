@@ -49,6 +49,8 @@ class CatalogCategoryController extends Controller
         $category = CatalogCategory::find($id);
         
         foreach($category->items as $item) {
+            $item->boxes()->detach();
+            $item->stockItems()->detach();
             $item->delete();
         }
         

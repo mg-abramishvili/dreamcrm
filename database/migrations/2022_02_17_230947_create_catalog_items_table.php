@@ -12,9 +12,10 @@ class CreateCatalogItemsTable extends Migration
             $table->id();
             $table->string('name');
             $table->integer('category_id');
-            $table->decimal('pre_rub')->default(0);
-            $table->decimal('pre_usd')->default(0);
             $table->decimal('price')->default(0);
+            $table->longText('description')->nullable();
+            $table->longText('manager_description')->nullable();
+            $table->text('comment')->nullable();
             $table->timestamps();
         });
     }

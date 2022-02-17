@@ -1,16 +1,13 @@
 <template>
-    <div v-if="categories && categories.length > 0 && boxes && boxes.length > 0 && usd.kurs && usd.kurs > 0 && element && element.id && element.id > 0">
+    <div v-if="categories.length > 0 && boxes.length > 0 && item.id">
         <div class="row align-items-center mb-4">
             <div class="col-12 col-lg-6">
                 <h1 class="h3 m-0">
-                    <router-link v-if="element.category_id && element.category_id > 0" :to="{name: 'CategoryElements', params: { category: element.category_id }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left align-middle me-2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                    </router-link>
-                    <router-link v-else :to="{name: 'Catalog'}">
+                    <router-link :to="{name: 'CatalogCategory', params: {id: item.category_id}}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left align-middle me-2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                     </router-link>
                     <strong>
-                        {{ element.name }}
+                        {{ item.name }}
                     </strong>
                 </h1>
             </div>
@@ -26,138 +23,124 @@
                     </div>
                 </div>
 
-                <label id="name_label">Название</label>
-                <input v-model="name" id="name_input" type="text" class="form-control mb-3">
-
-                <div class="row">
-                    <div class="col">
-                        <label>Цена RUB</label>
-                        <input v-model="pre_rub" type="number" min="0" class="form-control">
-                    </div>
-                    <div class="col">
-                        <label>Цена USD </label>
-                        <input v-model="pre_usd" type="number" min="0" class="form-control">
-                        <small>{{ usd.kurs }} ₽ от {{ usd.date | formatDateShort }}</small>
-                    </div>
-                    <div class="col">
-                        <label>Цена (финальная)</label>
-                        <input v-model="price" disabled type="number" class="form-control">
-                    </div>
-                </div>
+                <label>Название</label>
+                <input v-model="name" type="text" class="form-control mb-3">
 
                 <label>Категория</label>
                 <select v-model="selected.category" class="form-select mb-3">
                     <option v-for="category in categories" :key="'key_' + category.id" :value="category.id">{{ category.name }}</option>
                 </select>
 
-                <div class="d-flex justify-content-between">
-                    <label>Совместимость</label>
-                    <button @click="selectAllBoxes()" class="btn btn-sm">выбрать все</button>
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <div class="d-flex justify-content-between">
+                            <label>Совместимость</label>
+                            <button @click="selectAllBoxes()" class="btn btn-sm">выбрать все</button>
+                        </div>
+                        <select v-model="selected.boxes" class="form-control mb-3" style="height: 250px;" multiple>
+                            <option v-for="box in boxes" :key="'box_' + box.id" :value="box.id">{{ box.name }}</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <div class="d-flex justify-content-between">
+                            <label>Склад</label>
+                        </div>
+                        <select v-model="selected.stockItems" class="form-control mb-3" style="height: 165px;" multiple>
+                            <option v-for="stockItem in stockItems" :key="'stock_item_' + stockItem.id" :value="stockItem.id">{{ stockItem.name }} - {{ middleBalancePrice(stockItem) | currency }} ₽</option>
+                        </select>
+                        <label>Цена (финальная)</label>
+                        <input v-model="price" disabled type="number" class="form-control">
+                    </div>
                 </div>
-                <select v-model="selected.boxes" class="form-control mb-3" style="height: 300px;" multiple>
-                    <option v-for="box in boxes" :key="'box_' + box.id" :value="box.id">{{ box.name }}</option>
-                </select>
 
-                <button @click="updateElement(element.id)" class="btn btn-primary">Сохранить</button>
+                <button @click="save(item.id)" class="btn btn-primary">Сохранить</button>
+                <button @click="del(item.id)" class="btn btn-outline-danger">Удалить</button>
             </div>
         </div>
     </div>
     <div v-else>
-        <div class="spinner-border text-primary me-2" role="status">
-            <span class="sr-only">Загрузка...</span>
-        </div>
+        <Loader></Loader>
     </div>
 </template>
 
 <script>
+    import Loader from '../Loader.vue'
+
     export default {
         data() {
             return {
-                element: {},
+                item: '',
 
                 name: '',
-                pre_rub: 0,
-                pre_usd: 0,
 
                 selected: {
                     category: '',
                     boxes: [],
+                    stockItems: [],
                 },
                 
                 categories: [],
                 boxes: [],
-
-                usd: {
-                    kurs: '',
-                    date: '',
-                },
+                stockItems: [],
 
                 errors: [],
             }
         },
         computed: {
-            price: function () {
-                if(this.pre_rub && this.pre_rub.length > 0 || this.pre_usd && this.pre_usd.length > 0) {
-                    if(this.pre_rub && this.pre_rub.length > 0 && this.pre_usd && this.pre_usd.length > 0) {
-                        return Math.ceil((parseFloat(this.pre_rub) + (parseFloat(this.usd.kurs) * parseFloat(this.pre_usd))) / 50) * 50
-                    } else if (!this.pre_rub) {
-                        return Math.ceil(parseFloat(parseFloat(this.usd.kurs) * parseFloat(this.pre_usd) / 50)) * 50
-                    } else if (!this.pre_usd) {
-                        return Math.ceil(parseFloat(this.pre_rub) / 50) * 50
+            price() {
+                let stockItems = []
+                this.selected.stockItems.forEach((selectedItem) => {
+                    if(this.stockItems.find(item => item.id == selectedItem)) {
+                        stockItems.push(this.stockItems.find(item => item.id == selectedItem))
                     }
-                } else {
-                    return 0
-                }
+                })
+                return stockItems.map(stockItem => stockItem.balances.map(a => a.price).reduce((a, b) => (parseInt(a) + parseInt(b))) / stockItem.balances.map(a => a.price).length).reduce((a, b) => a + b, 0)
             }
         },
         created() {
-            this.loadCategories()            
-            this.loadBoxes()            
-            this.loadUsd()
-            this.loadElement()
+            this.loadCategories()
+            this.loadBoxes()
+            this.loadStockItems()
+            this.loadItem()
         },
         methods: {
             loadCategories() {
-                axios.get('/api/categories')
+                axios.get('/api/catalog/categories')
                     .then((response => {
                         this.categories = response.data
-                        if(this.$route.params.category) {
-                            this.selected.category = this.$route.params.category
-                        }
                     }))
             },
             loadBoxes() {
-                axios.get(`/api/boxes`)
+                axios.get(`/api/catalog/boxes`)
                     .then(response => (
                         this.boxes = response.data
                     ))
             },
-            loadUsd() {
-                axios
-                .get('/api/usd')
-                .then((response => {
-                    this.usd.kurs = response.data.kurs,
-                    this.usd.date = response.data.updated_at
-                }))
+            loadStockItems() {
+                axios.get(`/api/stock/items`)
+                    .then(response => (
+                        this.stockItems = response.data
+                    ))
             },
-            loadElement() {
-                axios
-                .get(`/api/element/${this.$route.params.id}`)
-                .then((response => {
-                    this.element = response.data
-                    this.name = response.data.name
-                    this.pre_rub = response.data.pre_rub
-                    this.pre_usd = response.data.pre_usd
+            loadItem() {
+                axios.get(`/api/catalog/item/${this.$route.params.id}`)
+                    .then((response => {
+                        this.item = response.data
 
-                    this.selected.category = response.data.category_id
+                        this.name = response.data.name
+                        this.selected.category = response.data.category_id
 
-                    this.selected.boxes = response.data.boxes.map(box => box.id)
-                }))
+                        this.selected.boxes = response.data.boxes.map(box => box.id)
+                        this.selected.stockItems = response.data.stock_items.map(item => item.id)
+                    }))
             },
             selectAllBoxes() {
                 this.selected.boxes = this.boxes.map(box => box.id)
             },
-            updateElement(id) {
+            middleBalancePrice(stockItem) {
+                return stockItem.balances.map(a => a.price).reduce((a, b) => (parseInt(a) + parseInt(b))) / stockItem.balances.map(a => a.price).length
+            },
+            save(id) {
                 this.errors = []
 
                 if (!this.name) {
@@ -177,17 +160,16 @@
                     return
                 }
 
-                axios.put(`/api/element/${id}/update`,
+                axios.put(`/api/catalog/item/${id}/update`,
                 {
                     name: this.name,
-                    pre_rub: this.pre_rub,
-                    pre_usd: this.pre_usd,
                     price: this.price,
-                    category: this.selected.category,
+                    category_id: this.selected.category,
+                    stock_items: this.selected.stockItems,
                     boxes: this.selected.boxes,
                 })
                 .then(response => (
-                    this.$router.push({path: `/catalog/${this.selected.category}/elements/`}) 
+                    this.$router.push({name: 'CatalogCategory', params: {id: this.item.category_id}}) 
                 ))
                 .catch((error) => {
                     if(error.response) {
@@ -197,6 +179,25 @@
                     }
                 })
             },
+            del(id) {
+                if (confirm("Точно удалить?")) {
+                    axios.delete(`/api/catalog/item/${id}/delete`)
+                    .then(response => (
+                        this.$router.push({name: 'CatalogCategory', params: {id: this.item.category_id}}) 
+                    ))
+                    .catch((error) => {
+                        if(error.response) {
+                            this.errors = []
+                            for(var key in error.response.data.errors){
+                                this.errors.push(key)
+                            }
+                        }
+                    })
+                }
+            },
         },
+        components: {
+            Loader
+        }
     }
 </script>

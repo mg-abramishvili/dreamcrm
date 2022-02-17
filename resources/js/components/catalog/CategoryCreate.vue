@@ -39,7 +39,7 @@
                     slug: this.slug
                 })
                 .then(response => (
-                    this.$router.push({name: 'CatalogCategory', params: {category_id: response.data }})
+                    this.$router.push({name: 'CatalogCategory', params: {id: response.data }})
                 ))
             },
             slugify(str) {

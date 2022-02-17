@@ -5,7 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DateController;
 use App\Http\Controllers\DollarController;
 
-use App\Http\Controllers\CatalogElementController;
+use App\Http\Controllers\CatalogItemController;
 use App\Http\Controllers\CatalogTypeController;
 use App\Http\Controllers\CatalogBoxController;
 use App\Http\Controllers\CatalogCategoryController;
@@ -49,12 +49,13 @@ Route::post('/me', [AuthController::class, 'me']);
 
 
 // CATALOG
-Route::get('elements', [CatalogElementController::class, 'index']);
-Route::get('elements/box/{id}', [CatalogElementController::class, 'indexByBox']);
-Route::get('element/{id}', [CatalogElementController::class, 'element']);
-Route::put('element/{id}/update', [CatalogElementController::class, 'update']);
-Route::post('elements', [CatalogElementController::class, 'store']);
-Route::get('elements-prices-update', [CatalogElementController::class, 'updatePrices']);
+Route::get('catalog/items', [CatalogItemController::class, 'index']);
+Route::get('catalog/items/box/{id}', [CatalogItemController::class, 'indexByBox']);
+Route::get('catalog/item/{id}', [CatalogItemController::class, 'item']);
+Route::put('catalog/item/{id}/update', [CatalogItemController::class, 'update']);
+Route::delete('catalog/item/{id}/delete', [CatalogItemController::class, 'delete']);
+Route::post('catalog/items', [CatalogItemController::class, 'store']);
+Route::get('catalog/items-prices-update', [CatalogItemController::class, 'updatePrices']);
 
 Route::get('catalog/boxes', [CatalogBoxController::class, 'index']);
 Route::post('catalog/boxes', [CatalogBoxController::class, 'store']);
