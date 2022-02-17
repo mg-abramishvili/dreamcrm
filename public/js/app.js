@@ -7969,7 +7969,7 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('currency', function (value) 
 });
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('date', function (value) {
   if (!value) return '';
-  return moment__WEBPACK_IMPORTED_MODULE_0___default()(value).format('DD.MM.YYYY');
+  return moment__WEBPACK_IMPORTED_MODULE_0___default()(value, 'DD.MM.YYYY');
 });
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('formatDate', function (value) {
   if (!value) return '';

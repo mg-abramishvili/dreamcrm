@@ -24,7 +24,7 @@ Vue.filter('currency', function (value) {
 })
 Vue.filter('date', function (value) {
     if (!value) return ''
-    return moment(value).format('DD.MM.YYYY')
+    return moment(value, 'DD.MM.YYYY')
 })
 Vue.filter('formatDate', function (value) {
     if (!value) return ''
