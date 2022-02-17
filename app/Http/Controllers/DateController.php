@@ -12,7 +12,7 @@ class DateController extends Controller
         
         $t=time();
         echo($t . "<br>");
-        echo(date("Y-m-d",$t));
+        echo(date("H:mm",$t));
         // return Carbon::now();
     }
 }
