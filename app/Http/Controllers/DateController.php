@@ -9,6 +9,6 @@ class DateController extends Controller
 {
     public function date()
     {
-        return phpinfo();
+        return Carbon::now();
     }
 }
