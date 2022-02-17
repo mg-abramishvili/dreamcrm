@@ -28,19 +28,19 @@ Vue.filter('date', function (value) {
 })
 Vue.filter('formatDate', function (value) {
     if (!value) return ''
-    return moment(value).utcOffset(180).format('DD.MM.YYYY')
+    return moment(value).format('DD.MM.YYYY')
 })
 Vue.filter('formatDateShort', function (value) {
     if (!value) return ''
-    return moment(value).utcOffset(180).format('DD.MM')
+    return moment(value).format('DD.MM')
 })
 Vue.filter('formatDateTimeOnly', function (value) {
     if (!value) return ''
-    return moment(value).utcOffset(180).format('H:mm')
+    return moment(value).format('H:mm')
 })
 Vue.filter('formatDateLong', function (value) {
     if (!value) return ''
-    return moment(value).utcOffset(180).format('dddd, D MMMM')
+    return moment(value).format('dddd, D MMMM')
 })
 
 const router = new VueRouter({

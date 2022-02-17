@@ -7973,19 +7973,19 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('date', function (value) {
 });
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('formatDate', function (value) {
   if (!value) return '';
-  return moment__WEBPACK_IMPORTED_MODULE_0___default()(value).utcOffset(180).format('DD.MM.YYYY');
+  return moment__WEBPACK_IMPORTED_MODULE_0___default()(value).format('DD.MM.YYYY');
 });
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('formatDateShort', function (value) {
   if (!value) return '';
-  return moment__WEBPACK_IMPORTED_MODULE_0___default()(value).utcOffset(180).format('DD.MM');
+  return moment__WEBPACK_IMPORTED_MODULE_0___default()(value).format('DD.MM');
 });
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('formatDateTimeOnly', function (value) {
   if (!value) return '';
-  return moment__WEBPACK_IMPORTED_MODULE_0___default()(value).utcOffset(180).format('H:mm');
+  return moment__WEBPACK_IMPORTED_MODULE_0___default()(value).format('H:mm');
 });
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('formatDateLong', function (value) {
   if (!value) return '';
-  return moment__WEBPACK_IMPORTED_MODULE_0___default()(value).utcOffset(180).format('dddd, D MMMM');
+  return moment__WEBPACK_IMPORTED_MODULE_0___default()(value).format('dddd, D MMMM');
 });
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_5__["default"]({
   mode: 'history',
