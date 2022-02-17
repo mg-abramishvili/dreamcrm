@@ -15,7 +15,7 @@
                 </h1>
             </div>
             <div class="col-12 col-lg-6 text-end">
-                <router-link :to="{name: 'ItemCreate', params: {category: category.id}}" class="btn btn-primary">Добавить</router-link>
+                <router-link :to="{name: 'CatalogItemCreate', params: {category_id: category.id}}" class="btn btn-primary">Добавить</router-link>
             </div>
         </div>
 
@@ -62,7 +62,7 @@
                 ));
             },
             goTo(id) {
-                this.$router.push({name: 'ItemEdit', params: {id: id}})
+                this.$router.push({name: 'CatalogItemEdit', params: {id: id}})
             },
         },
     }

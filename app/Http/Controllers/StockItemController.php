@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class StockItemController extends Controller
 {
+    public function index() {
+        return StockItem::with('balances')->get();
+    }
+
     public function item($id)
     {
         return StockItem::with('balances')->find($id);

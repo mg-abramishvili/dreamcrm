@@ -1,25 +1,35 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CatalogElementController;
-use App\Http\Controllers\TypeController;
-use App\Http\Controllers\BoxController;
-use App\Http\Controllers\CatalogCategoryController;
-use App\Http\Controllers\DeliveryController;
-use App\Http\Controllers\CalculationController;
-use App\Http\Controllers\OfferController;
+
+use App\Http\Controllers\DateController;
 use App\Http\Controllers\DollarController;
+
+use App\Http\Controllers\CatalogElementController;
+use App\Http\Controllers\CatalogTypeController;
+use App\Http\Controllers\CatalogBoxController;
+use App\Http\Controllers\CatalogCategoryController;
+use App\Http\Controllers\CatalogDeliveryController;
+
+use App\Http\Controllers\CalculationController;
+
+use App\Http\Controllers\OfferController;
+
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TaskCommentController;
 use App\Http\Controllers\TaskBoardController;
 use App\Http\Controllers\TaskBoardColumnController;
+
 use App\Http\Controllers\ClientController;
+
 use App\Http\Controllers\UserController;
+
 use App\Http\Controllers\FileController;
+
 use App\Http\Controllers\StockCategoryController;
 use App\Http\Controllers\StockItemController;
-use App\Http\Controllers\DateController;
 use App\Http\Controllers\StockBalanceController;
+
 use App\Http\Controllers\NotificationController;
 
 use Illuminate\Http\Request;
@@ -46,11 +56,11 @@ Route::put('element/{id}/update', [CatalogElementController::class, 'update']);
 Route::post('elements', [CatalogElementController::class, 'store']);
 Route::get('elements-prices-update', [CatalogElementController::class, 'updatePrices']);
 
-Route::get('boxes', [BoxController::class, 'index']);
-Route::post('boxes', [BoxController::class, 'store']);
-Route::get('boxes/type/{id}', [BoxController::class, 'indexByType']);
-Route::get('box/{id}', [BoxController::class, 'box']);
-Route::put('box/{id}/update', [BoxController::class, 'update']);
+Route::get('catalog/boxes', [CatalogBoxController::class, 'index']);
+Route::post('catalog/boxes', [CatalogBoxController::class, 'store']);
+Route::get('catalog/boxes/type/{type_id}', [CatalogBoxController::class, 'indexByType']);
+Route::get('catalog/box/{id}', [CatalogBoxController::class, 'box']);
+Route::put('catalog/box/{id}/update', [CatalogBoxController::class, 'update']);
 
 Route::get('catalog/categories', [CatalogCategoryController::class, 'index']);
 Route::post('catalog/categories', [CatalogCategoryController::class, 'store']);
@@ -58,7 +68,7 @@ Route::get('catalog/category/{id}', [CatalogCategoryController::class, 'category
 Route::put('catalog/category/{id}/update', [CatalogCategoryController::class, 'update']);
 Route::delete('catalog/category/{id}/delete', [CatalogCategoryController::class, 'delete']);
 
-Route::get('types', [TypeController::class, 'index']);
+Route::get('catalog/types', [CatalogTypeController::class, 'index']);
 
 
 
@@ -101,6 +111,7 @@ Route::post('stock/categories', [StockCategoryController::class, 'store'])->midd
 Route::get('stock/category/{id}', [StockCategoryController::class, 'category'])->middleware('auth:sanctum');
 Route::put('stock/category/{id}/update', [StockCategoryController::class, 'update'])->middleware('auth:sanctum');
 Route::delete('stock/category/{id}/delete', [StockCategoryController::class, 'delete'])->middleware('auth:sanctum');
+Route::get('stock/items', [StockItemController::class, 'index'])->middleware('auth:sanctum');
 Route::post('stock/items', [StockItemController::class, 'store'])->middleware('auth:sanctum');
 Route::get('stock/item/{id}', [StockItemController::class, 'item'])->middleware('auth:sanctum');
 Route::put('stock/item/{id}/update', [StockItemController::class, 'update'])->middleware('auth:sanctum');

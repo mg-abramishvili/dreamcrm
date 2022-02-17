@@ -11,19 +11,19 @@ class CreateCatalogBoxesTable extends Migration
         Schema::create('catalog_boxes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->decimal('pre_rub')->default(0);
-            $table->decimal('pre_usd')->default(0);
+            $table->integer('sborka_days')->nullable();
+            $table->integer('sborka_persons')->nullable();
+            $table->decimal('sborka')->nullable();
+            $table->decimal('marzha')->nullable();
             $table->decimal('price')->default(0);
+            $table->integer('length')->nullable();
+            $table->integer('width')->nullable();
+            $table->integer('height')->nullable();
+            $table->integer('weight')->nullable();
             $table->longText('description')->nullable();
             $table->longText('manager_description')->nullable();
             $table->longtext('gallery')->nullable();
             $table->text('comment')->nullable();
-            $table->decimal('length')->nullable();
-            $table->decimal('width')->nullable();
-            $table->decimal('height')->nullable();
-            $table->decimal('weight')->nullable();
-            $table->decimal('sborka')->nullable();
-            $table->decimal('marzha')->nullable();
             $table->timestamps();
         });
     }

@@ -12,7 +12,7 @@
                 </h1>
             </div>
             <div class="col-12 col-lg-6 text-end">
-                <router-link :to="{name: 'BoxCreate'}" class="btn btn-primary">Добавить</router-link>
+                <router-link :to="{name: 'CatalogBoxCreate'}" class="btn btn-primary">Добавить</router-link>
             </div>
         </div>
 
@@ -44,7 +44,6 @@
     export default {
         data() {
             return {
-                category: {},
                 boxes: [],
             }
         },
@@ -54,13 +53,13 @@
         methods: {
             loadBoxes() {
                 axios
-                .get(`/api/boxes`)
+                .get(`/api/catalog/boxes`)
                 .then(response => (
                     this.boxes = response.data
                 ));
             },
             goTo(id) {
-                this.$router.push({name: 'BoxEdit', params: {id: id}})
+                this.$router.push({name: 'CatalogBoxEdit', params: {id: id}})
             },
         },
     }

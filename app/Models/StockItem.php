@@ -13,4 +13,9 @@ class StockItem extends Model
     {
         return $this->hasMany(StockBalance::class, 'stock_item_id');
     }
+
+    public function catalogBoxes()
+    {
+        return $this->belongsToMany(CatalogBox::class);
+    }
 }

@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Type;
+use App\Models\CatalogType;
 use Illuminate\Http\Request;
 
-class TypeController extends Controller
+class CatalogTypeController extends Controller
 {
     public function index()
     {
-        return Type::all();
+        return CatalogType::all();
     }
 }

@@ -4,11 +4,11 @@ import Catalog from './components/catalog/Index.vue';
 import CatalogCategory from './components/catalog/Category.vue';
 import CatalogCategoryCreate from './components/catalog/CategoryCreate.vue';
 import CatalogCategoryEdit from './components/catalog/CategoryEdit.vue';
-import ItemCreate from './components/catalog/ItemCreate.vue';
-import ItemEdit from './components/catalog/ItemEdit.vue';
-import Boxes from './components/catalog/Boxes.vue';
-import BoxCreate from './components/catalog/BoxCreate.vue';
-import BoxEdit from './components/catalog/BoxEdit.vue';
+import CatalogItemCreate from './components/catalog/ItemCreate.vue';
+import CatalogItemEdit from './components/catalog/ItemEdit.vue';
+import CatalogBoxes from './components/catalog/Boxes.vue';
+import CatalogBoxCreate from './components/catalog/BoxCreate.vue';
+import CatalogBoxEdit from './components/catalog/BoxEdit.vue';
 import CatalogSearch from './components/catalog/CatalogSearch.vue';
 
 import Calculations from './components/calculations/Calculations.vue';
@@ -48,7 +48,12 @@ export const routes = [
         component: Catalog
     },
     {
-        path: '/catalog/category/create',
+        path: '/catalog/category/:id',
+        name: 'CatalogCategory',
+        component: CatalogCategory
+    },
+    {
+        path: '/catalog/categories/create',
         name: 'CatalogCategoryCreate',
         component: CatalogCategoryCreate
     },
@@ -57,35 +62,31 @@ export const routes = [
         name: 'CatalogCategoryEdit',
         component: CatalogCategoryEdit
     },
-    {
-        path: '/catalog/:category_id',
-        name: 'CatalogCategory',
-        component: CatalogCategory
-    },
+    
     {
         path: '/catalog/:category_id?/item/create',
-        name: 'ItemCreate',
-        component: ItemCreate
+        name: 'CatalogItemCreate',
+        component: CatalogItemCreate
     },
     {
         path: '/catalog/item/:id/edit',
-        name: 'ItemEdit',
-        component: ItemEdit
+        name: 'CatalogItemEdit',
+        component: CatalogItemEdit
     },
     {
         path: '/catalog/boxes',
-        name: 'Boxes',
-        component: Boxes
+        name: 'CatalogBoxes',
+        component: CatalogBoxes
     },
     {
-        path: '/box/create',
-        name: 'BoxCreate',
-        component: BoxCreate
+        path: '/catalog/boxes/create',
+        name: 'CatalogBoxCreate',
+        component: CatalogBoxCreate
     },
     {
-        path: '/box/:id/edit',
-        name: 'BoxEdit',
-        component: BoxEdit
+        path: '/catalog/box/:id/edit',
+        name: 'CatalogBoxEdit',
+        component: CatalogBoxEdit
     },
     {
         path: '/catalog/search',

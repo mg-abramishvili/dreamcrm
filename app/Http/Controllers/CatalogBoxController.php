@@ -19,19 +19,20 @@ class CatalogBoxController extends Controller
 
     public function box($id)
     {
-        return CatalogBox::with('types')->find($id);
+        return CatalogBox::with('types', 'stockItems')->find($id);
     }
 
     public function store(Request $request)
     {
         $rules = [
             'name' => 'required',
-            'pre_rub' => 'required|numeric',
-            'pre_usd' => 'required|numeric',
             'marzha' => 'required|numeric',
+            'sborka_days' => 'required|numeric',
+            'sborka_persons' => 'required|numeric',
             'sborka' => 'required|numeric',
             'price' => 'required|numeric',
             'types' => 'required',
+            'stock_items' => 'required',
             'length' => 'required|numeric',
             'width' => 'required|numeric',
             'height' => 'required|numeric',
@@ -42,9 +43,9 @@ class CatalogBoxController extends Controller
         
         $box = new CatalogBox();
         $box->name = $request->name;
-        $box->pre_rub = $request->pre_rub;
-        $box->pre_usd = $request->pre_usd;
         $box->marzha = $request->marzha;
+        $box->sborka_days = $request->sborka_days;
+        $box->sborka_persons = $request->sborka_persons;
         $box->sborka = $request->sborka;
         $box->price = $request->price;
         $box->length = $request->length;
@@ -54,20 +55,29 @@ class CatalogBoxController extends Controller
         $box->description = $request->description;
         $box->manager_description = $request->manager_description;
         $box->comment = $request->comment;
+
+        if (!isset($request->gallery)) {
+            $request->gallery = [];
+        }
+        $box->gallery = $request->gallery;
+
         $box->save();
-        $box->types()->attach($request->types, ['box_id' => $box->id]);
+
+        $box->types()->attach($request->types, ['catalog_box_id' => $box->id]);
+        $box->stockItems()->attach($request->stock_items, ['catalog_box_id' => $box->id]);
     }
 
     public function update($id, Request $request)
     {
         $rules = [
             'name' => 'required',
-            'pre_rub' => 'required|numeric',
-            'pre_usd' => 'required|numeric',
             'marzha' => 'required|numeric',
+            'sborka_days' => 'required|numeric',
+            'sborka_persons' => 'required|numeric',
             'sborka' => 'required|numeric',
             'price' => 'required|numeric',
             'types' => 'required',
+            'stock_items' => 'required',
             'length' => 'required|numeric',
             'width' => 'required|numeric',
             'height' => 'required|numeric',
@@ -78,9 +88,9 @@ class CatalogBoxController extends Controller
         
         $box = CatalogBox::find($id);
         $box->name = $request->name;
-        $box->pre_rub = $request->pre_rub;
-        $box->pre_usd = $request->pre_usd;
         $box->marzha = $request->marzha;
+        $box->sborka_days = $request->sborka_days;
+        $box->sborka_persons = $request->sborka_persons;
         $box->sborka = $request->sborka;
         $box->price = $request->price;
         $box->length = $request->length;
@@ -90,8 +100,17 @@ class CatalogBoxController extends Controller
         $box->description = $request->description;
         $box->manager_description = $request->manager_description;
         $box->comment = $request->comment;
+
+        if (!isset($request->gallery)) {
+            $request->gallery = [];
+        }
+        $box->gallery = $request->gallery;
+
         $box->save();
+
         $box->types()->detach();
-        $box->types()->attach($request->types, ['box_id' => $box->id]);
+        $box->types()->attach($request->types, ['catalog_box_id' => $box->id]);
+        $box->stockItems()->detach();
+        $box->stockItems()->attach($request->stock_items, ['catalog_box_id' => $box->id]);
     }
 }

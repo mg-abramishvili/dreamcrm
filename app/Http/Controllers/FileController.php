@@ -24,6 +24,20 @@ class FileController extends Controller
             ]);
         }
 
+        if (request()->file('gallery')) {
+            $gallery = request()->file('gallery');
+            for ($i = 0; $i < count($gallery); $i++) {
+                $galleryItem = $gallery[$i];
+                $galleryItem_name = time().'.'.$galleryItem->extension();
+
+                $galleryItem->move(public_path() . '/uploads/catalog', $galleryItem_name);
+
+                return \Response::make('/uploads/catalog' . '/' . $galleryItem_name, 200, [
+                    'Content-Disposition' => 'inline',
+                ]);
+            }
+        }
+
         if (request()->file('task_files')) {
             $task_files = request()->file('task_files');
             for ($i = 0; $i < count($task_files); $i++) {
@@ -42,7 +56,7 @@ class FileController extends Controller
                 $file->user_id = $request->user_id;
                 $file->save();
 
-                return \Response::make('/uploads/' . $task_file_name, 200, [
+                return \Response::make('/uploads/task_' . $request->task_id . '/' . $task_file_name, 200, [
                     'Content-Disposition' => 'inline',
                 ]);
             }
