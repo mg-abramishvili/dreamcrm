@@ -9,10 +9,13 @@
                     <strong>
                         {{ category.name }}
                     </strong>
+                    <router-link :to="{name: 'CatalogCategoryEdit', params: {id: $route.params.category_id}}" class="btn btn-sm ms-1" style="opacity: 0.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit align-middle"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                    </router-link>
                 </h1>
             </div>
             <div class="col-12 col-lg-6 text-end">
-                <router-link :to="{name: 'ElementCreate', params: {category: category.id}}" class="btn btn-primary">Добавить</router-link>
+                <router-link :to="{name: 'ItemCreate', params: {category: category.id}}" class="btn btn-primary">Добавить</router-link>
             </div>
         </div>
 
@@ -25,12 +28,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr @click="goTo(element.id)" v-for="element in elements" :key="'element_' + element.id">
+                    <tr @click="goTo(item.id)" v-for="item in category.items" :key="'item_' + item.id">
                         <td class="align-middle">
-                            <a>{{ element.name }}</a>
+                            <a>{{ item.name }}</a>
                         </td>
                         <td class="align-middle">
-                            {{ element.price | currency }} ₽
+                            {{ item.price | currency }} ₽
                         </td>
                     </tr>
                 </tbody>
@@ -45,30 +48,21 @@
         data() {
             return {
                 category: {},
-                elements: [],
             }
         },
         created() {
             this.loadCategory()
-            this.loadElements()
         },
         methods: {
             loadCategory() {
                 axios
-                .get(`/api/category/${this.$route.params.category}`)
+                .get(`/api/catalog/category/${this.$route.params.category_id}`)
                 .then(response => (
                     this.category = response.data
                 ));
             },
-            loadElements() {
-                axios
-                .get(`/api/category/${this.$route.params.category}/elements`)
-                .then(response => (
-                    this.elements = response.data
-                ));
-            },
             goTo(id) {
-                this.$router.push({name: 'ElementEdit', params: {id: id}})
+                this.$router.push({name: 'ItemEdit', params: {id: id}})
             },
         },
     }

@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Box;
+use App\Models\CatalogBox;
 use Illuminate\Http\Request;
 
-class BoxController extends Controller
+class CatalogBoxController extends Controller
 {
     public function index()
     {
-        return Box::all();
+        return CatalogBox::all();
     }
 
     public function indexByType($id)
     {
-        return Box::whereRelation('types', 'type_id', $id)->get();
+        return CatalogBox::whereRelation('types', 'type_id', $id)->get();
     }
 
     public function box($id)
     {
-        return Box::with('types')->find($id);
+        return CatalogBox::with('types')->find($id);
     }
 
     public function store(Request $request)
@@ -40,7 +40,7 @@ class BoxController extends Controller
 
         $this->validate($request, $rules);
         
-        $box = new Box();
+        $box = new CatalogBox();
         $box->name = $request->name;
         $box->pre_rub = $request->pre_rub;
         $box->pre_usd = $request->pre_usd;
@@ -76,7 +76,7 @@ class BoxController extends Controller
 
         $this->validate($request, $rules);
         
-        $box = Box::find($id);
+        $box = CatalogBox::find($id);
         $box->name = $request->name;
         $box->pre_rub = $request->pre_rub;
         $box->pre_usd = $request->pre_usd;

@@ -1,10 +1,11 @@
 import Home from './components/Home.vue';
 
-import Catalog from './components/catalog/Catalog.vue';
-import CategoryCreate from './components/catalog/CategoryCreate.vue';
-import CategoryElements from './components/catalog/CategoryElements.vue';
-import ElementCreate from './components/catalog/ElementCreate.vue';
-import ElementEdit from './components/catalog/ElementEdit.vue';
+import Catalog from './components/catalog/Index.vue';
+import CatalogCategory from './components/catalog/Category.vue';
+import CatalogCategoryCreate from './components/catalog/CategoryCreate.vue';
+import CatalogCategoryEdit from './components/catalog/CategoryEdit.vue';
+import ItemCreate from './components/catalog/ItemCreate.vue';
+import ItemEdit from './components/catalog/ItemEdit.vue';
 import Boxes from './components/catalog/Boxes.vue';
 import BoxCreate from './components/catalog/BoxCreate.vue';
 import BoxEdit from './components/catalog/BoxEdit.vue';
@@ -48,23 +49,28 @@ export const routes = [
     },
     {
         path: '/catalog/category/create',
-        name: 'CategoryCreate',
-        component: CategoryCreate
+        name: 'CatalogCategoryCreate',
+        component: CatalogCategoryCreate
     },
     {
-        path: '/catalog/:category/elements',
-        name: 'CategoryElements',
-        component: CategoryElements
+        path: '/catalog/category/:id/edit',
+        name: 'CatalogCategoryEdit',
+        component: CatalogCategoryEdit
     },
     {
-        path: '/catalog/:category?/create',
-        name: 'ElementCreate',
-        component: ElementCreate
+        path: '/catalog/:category_id',
+        name: 'CatalogCategory',
+        component: CatalogCategory
     },
     {
-        path: '/element/:id/edit',
-        name: 'ElementEdit',
-        component: ElementEdit
+        path: '/catalog/:category_id?/item/create',
+        name: 'ItemCreate',
+        component: ItemCreate
+    },
+    {
+        path: '/catalog/item/:id/edit',
+        name: 'ItemEdit',
+        component: ItemEdit
     },
     {
         path: '/catalog/boxes',

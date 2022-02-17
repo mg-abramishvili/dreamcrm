@@ -56,13 +56,13 @@
         </div>
     </div>
     <div v-else>
-        <div class="spinner-border text-primary me-2" role="status">
-            <span class="sr-only">Загрузка...</span>
-        </div>
+        <Loader></Loader>
     </div>
 </template>
 
 <script>
+    import Loader from '../Loader.vue'
+
     import vueFilePond from "vue-filepond";
     import "filepond/dist/filepond.min.css";
     import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css";
@@ -192,5 +192,8 @@
                 })
             },
         },
+        components: {
+            Loader
+        }
     }
 </script>

@@ -15,7 +15,7 @@
                 <input v-model="slug" type="text" class="form-control mb-3" disabled>
 
                 <div>
-                    <button @click="saveCategory()" class="btn btn-primary">Сохранить</button>
+                    <button @click="save()" class="btn btn-primary">Сохранить</button>
                     <router-link :to="{name: 'Catalog'}" class="btn btn-default">Отмена</router-link>
                 </div>
             </div>
@@ -32,14 +32,14 @@
             }
         },
         methods: {
-            saveCategory() {
+            save() {
                 axios
-                .post(`/api/categories`, {
+                .post(`/api/catalog/categories`, {
                     name: this.name,
                     slug: this.slug
                 })
                 .then(response => (
-                    this.$router.push({name: 'Catalog'})
+                    this.$router.push({name: 'CatalogCategory', params: {category_id: response.data }})
                 ))
             },
             slugify(str) {

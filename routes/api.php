@@ -4,7 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CatalogElementController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\BoxController;
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CatalogCategoryController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\CalculationController;
 use App\Http\Controllers\OfferController;
@@ -52,10 +52,11 @@ Route::get('boxes/type/{id}', [BoxController::class, 'indexByType']);
 Route::get('box/{id}', [BoxController::class, 'box']);
 Route::put('box/{id}/update', [BoxController::class, 'update']);
 
-Route::get('categories', [CategoryController::class, 'index']);
-Route::post('categories', [CategoryController::class, 'store']);
-Route::get('category/{id}', [CategoryController::class, 'category']);
-Route::get('category/{id}/elements', [CategoryController::class, 'categoryElements']);
+Route::get('catalog/categories', [CatalogCategoryController::class, 'index']);
+Route::post('catalog/categories', [CatalogCategoryController::class, 'store']);
+Route::get('catalog/category/{id}', [CatalogCategoryController::class, 'category']);
+Route::put('catalog/category/{id}/update', [CatalogCategoryController::class, 'update']);
+Route::delete('catalog/category/{id}/delete', [CatalogCategoryController::class, 'delete']);
 
 Route::get('types', [TypeController::class, 'index']);
 
