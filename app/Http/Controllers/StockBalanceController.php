@@ -22,6 +22,20 @@ class StockBalanceController extends Controller
         $balance->save();
     }
 
+    public function update($id, Request $request)
+    {
+        $balance = StockBalance::find($id);
+        
+        $balance->quantity = $request->quantity;
+        $balance->pre_rub = $request->pre_rub;
+        $balance->pre_usd = $request->pre_usd;
+        $balance->price = $request->price;
+        $balance->usd_kurs = $request->usd_kurs;
+        $balance->date = $request->date;
+
+        $balance->save();
+    }
+
     public function delete($id)
     {
         $balance = StockBalance::find($id);

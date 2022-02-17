@@ -51,7 +51,7 @@
         <AddBalance v-if="views.addBalance" :item="item"></AddBalance>
 
         <div v-for="balance in item.balances" :key="balance.id" class="card mb-1">
-            <div class="card-body">
+            <div v-if="views.editBalance == false" class="card-body">
                 <div class="row align-items-center">
                     <div class="col-2 text-center">
                         <span class="text-lg fw-bold text-primary" style="font-size: 30px; line-height: 1;">{{ balance.quantity }}</span>
@@ -70,10 +70,14 @@
                         {{ balance.price | currency }} ₽
                     </div>
                     <div class="col-2 text-center">
+                        <button @click="openEditBalance(balance.id)" class="btn btn-sm btn-outline-warning">
+                            <svg data-v-766bff82="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit align-middle"><path data-v-766bff82="" d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path data-v-766bff82="" d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                        </button>
                         <button @click="delBalance(balance.id)" class="btn btn-sm btn-outline-danger">&times;</button>
                     </div>
                 </div>
             </div>
+            <EditBalance v-if="views.editBalance" :item="item" :balance="balance"></EditBalance>
         </div>
     </div>
     <div v-else>
@@ -85,6 +89,7 @@
 
 <script>
     import AddBalance from './ItemAddBalance.vue'
+    import EditBalance from './ItemEditBalance.vue'
 
     export default {
         data() {
@@ -98,6 +103,7 @@
 
                 views: {
                     addBalance: false,
+                    editBalance: false,
                 },
 
                 errors: [],
@@ -128,6 +134,12 @@
             },
             closeAddBalance() {
                 this.views.addBalance = false
+            },
+            openEditBalance() {
+                this.views.editBalance = true
+            },
+            closeEditBalance() {
+                this.views.editBalance = false
             },
             update(id) {
                 this.errors = []
@@ -194,7 +206,8 @@
             }
         },
         components: {
-            AddBalance
+            AddBalance,
+            EditBalance
         }
     }
 </script>

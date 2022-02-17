@@ -5942,6 +5942,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _ItemAddBalance_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ItemAddBalance.vue */ "./resources/js/components/stock/ItemAddBalance.vue");
+/* harmony import */ var _ItemEditBalance_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ItemEditBalance.vue */ "./resources/js/components/stock/ItemEditBalance.vue");
+//
+//
+//
+//
 //
 //
 //
@@ -6028,6 +6033,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -6036,7 +6042,8 @@ __webpack_require__.r(__webpack_exports__);
       category: '',
       categories: [],
       views: {
-        addBalance: false
+        addBalance: false,
+        editBalance: false
       },
       errors: []
     };
@@ -6067,6 +6074,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     closeAddBalance: function closeAddBalance() {
       this.views.addBalance = false;
+    },
+    openEditBalance: function openEditBalance() {
+      this.views.editBalance = true;
+    },
+    closeEditBalance: function closeEditBalance() {
+      this.views.editBalance = false;
     },
     update: function update(id) {
       var _this3 = this;
@@ -6146,7 +6159,8 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   components: {
-    AddBalance: _ItemAddBalance_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    AddBalance: _ItemAddBalance_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    EditBalance: _ItemEditBalance_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   }
 });
 
@@ -6395,6 +6409,132 @@ __webpack_require__.r(__webpack_exports__);
 
           for (var key in error.response.data.errors) {
             _this2.errors.push(key);
+          }
+        }
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/stock/ItemEditBalance.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/stock/ItemEditBalance.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['item', 'balance'],
+  data: function data() {
+    return {
+      quantity: 0,
+      pre_rub: 0,
+      pre_usd: 0,
+      usd_kurs: 0,
+      date: '',
+      errors: []
+    };
+  },
+  computed: {
+    price: function price() {
+      if (!this.pre_rub) {
+        this.pre_rub = 0;
+      }
+
+      if (!this.pre_usd) {
+        this.pre_usd = 0;
+      }
+
+      return Math.ceil((parseFloat(this.pre_rub) + parseFloat(this.usd_kurs) * parseFloat(this.pre_usd)) / 50) * 50;
+    }
+  },
+  created: function created() {
+    this.quantity = this.balance.quantity;
+    this.pre_rub = this.balance.pre_rub;
+    this.pre_usd = this.balance.pre_usd;
+    this.date = this.balance.date;
+    this.usd_kurs = this.balance.usd_kurs;
+  },
+  methods: {
+    save: function save() {
+      var _this = this;
+
+      this.errors = [];
+
+      if (this.quantity < 0) {
+        this.errors.push('Укажите количество');
+      }
+
+      if (!this.date) {
+        this.errors.push('Укажите дату');
+      }
+
+      if (this.errors && this.errors.length > 0) {
+        return;
+      }
+
+      axios.put("/api/stock/balance/".concat(this.balance.id, "/update"), {
+        quantity: this.quantity,
+        pre_rub: this.pre_rub,
+        pre_usd: this.pre_usd,
+        price: this.price,
+        date: this.date,
+        usd_kurs: this.usd_kurs
+      }).then(function (response) {
+        return _this.$parent.closeEditBalance(), _this.$parent.loadItem();
+      })["catch"](function (error) {
+        if (error.response) {
+          for (var key in error.response.data.errors) {
+            console.log(key);
           }
         }
       });
@@ -52787,6 +52927,45 @@ component.options.__file = "resources/js/components/stock/ItemCreate.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/stock/ItemEditBalance.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/stock/ItemEditBalance.vue ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ItemEditBalance_vue_vue_type_template_id_515bf70b___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ItemEditBalance.vue?vue&type=template&id=515bf70b& */ "./resources/js/components/stock/ItemEditBalance.vue?vue&type=template&id=515bf70b&");
+/* harmony import */ var _ItemEditBalance_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ItemEditBalance.vue?vue&type=script&lang=js& */ "./resources/js/components/stock/ItemEditBalance.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ItemEditBalance_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ItemEditBalance_vue_vue_type_template_id_515bf70b___WEBPACK_IMPORTED_MODULE_0__.render,
+  _ItemEditBalance_vue_vue_type_template_id_515bf70b___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/stock/ItemEditBalance.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/tasks/AddUser.vue":
 /*!***************************************************!*\
   !*** ./resources/js/components/tasks/AddUser.vue ***!
@@ -53797,6 +53976,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/stock/ItemEditBalance.vue?vue&type=script&lang=js&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/stock/ItemEditBalance.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ItemEditBalance_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ItemEditBalance.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/stock/ItemEditBalance.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ItemEditBalance_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/tasks/AddUser.vue?vue&type=script&lang=js&":
 /*!****************************************************************************!*\
   !*** ./resources/js/components/tasks/AddUser.vue?vue&type=script&lang=js& ***!
@@ -54562,6 +54757,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ItemCreate_vue_vue_type_template_id_5aeb84f3___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ItemCreate_vue_vue_type_template_id_5aeb84f3___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ItemCreate.vue?vue&type=template&id=5aeb84f3& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/stock/ItemCreate.vue?vue&type=template&id=5aeb84f3&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/stock/ItemEditBalance.vue?vue&type=template&id=515bf70b&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/stock/ItemEditBalance.vue?vue&type=template&id=515bf70b& ***!
+  \******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ItemEditBalance_vue_vue_type_template_id_515bf70b___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ItemEditBalance_vue_vue_type_template_id_515bf70b___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ItemEditBalance_vue_vue_type_template_id_515bf70b___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ItemEditBalance.vue?vue&type=template&id=515bf70b& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/stock/ItemEditBalance.vue?vue&type=template&id=515bf70b&");
 
 
 /***/ }),
@@ -61799,79 +62011,157 @@ var render = function () {
             : _vm._e(),
           _vm._v(" "),
           _vm._l(_vm.item.balances, function (balance) {
-            return _c("div", { key: balance.id, staticClass: "card mb-1" }, [
-              _c("div", { staticClass: "card-body" }, [
-                _c("div", { staticClass: "row align-items-center" }, [
-                  _c("div", { staticClass: "col-2 text-center" }, [
-                    _c(
-                      "span",
-                      {
-                        staticClass: "text-lg fw-bold text-primary",
-                        staticStyle: {
-                          "font-size": "30px",
-                          "line-height": "1",
-                        },
-                      },
-                      [_vm._v(_vm._s(balance.quantity))]
-                    ),
-                    _vm._v(" "),
-                    _c("small", { staticClass: "text-muted" }, [_vm._v("шт.")]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-2 text-center fw-bold" }, [
-                    _vm._v(
-                      "\n                    " +
-                        _vm._s(_vm._f("date")(balance.date)) +
-                        "\n                "
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-2 text-center fw-bold" }, [
-                    _vm._v(
-                      "\n                    " +
-                        _vm._s(_vm._f("currency")(balance.pre_rub)) +
-                        " ₽\n                "
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-2 text-center fw-bold" }, [
-                    _vm._v(
-                      "\n                    $" +
-                        _vm._s(_vm._f("currency")(balance.pre_usd)) +
-                        " "
-                    ),
-                    _c(
-                      "small",
-                      { staticClass: "fw-normal text-muted d-block" },
-                      [_vm._v("курс " + _vm._s(balance.usd_kurs))]
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-2 text-center fw-bold" }, [
-                    _vm._v(
-                      "\n                    " +
-                        _vm._s(_vm._f("currency")(balance.price)) +
-                        " ₽\n                "
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-2 text-center" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-sm btn-outline-danger",
-                        on: {
-                          click: function ($event) {
-                            return _vm.delBalance(balance.id)
-                          },
-                        },
-                      },
-                      [_vm._v("×")]
-                    ),
-                  ]),
-                ]),
-              ]),
-            ])
+            return _c(
+              "div",
+              { key: balance.id, staticClass: "card mb-1" },
+              [
+                _vm.views.editBalance == false
+                  ? _c("div", { staticClass: "card-body" }, [
+                      _c("div", { staticClass: "row align-items-center" }, [
+                        _c("div", { staticClass: "col-2 text-center" }, [
+                          _c(
+                            "span",
+                            {
+                              staticClass: "text-lg fw-bold text-primary",
+                              staticStyle: {
+                                "font-size": "30px",
+                                "line-height": "1",
+                              },
+                            },
+                            [_vm._v(_vm._s(balance.quantity))]
+                          ),
+                          _vm._v(" "),
+                          _c("small", { staticClass: "text-muted" }, [
+                            _vm._v("шт."),
+                          ]),
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "col-2 text-center fw-bold" },
+                          [
+                            _vm._v(
+                              "\n                    " +
+                                _vm._s(_vm._f("date")(balance.date)) +
+                                "\n                "
+                            ),
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "col-2 text-center fw-bold" },
+                          [
+                            _vm._v(
+                              "\n                    " +
+                                _vm._s(_vm._f("currency")(balance.pre_rub)) +
+                                " ₽\n                "
+                            ),
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "col-2 text-center fw-bold" },
+                          [
+                            _vm._v(
+                              "\n                    $" +
+                                _vm._s(_vm._f("currency")(balance.pre_usd)) +
+                                " "
+                            ),
+                            _c(
+                              "small",
+                              { staticClass: "fw-normal text-muted d-block" },
+                              [_vm._v("курс " + _vm._s(balance.usd_kurs))]
+                            ),
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "col-2 text-center fw-bold" },
+                          [
+                            _vm._v(
+                              "\n                    " +
+                                _vm._s(_vm._f("currency")(balance.price)) +
+                                " ₽\n                "
+                            ),
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-2 text-center" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-sm btn-outline-warning",
+                              on: {
+                                click: function ($event) {
+                                  return _vm.openEditBalance(balance.id)
+                                },
+                              },
+                            },
+                            [
+                              _c(
+                                "svg",
+                                {
+                                  staticClass:
+                                    "feather feather-edit align-middle",
+                                  attrs: {
+                                    "data-v-766bff82": "",
+                                    xmlns: "http://www.w3.org/2000/svg",
+                                    width: "24",
+                                    height: "24",
+                                    viewBox: "0 0 24 24",
+                                    fill: "none",
+                                    stroke: "currentColor",
+                                    "stroke-width": "2",
+                                    "stroke-linecap": "round",
+                                    "stroke-linejoin": "round",
+                                  },
+                                },
+                                [
+                                  _c("path", {
+                                    attrs: {
+                                      "data-v-766bff82": "",
+                                      d: "M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7",
+                                    },
+                                  }),
+                                  _c("path", {
+                                    attrs: {
+                                      "data-v-766bff82": "",
+                                      d: "M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z",
+                                    },
+                                  }),
+                                ]
+                              ),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-sm btn-outline-danger",
+                              on: {
+                                click: function ($event) {
+                                  return _vm.delBalance(balance.id)
+                                },
+                              },
+                            },
+                            [_vm._v("×")]
+                          ),
+                        ]),
+                      ]),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.views.editBalance
+                  ? _c("EditBalance", {
+                      attrs: { item: _vm.item, balance: balance },
+                    })
+                  : _vm._e(),
+              ],
+              1
+            )
           }),
         ],
         2
@@ -62341,6 +62631,240 @@ var render = function () {
           [_vm._v("Сохранить")]
         ),
       ]),
+    ]),
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/stock/ItemEditBalance.vue?vue&type=template&id=515bf70b&":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/stock/ItemEditBalance.vue?vue&type=template&id=515bf70b& ***!
+  \*********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "card w-50 m-0 m-auto mb-1" }, [
+    _c("div", { staticClass: "card-body" }, [
+      _vm.errors && _vm.errors.length > 0
+        ? _c("div", { staticClass: "alert alert-danger" }, [
+            _c(
+              "div",
+              { staticClass: "alert-message" },
+              _vm._l(_vm.errors, function (error, index) {
+                return _c(
+                  "strong",
+                  { key: "error_" + index, staticClass: "d-block" },
+                  [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(error) +
+                        "\n                "
+                    ),
+                  ]
+                )
+              }),
+              0
+            ),
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("div", { staticClass: "row align-items-center" }, [
+        _c("div", { staticClass: "col-6 mb-4" }, [
+          _c("label", { staticClass: "form-label" }, [_vm._v("Кол-во")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.quantity,
+                expression: "quantity",
+              },
+            ],
+            staticClass: "form-control",
+            attrs: { type: "number", min: "0" },
+            domProps: { value: _vm.quantity },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.quantity = $event.target.value
+              },
+            },
+          }),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-6 mb-4" }, [
+          _c("label", { staticClass: "form-label" }, [_vm._v("Дата")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.date,
+                expression: "date",
+              },
+            ],
+            staticClass: "form-control",
+            attrs: { type: "date" },
+            domProps: { value: _vm.date },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.date = $event.target.value
+              },
+            },
+          }),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-3 mb-4" }, [
+          _c("label", { staticClass: "form-label" }, [_vm._v("Цена RUB")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.pre_rub,
+                expression: "pre_rub",
+              },
+            ],
+            staticClass: "form-control",
+            attrs: { type: "number", min: "0" },
+            domProps: { value: _vm.pre_rub },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.pre_rub = $event.target.value
+              },
+            },
+          }),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-3 mb-4" }, [
+          _c("label", { staticClass: "form-label" }, [_vm._v("Цена USD")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.pre_usd,
+                expression: "pre_usd",
+              },
+            ],
+            staticClass: "form-control",
+            attrs: { type: "number", min: "0" },
+            domProps: { value: _vm.pre_usd },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.pre_usd = $event.target.value
+              },
+            },
+          }),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-3 mb-4" }, [
+          _c("label", { staticClass: "form-label" }, [_vm._v("Цена итог")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.price,
+                expression: "price",
+              },
+            ],
+            staticClass: "form-control",
+            attrs: { type: "number", disabled: "" },
+            domProps: { value: _vm.price },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.price = $event.target.value
+              },
+            },
+          }),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-3 mb-4" }, [
+          _c("label", { staticClass: "form-label" }, [_vm._v("Курс USD")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.usd_kurs,
+                expression: "usd_kurs",
+              },
+            ],
+            staticClass: "form-control",
+            attrs: { type: "number" },
+            domProps: { value: _vm.usd_kurs },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.usd_kurs = $event.target.value
+              },
+            },
+          }),
+        ]),
+      ]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary",
+          on: {
+            click: function ($event) {
+              return _vm.save()
+            },
+          },
+        },
+        [_vm._v("Сохранить")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-outline-secondary",
+          on: {
+            click: function ($event) {
+              return _vm.$parent.closeEditBalance()
+            },
+          },
+        },
+        [_vm._v("Отмена")]
+      ),
     ]),
   ])
 }
