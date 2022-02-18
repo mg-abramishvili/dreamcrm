@@ -71,7 +71,7 @@ class TaskController extends Controller
                 $notification = new Notification();
                 $notification->task_id = $task->id;
                 $notification->user_id = $task->column->board->admin;
-                $notification->is_marked_as_read = false;
+                $notification->is_read = false;
                 $notification->name = 'Задача выполнена';
                 $notification->save();
             }
