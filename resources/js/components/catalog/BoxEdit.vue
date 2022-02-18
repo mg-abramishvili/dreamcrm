@@ -324,7 +324,9 @@
                 this.selected.boxes = this.boxes.map(box => box.id)
             },
             middleBalancePrice(stockItem) {
-                return stockItem.balances.map(a => a.price).reduce((a, b) => (parseInt(a) + parseInt(b))) / stockItem.balances.map(a => a.price).length
+                if(stockItem.balances.length) {
+                    return stockItem.balances.map(a => a.price).reduce((a, b) => (parseInt(a) + parseInt(b))) / stockItem.balances.map(a => a.price).length
+                }
             },
             save(id) {
                 this.errors = []

@@ -3567,13 +3567,15 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
       });
     },
     middleBalancePrice: function middleBalancePrice(stockItem) {
-      return stockItem.balances.map(function (a) {
-        return a.price;
-      }).reduce(function (a, b) {
-        return parseInt(a) + parseInt(b);
-      }) / stockItem.balances.map(function (a) {
-        return a.price;
-      }).length;
+      if (stockItem.balances.length) {
+        return stockItem.balances.map(function (a) {
+          return a.price;
+        }).reduce(function (a, b) {
+          return parseInt(a) + parseInt(b);
+        }) / stockItem.balances.map(function (a) {
+          return a.price;
+        }).length;
+      }
     },
     save: function save() {
       var _this6 = this;
@@ -4014,13 +4016,15 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
       });
     },
     middleBalancePrice: function middleBalancePrice(stockItem) {
-      return stockItem.balances.map(function (a) {
-        return a.price;
-      }).reduce(function (a, b) {
-        return parseInt(a) + parseInt(b);
-      }) / stockItem.balances.map(function (a) {
-        return a.price;
-      }).length;
+      if (stockItem.balances.length) {
+        return stockItem.balances.map(function (a) {
+          return a.price;
+        }).reduce(function (a, b) {
+          return parseInt(a) + parseInt(b);
+        }) / stockItem.balances.map(function (a) {
+          return a.price;
+        }).length;
+      }
     },
     save: function save(id) {
       var _this7 = this;
