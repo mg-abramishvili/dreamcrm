@@ -8501,10 +8501,10 @@ __webpack_require__.r(__webpack_exports__);
 window.moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.$moment = (moment__WEBPACK_IMPORTED_MODULE_0___default());
-moment__WEBPACK_IMPORTED_MODULE_0___default().locale('ru');
-
-
-
+moment__WEBPACK_IMPORTED_MODULE_0___default().locale('ru'); // import parse from 'date-fns/parse'
+// import parseISO from 'date-fns/parseISO'
+// import format from 'date-fns/format'
+// import ru from 'date-fns/locale/ru'
 
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"); //window.axios.defaults.withCredentials = true;
@@ -8517,21 +8517,21 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('currency', function (value) 
   if (!value) return '';
   return parseInt(value).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 });
-vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('dateMini', function (value) {
-  if (!value) return '';
-  return moment__WEBPACK_IMPORTED_MODULE_0___default().utc(value).utcOffset(3).format('DD.MM');
-});
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('date', function (value) {
   if (!value) return '';
   return moment__WEBPACK_IMPORTED_MODULE_0___default().utc(value).utcOffset(3).format('DD.MM.YYYY');
 });
-vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('time', function (value) {
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('dateMini', function (value) {
   if (!value) return '';
-  return moment__WEBPACK_IMPORTED_MODULE_0___default().utc(value).utcOffset(3).format('H:mm');
+  return moment__WEBPACK_IMPORTED_MODULE_0___default().utc(value).utcOffset(3).format('DD.MM');
 });
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('dateFull', function (value) {
   if (!value) return '';
-  return moment__WEBPACK_IMPORTED_MODULE_0___default().utc(value).format('dddd, D MMMM');
+  return moment__WEBPACK_IMPORTED_MODULE_0___default().utc(value).utcOffset(3).format('dddd, D MMMM');
+});
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('time', function (value) {
+  if (!value) return '';
+  return moment__WEBPACK_IMPORTED_MODULE_0___default().utc(value).utcOffset(3).format('H:mm');
 });
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_5__["default"]({
   mode: 'history',

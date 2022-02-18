@@ -8,10 +8,10 @@ import moment from 'moment'
 Vue.prototype.$moment = moment;
 moment.locale('ru');
 
-import parse from 'date-fns/parse'
-import parseISO from 'date-fns/parseISO'
-import format from 'date-fns/format'
-import ru from 'date-fns/locale/ru'
+// import parse from 'date-fns/parse'
+// import parseISO from 'date-fns/parseISO'
+// import format from 'date-fns/format'
+// import ru from 'date-fns/locale/ru'
 
 import axios from 'axios'
 window.axios = require('axios');
@@ -27,21 +27,21 @@ Vue.filter('currency', function (value) {
     if (!value) return ''
     return parseInt(value).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") 
 })
-Vue.filter('dateMini', function (value) {
-    if (!value) return ''
-    return moment.utc(value).utcOffset(3).format('DD.MM')
-})
 Vue.filter('date', function (value) {
     if (!value) return ''
     return moment.utc(value).utcOffset(3).format('DD.MM.YYYY')
 })
-Vue.filter('time', function (value) {
+Vue.filter('dateMini', function (value) {
     if (!value) return ''
-    return moment.utc(value).utcOffset(3).format('H:mm')
+    return moment.utc(value).utcOffset(3).format('DD.MM')
 })
 Vue.filter('dateFull', function (value) {
     if (!value) return ''
-    return moment.utc(value).format('dddd, D MMMM')
+    return moment.utc(value).utcOffset(3).format('dddd, D MMMM')
+})
+Vue.filter('time', function (value) {
+    if (!value) return ''
+    return moment.utc(value).utcOffset(3).format('H:mm')
 })
 
 const router = new VueRouter({
