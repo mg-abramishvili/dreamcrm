@@ -41,8 +41,9 @@
                         <div class="d-flex justify-content-between">
                             <label>Склад</label>
                         </div>
-                        <select v-model="selected.stockItems" class="form-control mb-3" style="height: 200px;" multiple>
-                            <option v-for="stockItem in stockItems.filter(item => middleBalancePrice(item))" :key="'stock_item_' + stockItem.id" :value="stockItem.id">{{ stockItem.name }} - {{ middleBalancePrice(stockItem) | currency }} ₽</option>
+                        <input v-model="stockSearchInput" type="text" class="form-control mb-1" placeholder="Поиск по складу...">
+                        <select v-model="selected.stockItems" class="form-control mb-3" style="height: 155px;" multiple>
+                            <option v-for="stockItem in stockItemsFiltered" :key="'stock_item_' + stockItem.id" :value="stockItem.id">{{ stockItem.name }} - {{ middleBalancePrice(stockItem) | currency }} ₽</option>
                         </select>
                     </div>
                 </div>
@@ -182,6 +183,8 @@
                 filepond_gallery: [],
                 filepond_gallery_edit: [],
 
+                stockSearchInput: '',
+
                 errors: [],
 
                 server: {
@@ -227,6 +230,11 @@
             }
         },
         computed: {
+            stockItemsFiltered() {
+                return this.stockItems.filter(item => this.middleBalancePrice(item)).filter(stockItem => {
+                    return stockItem.name.toLowerCase().includes(this.stockSearchInput.toLowerCase())
+                })
+            },
             stockItemsPrice() {
                 let stockItems = []
                 this.selected.stockItems.forEach((selectedItem) => {

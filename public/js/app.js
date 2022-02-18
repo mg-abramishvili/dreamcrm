@@ -3303,6 +3303,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -3341,6 +3342,7 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
       },
       filepond_gallery: [],
       filepond_gallery_edit: [],
+      stockSearchInput: '',
       errors: [],
       server: {
         remove: function remove(filename, load) {
@@ -3388,15 +3390,24 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
     };
   },
   computed: {
-    stockItemsPrice: function stockItemsPrice() {
+    stockItemsFiltered: function stockItemsFiltered() {
       var _this = this;
+
+      return this.stockItems.filter(function (item) {
+        return _this.middleBalancePrice(item);
+      }).filter(function (stockItem) {
+        return stockItem.name.toLowerCase().includes(_this.stockSearchInput.toLowerCase());
+      });
+    },
+    stockItemsPrice: function stockItemsPrice() {
+      var _this2 = this;
 
       var stockItems = [];
       this.selected.stockItems.forEach(function (selectedItem) {
-        if (_this.stockItems.find(function (item) {
+        if (_this2.stockItems.find(function (item) {
           return item.id == selectedItem;
         })) {
-          stockItems.push(_this.stockItems.find(function (item) {
+          stockItems.push(_this2.stockItems.find(function (item) {
             return item.id == selectedItem;
           }));
         }
@@ -3435,31 +3446,31 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
   },
   methods: {
     loadTypes: function loadTypes() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.get("/api/catalog/types").then(function (response) {
-        return _this2.types = response.data;
+        return _this3.types = response.data;
       });
     },
     loadStockItems: function loadStockItems() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.get("/api/stock/items").then(function (response) {
-        return _this3.stockItems = response.data;
+        return _this4.stockItems = response.data;
       });
     },
     loadSborkaTarif: function loadSborkaTarif() {
-      var _this4 = this;
+      var _this5 = this;
 
       axios.get("/api/catalog/sborka").then(function (response) {
-        return _this4.sborkaTarif.arenda = response.data.arenda, _this4.sborkaTarif.person = response.data.person;
+        return _this5.sborkaTarif.arenda = response.data.arenda, _this5.sborkaTarif.person = response.data.person;
       });
     },
     loadUsd: function loadUsd() {
-      var _this5 = this;
+      var _this6 = this;
 
       axios.get('/api/usd').then(function (response) {
-        _this5.usd.kurs = response.data.kurs, _this5.usd.date = response.data.updated_at;
+        _this6.usd.kurs = response.data.kurs, _this6.usd.date = response.data.updated_at;
       });
     },
     selectAllBoxes: function selectAllBoxes() {
@@ -3479,7 +3490,7 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
       }
     },
     save: function save() {
-      var _this6 = this;
+      var _this7 = this;
 
       this.errors = [];
 
@@ -3519,7 +3530,7 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
         this.gallery = [];
         document.getElementsByName("gallery[]").forEach(function (galleryItem) {
           if (galleryItem.value) {
-            _this6.gallery.push(galleryItem.value);
+            _this7.gallery.push(galleryItem.value);
           }
         });
       }
@@ -3542,7 +3553,7 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
         comment: this.comment,
         gallery: this.gallery
       }).then(function (response) {
-        return _this6.$router.push({
+        return _this7.$router.push({
           name: 'CatalogBoxes'
         });
       })["catch"](function (error) {
@@ -3581,6 +3592,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var filepond_plugin_file_validate_type__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(filepond_plugin_file_validate_type__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var filepond_plugin_image_preview__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! filepond-plugin-image-preview */ "./node_modules/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js");
 /* harmony import */ var filepond_plugin_image_preview__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(filepond_plugin_image_preview__WEBPACK_IMPORTED_MODULE_5__);
+//
 //
 //
 //
@@ -3752,6 +3764,7 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
       },
       filepond_gallery: [],
       filepond_gallery_edit: [],
+      stockSearchInput: '',
       errors: [],
       server: {
         remove: function remove(filename, load) {
@@ -3799,15 +3812,24 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
     };
   },
   computed: {
-    stockItemsPrice: function stockItemsPrice() {
+    stockItemsFiltered: function stockItemsFiltered() {
       var _this = this;
+
+      return this.stockItems.filter(function (item) {
+        return _this.middleBalancePrice(item);
+      }).filter(function (stockItem) {
+        return stockItem.name.toLowerCase().includes(_this.stockSearchInput.toLowerCase());
+      });
+    },
+    stockItemsPrice: function stockItemsPrice() {
+      var _this2 = this;
 
       var stockItems = [];
       this.selected.stockItems.forEach(function (selectedItem) {
-        if (_this.stockItems.find(function (item) {
+        if (_this2.stockItems.find(function (item) {
           return item.id == selectedItem;
         })) {
-          stockItems.push(_this.stockItems.find(function (item) {
+          stockItems.push(_this2.stockItems.find(function (item) {
             return item.id == selectedItem;
           }));
         }
@@ -3847,58 +3869,58 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
   },
   methods: {
     loadTypes: function loadTypes() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.get("/api/catalog/types").then(function (response) {
-        return _this2.types = response.data;
+        return _this3.types = response.data;
       });
     },
     loadStockItems: function loadStockItems() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.get("/api/stock/items").then(function (response) {
-        return _this3.stockItems = response.data;
+        return _this4.stockItems = response.data;
       });
     },
     loadSborkaTarif: function loadSborkaTarif() {
-      var _this4 = this;
+      var _this5 = this;
 
       axios.get("/api/catalog/sborka").then(function (response) {
-        return _this4.sborkaTarif.arenda = response.data.arenda, _this4.sborkaTarif.person = response.data.person;
+        return _this5.sborkaTarif.arenda = response.data.arenda, _this5.sborkaTarif.person = response.data.person;
       });
     },
     loadUsd: function loadUsd() {
-      var _this5 = this;
+      var _this6 = this;
 
       axios.get('/api/usd').then(function (response) {
-        _this5.usd.kurs = response.data.kurs, _this5.usd.date = response.data.updated_at;
+        _this6.usd.kurs = response.data.kurs, _this6.usd.date = response.data.updated_at;
       });
     },
     loadBox: function loadBox() {
-      var _this6 = this;
+      var _this7 = this;
 
       axios.get("/api/catalog/box/".concat(this.$route.params.id)).then(function (response) {
-        _this6.box = response.data;
-        _this6.name = response.data.name;
-        _this6.sborkaDays = response.data.sborka_days;
-        _this6.sborkaPersons = response.data.sborka_persons;
-        _this6.marzha = response.data.marzha;
-        _this6.length = response.data.length;
-        _this6.width = response.data.width;
-        _this6.height = response.data.height;
-        _this6.weight = response.data.weight;
-        _this6.description = response.data.description;
-        _this6.manager_description = response.data.manager_description;
-        _this6.comment = response.data.comment;
-        _this6.selected.types = response.data.types.map(function (type) {
+        _this7.box = response.data;
+        _this7.name = response.data.name;
+        _this7.sborkaDays = response.data.sborka_days;
+        _this7.sborkaPersons = response.data.sborka_persons;
+        _this7.marzha = response.data.marzha;
+        _this7.length = response.data.length;
+        _this7.width = response.data.width;
+        _this7.height = response.data.height;
+        _this7.weight = response.data.weight;
+        _this7.description = response.data.description;
+        _this7.manager_description = response.data.manager_description;
+        _this7.comment = response.data.comment;
+        _this7.selected.types = response.data.types.map(function (type) {
           return type.id;
         });
-        _this6.selected.stockItems = response.data.stock_items.map(function (item) {
+        _this7.selected.stockItems = response.data.stock_items.map(function (item) {
           return item.id;
         });
 
         if (response.data.gallery) {
-          _this6.filepond_gallery_edit = response.data.gallery.map(function (element) {
+          _this7.filepond_gallery_edit = response.data.gallery.map(function (element) {
             {
               return {
                 source: element,
@@ -3928,7 +3950,7 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
       }
     },
     save: function save(id) {
-      var _this7 = this;
+      var _this8 = this;
 
       this.errors = [];
 
@@ -3968,7 +3990,7 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
         this.gallery = [];
         document.getElementsByName("gallery[]").forEach(function (galleryItem) {
           if (galleryItem.value) {
-            _this7.gallery.push(galleryItem.value);
+            _this8.gallery.push(galleryItem.value);
           }
         });
       }
@@ -3991,7 +4013,7 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
         comment: this.comment,
         gallery: this.gallery
       }).then(function (response) {
-        return _this7.$router.push({
+        return _this8.$router.push({
           name: 'CatalogBoxes'
         });
       })["catch"](function (error) {
@@ -4003,19 +4025,19 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
       });
     },
     del: function del(id) {
-      var _this8 = this;
+      var _this9 = this;
 
       if (confirm("Точно удалить?")) {
         axios["delete"]("/api/catalog/box/".concat(id, "/delete")).then(function (response) {
-          return _this8.$router.push({
+          return _this9.$router.push({
             name: 'CatalogBoxes'
           });
         })["catch"](function (error) {
           if (error.response) {
-            _this8.errors = [];
+            _this9.errors = [];
 
             for (var key in error.response.data.errors) {
-              _this8.errors.push(key);
+              _this9.errors.push(key);
             }
           }
         });
@@ -63705,6 +63727,28 @@ var render = function () {
               _c("div", { staticClass: "col-12 col-lg-6" }, [
                 _vm._m(1),
                 _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.stockSearchInput,
+                      expression: "stockSearchInput",
+                    },
+                  ],
+                  staticClass: "form-control mb-1",
+                  attrs: { type: "text", placeholder: "Поиск по складу..." },
+                  domProps: { value: _vm.stockSearchInput },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.stockSearchInput = $event.target.value
+                    },
+                  },
+                }),
+                _vm._v(" "),
                 _c(
                   "select",
                   {
@@ -63717,7 +63761,7 @@ var render = function () {
                       },
                     ],
                     staticClass: "form-control mb-3",
-                    staticStyle: { height: "200px" },
+                    staticStyle: { height: "155px" },
                     attrs: { multiple: "" },
                     on: {
                       change: function ($event) {
@@ -63739,32 +63783,27 @@ var render = function () {
                       },
                     },
                   },
-                  _vm._l(
-                    _vm.stockItems.filter(function (item) {
-                      return _vm.middleBalancePrice(item)
-                    }),
-                    function (stockItem) {
-                      return _c(
-                        "option",
-                        {
-                          key: "stock_item_" + stockItem.id,
-                          domProps: { value: stockItem.id },
-                        },
-                        [
-                          _vm._v(
-                            _vm._s(stockItem.name) +
-                              " - " +
-                              _vm._s(
-                                _vm._f("currency")(
-                                  _vm.middleBalancePrice(stockItem)
-                                )
-                              ) +
-                              " ₽"
-                          ),
-                        ]
-                      )
-                    }
-                  ),
+                  _vm._l(_vm.stockItemsFiltered, function (stockItem) {
+                    return _c(
+                      "option",
+                      {
+                        key: "stock_item_" + stockItem.id,
+                        domProps: { value: stockItem.id },
+                      },
+                      [
+                        _vm._v(
+                          _vm._s(stockItem.name) +
+                            " - " +
+                            _vm._s(
+                              _vm._f("currency")(
+                                _vm.middleBalancePrice(stockItem)
+                              )
+                            ) +
+                            " ₽"
+                        ),
+                      ]
+                    )
+                  }),
                   0
                 ),
               ]),
@@ -64346,6 +64385,28 @@ var render = function () {
               _c("div", { staticClass: "col-12 col-lg-6" }, [
                 _vm._m(1),
                 _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.stockSearchInput,
+                      expression: "stockSearchInput",
+                    },
+                  ],
+                  staticClass: "form-control mb-1",
+                  attrs: { type: "text", placeholder: "Поиск по складу..." },
+                  domProps: { value: _vm.stockSearchInput },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.stockSearchInput = $event.target.value
+                    },
+                  },
+                }),
+                _vm._v(" "),
                 _c(
                   "select",
                   {
@@ -64358,7 +64419,7 @@ var render = function () {
                       },
                     ],
                     staticClass: "form-control mb-3",
-                    staticStyle: { height: "200px" },
+                    staticStyle: { height: "155px" },
                     attrs: { multiple: "" },
                     on: {
                       change: function ($event) {
@@ -64380,32 +64441,27 @@ var render = function () {
                       },
                     },
                   },
-                  _vm._l(
-                    _vm.stockItems.filter(function (item) {
-                      return _vm.middleBalancePrice(item)
-                    }),
-                    function (stockItem) {
-                      return _c(
-                        "option",
-                        {
-                          key: "stock_item_" + stockItem.id,
-                          domProps: { value: stockItem.id },
-                        },
-                        [
-                          _vm._v(
-                            _vm._s(stockItem.name) +
-                              " - " +
-                              _vm._s(
-                                _vm._f("currency")(
-                                  _vm.middleBalancePrice(stockItem)
-                                )
-                              ) +
-                              " ₽"
-                          ),
-                        ]
-                      )
-                    }
-                  ),
+                  _vm._l(_vm.stockItemsFiltered, function (stockItem) {
+                    return _c(
+                      "option",
+                      {
+                        key: "stock_item_" + stockItem.id,
+                        domProps: { value: stockItem.id },
+                      },
+                      [
+                        _vm._v(
+                          _vm._s(stockItem.name) +
+                            " - " +
+                            _vm._s(
+                              _vm._f("currency")(
+                                _vm.middleBalancePrice(stockItem)
+                              )
+                            ) +
+                            " ₽"
+                        ),
+                      ]
+                    )
+                  }),
                   0
                 ),
               ]),
