@@ -2910,7 +2910,7 @@ __webpack_require__.r(__webpack_exports__);
     viewCategories: function viewCategories() {
       var _this8 = this;
 
-      if (this.selected.box.id && this.catalogItems.length) {
+      if (this.selected.box && this.selected.box.id && this.catalogItems.length) {
         this.views.types = false;
         this.views.boxes = false;
         this.views.categories = true;

@@ -368,7 +368,7 @@
                 this.views.saveButton = false
             },
             viewCategories() {
-                if(this.selected.box.id && this.catalogItems.length) {
+                if(this.selected.box && this.selected.box.id && this.catalogItems.length) {
                     this.views.types = false
                     this.views.boxes = false
                     this.views.categories = true
