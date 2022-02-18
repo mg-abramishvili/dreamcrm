@@ -169,6 +169,11 @@
                 types: [],
                 stockItems: [],
 
+                sborkaTarif: {
+                    arenda: 0,
+                    person: 0,
+                },
+
                 usd: {
                     kurs: '',
                     date: '',
@@ -232,7 +237,8 @@
                 return stockItems.map(stockItem => stockItem.balances.map(a => a.price).reduce((a, b) => (parseInt(a) + parseInt(b))) / stockItem.balances.map(a => a.price).length).reduce((a, b) => a + b, 0)
             },
             sborka() {
-                return this.sborkaDays * this.sborkaPersons
+
+                return this.sborkaDays * (this.sborkaPersons * parseInt(this.sborkaTarif.person) + parseInt(this.sborkaTarif.arenda))
             },
             price() {
                 if(!this.marzha) {
@@ -250,6 +256,7 @@
             this.loadTypes()
             this.loadStockItems()
             this.loadUsd()
+            this.loadSborkaTarif()
             this.loadBox()
         },
         methods: {
@@ -263,6 +270,13 @@
                 axios.get(`/api/stock/items`)
                     .then(response => (
                         this.stockItems = response.data
+                    ))
+            },
+            loadSborkaTarif() {
+                axios.get(`/api/catalog/sborka`)
+                    .then(response => (
+                        this.sborkaTarif.arenda = response.data.arenda,
+                        this.sborkaTarif.person = response.data.person
                     ))
             },
             loadUsd() {

@@ -9,6 +9,7 @@ use App\Http\Controllers\CatalogItemController;
 use App\Http\Controllers\CatalogTypeController;
 use App\Http\Controllers\CatalogBoxController;
 use App\Http\Controllers\CatalogCategoryController;
+use App\Http\Controllers\CatalogSborkaController;
 use App\Http\Controllers\CatalogDeliveryController;
 
 use App\Http\Controllers\CalculationController;
@@ -56,6 +57,8 @@ Route::put('catalog/item/{id}/update', [CatalogItemController::class, 'update'])
 Route::delete('catalog/item/{id}/delete', [CatalogItemController::class, 'delete']);
 Route::post('catalog/items', [CatalogItemController::class, 'store']);
 Route::get('catalog/items-prices-update', [CatalogItemController::class, 'updatePrices']);
+
+Route::get('catalog/sborka', [CatalogSborkaController::class, 'index']);
 
 Route::get('catalog/boxes', [CatalogBoxController::class, 'index']);
 Route::post('catalog/boxes', [CatalogBoxController::class, 'store']);

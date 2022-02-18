@@ -3430,6 +3430,10 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
       },
       types: [],
       stockItems: [],
+      sborkaTarif: {
+        arenda: 0,
+        person: 0
+      },
       usd: {
         kurs: '',
         date: ''
@@ -3509,7 +3513,7 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
       }, 0);
     },
     sborka: function sborka() {
-      return this.sborkaDays * this.sborkaPersons;
+      return this.sborkaDays * (this.sborkaPersons * parseInt(this.sborkaTarif.person) + parseInt(this.sborkaTarif.arenda));
     },
     price: function price() {
       if (!this.marzha) {
@@ -3525,6 +3529,7 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
   created: function created() {
     this.loadTypes();
     this.loadStockItems();
+    this.loadSborkaTarif();
     this.loadUsd();
   },
   methods: {
@@ -3542,11 +3547,18 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
         return _this3.stockItems = response.data;
       });
     },
-    loadUsd: function loadUsd() {
+    loadSborkaTarif: function loadSborkaTarif() {
       var _this4 = this;
 
+      axios.get("/api/catalog/sborka").then(function (response) {
+        return _this4.sborkaTarif.arenda = response.data.arenda, _this4.sborkaTarif.person = response.data.person;
+      });
+    },
+    loadUsd: function loadUsd() {
+      var _this5 = this;
+
       axios.get('/api/usd').then(function (response) {
-        _this4.usd.kurs = response.data.kurs, _this4.usd.date = response.data.updated_at;
+        _this5.usd.kurs = response.data.kurs, _this5.usd.date = response.data.updated_at;
       });
     },
     selectAllBoxes: function selectAllBoxes() {
@@ -3564,7 +3576,7 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
       }).length;
     },
     save: function save() {
-      var _this5 = this;
+      var _this6 = this;
 
       this.errors = [];
 
@@ -3604,7 +3616,7 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
         this.gallery = [];
         document.getElementsByName("gallery[]").forEach(function (galleryItem) {
           if (galleryItem.value) {
-            _this5.gallery.push(galleryItem.value);
+            _this6.gallery.push(galleryItem.value);
           }
         });
       }
@@ -3627,7 +3639,7 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
         comment: this.comment,
         gallery: this.gallery
       }).then(function (response) {
-        return _this5.$router.push({
+        return _this6.$router.push({
           name: 'CatalogBoxes'
         });
       })["catch"](function (error) {
@@ -3827,6 +3839,10 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
       },
       types: [],
       stockItems: [],
+      sborkaTarif: {
+        arenda: 0,
+        person: 0
+      },
       usd: {
         kurs: '',
         date: ''
@@ -3906,7 +3922,7 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
       }, 0);
     },
     sborka: function sborka() {
-      return this.sborkaDays * this.sborkaPersons;
+      return this.sborkaDays * (this.sborkaPersons * parseInt(this.sborkaTarif.person) + parseInt(this.sborkaTarif.arenda));
     },
     price: function price() {
       if (!this.marzha) {
@@ -3923,6 +3939,7 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
     this.loadTypes();
     this.loadStockItems();
     this.loadUsd();
+    this.loadSborkaTarif();
     this.loadBox();
   },
   methods: {
@@ -3940,38 +3957,45 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
         return _this3.stockItems = response.data;
       });
     },
-    loadUsd: function loadUsd() {
+    loadSborkaTarif: function loadSborkaTarif() {
       var _this4 = this;
 
+      axios.get("/api/catalog/sborka").then(function (response) {
+        return _this4.sborkaTarif.arenda = response.data.arenda, _this4.sborkaTarif.person = response.data.person;
+      });
+    },
+    loadUsd: function loadUsd() {
+      var _this5 = this;
+
       axios.get('/api/usd').then(function (response) {
-        _this4.usd.kurs = response.data.kurs, _this4.usd.date = response.data.updated_at;
+        _this5.usd.kurs = response.data.kurs, _this5.usd.date = response.data.updated_at;
       });
     },
     loadBox: function loadBox() {
-      var _this5 = this;
+      var _this6 = this;
 
       axios.get("/api/catalog/box/".concat(this.$route.params.id)).then(function (response) {
-        _this5.box = response.data;
-        _this5.name = response.data.name;
-        _this5.sborkaDays = response.data.sborka_days;
-        _this5.sborkaPersons = response.data.sborka_persons;
-        _this5.marzha = response.data.marzha;
-        _this5.length = response.data.length;
-        _this5.width = response.data.width;
-        _this5.height = response.data.height;
-        _this5.weight = response.data.weight;
-        _this5.description = response.data.description;
-        _this5.manager_description = response.data.manager_description;
-        _this5.comment = response.data.comment;
-        _this5.selected.types = response.data.types.map(function (type) {
+        _this6.box = response.data;
+        _this6.name = response.data.name;
+        _this6.sborkaDays = response.data.sborka_days;
+        _this6.sborkaPersons = response.data.sborka_persons;
+        _this6.marzha = response.data.marzha;
+        _this6.length = response.data.length;
+        _this6.width = response.data.width;
+        _this6.height = response.data.height;
+        _this6.weight = response.data.weight;
+        _this6.description = response.data.description;
+        _this6.manager_description = response.data.manager_description;
+        _this6.comment = response.data.comment;
+        _this6.selected.types = response.data.types.map(function (type) {
           return type.id;
         });
-        _this5.selected.stockItems = response.data.stock_items.map(function (item) {
+        _this6.selected.stockItems = response.data.stock_items.map(function (item) {
           return item.id;
         });
 
         if (response.data.gallery) {
-          _this5.filepond_gallery_edit = response.data.gallery.map(function (element) {
+          _this6.filepond_gallery_edit = response.data.gallery.map(function (element) {
             {
               return {
                 source: element,
@@ -3999,7 +4023,7 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
       }).length;
     },
     save: function save(id) {
-      var _this6 = this;
+      var _this7 = this;
 
       this.errors = [];
 
@@ -4039,7 +4063,7 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
         this.gallery = [];
         document.getElementsByName("gallery[]").forEach(function (galleryItem) {
           if (galleryItem.value) {
-            _this6.gallery.push(galleryItem.value);
+            _this7.gallery.push(galleryItem.value);
           }
         });
       }
@@ -4062,7 +4086,7 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
         comment: this.comment,
         gallery: this.gallery
       }).then(function (response) {
-        return _this6.$router.push({
+        return _this7.$router.push({
           name: 'CatalogBoxes'
         });
       })["catch"](function (error) {
@@ -4074,19 +4098,19 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
       });
     },
     del: function del(id) {
-      var _this7 = this;
+      var _this8 = this;
 
       if (confirm("Точно удалить?")) {
         axios["delete"]("/api/catalog/box/".concat(id, "/delete")).then(function (response) {
-          return _this7.$router.push({
+          return _this8.$router.push({
             name: 'CatalogBoxes'
           });
         })["catch"](function (error) {
           if (error.response) {
-            _this7.errors = [];
+            _this8.errors = [];
 
             for (var key in error.response.data.errors) {
-              _this7.errors.push(key);
+              _this8.errors.push(key);
             }
           }
         });
