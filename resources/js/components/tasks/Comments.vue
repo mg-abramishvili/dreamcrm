@@ -5,8 +5,8 @@
                 <img v-if="comment.user.avatar" :src="comment.user.avatar" class="rounded-circle me-1" alt="" width="40" height="40">
                 <img v-else src="/img/no-image.jpg" class="rounded-circle me-1" alt="" width="40" height="40">
                 <div class="text-muted text-comment-date small text-nowrap mt-2" >
-                    {{ comment.created_at | formatDateTimeOnly }}<br>
-                    {{ comment.created_at | formatDate }}
+                    {{ comment.created_at | time }}<br>
+                    {{ comment.created_at | date }}
                 </div>
             </div>
             <div class="w-100 flex-shrink-1 bg-light rounded py-2 px-3 ms-3">

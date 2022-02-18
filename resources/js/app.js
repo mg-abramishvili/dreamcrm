@@ -37,13 +37,14 @@ Vue.filter('date', function (value) {
     const date = parseISO(value, new Date())
     return format(date, "dd.MM.yyyy")
 })
+Vue.filter('time', function (value) {
+    if (!value) return ''
+    const date = parseISO(value, new Date())
+    return format(date, "H:mm")
+})
 Vue.filter('formatDateShort', function (value) {
     if (!value) return ''
     return moment(value).format('DD.MM')
-})
-Vue.filter('formatDateTimeOnly', function (value) {
-    if (!value) return ''
-    return moment(value).format('H:mm')
 })
 Vue.filter('formatDateLong', function (value) {
     if (!value) return ''

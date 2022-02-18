@@ -8530,13 +8530,14 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('date', function (value) {
   var date = (0,date_fns_parseISO__WEBPACK_IMPORTED_MODULE_8__["default"])(value, new Date());
   return (0,date_fns_format__WEBPACK_IMPORTED_MODULE_7__["default"])(date, "dd.MM.yyyy");
 });
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('time', function (value) {
+  if (!value) return '';
+  var date = (0,date_fns_parseISO__WEBPACK_IMPORTED_MODULE_8__["default"])(value, new Date());
+  return (0,date_fns_format__WEBPACK_IMPORTED_MODULE_7__["default"])(date, "H:mm");
+});
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('formatDateShort', function (value) {
   if (!value) return '';
   return moment__WEBPACK_IMPORTED_MODULE_0___default()(value).format('DD.MM');
-});
-vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('formatDateTimeOnly', function (value) {
-  if (!value) return '';
-  return moment__WEBPACK_IMPORTED_MODULE_0___default()(value).format('H:mm');
 });
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('formatDateLong', function (value) {
   if (!value) return '';
@@ -70362,14 +70363,12 @@ var render = function () {
                     [
                       _vm._v(
                         "\n                " +
-                          _vm._s(
-                            _vm._f("formatDateTimeOnly")(comment.created_at)
-                          )
+                          _vm._s(_vm._f("time")(comment.created_at))
                       ),
                       _c("br"),
                       _vm._v(
                         "\n                " +
-                          _vm._s(_vm._f("formatDate")(comment.created_at)) +
+                          _vm._s(_vm._f("date")(comment.created_at)) +
                           "\n            "
                       ),
                     ]
