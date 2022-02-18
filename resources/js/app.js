@@ -29,8 +29,7 @@ Vue.filter('currency', function (value) {
 })
 Vue.filter('dateMini', function (value) {
     if (!value) return ''
-    const date = parse(value, 'yyyy-MM-dd')
-    return format(date, "dd.MM")
+    return moment.utc(value).utcOffset(3).format('DD.MM')
 })
 Vue.filter('date', function (value) {
     if (!value) return ''
@@ -40,13 +39,9 @@ Vue.filter('time', function (value) {
     if (!value) return ''
     return moment.utc(value).utcOffset(3).format('H:mm')
 })
-Vue.filter('formatDateShort', function (value) {
-    if (!value) return ''
-    return moment(value).format('DD.MM')
-})
 Vue.filter('formatDateLong', function (value) {
     if (!value) return ''
-    return moment(value).format('dddd, D MMMM')
+    return moment.utc(value).format('dddd, D MMMM')
 })
 
 const router = new VueRouter({
