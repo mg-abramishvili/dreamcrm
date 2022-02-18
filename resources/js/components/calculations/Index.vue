@@ -23,7 +23,7 @@
                     <tbody>
                         <tr v-for="calculation in calculations" :key="calculation.id" @click="goTo(calculation.id)">
                             <td class="align-middle">
-                                {{moment(calculation.created_at).utcOffset(180).format('DD.MM.YYYY HH:mm')}}
+                                {{ calculation.created_at | date }}
                             </td>
                             <td class="align-middle">
                                 Расчет №{{ calculation.id }}
@@ -34,10 +34,7 @@
                                 </template>
                             </td>
                             <td class="align-middle">
-                                <!-- <img src="/img/profile.png" width="48" height="48" class="rounded-circle me-2" alt="Avatar"> -->
-                                <template v-if="calculation.user">
-                                    {{ calculation.user.name }}
-                                </template>
+                                {{ calculation.user.name }}
                             </td>
                         </tr>
                     </tbody>
@@ -52,7 +49,6 @@
         data() {
             return {
                 calculations: [],
-                moment: moment,
             }
         },
         created() {

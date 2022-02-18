@@ -5,13 +5,16 @@
         <div v-if="types.length" class="row">
             <div class="col-12 col-lg-5">
                 <div class="calculation-left-block bg-white px-4 py-4" style="position: sticky; top: 20px;">
+                    
                     <div v-if="views.types" class="mb-4">
                         <div class="calculation-left-block-main-label">
                             <strong>Тип</strong>
                         </div>
-                        <select v-model="selected.type" @change="loadBoxes(); resetCatalogItems()" class="form-select form-select-lg mt-2 mb-3">
+
+                        <select @change="loadBoxes(); resetCatalogItems()" v-model="selected.type" class="form-select form-select-lg mt-2 mb-3">
                             <option v-for="type in types" :key="'type_' + type.id" :value="type">{{ type.name }}</option>
                         </select>
+
                         <div class="mt-4">
                             <button class="btn btn-outline-primary" disabled>Назад</button>
                             <button @click="viewBoxes()" class="btn btn-outline-primary">Далее</button>
@@ -22,11 +25,13 @@
                         <div class="calculation-left-block-main-label">
                             <strong>Корпус</strong>
                         </div>
-                        <select v-model="selected.box" @change="loadCatalogItems(); resetCatalogItems()" class="form-select form-select-lg mt-2 mb-3">
+
+                        <select @change="loadCatalogItems(); resetCatalogItems()" v-model="selected.box" class="form-select form-select-lg mt-2 mb-3">
                             <template v-for="box in boxes">
                                 <option v-if="box.width > 0 && box.length > 0 && box.height > 0 && box.weight > 0" :key="'box_' + box.id" :value="box">{{ box.name }} &mdash; {{ box.price | currency }} ₽</option>
                             </template>
                         </select>
+
                         <div class="mt-4">
                             <button @click="viewTypes()" class="btn btn-outline-primary">Назад</button>
                             <button @click="viewCategories()" class="btn btn-outline-primary">Далее</button>
@@ -38,18 +43,18 @@
                             <div v-show="views.categoryCurrent == category.id">
                                 <div class="calculation-left-block-main-label">
                                     <strong>{{ category.name }}</strong>
-                                    <button @click="addCatalogItem(category.slug)" class="btn btn-sm btn-outline-danger">+</button>
+                                    <button @click="addElement(category.slug)" class="btn btn-sm btn-outline-danger">+</button>
                                 </div>
                                 
-                                <div v-for="(catalogItem, index) in selected.catalogItems[category.slug]" :key="index" style="position: relative;">
-                                    <select v-model="catalogItem.id" class="form-select form-select-lg mt-2 mb-3">
-                                        <template v-for="catalogItem in catalogItems">
-                                            <option v-if="catalogItem.category_id == category.id" :key="'catalogItem_' + catalogItem.id" :value="catalogItem.id">
-                                                {{ catalogItem.name }} <template v-if="catalogItem.price > 0">&mdash; {{ catalogItem.price | currency }} ₽</template>
+                                <div v-for="(element, index) in selected.catalogItems[category.slug]" :key="index" style="position: relative;">
+                                    <select v-model="element.id" class="form-select form-select-lg mt-2 mb-3">
+                                        <template v-for="element in catalogItems">
+                                            <option v-if="element.category_id == category.id" :key="'element_' + element.id" :value="element.id">
+                                                {{ element.name }} <template v-if="element.price > 0">&mdash; {{ element.price | currency }} ₽</template>
                                             </option>
                                         </template>
                                     </select>
-                                    <button v-if="index > 0 && selected.catalogItems[category.slug].length > 1" @click="deleteCatalogItem(catalogItem.id, category.slug)" class="btn btn-sm btn-outline-danger" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); padding: 0; width: 20px; margin-right: -21px;">&ndash;</button>
+                                    <button v-if="index > 0 && selected.catalogItems[category.slug].length > 1" @click="deleteElement(element.id, category.slug)" class="btn btn-sm btn-outline-danger" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); padding: 0; width: 20px; margin-right: -21px;">&ndash;</button>
                                 </div>
 
                                 <div class="mt-4">
@@ -89,12 +94,13 @@
                             <button class="btn btn-outline-primary" disabled>Далее</button>
                         </div>
                     </div>
-
+                    
                     <div class="total">
                         <div v-if="price && price > 0" class="row align-items-center mb-3">
                             <div class="col-6"><strong>Цена за 1 ед:</strong></div>
                             <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">
                                 {{ price | currency }} ₽
+                                <small style="display:block; line-height: 1; font-size: 15px; font-weight: 400; color: #777;">{{ pricePreRub | currency }} ₽ / {{ pricePreUsd | currency }} $</small>
                             </div>
                         </div>
                         <div v-if="quantity > 1 && priceWithQuantity && priceWithQuantity > 0" class="row align-items-center mb-3">
@@ -144,7 +150,7 @@
 
                 <div v-for="category in categories" :key="'category_' + category.id" class="mb-3 bg-white px-3 py-3">
                     <small style="color: rgb(136, 136, 136);">{{ category.name }}</small>
-                    <div v-for="item in catalogItemsByCategory(category)" class="row align-items-center">
+                    <div v-for="item in catalogItemsByCategory(category)" :key="'item_' + item.id" class="row align-items-center">
                         <div class="col-8">
                             <strong class="d-block">{{ item.name }}</strong>
                         </div>
@@ -206,6 +212,9 @@
         created() {
             this.loadTypes()
             this.loadCategories()
+            // this.loadDeliveries()
+        },
+        mounted () {
         },
         watch: {
             selected: {
@@ -213,9 +222,11 @@
                 handler() {
                     for (const category of Object.entries(this.selected.catalogItems)) {
                         if(category[1] && category[1].length > 0) {
-                            category[1].forEach((i) => {
-                                if(i.id != null) {
-                                    i.price = parseInt(this.catalogItems.filter(item => item.id == i.id)[0].price)
+                            category[1].forEach((el) => {
+                                if(el.id != null) {
+                                    el.price = parseInt(this.catalogItems.filter(element => element.id == el.id)[0].price)
+                                    el.pre_rub = parseInt(this.catalogItems.filter(element => element.id == el.id)[0].pre_rub)
+                                    el.pre_usd = parseInt(this.catalogItems.filter(element => element.id == el.id)[0].pre_usd)
                                 }
                             })
                         }
@@ -224,6 +235,28 @@
             }
         },
         computed: {
+            pricePreRub() {
+                if(this.selected.box && this.selected.box.id > 0) {
+                    var price = []
+                    for (const category of Object.entries(this.selected.catalogItems)) {
+                        category[1].forEach((el) => {
+                            price.push(el.pre_rub)
+                        })
+                    }
+                    return parseInt(this.selected.box.pre_rub) + parseInt(this.selected.box.sborka) + parseInt(this.selected.box.marzha) + price.reduce((a, b) => a + b, 0)
+                }
+            },
+            pricePreUsd() {
+                if(this.selected.box && this.selected.box.id > 0) {
+                    var price = []
+                    for (const category of Object.entries(this.selected.catalogItems)) {
+                        category[1].forEach((el) => {
+                            price.push(el.pre_usd)
+                        })
+                    }
+                    return parseInt(this.selected.box.pre_usd) + price.reduce((a, b) => a + b, 0)
+                }
+            },
             price() {
                 if(this.selected.box && this.selected.box.id > 0) {
                     var price = []
@@ -267,7 +300,7 @@
 
                     response.data.forEach(category => {
                         this.$set(this.selected.catalogItems, category.slug, [])
-                        this.addCatalogItem(category.slug)
+                        this.addElement(category.slug)
                     })
 
                     this.views.categoryCurrent = response.data[0].id
@@ -283,65 +316,25 @@
                 }
                 
             },
-            resetCatalogItems() {
-
-            },
-            addCatalogItem(categorySlug) {
-                let checkEmpty = this.selected.catalogItems[categorySlug].filter(item => item.id === null)
-                if (checkEmpty.length >= 1 && this.selected.catalogItems[categorySlug].length > 0) {
-                    return
-                }
-                this.selected.catalogItems[categorySlug].push({
-                    id: null,
-                    price: 0
-                })
-            },
-            deleteCatalogItem(itemID, categorySlug) {
-                var index = this.selected.catalogItems[categorySlug].map(item => { return item.id }).indexOf(itemID)
-                this.selected.catalogItems[categorySlug].splice(index, 1)
+            loadDeliveries() {
+                axios
+                .get('/api/deliveries')
+                .then((response => {
+                    this.deliveries = response.data
+                }));
             },
             catalogItemsByCategory(category) {
-                var categoryItems = this.catalogItems.filter(item => item.category_id == category.id)
-                var categoryItemsSelected = this.selected.catalogItems[category.slug]
-                var categoryItemsFiltered = []
+                var categoryElements = this.catalogItems.filter(element => element.category_id == category.id)
+                var categoryElementsSelected = this.selected.catalogItems[category.slug]
+                var categoryElementsFiltered = []
 
-                categoryItemsSelected.forEach((itemSelected) => {
-                    if(categoryItems.find(item => item.id === itemSelected.id)) {
-                        categoryItemsFiltered.push(categoryItems.find(item => item.id === itemSelected.id))
+                categoryElementsSelected.forEach((elementSelected) => {
+                    if(categoryElements.find(element => element.id === elementSelected.id)) {
+                        categoryElementsFiltered.push(categoryElements.find(element => element.id === elementSelected.id))
                     }
                 })
 
-                return categoryItemsFiltered
-            },
-            nextCategory(category) {
-                let index = this.categories.indexOf(category)
-                let nextCategory = this.categories[index + 1]
-
-                if(index >= 0 && index < this.categories.length - 1) {
-                    this.views.categoryCurrent = nextCategory.id
-                    this.selected.catalogItems[nextCategory.slug][0].id = this.catalogItems.filter(item => item.category_id == nextCategory.id)[0].id
-                } else {
-                    this.viewQuantity()
-                }
-            },
-            resetDelivery() {
-                this.selected.delivery.id = ''
-                this.selected.delivery.name = ''
-                this.selected.delivery.price = ''
-                this.selected.delivery.to = ''
-                this.selected.delivery.directionFrom = ''
-                this.selected.delivery.directionTo = ''
-                this.selected.delivery.days = ''
-            },
-            changeDelivery() {
-                var delivery = this.deliveries.find(delivery => delivery.id === this.selected.delivery.id)
-                
-                this.selected.delivery.name = delivery.name
-                this.selected.delivery.price = delivery.price
-                this.selected.delivery.to = ''
-                this.selected.delivery.directionFrom = ''
-                this.selected.delivery.directionTo = ''
-                this.selected.delivery.days = ''
+                return categoryElementsFiltered
             },
             viewTypes() {
                 this.views.types = true
@@ -360,7 +353,7 @@
                 this.views.saveButton = false
             },
             viewCategories() {
-                if(this.selected.box.id && this.catalogItems.length) {
+                if(this.selected.box && this.selected.box.id > 0 && this.catalogItems && this.catalogItems.length > 0) {
                     this.views.types = false
                     this.views.boxes = false
                     this.views.categories = true
@@ -368,7 +361,7 @@
                     this.views.delivery = false
                     this.views.saveButton = false
 
-                    this.selected.catalogItems[this.categories[0].slug][0].id = this.catalogItems.filter(catalogItem => catalogItem.category_id == this.categories[0].id)[0].id
+                    this.selected.catalogItems[this.categories[0].slug][0].id = this.catalogItems.filter(element => element.category_id == this.categories[0].id)[0].id
                 } else {
                     alert('Выберите корпус!')
                 }
@@ -389,6 +382,99 @@
                 this.views.delivery = true
                 this.views.saveButton = true
             },
+            addElement(categorySlug) {
+                let checkEmpty = this.selected.catalogItems[categorySlug].filter(element => element.id === null)
+                if (checkEmpty.length >= 1 && this.selected.catalogItems[categorySlug].length > 0) {
+                    return
+                }
+                this.selected.catalogItems[categorySlug].push({
+                    id: null,
+                    price: 0,
+                    pre_rub: 0,
+                    pre_usd: 0
+                })
+            },
+            deleteElement(ElementID, categorySlug) {
+                var index = this.selected.catalogItems[categorySlug].map(element => { return element.id }).indexOf(ElementID)
+                this.selected.catalogItems[categorySlug].splice(index, 1)
+            },
+            prevCategory(category) {
+                var index = this.categories.indexOf(category)
+                if(index > 0 && index < this.categories.length + 1) {
+                    this.views.categoryCurrent = this.categories[index - 1].id
+                } else {
+                    this.viewBoxes()
+                }
+            },
+            nextCategory(category) {
+                var index = this.categories.indexOf(category)
+                var nextCategory = this.categories[index + 1]
+
+                if(index >= 0 && index < this.categories.length - 1 && nextCategory.items && nextCategory.items.length > 0) {
+                    this.views.categoryCurrent = nextCategory.id
+                    this.selected.catalogItems[nextCategory.slug][0].id = this.catalogItems.filter(element => element.category_id == nextCategory.id)[0].id
+                } else {
+                    this.viewQuantity()
+                }
+            },
+            changeDelivery() {
+                var delivery = this.deliveries.find(delivery => delivery.id === this.selected.delivery.id)
+                
+                this.selected.delivery.name = delivery.name
+                this.selected.delivery.price = delivery.price
+                this.selected.delivery.to = ''
+                this.selected.delivery.directionFrom = ''
+                this.selected.delivery.directionTo = ''
+                this.selected.delivery.days = ''
+            },
+            resetCatalogItems() {
+                for (const category of Object.entries(this.selected.catalogItems)) {
+                    if(category[1] && category[1].length > 0) {
+                        category[1].forEach((el) => {
+                            el.id = null,
+                            el.price = 0,
+                            el.pre_rub = 0,
+                            el.pre_usd = 0
+                        })
+                    }
+                }
+                this.quantity = 1
+                this.resetDelivery()
+            },
+            resetDelivery() {
+                this.selected.delivery.id = ''
+                this.selected.delivery.name = ''
+                this.selected.delivery.price = ''
+                this.selected.delivery.to = ''
+                this.selected.delivery.directionFrom = ''
+                this.selected.delivery.directionTo = ''
+                this.selected.delivery.days = ''
+            },
+            saveCalculation() {
+                if(!this.selected.delivery.id) {
+                    alert('Выберите доставку')
+                    return
+                }
+
+                if(this.selected.delivery.id == 3 && this.selected.delivery.price <= 0) {
+                    alert('Укажите город доставки')
+                    return
+                }
+
+                axios
+                .post(`/api/calculations`, {
+                    type: this.selected.type.id,
+                    box: this.selected.box,
+                    elements: this.selected.elements,
+                    quantity: this.quantity,
+                    price: this.price,
+                    delivery: this.selected.delivery,
+                    user: this.$parent.user.id,
+                })
+                .then(response => (
+                    this.$router.push({name: 'Calculations'})
+                ))
+            }
         },
         components: {
             Loader,

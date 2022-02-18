@@ -18,7 +18,7 @@ class CatalogBox extends Model
 
     public function items()
     {
-        return $this->belongsToMany(CatalogItem::class);
+        return $this->belongsToMany(CatalogItem::class, 'catalog_box__catalog_item', 'catalog_box_id', 'catalog_item_id');
     }
 
     public function stockItems()

@@ -11,7 +11,7 @@ import CatalogBoxCreate from './components/catalog/BoxCreate.vue';
 import CatalogBoxEdit from './components/catalog/BoxEdit.vue';
 import CatalogSearch from './components/catalog/CatalogSearch.vue';
 
-import Calculations from './components/calculations/Calculations.vue';
+import Calculations from './components/calculations/Index.vue';
 import Calculation from './components/calculations/Calculation.vue';
 import CalculationCreate from './components/calculations/CalculationCreate.vue';
 

@@ -14,7 +14,7 @@ class CatalogItemController extends Controller
 
     public function indexByBox($id)
     {
-        return CatalogItem::whereRelation('boxes', 'box_id', $id)->get();
+        return CatalogItem::whereRelation('boxes', 'catalog_box_id', $id)->with('stockItems')->orderBy('price', 'asc')->get();
     }
 
     public function item($id)

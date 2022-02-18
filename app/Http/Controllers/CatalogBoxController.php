@@ -14,7 +14,7 @@ class CatalogBoxController extends Controller
 
     public function indexByType($id)
     {
-        return CatalogBox::whereRelation('types', 'type_id', $id)->get();
+        return CatalogBox::whereRelation('types', 'catalog_type_id', $id)->get();
     }
 
     public function box($id)
