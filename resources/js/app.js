@@ -29,12 +29,12 @@ Vue.filter('currency', function (value) {
 })
 Vue.filter('dateMini', function (value) {
     if (!value) return ''
-    const date = parse(value, 'yyyy-MM-dd', new Date())
+    const date = parse(value, 'yyyy-MM-dd')
     return format(date, "dd.MM")
 })
 Vue.filter('date', function (value) {
     if (!value) return ''
-    const date = parseISO(value, new Date())
+    const date = parseISO(value)
     return format(date, "dd.MM.yyyy")
 })
 Vue.filter('time', function (value) {

@@ -8522,12 +8522,12 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('currency', function (value) 
 });
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('dateMini', function (value) {
   if (!value) return '';
-  var date = (0,date_fns_parse__WEBPACK_IMPORTED_MODULE_6__["default"])(value, 'yyyy-MM-dd', new Date());
+  var date = (0,date_fns_parse__WEBPACK_IMPORTED_MODULE_6__["default"])(value, 'yyyy-MM-dd');
   return (0,date_fns_format__WEBPACK_IMPORTED_MODULE_7__["default"])(date, "dd.MM");
 });
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('date', function (value) {
   if (!value) return '';
-  var date = (0,date_fns_parseISO__WEBPACK_IMPORTED_MODULE_8__["default"])(value, new Date());
+  var date = (0,date_fns_parseISO__WEBPACK_IMPORTED_MODULE_8__["default"])(value);
   return (0,date_fns_format__WEBPACK_IMPORTED_MODULE_7__["default"])(date, "dd.MM.yyyy");
 });
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('time', function (value) {
