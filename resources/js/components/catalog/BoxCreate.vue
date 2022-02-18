@@ -42,7 +42,7 @@
                             <label>Склад</label>
                         </div>
                         <select v-model="selected.stockItems" class="form-control mb-3" style="height: 200px;" multiple>
-                            <option v-for="stockItem in stockItems" :key="'stock_item_' + stockItem.id" :value="stockItem.id">{{ stockItem.name }} - {{ middleBalancePrice(stockItem) | currency }} ₽</option>
+                            <option v-for="stockItem in stockItems.filter(item => middleBalancePrice(item))" :key="'stock_item_' + stockItem.id" :value="stockItem.id">{{ stockItem.name }} - {{ middleBalancePrice(stockItem) | currency }} ₽</option>
                         </select>
                     </div>
                 </div>

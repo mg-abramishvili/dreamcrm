@@ -63739,27 +63739,32 @@ var render = function () {
                       },
                     },
                   },
-                  _vm._l(_vm.stockItems, function (stockItem) {
-                    return _c(
-                      "option",
-                      {
-                        key: "stock_item_" + stockItem.id,
-                        domProps: { value: stockItem.id },
-                      },
-                      [
-                        _vm._v(
-                          _vm._s(stockItem.name) +
-                            " - " +
-                            _vm._s(
-                              _vm._f("currency")(
-                                _vm.middleBalancePrice(stockItem)
-                              )
-                            ) +
-                            " ₽"
-                        ),
-                      ]
-                    )
-                  }),
+                  _vm._l(
+                    _vm.stockItems.filter(function (item) {
+                      return _vm.middleBalancePrice(item)
+                    }),
+                    function (stockItem) {
+                      return _c(
+                        "option",
+                        {
+                          key: "stock_item_" + stockItem.id,
+                          domProps: { value: stockItem.id },
+                        },
+                        [
+                          _vm._v(
+                            _vm._s(stockItem.name) +
+                              " - " +
+                              _vm._s(
+                                _vm._f("currency")(
+                                  _vm.middleBalancePrice(stockItem)
+                                )
+                              ) +
+                              " ₽"
+                          ),
+                        ]
+                      )
+                    }
+                  ),
                   0
                 ),
               ]),
@@ -64375,27 +64380,32 @@ var render = function () {
                       },
                     },
                   },
-                  _vm._l(_vm.stockItems, function (stockItem) {
-                    return _c(
-                      "option",
-                      {
-                        key: "stock_item_" + stockItem.id,
-                        domProps: { value: stockItem.id },
-                      },
-                      [
-                        _vm._v(
-                          _vm._s(stockItem.name) +
-                            " - " +
-                            _vm._s(
-                              _vm._f("currency")(
-                                _vm.middleBalancePrice(stockItem)
-                              )
-                            ) +
-                            " ₽"
-                        ),
-                      ]
-                    )
-                  }),
+                  _vm._l(
+                    _vm.stockItems.filter(function (item) {
+                      return _vm.middleBalancePrice(item)
+                    }),
+                    function (stockItem) {
+                      return _c(
+                        "option",
+                        {
+                          key: "stock_item_" + stockItem.id,
+                          domProps: { value: stockItem.id },
+                        },
+                        [
+                          _vm._v(
+                            _vm._s(stockItem.name) +
+                              " - " +
+                              _vm._s(
+                                _vm._f("currency")(
+                                  _vm.middleBalancePrice(stockItem)
+                                )
+                              ) +
+                              " ₽"
+                          ),
+                        ]
+                      )
+                    }
+                  ),
                   0
                 ),
               ]),
@@ -66119,27 +66129,32 @@ var render = function () {
                       },
                     },
                   },
-                  _vm._l(_vm.stockItems, function (stockItem) {
-                    return _c(
-                      "option",
-                      {
-                        key: "stock_item_" + stockItem.id,
-                        domProps: { value: stockItem.id },
-                      },
-                      [
-                        _vm._v(
-                          _vm._s(stockItem.name) +
-                            " - " +
-                            _vm._s(
-                              _vm._f("currency")(
-                                _vm.middleBalancePrice(stockItem)
-                              )
-                            ) +
-                            " ₽"
-                        ),
-                      ]
-                    )
-                  }),
+                  _vm._l(
+                    _vm.stockItems.filter(function (item) {
+                      return _vm.middleBalancePrice(item)
+                    }),
+                    function (stockItem) {
+                      return _c(
+                        "option",
+                        {
+                          key: "stock_item_" + stockItem.id,
+                          domProps: { value: stockItem.id },
+                        },
+                        [
+                          _vm._v(
+                            _vm._s(stockItem.name) +
+                              " - " +
+                              _vm._s(
+                                _vm._f("currency")(
+                                  _vm.middleBalancePrice(stockItem)
+                                )
+                              ) +
+                              " ₽"
+                          ),
+                        ]
+                      )
+                    }
+                  ),
                   0
                 ),
                 _vm._v(" "),
@@ -66474,27 +66489,32 @@ var render = function () {
                       },
                     },
                   },
-                  _vm._l(_vm.stockItems, function (stockItem) {
-                    return _c(
-                      "option",
-                      {
-                        key: "stock_item_" + stockItem.id,
-                        domProps: { value: stockItem.id },
-                      },
-                      [
-                        _vm._v(
-                          _vm._s(stockItem.name) +
-                            " - " +
-                            _vm._s(
-                              _vm._f("currency")(
-                                _vm.middleBalancePrice(stockItem)
-                              )
-                            ) +
-                            " ₽"
-                        ),
-                      ]
-                    )
-                  }),
+                  _vm._l(
+                    _vm.stockItems.filter(function (item) {
+                      return _vm.middleBalancePrice(item)
+                    }),
+                    function (stockItem) {
+                      return _c(
+                        "option",
+                        {
+                          key: "stock_item_" + stockItem.id,
+                          domProps: { value: stockItem.id },
+                        },
+                        [
+                          _vm._v(
+                            _vm._s(stockItem.name) +
+                              " - " +
+                              _vm._s(
+                                _vm._f("currency")(
+                                  _vm.middleBalancePrice(stockItem)
+                                )
+                              ) +
+                              " ₽"
+                          ),
+                        ]
+                      )
+                    }
+                  ),
                   0
                 ),
                 _vm._v(" "),
