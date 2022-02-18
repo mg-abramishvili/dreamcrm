@@ -8529,7 +8529,7 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('time', function (value) {
   if (!value) return '';
   return moment__WEBPACK_IMPORTED_MODULE_0___default().utc(value).utcOffset(3).format('H:mm');
 });
-vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('formatDateLong', function (value) {
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('dateFull', function (value) {
   if (!value) return '';
   return moment__WEBPACK_IMPORTED_MODULE_0___default().utc(value).format('dddd, D MMMM');
 });
@@ -55984,11 +55984,11 @@ var render = function () {
             _c("div", { staticClass: "d-flex align-items-center" }, [
               _c("div", { staticClass: "flex-grow-1" }, [
                 _c("h1", { staticClass: "illustration-text lh-1 mb-2" }, [
-                  _vm._v(_vm._s(_vm._f("formatDateTimeOnly")(_vm.time))),
+                  _vm._v(_vm._s(_vm._f("time")(_vm.time))),
                 ]),
                 _vm._v(" "),
                 _c("p", { staticClass: "mb-0 fw-normal lh-1" }, [
-                  _vm._v(_vm._s(_vm._f("formatDateLong")(_vm.date))),
+                  _vm._v(_vm._s(_vm._f("dateFull")(_vm.date))),
                 ]),
               ]),
             ]),

@@ -7,8 +7,8 @@
                     <div class="card-body py-4">
                         <div class="d-flex align-items-center">
                             <div class="flex-grow-1">
-                                <h1 class="illustration-text lh-1 mb-2">{{ time | formatDateTimeOnly }}</h1>
-                                <p class="mb-0 fw-normal lh-1">{{ date | formatDateLong }}</p>
+                                <h1 class="illustration-text lh-1 mb-2">{{ time | time }}</h1>
+                                <p class="mb-0 fw-normal lh-1">{{ date | dateFull }}</p>
                                 <!-- <p class="mb-0">AppStack Dashboard</p> -->
                             </div>
                         </div>

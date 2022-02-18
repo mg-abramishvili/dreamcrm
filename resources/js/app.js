@@ -39,7 +39,7 @@ Vue.filter('time', function (value) {
     if (!value) return ''
     return moment.utc(value).utcOffset(3).format('H:mm')
 })
-Vue.filter('formatDateLong', function (value) {
+Vue.filter('dateFull', function (value) {
     if (!value) return ''
     return moment.utc(value).format('dddd, D MMMM')
 })
