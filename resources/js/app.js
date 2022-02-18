@@ -39,7 +39,7 @@ Vue.filter('date', function (value) {
 })
 Vue.filter('time', function (value) {
     if (!value) return ''
-    return moment.utc(value).format('H:mm')
+    return moment(value).format('H:mm')
 })
 Vue.filter('formatDateShort', function (value) {
     if (!value) return ''

@@ -8532,7 +8532,7 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('date', function (value) {
 });
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('time', function (value) {
   if (!value) return '';
-  return moment__WEBPACK_IMPORTED_MODULE_0___default().utc(value).format('H:mm');
+  return moment__WEBPACK_IMPORTED_MODULE_0___default()(value).format('H:mm');
 });
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('formatDateShort', function (value) {
   if (!value) return '';
