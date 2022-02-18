@@ -10,9 +10,9 @@ use App\Http\Controllers\CatalogTypeController;
 use App\Http\Controllers\CatalogBoxController;
 use App\Http\Controllers\CatalogCategoryController;
 use App\Http\Controllers\CatalogSborkaController;
-use App\Http\Controllers\CatalogDeliveryController;
 
 use App\Http\Controllers\CalculationController;
+use App\Http\Controllers\CalculationDeliveryController;
 
 use App\Http\Controllers\OfferController;
 
@@ -75,9 +75,7 @@ Route::delete('catalog/category/{id}/delete', [CatalogCategoryController::class,
 
 Route::get('catalog/types', [CatalogTypeController::class, 'index']);
 
-
-
-Route::get('deliveries', [DeliveryController::class, 'index']);
+Route::get('calculation/deliveries', [CalculationDeliveryController::class, 'index']);
 
 
 

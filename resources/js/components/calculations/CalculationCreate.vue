@@ -206,6 +206,7 @@
         created() {
             this.loadTypes()
             this.loadCategories()
+            this.loadDeliveries()
         },
         watch: {
             selected: {
@@ -258,6 +259,13 @@
                 .then((response => {
                     this.boxes = response.data
                 }))
+            },
+            loadDeliveries() {
+                axios
+                .get('/api/calculation/deliveries')
+                .then((response => {
+                    this.deliveries = response.data
+                }));
             },
             loadCategories() {
                 axios

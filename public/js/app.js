@@ -2724,6 +2724,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     this.loadTypes();
     this.loadCategories();
+    this.loadDeliveries();
   },
   watch: {
     selected: {
@@ -2788,25 +2789,32 @@ __webpack_require__.r(__webpack_exports__);
         _this3.boxes = response.data;
       });
     },
-    loadCategories: function loadCategories() {
+    loadDeliveries: function loadDeliveries() {
       var _this4 = this;
 
-      axios.get('/api/catalog/categories').then(function (response) {
-        _this4.categories = response.data;
-        response.data.forEach(function (category) {
-          _this4.$set(_this4.selected.catalogItems, category.slug, []);
+      axios.get('/api/calculation/deliveries').then(function (response) {
+        _this4.deliveries = response.data;
+      });
+    },
+    loadCategories: function loadCategories() {
+      var _this5 = this;
 
-          _this4.addCatalogItem(category.slug);
+      axios.get('/api/catalog/categories').then(function (response) {
+        _this5.categories = response.data;
+        response.data.forEach(function (category) {
+          _this5.$set(_this5.selected.catalogItems, category.slug, []);
+
+          _this5.addCatalogItem(category.slug);
         });
-        _this4.views.categoryCurrent = response.data[0].id;
+        _this5.views.categoryCurrent = response.data[0].id;
       });
     },
     loadCatalogItems: function loadCatalogItems() {
-      var _this5 = this;
+      var _this6 = this;
 
       if (this.selected.box && this.selected.box.id > 0) {
         axios.get("/api/catalog/items/box/".concat(this.selected.box.id)).then(function (response) {
-          _this5.catalogItems = response.data;
+          _this6.catalogItems = response.data;
         });
       }
     },
@@ -2871,10 +2879,10 @@ __webpack_require__.r(__webpack_exports__);
       this.selected.delivery.days = '';
     },
     changeDelivery: function changeDelivery() {
-      var _this6 = this;
+      var _this7 = this;
 
       var delivery = this.deliveries.find(function (delivery) {
-        return delivery.id === _this6.selected.delivery.id;
+        return delivery.id === _this7.selected.delivery.id;
       });
       this.selected.delivery.name = delivery.name;
       this.selected.delivery.price = delivery.price;
@@ -2900,7 +2908,7 @@ __webpack_require__.r(__webpack_exports__);
       this.views.saveButton = false;
     },
     viewCategories: function viewCategories() {
-      var _this7 = this;
+      var _this8 = this;
 
       if (this.selected.box.id && this.catalogItems.length) {
         this.views.types = false;
@@ -2910,7 +2918,7 @@ __webpack_require__.r(__webpack_exports__);
         this.views.delivery = false;
         this.views.saveButton = false;
         this.selected.catalogItems[this.categories[0].slug][0].id = this.catalogItems.filter(function (catalogItem) {
-          return catalogItem.category_id == _this7.categories[0].id;
+          return catalogItem.category_id == _this8.categories[0].id;
         })[0].id;
       } else {
         alert('Выберите корпус!');
