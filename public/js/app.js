@@ -70360,7 +70360,10 @@ var render = function () {
                         "text-muted text-comment-date small text-nowrap mt-2",
                     },
                     [
-                      _vm._v("\n                " + _vm._s(comment.created_at)),
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(_vm._f("time")(comment.created_at))
+                      ),
                       _c("br"),
                       _vm._v(
                         "\n                " +
