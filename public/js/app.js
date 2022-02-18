@@ -8532,8 +8532,7 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('date', function (value) {
 });
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('time', function (value) {
   if (!value) return '';
-  var date = (0,date_fns_parseISO__WEBPACK_IMPORTED_MODULE_8__["default"])(value);
-  return (0,date_fns_format__WEBPACK_IMPORTED_MODULE_7__["default"])(date, "H:mm");
+  return moment__WEBPACK_IMPORTED_MODULE_0___default()(value).format('H:mm');
 });
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('formatDateShort', function (value) {
   if (!value) return '';
