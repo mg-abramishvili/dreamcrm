@@ -63741,7 +63741,7 @@ var render = function () {
                   },
                   _vm._l(
                     _vm.stockItems.filter(function (item) {
-                      return item.price
+                      return _vm.middleBalancePrice(item)
                     }),
                     function (stockItem) {
                       return _c(
