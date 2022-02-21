@@ -37,7 +37,7 @@
                             <label>Совместимость</label>
                             <button @click="selectAllBoxes()" class="btn btn-sm">выбрать все</button>
                         </div>
-                        <select v-model="selected.boxes" class="form-control mb-3" style="height: 250px;" multiple>
+                        <select v-model="selected.boxes" class="form-control mb-3" style="height: 295px;" multiple>
                             <option v-for="box in boxes" :key="'box_' + box.id" :value="box.id">{{ box.name }}</option>
                         </select>
                     </div>
@@ -45,8 +45,9 @@
                         <div class="d-flex justify-content-between">
                             <label>Склад</label>
                         </div>
+                        <input v-model="stockSearchInput" type="text" class="form-control mb-1" placeholder="Поиск по складу...">
                         <select v-model="selected.stockItems" class="form-control mb-3" style="height: 165px;" multiple>
-                            <option v-for="stockItem in stockItems.filter(item => middleBalancePrice(item))" :key="'stock_item_' + stockItem.id" :value="stockItem.id">{{ stockItem.name }} - {{ middleBalancePrice(stockItem) | currency }} ₽</option>
+                            <option v-for="stockItem in stockItemsFiltered" :key="'stock_item_' + stockItem.id" :value="stockItem.id">{{ stockItem.name }} - {{ middleBalancePrice(stockItem) | currency }} ₽</option>
                         </select>
                         <label>Цена (финальная)</label>
                         <input v-model="price" disabled type="number" class="form-control">
@@ -83,10 +84,17 @@
                 boxes: [],
                 stockItems: [],
 
+                stockSearchInput: '',
+
                 errors: [],
             }
         },
         computed: {
+            stockItemsFiltered() {
+                return this.stockItems.filter(item => this.middleBalancePrice(item)).filter(stockItem => {
+                    return stockItem.name.toLowerCase().includes(this.stockSearchInput.toLowerCase())
+                })
+            },
             price() {
                 let stockItems = []
                 this.selected.stockItems.forEach((selectedItem) => {

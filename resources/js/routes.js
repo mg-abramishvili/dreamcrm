@@ -1,6 +1,9 @@
 import Home from './components/Home.vue';
 
 import Catalog from './components/catalog/Index.vue';
+import CatalogTypes from './components/catalog/Types.vue';
+import CatalogTypeCreate from './components/catalog/TypeCreate.vue';
+import CatalogTypeEdit from './components/catalog/TypeEdit.vue';
 import CatalogCategory from './components/catalog/Category.vue';
 import CatalogCategoryCreate from './components/catalog/CategoryCreate.vue';
 import CatalogCategoryEdit from './components/catalog/CategoryEdit.vue';
@@ -9,11 +12,11 @@ import CatalogItemEdit from './components/catalog/ItemEdit.vue';
 import CatalogBoxes from './components/catalog/Boxes.vue';
 import CatalogBoxCreate from './components/catalog/BoxCreate.vue';
 import CatalogBoxEdit from './components/catalog/BoxEdit.vue';
-import CatalogSearch from './components/catalog/CatalogSearch.vue';
+import CatalogSearch from './components/catalog/Search.vue';
 
 import Calculations from './components/calculations/Index.vue';
 import Calculation from './components/calculations/Calculation.vue';
-import CalculationCreate from './components/calculations/CalculationCreate.vue';
+import CalculationCreate from './components/calculations/Create.vue';
 
 import Offers from './components/offers/Offers.vue';
 import Offer from './components/offers/Offer.vue';
@@ -46,6 +49,21 @@ export const routes = [
         path: '/catalog',
         name: 'Catalog',
         component: Catalog
+    },
+    {
+        path: '/catalog/types',
+        name: 'CatalogTypes',
+        component: CatalogTypes
+    },
+    {
+        path: '/catalog/types/create',
+        name: 'CatalogTypeCreate',
+        component: CatalogTypeCreate
+    },
+    {
+        path: '/catalog/type/:id/edit',
+        name: 'CatalogTypeEdit',
+        component: CatalogTypeEdit
     },
     {
         path: '/catalog/category/:id',

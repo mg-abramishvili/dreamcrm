@@ -74,6 +74,10 @@ Route::put('catalog/category/{id}/update', [CatalogCategoryController::class, 'u
 Route::delete('catalog/category/{id}/delete', [CatalogCategoryController::class, 'delete']);
 
 Route::get('catalog/types', [CatalogTypeController::class, 'index']);
+Route::post('catalog/types', [CatalogTypeController::class, 'store']);
+Route::get('catalog/type/{id}', [CatalogTypeController::class, 'type']);
+Route::put('catalog/type/{id}/update', [CatalogTypeController::class, 'update']);
+Route::delete('catalog/type/{id}/delete', [CatalogTypeController::class, 'delete']);
 
 Route::get('calculation/deliveries', [CalculationDeliveryController::class, 'index']);
 

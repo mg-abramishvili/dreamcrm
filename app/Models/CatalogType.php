@@ -11,6 +11,6 @@ class CatalogType extends Model
 
     public function boxes()
     {
-        return $this->belongsToMany(CatalogBox::class);
+        return $this->belongsToMany(CatalogBox::class, 'catalog_box__catalog_type', 'catalog_type_id', 'catalog_box_id');
     }
 }

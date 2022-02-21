@@ -29,12 +29,12 @@
                 <tbody>
                     <tr v-for="box in filteredBoxes" :key="'box_' + box.id">
                         <td class="align-middle">
-                            <router-link :to="{name: 'BoxEdit', params: {id: box.id}}">{{ box.name }}</router-link>
+                            <router-link :to="{name: 'CatalogBoxEdit', params: {id: box.id}}">{{ box.name }}</router-link>
                         </td>
                     </tr>
-                    <tr v-for="element in filteredElements" :key="'element_' + element.id">
+                    <tr v-for="catalogItem in filteredCatalogItems" :key="'catalogItem_' + catalogItem.id">
                         <td class="align-middle">
-                            <router-link :to="{name: 'ElementEdit', params: {id: element.id}}">{{ element.name }}</router-link>
+                            <router-link :to="{name: 'CatalogItemEdit', params: {id: catalogItem.id}}">{{ catalogItem.name }}</router-link>
                         </td>
                     </tr>
                 </tbody>
@@ -48,7 +48,7 @@
     export default {
         data() {
             return {
-                elements: [],
+                catalogItems: [],
                 boxes: [],
 
                 input: '',
@@ -56,7 +56,7 @@
         },
         created() {
             this.loadBoxes()
-            this.loadElements()
+            this.loadCatalogItems()
         },
         mounted() {
             document.getElementById("input").focus();
@@ -67,25 +67,25 @@
                     return box.name.toLowerCase().includes(this.input.toLowerCase())
                 })
             },
-            filteredElements() {
-                return this.elements.filter(element => {
-                    return element.name.toLowerCase().includes(this.input.toLowerCase())
+            filteredCatalogItems() {
+                return this.catalogItems.filter(item => {
+                    return item.name.toLowerCase().includes(this.input.toLowerCase())
                 })
             }
         },
         methods: {
             loadBoxes() {
                 axios
-                .get(`/api/boxes`)
+                .get(`/api/catalog/boxes`)
                 .then(response => (
                     this.boxes = response.data
                 ));
             },
-            loadElements() {
+            loadCatalogItems() {
                 axios
-                .get(`/api/elements`)
+                .get(`/api/catalog/items`)
                 .then(response => (
-                    this.elements = response.data
+                    this.catalogItems = response.data
                 ));
             }
         },

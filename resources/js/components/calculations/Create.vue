@@ -164,7 +164,7 @@
 
 <script>
     import Loader from '../Loader.vue'
-    import DeliveryPEK from './CalculationDeliveryPEK.vue'
+    import DeliveryPEK from './DeliveryPEK.vue'
 
     export default {
         data() {
