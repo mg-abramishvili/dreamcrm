@@ -51,7 +51,7 @@
                 })
                 .then(response => (
                     this.name = '',
-                    this.$parent.getColumns(),
+                    this.$parent.getBoard(this.board_id),
                     this.closeModal()
                 ))
             },

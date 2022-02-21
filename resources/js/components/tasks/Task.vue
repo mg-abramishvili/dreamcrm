@@ -4,7 +4,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <template v-if="views.changeTaskName">
-                        <ChangeTaskName :task="task"></ChangeTaskName>
+                        <ChangeTaskName :task="task" :board_id="board_id"></ChangeTaskName>
                     </template>
                     <template v-else>
                         <h5 @click="changeTaskName()" class="modal-title">{{ task.name }}</h5>
@@ -23,10 +23,10 @@
                                 </div>
 
                                 <template v-if="views.changeTaskDeadline">
-                                    <ChangeTaskDeadline :task="task"></ChangeTaskDeadline>
+                                    <ChangeTaskDeadline :task="task" :board_id="board_id"></ChangeTaskDeadline>
                                 </template>
                                 <template v-else>
-                                    <p v-if="task.deadline" class="mb-0">{{ task.deadline | formatDateLong }}</p>
+                                    <p v-if="task.deadline" class="mb-0">{{ task.deadline | date }}</p>
                                     <p v-else class="mb-0">Не указан</p>
                                 </template>
                             </div>
@@ -38,7 +38,7 @@
                                 </div>
 
                                 <template v-if="views.changeTaskDescription">
-                                    <ChangeTaskDescription :task="task"></ChangeTaskDescription>
+                                    <ChangeTaskDescription :task="task" :board_id="board_id"></ChangeTaskDescription>
                                 </template>
                                 <template v-else>
                                     <p v-if="task.description" class="mb-0">{{ task.description }}</p>
@@ -68,7 +68,7 @@
                                 </template>
                             </div>
 
-                            <Comments :task_id="task.id"></Comments>
+                            <Comments :task_id="task.id" :board_id="board_id"></Comments>
                         </div>
                         <div class="col-12 col-lg-3">
                             <h6 class="text-muted mb-0">Статус</h6>
@@ -87,7 +87,7 @@
                             <h6 class="text-muted mt-4">Действия</h6>
                             <div style="position: relative;">
                                 <button v-if="task.column.board.admin == $parent.$parent.user.id" @click="addUser()" class="w-100 btn btn-outline-primary mb-2">Добавить участника</button>
-                                <AddUser v-if="views.addUser" :task="task"></AddUser>
+                                <AddUser v-if="views.addUser" :task="task" :board_id="board_id"></AddUser>
                             </div>
 
                             <button v-if="task.status !== 'completed'" @click="completeTask()" class="w-100 btn btn-success">Отметить как выполненную</button>
@@ -110,7 +110,7 @@
     import AddUser from './AddUser.vue'
     
     export default {
-        props: ['task_id'],
+        props: ['task_id', 'board_id'],
         data() {
             return {
                 task: {},
@@ -151,7 +151,7 @@
                         status: 'completed'
                     })
                     .then(response => (
-                        this.$parent.getColumns(),
+                        this.$parent.getBoard(this.board_id),
                         this.closeModal()
                     ))
                 }
@@ -163,7 +163,7 @@
                         status: 'active'
                     })
                     .then(response => (
-                        this.$parent.getColumns(),
+                        this.$parent.getBoard(this.board_id),
                         this.closeModal()
                     ))
                 }
@@ -173,7 +173,7 @@
                     axios
                     .delete(`/api/task/${this.task.id}/delete`)
                     .then(response => (
-                        this.$parent.getColumns(),
+                        this.$parent.getBoard(this.board_id),
                         this.closeModal()
                     ))
                 }

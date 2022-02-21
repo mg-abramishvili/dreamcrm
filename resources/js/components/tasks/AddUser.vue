@@ -11,7 +11,7 @@
 
 <script>    
     export default {
-        props: ['task'],
+        props: ['task', 'board_id'],
         data() {
             return {
                 users: [],
@@ -44,7 +44,7 @@
                 })
                 .then(response => (
                     this.$parent.getTask(),
-                    this.$parent.$parent.getColumns(),
+                    this.$parent.$parent.getBoard(this.board_id),
                     this.closeForm()
                 ))
             },

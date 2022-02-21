@@ -4,9 +4,9 @@
             <div class="col-12 col-lg-12">
                 <div class="d-inline-flex w-75">
                     <template v-if="views.createTaskBoard == false" class="form-select w-50">
-                        <button @click="selected.board = board, getColumns()" v-for="board in boards" :key="'board_' + board.id" class="btn btn-pill me-1" :class="{'btn-primary': selected.board == board, 'btn-outline-primary': selected.board != board}">
+                        <router-link :to="{name: 'Tasks', params: {board_id: board.id}}" v-for="board in boards" :key="'board_' + board.id" class="btn btn-pill me-1" :class="{'btn-primary': $route.params.board_id == board.id, 'btn-outline-primary': $route.params.board_id != board.id}">
                             {{ board.name }}
-                        </button>
+                        </router-link>
                     </template>
 
                     <CreateTaskBoard v-if="views.createTaskBoard"></CreateTaskBoard>
@@ -16,23 +16,23 @@
             </div>
         </div>
         
-        <template v-if="views.loading == false">
-            <draggable v-dragscroll:nochilddrag v-model="columns" :move="detectMove" @change="moveColumn($event)" :disabled="views.draggable == false" draggable=".task-column" class="tasks-page-board align-items-start">
-                <div v-for="column in columns" :key="column.id" class="task-column">
+        <template>
+            <draggable v-dragscroll:nochilddrag v-model="board.columns" :move="detectMove" @change="moveColumn($event)" :disabled="views.draggable == false" draggable=".task-column" class="tasks-page-board align-items-start">
+                <div v-for="column in board.columns" :key="column.id" class="task-column">
                     <div class="card-header">
                         <div class="row align-items-center mb-2">
                             <div class="col-9">
-                                <h5 v-if="views.modals.changeColumnName == false" @click="openChangeColumnName(column)" class="card-title mb-0">
+                                <h5 v-if="views.modals.changeColumnName == false" @click="openChangeColumnName(column, board)" class="card-title mb-0">
                                     {{ column.name }}
                                 </h5>
                             </div>
                             <div class="col-3 text-end">
-                                <button v-if="column.board && column.board.admin == $parent.user.id || $parent.user.permissions && $parent.user.permissions.can_see_all_boards == true" @click="openCreateTask(column.id)" class="btn btn-sm btn-outline-primary">+</button>
+                                <button v-if="board.admin == $parent.user.id || $parent.user.permissions && $parent.user.permissions.can_see_all_boards == true" @click="openCreateTask(column)" class="btn btn-sm btn-outline-primary">+</button>
                             </div>
                         </div>
                     </div>
 
-                    <CreateTask v-if="views.createTask && selected.column == column.id" :column_id="selected.column"></CreateTask>
+                    <CreateTask v-if="views.createTask && selected.column.id == column.id" :column_id="selected.column.id" :board_id="board.id"></CreateTask>
                     
                     <draggable v-model="column.tasks" group="tasks" :move="detectMove" @change="moveTask($event, column)" :disabled="views.draggable == false" class="task-column-body">
                         <div @click="openTask(task)" v-for="task in column.tasks" :key="task.id" class="card m-0" style="box-shadow: none;">
@@ -59,15 +59,15 @@
                         </div>
                     </draggable>
                 </div>
-                <button v-if="selected.board.admin == $parent.user.id" @click="openCreateColumn()" class="btn btn-outline-primary mt-4">Добавить колонку</button>
+                <button v-if="board.admin == $parent.user.id" @click="openCreateColumn()" class="btn btn-outline-primary mt-4">Добавить колонку</button>
             </draggable>
         </template>
 
-        <TaskItem v-if="views.modals.openTask" :task_id="selected.task.id"></TaskItem>
+        <TaskItem v-if="views.modals.openTask" :task_id="selected.task.id" :board_id="$route.params.board_id"></TaskItem>
         
-        <CreateColumn v-if="views.modals.createColumn" :board_id="selected.board.id"></CreateColumn>
+        <CreateColumn v-if="views.modals.createColumn" :board_id="$route.params.board_id"></CreateColumn>
         
-        <ChangeColumnName v-if="views.modals.changeColumnName" :column="selected.column"></ChangeColumnName>
+        <ChangeColumnName v-if="views.modals.changeColumnName" :column="selected.column" :board_id="$route.params.board_id"></ChangeColumnName>
 
         <div v-if="views.modals.showBackdrop" class="modal-backdrop fade show"></div>
     </div>
@@ -88,16 +88,14 @@
         data() {
             return {
                 boards: [],
-                columns: [],
+                board: {},
 
                 selected: {
-                    board: {},
                     column: {},
                     task: {},
                 },
 
                 views: {
-                    loading: true,
                     draggable: false,
                     createTask: false,
                     createTaskBoard: false,
@@ -114,38 +112,33 @@
             this.getBoards()
         },
         methods: {
-            getBoards(board_id) {
+            getBoards() {
                 axios
                 .get('/api/tasks/boards')
                 .then((response => {
                     this.boards = response.data
 
-                    this.views.loading = false
-
-                    if(board_id) {
-                        this.selected.board = response.data.find(board => board.id == board_id)
-                        this.getColumns()
+                    if(!this.$route.params.board_id) {
+                        this.$router.push({name: 'Tasks', params: {board_id: response.data[0].id}})
+                        this.getBoard(response.data[0].id)
                         return
                     }
 
-                    if(response.data[0]) {
-                        this.selected.board = response.data[0]
-                        this.getColumns()
-                    }
+                    this.getBoard(this.$route.params.board_id)
                 }))
             },
-            getColumns() {
-                if(this.selected.board.admin == this.$parent.user.id) {
-                    this.views.draggable = true
-                } else {
-                    this.views.draggable = false
-                }
-
+            getBoard(id) {
                 axios
-                .get(`/api/tasks/board/${this.selected.board.id}/columns`)
-                .then(response => (
-                    this.columns = response.data
-                ))
+                .get(`/api/tasks/board/${id}`)
+                .then((response => {
+                    this.board = response.data
+
+                    if(response.data.admin == this.$parent.user.id) {
+                        this.views.draggable = true
+                    } else {
+                        this.views.draggable = false
+                    }
+                }))
             },
             openTask(task) {
                 this.selected.task = task
@@ -156,8 +149,8 @@
                 this.views.modals.createColumn = true
                 this.views.modals.showBackdrop = true
             },
-            openChangeColumnName(column) {
-                if(column.board.admin == this.$parent.user.id) {
+            openChangeColumnName(column, board) {
+                if(board.admin == this.$parent.user.id) {
                     this.selected.column = column
                     this.views.modals.changeColumnName = true
                     this.views.modals.showBackdrop = true
@@ -202,7 +195,7 @@
                 })
             },
             moveColumn(event) {
-                var reorderedColumns = this.columns.map(function(column, index){
+                var reorderedColumns = this.board.columns.map(function(column, index) {
                     {
                         return {
                             id: column.id,

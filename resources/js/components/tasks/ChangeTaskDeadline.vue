@@ -7,7 +7,7 @@
 
 <script>
 export default {
-    props: ['task'],
+    props: ['task', 'board_id'],
     data() {
         return {
             //
@@ -27,7 +27,7 @@ export default {
             })
             .then(response => (
                 this.$parent.getTask(),
-                this.$parent.$parent.getColumns(),
+                this.$parent.$parent.getBoard(this.board_id),
                 this.$parent.views.changeTaskDeadline = false
             ))
         }

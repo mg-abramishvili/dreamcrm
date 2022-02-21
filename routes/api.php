@@ -133,7 +133,7 @@ Route::get('stock/items-to-buy', [StockItemController::class, 'itemsToBuy'])->mi
 // TASKS
 Route::get('tasks/boards', [TaskBoardController::class, 'index']);
 Route::post('tasks/boards', [TaskBoardController::class, 'store']);
-Route::get('tasks/board/{id}/columns', [TaskBoardColumnController::class, 'index']);
+Route::get('tasks/board/{id}', [TaskBoardController::class, 'board']);
 Route::post('tasks/columns', [TaskBoardColumnController::class, 'store']);
 Route::put('tasks/columns/reorder', [TaskBoardColumnController::class, 'reorder']);
 Route::put('tasks/reorder', [TaskController::class, 'reorder']);

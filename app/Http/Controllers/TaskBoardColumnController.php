@@ -10,57 +10,6 @@ use Illuminate\Http\Request;
 
 class TaskBoardColumnController extends Controller
 {
-    public function index($id, Request $request)
-    {
-        $board = TaskBoard::find($id);
-
-        $user = User::find($request->user()->id);
-
-        if($user->permissions && $user->permissions->can_see_all_boards == 1 || $board->admin == $user->id) {
-            return TaskBoardColumn::where('board_id', $board->id)->with(
-                [
-                    'board',
-                    'tasks' => function ($q) use($user) {
-                        $q->with(
-                            [
-                                'users',
-                                'comments',
-                                'notifications' => function ($q) use($user) { $q->where('user_id', $user->id); }
-                            ]
-                        )
-                        ->orderBy('status', 'asc')
-                        ->orderBy('order', 'asc');
-                    },
-                ]
-            )
-            ->orderBy('order', 'asc')
-            ->get();
-        }
-
-        return TaskBoardColumn::where('board_id', $board->id)->with(
-            [
-                'board',
-                'tasks' => function ($q) use($user) {
-                    $q->with(
-                        [
-                            'users',
-                            'comments',
-                            'notifications' => function ($q) use($user) { $q->where('user_id', $user->id); }
-                        ]
-                    )
-                    ->whereRelation('users', 'user_id', $user->id)
-                    ->orderBy('status', 'asc')
-                    ->orderBy('order', 'asc');
-                },
-            ],
-        )
-        ->whereHas('tasks', function ($q) use($user) {
-            $q->whereRelation('users', 'user_id', $user->id);
-        })
-        ->orderBy('order', 'asc')
-        ->get();
-    }
-
     public function store(Request $request)
     {
         $column = new TaskBoardColumn();

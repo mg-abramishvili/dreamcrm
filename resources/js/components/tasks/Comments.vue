@@ -24,7 +24,7 @@
 
 <script>
 export default {
-    props: ['task_id'],
+    props: ['task_id', 'board_id'],
     data() {
         return {
             comments: [],
@@ -59,7 +59,7 @@ export default {
                 .then(response => (
                     this.text = '',
                     this.getComments(),
-                    this.$parent.$parent.getColumns()
+                    this.$parent.$parent.getBoard(this.board_id)
                 ))
             }
         }

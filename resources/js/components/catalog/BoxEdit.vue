@@ -33,7 +33,7 @@
                         <div class="d-flex justify-content-between">
                             <label>Тип</label>
                         </div>
-                        <select v-model="selected.types" class="form-control mb-3" style="height: 200px;" multiple>
+                        <select v-model="selected.types" class="form-control mb-3" style="height: 225px;" multiple>
                             <option v-for="type in types" :key="'type_' + type.id" :value="type.id">{{ type.name }}</option>
                         </select>
                     </div>
@@ -42,9 +42,17 @@
                             <label>Склад</label>
                         </div>
                         <input v-model="stockSearchInput" type="text" class="form-control mb-1" placeholder="Поиск по складу...">
-                        <select v-model="selected.stockItems" class="form-control mb-3" style="height: 155px;" multiple>
+                        <!-- <select v-model="selected.stockItems" class="form-control mb-3" style="height: 155px;" multiple>
                             <option v-for="stockItem in stockItemsFiltered" :key="'stock_item_' + stockItem.id" :value="stockItem.id">{{ stockItem.name }} - {{ middleBalancePrice(stockItem) | currency }} ₽</option>
-                        </select>
+                        </select> -->
+                        <div class="form-control" style="height: 180px; overflow-y: auto;">
+                            <div v-for="stockItem in stockItemsFiltered" :key="'stock_item_' + stockItem.id" class="form-check">
+                                <input v-model="selected.stockItems" id="'stock_item_' + stockItem.id" :value="stockItem.id" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" for="'stock_item_' + stockItem.id">
+                                    {{ stockItem.name }}
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

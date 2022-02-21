@@ -19,6 +19,68 @@ class TaskBoardController extends Controller
         return TaskBoard::whereRelation('columns.tasks.users', 'user_id', $user->id)->orWhere('admin', $user->id)->get();
     }
 
+    public function board($id, Request $request)
+    {
+        $user = User::find($request->user()->id);
+
+        $board = TaskBoard::find($id);
+
+        if($user->permissions && $user->permissions->can_see_all_boards == 1 || $board->admin == $user->id) {
+            $board = TaskBoard::with(
+                [
+                    'columns' => function ($q) use($user) {
+                        $q->with(
+                            [
+                                'tasks' => function ($q) use($user) {
+                                    $q->with(
+                                        [
+                                            'users',
+                                            'comments',
+                                            'notifications' => function ($q) use($user) { $q->where('user_id', $user->id); }
+                                        ]
+                                    )
+                                    ->orderBy('status', 'asc')
+                                    ->orderBy('order', 'asc');
+                                }
+                            ]
+                        )
+                        ->orderBy('order', 'asc');
+                    }
+                ]
+            )
+            ->find($id);
+        } else {
+            $board = TaskBoard::with(
+                [
+                    'columns' => function ($q) use($user) {
+                        $q->with(
+                            [
+                                'tasks' => function ($q) use($user) {
+                                    $q->with(
+                                        [
+                                            'users',
+                                            'comments',
+                                            'notifications' => function ($q) use($user) { $q->where('user_id', $user->id); }
+                                        ]
+                                    )
+                                    ->whereRelation('users', 'user_id', $user->id)
+                                    ->orderBy('status', 'asc')
+                                    ->orderBy('order', 'asc');
+                                }
+                            ]
+                        )
+                        ->whereHas('tasks', function ($q) use($user) {
+                            $q->whereRelation('users', 'user_id', $user->id);
+                        })
+                        ->orderBy('order', 'asc');
+                    }
+                ]
+            )
+            ->find($id);
+        }
+        return $board;
+    }
+
     public function store(Request $request)
     {
         $user = User::find($request->user()->id);

@@ -27,7 +27,7 @@
 
 <script>    
     export default {
-        props: ['column'],
+        props: ['column', 'board_id'],
         data() {
             return {
                 //
@@ -56,7 +56,7 @@
                 })
                 .then(response => (
                     this.name = '',
-                    this.$parent.getColumns(),
+                    this.$parent.getBoard(this.board_id),
                     this.closeModal()
                 ))
             },
@@ -65,7 +65,7 @@
                     axios
                     .delete(`/api/tasks/column/${this.column.id}/delete`)
                     .then(response => (
-                        this.$parent.getColumns(),
+                        this.$parent.getBoard(this.board_id),
                         this.closeModal()
                     ))
                 }

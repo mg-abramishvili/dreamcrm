@@ -46,9 +46,17 @@
                             <label>Склад</label>
                         </div>
                         <input v-model="stockSearchInput" type="text" class="form-control mb-1" placeholder="Поиск по складу...">
-                        <select v-model="selected.stockItems" class="form-control mb-3" style="height: 165px;" multiple>
+                        <!-- <select v-model="selected.stockItems" class="form-control mb-3" style="height: 165px;" multiple>
                             <option v-for="stockItem in stockItemsFiltered" :key="'stock_item_' + stockItem.id" :value="stockItem.id">{{ stockItem.name }} - {{ middleBalancePrice(stockItem) | currency }} ₽</option>
-                        </select>
+                        </select> -->
+                        <div class="form-control" style="height: 180px; overflow-y: auto;">
+                            <div v-for="stockItem in stockItemsFiltered" :key="'stock_item_' + stockItem.id" class="form-check">
+                                <input v-model="selected.stockItems" id="'stock_item_' + stockItem.id" :value="stockItem.id" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" for="'stock_item_' + stockItem.id">
+                                    {{ stockItem.name }}
+                                </label>
+                            </div>
+                        </div>
                         <label>Цена (финальная)</label>
                         <input v-model="price" disabled type="number" class="form-control">
                     </div>

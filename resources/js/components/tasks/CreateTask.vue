@@ -10,7 +10,7 @@
 
 <script>    
     export default {
-        props: ['column_id'],
+        props: ['column_id', 'board_id'],
         data() {
             return {
                 name: '',
@@ -25,7 +25,7 @@
                 })
                 .then((response => {
                     this.name = ''
-                    this.$parent.$parent.getColumns()
+                    this.$parent.$parent.getBoard(this.board_id)
                     this.$parent.$parent.views.createTask = false
                 }))
             },

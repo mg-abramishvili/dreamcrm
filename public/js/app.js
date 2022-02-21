@@ -3304,6 +3304,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3592,6 +3600,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var filepond_plugin_file_validate_type__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(filepond_plugin_file_validate_type__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var filepond_plugin_image_preview__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! filepond-plugin-image-preview */ "./node_modules/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js");
 /* harmony import */ var filepond_plugin_image_preview__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(filepond_plugin_image_preview__WEBPACK_IMPORTED_MODULE_5__);
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -4700,6 +4716,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -4866,6 +4890,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Loader_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Loader.vue */ "./resources/js/components/Loader.vue");
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -7427,7 +7459,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['task'],
+  props: ['task', 'board_id'],
   data: function data() {
     return {
       users: [],
@@ -7457,7 +7489,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.put("/api/task/".concat(this.task.id, "/update"), {
         user_id: user_id
       }).then(function (response) {
-        return _this2.$parent.getTask(), _this2.$parent.$parent.getColumns(), _this2.closeForm();
+        return _this2.$parent.getTask(), _this2.$parent.$parent.getBoard(_this2.board_id), _this2.closeForm();
       });
     }
   }
@@ -7504,7 +7536,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['column'],
+  props: ['column', 'board_id'],
   data: function data() {
     return {//
     };
@@ -7531,7 +7563,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.put("/api/tasks/column/".concat(this.column.id, "/rename"), {
         name: this.name
       }).then(function (response) {
-        return _this.name = '', _this.$parent.getColumns(), _this.closeModal();
+        return _this.name = '', _this.$parent.getBoard(_this.board_id), _this.closeModal();
       });
     },
     deleteColumn: function deleteColumn() {
@@ -7539,7 +7571,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (confirm("Точно удалить?")) {
         axios["delete"]("/api/tasks/column/".concat(this.column.id, "/delete")).then(function (response) {
-          return _this2.$parent.getColumns(), _this2.closeModal();
+          return _this2.$parent.getBoard(_this2.board_id), _this2.closeModal();
         });
       }
     }
@@ -7567,7 +7599,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['task'],
+  props: ['task', 'board_id'],
   data: function data() {
     return {//
     };
@@ -7585,7 +7617,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.put("/api/task/".concat(this.task.id, "/update"), {
         deadline: this.deadline
       }).then(function (response) {
-        return _this.$parent.getTask(), _this.$parent.$parent.getColumns(), _this.$parent.views.changeTaskDeadline = false;
+        return _this.$parent.getTask(), _this.$parent.$parent.getBoard(_this.board_id), _this.$parent.views.changeTaskDeadline = false;
       });
     }
   }
@@ -7612,7 +7644,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['task'],
+  props: ['task', 'board_id'],
   data: function data() {
     return {//
     };
@@ -7630,7 +7662,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.put("/api/task/".concat(this.task.id, "/update"), {
         description: this.description
       }).then(function (response) {
-        return _this.$parent.getTask(), _this.$parent.$parent.getColumns(), _this.$parent.views.changeTaskDescription = false;
+        return _this.$parent.getTask(), _this.$parent.$parent.getBoard(_this.board_id), _this.$parent.views.changeTaskDescription = false;
       });
     }
   }
@@ -7657,7 +7689,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['task'],
+  props: ['task', 'board_id'],
   data: function data() {
     return {//
     };
@@ -7675,7 +7707,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.put("/api/task/".concat(this.task.id, "/update"), {
         name: this.name
       }).then(function (response) {
-        return _this.$parent.getTask(), _this.$parent.$parent.getColumns(), _this.$parent.views.changeTaskName = false;
+        return _this.$parent.getTask(), _this.$parent.$parent.getBoard(_this.board_id), _this.$parent.views.changeTaskName = false;
       });
     }
   }
@@ -7719,7 +7751,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['task_id'],
+  props: ['task_id', 'board_id'],
   data: function data() {
     return {
       comments: [],
@@ -7749,7 +7781,7 @@ __webpack_require__.r(__webpack_exports__);
           user_id: this.$parent.$parent.$parent.user.id,
           text: this.text
         }).then(function (response) {
-          return _this2.text = '', _this2.getComments(), _this2.$parent.$parent.getColumns();
+          return _this2.text = '', _this2.getComments(), _this2.$parent.$parent.getBoard(_this2.board_id);
         });
       }
     }
@@ -7827,7 +7859,7 @@ __webpack_require__.r(__webpack_exports__);
         board_id: this.board_id,
         name: this.name
       }).then(function (response) {
-        return _this2.name = '', _this2.$parent.getColumns(), _this2.closeModal();
+        return _this2.name = '', _this2.$parent.getBoard(_this2.board_id), _this2.closeModal();
       });
     }
   }
@@ -7857,7 +7889,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['column_id'],
+  props: ['column_id', 'board_id'],
   data: function data() {
     return {
       name: ''
@@ -7873,7 +7905,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         _this.name = '';
 
-        _this.$parent.$parent.getColumns();
+        _this.$parent.$parent.getBoard(_this.board_id);
 
         _this.$parent.$parent.views.createTask = false;
       });
@@ -8158,7 +8190,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['task_id'],
+  props: ['task_id', 'board_id'],
   data: function data() {
     return {
       task: {},
@@ -8198,7 +8230,7 @@ __webpack_require__.r(__webpack_exports__);
         axios.put("/api/task/".concat(this.task.id, "/update"), {
           status: 'completed'
         }).then(function (response) {
-          return _this2.$parent.getColumns(), _this2.closeModal();
+          return _this2.$parent.getBoard(_this2.board_id), _this2.closeModal();
         });
       }
     },
@@ -8209,7 +8241,7 @@ __webpack_require__.r(__webpack_exports__);
         axios.put("/api/task/".concat(this.task.id, "/update"), {
           status: 'active'
         }).then(function (response) {
-          return _this3.$parent.getColumns(), _this3.closeModal();
+          return _this3.$parent.getBoard(_this3.board_id), _this3.closeModal();
         });
       }
     },
@@ -8218,7 +8250,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (confirm("Точно удалить задачу?")) {
         axios["delete"]("/api/task/".concat(this.task.id, "/delete")).then(function (response) {
-          return _this4.$parent.getColumns(), _this4.closeModal();
+          return _this4.$parent.getBoard(_this4.board_id), _this4.closeModal();
         });
       }
     },
@@ -8373,14 +8405,12 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       boards: [],
-      columns: [],
+      board: {},
       selected: {
-        board: {},
         column: {},
         task: {}
       },
       views: {
-        loading: true,
         draggable: false,
         createTask: false,
         createTaskBoard: false,
@@ -8397,41 +8427,39 @@ __webpack_require__.r(__webpack_exports__);
     this.getBoards();
   },
   methods: {
-    getBoards: function getBoards(board_id) {
+    getBoards: function getBoards() {
       var _this = this;
 
       axios.get('/api/tasks/boards').then(function (response) {
         _this.boards = response.data;
-        _this.views.loading = false;
 
-        if (board_id) {
-          _this.selected.board = response.data.find(function (board) {
-            return board.id == board_id;
+        if (!_this.$route.params.board_id) {
+          _this.$router.push({
+            name: 'Tasks',
+            params: {
+              board_id: response.data[0].id
+            }
           });
 
-          _this.getColumns();
+          _this.getBoard(response.data[0].id);
 
           return;
         }
 
-        if (response.data[0]) {
-          _this.selected.board = response.data[0];
-
-          _this.getColumns();
-        }
+        _this.getBoard(_this.$route.params.board_id);
       });
     },
-    getColumns: function getColumns() {
+    getBoard: function getBoard(id) {
       var _this2 = this;
 
-      if (this.selected.board.admin == this.$parent.user.id) {
-        this.views.draggable = true;
-      } else {
-        this.views.draggable = false;
-      }
+      axios.get("/api/tasks/board/".concat(id)).then(function (response) {
+        _this2.board = response.data;
 
-      axios.get("/api/tasks/board/".concat(this.selected.board.id, "/columns")).then(function (response) {
-        return _this2.columns = response.data;
+        if (response.data.admin == _this2.$parent.user.id) {
+          _this2.views.draggable = true;
+        } else {
+          _this2.views.draggable = false;
+        }
       });
     },
     openTask: function openTask(task) {
@@ -8443,8 +8471,8 @@ __webpack_require__.r(__webpack_exports__);
       this.views.modals.createColumn = true;
       this.views.modals.showBackdrop = true;
     },
-    openChangeColumnName: function openChangeColumnName(column) {
-      if (column.board.admin == this.$parent.user.id) {
+    openChangeColumnName: function openChangeColumnName(column, board) {
+      if (board.admin == this.$parent.user.id) {
         this.selected.column = column;
         this.views.modals.changeColumnName = true;
         this.views.modals.showBackdrop = true;
@@ -8483,7 +8511,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     moveColumn: function moveColumn(event) {
-      var reorderedColumns = this.columns.map(function (column, index) {
+      var reorderedColumns = this.board.columns.map(function (column, index) {
         {
           return {
             id: column.id,
@@ -58516,7 +58544,7 @@ var render = function () {
                       },
                     ],
                     staticClass: "form-control mb-3",
-                    staticStyle: { height: "200px" },
+                    staticStyle: { height: "225px" },
                     attrs: { multiple: "" },
                     on: {
                       change: function ($event) {
@@ -58575,56 +58603,85 @@ var render = function () {
                 }),
                 _vm._v(" "),
                 _c(
-                  "select",
+                  "div",
                   {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.selected.stockItems,
-                        expression: "selected.stockItems",
-                      },
-                    ],
-                    staticClass: "form-control mb-3",
-                    staticStyle: { height: "155px" },
-                    attrs: { multiple: "" },
-                    on: {
-                      change: function ($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function (o) {
-                            return o.selected
-                          })
-                          .map(function (o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.selected,
-                          "stockItems",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      },
-                    },
+                    staticClass: "form-control",
+                    staticStyle: { height: "180px", "overflow-y": "auto" },
                   },
                   _vm._l(_vm.stockItemsFiltered, function (stockItem) {
                     return _c(
-                      "option",
+                      "div",
                       {
                         key: "stock_item_" + stockItem.id,
-                        domProps: { value: stockItem.id },
+                        staticClass: "form-check",
                       },
                       [
-                        _vm._v(
-                          _vm._s(stockItem.name) +
-                            " - " +
-                            _vm._s(
-                              _vm._f("currency")(
-                                _vm.middleBalancePrice(stockItem)
-                              )
-                            ) +
-                            " ₽"
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.selected.stockItems,
+                              expression: "selected.stockItems",
+                            },
+                          ],
+                          staticClass: "form-check-input",
+                          attrs: {
+                            id: "'stock_item_' + stockItem.id",
+                            type: "checkbox",
+                          },
+                          domProps: {
+                            value: stockItem.id,
+                            checked: Array.isArray(_vm.selected.stockItems)
+                              ? _vm._i(_vm.selected.stockItems, stockItem.id) >
+                                -1
+                              : _vm.selected.stockItems,
+                          },
+                          on: {
+                            change: function ($event) {
+                              var $$a = _vm.selected.stockItems,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = stockItem.id,
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 &&
+                                    _vm.$set(
+                                      _vm.selected,
+                                      "stockItems",
+                                      $$a.concat([$$v])
+                                    )
+                                } else {
+                                  $$i > -1 &&
+                                    _vm.$set(
+                                      _vm.selected,
+                                      "stockItems",
+                                      $$a
+                                        .slice(0, $$i)
+                                        .concat($$a.slice($$i + 1))
+                                    )
+                                }
+                              } else {
+                                _vm.$set(_vm.selected, "stockItems", $$c)
+                              }
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "label",
+                          {
+                            staticClass: "form-check-label",
+                            attrs: { for: "'stock_item_' + stockItem.id" },
+                          },
+                          [
+                            _vm._v(
+                              "\n                                " +
+                                _vm._s(stockItem.name) +
+                                "\n                            "
+                            ),
+                          ]
                         ),
                       ]
                     )
@@ -59174,7 +59231,7 @@ var render = function () {
                       },
                     ],
                     staticClass: "form-control mb-3",
-                    staticStyle: { height: "200px" },
+                    staticStyle: { height: "225px" },
                     attrs: { multiple: "" },
                     on: {
                       change: function ($event) {
@@ -59233,56 +59290,85 @@ var render = function () {
                 }),
                 _vm._v(" "),
                 _c(
-                  "select",
+                  "div",
                   {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.selected.stockItems,
-                        expression: "selected.stockItems",
-                      },
-                    ],
-                    staticClass: "form-control mb-3",
-                    staticStyle: { height: "155px" },
-                    attrs: { multiple: "" },
-                    on: {
-                      change: function ($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function (o) {
-                            return o.selected
-                          })
-                          .map(function (o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.selected,
-                          "stockItems",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      },
-                    },
+                    staticClass: "form-control",
+                    staticStyle: { height: "180px", "overflow-y": "auto" },
                   },
                   _vm._l(_vm.stockItemsFiltered, function (stockItem) {
                     return _c(
-                      "option",
+                      "div",
                       {
                         key: "stock_item_" + stockItem.id,
-                        domProps: { value: stockItem.id },
+                        staticClass: "form-check",
                       },
                       [
-                        _vm._v(
-                          _vm._s(stockItem.name) +
-                            " - " +
-                            _vm._s(
-                              _vm._f("currency")(
-                                _vm.middleBalancePrice(stockItem)
-                              )
-                            ) +
-                            " ₽"
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.selected.stockItems,
+                              expression: "selected.stockItems",
+                            },
+                          ],
+                          staticClass: "form-check-input",
+                          attrs: {
+                            id: "'stock_item_' + stockItem.id",
+                            type: "checkbox",
+                          },
+                          domProps: {
+                            value: stockItem.id,
+                            checked: Array.isArray(_vm.selected.stockItems)
+                              ? _vm._i(_vm.selected.stockItems, stockItem.id) >
+                                -1
+                              : _vm.selected.stockItems,
+                          },
+                          on: {
+                            change: function ($event) {
+                              var $$a = _vm.selected.stockItems,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = stockItem.id,
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 &&
+                                    _vm.$set(
+                                      _vm.selected,
+                                      "stockItems",
+                                      $$a.concat([$$v])
+                                    )
+                                } else {
+                                  $$i > -1 &&
+                                    _vm.$set(
+                                      _vm.selected,
+                                      "stockItems",
+                                      $$a
+                                        .slice(0, $$i)
+                                        .concat($$a.slice($$i + 1))
+                                    )
+                                }
+                              } else {
+                                _vm.$set(_vm.selected, "stockItems", $$c)
+                              }
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "label",
+                          {
+                            staticClass: "form-check-label",
+                            attrs: { for: "'stock_item_' + stockItem.id" },
+                          },
+                          [
+                            _vm._v(
+                              "\n                                " +
+                                _vm._s(stockItem.name) +
+                                "\n                            "
+                            ),
+                          ]
                         ),
                       ]
                     )
@@ -60877,56 +60963,85 @@ var render = function () {
                 }),
                 _vm._v(" "),
                 _c(
-                  "select",
+                  "div",
                   {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.selected.stockItems,
-                        expression: "selected.stockItems",
-                      },
-                    ],
-                    staticClass: "form-control mb-3",
-                    staticStyle: { height: "165px" },
-                    attrs: { multiple: "" },
-                    on: {
-                      change: function ($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function (o) {
-                            return o.selected
-                          })
-                          .map(function (o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.selected,
-                          "stockItems",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      },
-                    },
+                    staticClass: "form-control",
+                    staticStyle: { height: "180px", "overflow-y": "auto" },
                   },
                   _vm._l(_vm.stockItemsFiltered, function (stockItem) {
                     return _c(
-                      "option",
+                      "div",
                       {
                         key: "stock_item_" + stockItem.id,
-                        domProps: { value: stockItem.id },
+                        staticClass: "form-check",
                       },
                       [
-                        _vm._v(
-                          _vm._s(stockItem.name) +
-                            " - " +
-                            _vm._s(
-                              _vm._f("currency")(
-                                _vm.middleBalancePrice(stockItem)
-                              )
-                            ) +
-                            " ₽"
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.selected.stockItems,
+                              expression: "selected.stockItems",
+                            },
+                          ],
+                          staticClass: "form-check-input",
+                          attrs: {
+                            id: "'stock_item_' + stockItem.id",
+                            type: "checkbox",
+                          },
+                          domProps: {
+                            value: stockItem.id,
+                            checked: Array.isArray(_vm.selected.stockItems)
+                              ? _vm._i(_vm.selected.stockItems, stockItem.id) >
+                                -1
+                              : _vm.selected.stockItems,
+                          },
+                          on: {
+                            change: function ($event) {
+                              var $$a = _vm.selected.stockItems,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = stockItem.id,
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 &&
+                                    _vm.$set(
+                                      _vm.selected,
+                                      "stockItems",
+                                      $$a.concat([$$v])
+                                    )
+                                } else {
+                                  $$i > -1 &&
+                                    _vm.$set(
+                                      _vm.selected,
+                                      "stockItems",
+                                      $$a
+                                        .slice(0, $$i)
+                                        .concat($$a.slice($$i + 1))
+                                    )
+                                }
+                              } else {
+                                _vm.$set(_vm.selected, "stockItems", $$c)
+                              }
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "label",
+                          {
+                            staticClass: "form-check-label",
+                            attrs: { for: "'stock_item_' + stockItem.id" },
+                          },
+                          [
+                            _vm._v(
+                              "\n                                " +
+                                _vm._s(stockItem.name) +
+                                "\n                            "
+                            ),
+                          ]
                         ),
                       ]
                     )
@@ -61254,56 +61369,85 @@ var render = function () {
                 }),
                 _vm._v(" "),
                 _c(
-                  "select",
+                  "div",
                   {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.selected.stockItems,
-                        expression: "selected.stockItems",
-                      },
-                    ],
-                    staticClass: "form-control mb-3",
-                    staticStyle: { height: "165px" },
-                    attrs: { multiple: "" },
-                    on: {
-                      change: function ($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function (o) {
-                            return o.selected
-                          })
-                          .map(function (o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.selected,
-                          "stockItems",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      },
-                    },
+                    staticClass: "form-control",
+                    staticStyle: { height: "180px", "overflow-y": "auto" },
                   },
                   _vm._l(_vm.stockItemsFiltered, function (stockItem) {
                     return _c(
-                      "option",
+                      "div",
                       {
                         key: "stock_item_" + stockItem.id,
-                        domProps: { value: stockItem.id },
+                        staticClass: "form-check",
                       },
                       [
-                        _vm._v(
-                          _vm._s(stockItem.name) +
-                            " - " +
-                            _vm._s(
-                              _vm._f("currency")(
-                                _vm.middleBalancePrice(stockItem)
-                              )
-                            ) +
-                            " ₽"
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.selected.stockItems,
+                              expression: "selected.stockItems",
+                            },
+                          ],
+                          staticClass: "form-check-input",
+                          attrs: {
+                            id: "'stock_item_' + stockItem.id",
+                            type: "checkbox",
+                          },
+                          domProps: {
+                            value: stockItem.id,
+                            checked: Array.isArray(_vm.selected.stockItems)
+                              ? _vm._i(_vm.selected.stockItems, stockItem.id) >
+                                -1
+                              : _vm.selected.stockItems,
+                          },
+                          on: {
+                            change: function ($event) {
+                              var $$a = _vm.selected.stockItems,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = stockItem.id,
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 &&
+                                    _vm.$set(
+                                      _vm.selected,
+                                      "stockItems",
+                                      $$a.concat([$$v])
+                                    )
+                                } else {
+                                  $$i > -1 &&
+                                    _vm.$set(
+                                      _vm.selected,
+                                      "stockItems",
+                                      $$a
+                                        .slice(0, $$i)
+                                        .concat($$a.slice($$i + 1))
+                                    )
+                                }
+                              } else {
+                                _vm.$set(_vm.selected, "stockItems", $$c)
+                              }
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "label",
+                          {
+                            staticClass: "form-check-label",
+                            attrs: { for: "'stock_item_' + stockItem.id" },
+                          },
+                          [
+                            _vm._v(
+                              "\n                                " +
+                                _vm._s(stockItem.name) +
+                                "\n                            "
+                            ),
+                          ]
                         ),
                       ]
                     )
@@ -66141,7 +66285,11 @@ var render = function () {
                   { staticClass: "modal-header" },
                   [
                     _vm.views.changeTaskName
-                      ? [_c("ChangeTaskName", { attrs: { task: _vm.task } })]
+                      ? [
+                          _c("ChangeTaskName", {
+                            attrs: { task: _vm.task, board_id: _vm.board_id },
+                          }),
+                        ]
                       : [
                           _c(
                             "h5",
@@ -66214,7 +66362,10 @@ var render = function () {
                             _vm.views.changeTaskDeadline
                               ? [
                                   _c("ChangeTaskDeadline", {
-                                    attrs: { task: _vm.task },
+                                    attrs: {
+                                      task: _vm.task,
+                                      board_id: _vm.board_id,
+                                    },
                                   }),
                                 ]
                               : [
@@ -66222,9 +66373,7 @@ var render = function () {
                                     ? _c("p", { staticClass: "mb-0" }, [
                                         _vm._v(
                                           _vm._s(
-                                            _vm._f("formatDateLong")(
-                                              _vm.task.deadline
-                                            )
+                                            _vm._f("date")(_vm.task.deadline)
                                           )
                                         ),
                                       ])
@@ -66264,7 +66413,10 @@ var render = function () {
                             _vm.views.changeTaskDescription
                               ? [
                                   _c("ChangeTaskDescription", {
-                                    attrs: { task: _vm.task },
+                                    attrs: {
+                                      task: _vm.task,
+                                      board_id: _vm.board_id,
+                                    },
                                   }),
                                 ]
                               : [
@@ -66384,7 +66536,12 @@ var render = function () {
                           2
                         ),
                         _vm._v(" "),
-                        _c("Comments", { attrs: { task_id: _vm.task.id } }),
+                        _c("Comments", {
+                          attrs: {
+                            task_id: _vm.task.id,
+                            board_id: _vm.board_id,
+                          },
+                        }),
                       ],
                       1
                     ),
@@ -66489,7 +66646,12 @@ var render = function () {
                               : _vm._e(),
                             _vm._v(" "),
                             _vm.views.addUser
-                              ? _c("AddUser", { attrs: { task: _vm.task } })
+                              ? _c("AddUser", {
+                                  attrs: {
+                                    task: _vm.task,
+                                    board_id: _vm.board_id,
+                                  },
+                                })
                               : _vm._e(),
                           ],
                           1
@@ -66614,18 +66776,17 @@ var render = function () {
               _vm.views.createTaskBoard == false
                 ? _vm._l(_vm.boards, function (board) {
                     return _c(
-                      "button",
+                      "router-link",
                       {
                         key: "board_" + board.id,
                         staticClass: "btn btn-pill me-1",
                         class: {
-                          "btn-primary": _vm.selected.board == board,
-                          "btn-outline-primary": _vm.selected.board != board,
+                          "btn-primary": _vm.$route.params.board_id == board.id,
+                          "btn-outline-primary":
+                            _vm.$route.params.board_id != board.id,
                         },
-                        on: {
-                          click: function ($event) {
-                            ;(_vm.selected.board = board), _vm.getColumns()
-                          },
+                        attrs: {
+                          to: { name: "Tasks", params: { board_id: board.id } },
                         },
                       },
                       [
@@ -66663,299 +66824,307 @@ var render = function () {
         ]),
       ]),
       _vm._v(" "),
-      _vm.views.loading == false
-        ? [
-            _c(
-              "draggable",
+      [
+        _c(
+          "draggable",
+          {
+            directives: [
               {
-                directives: [
-                  {
-                    name: "dragscroll",
-                    rawName: "v-dragscroll:nochilddrag",
-                    arg: "nochilddrag",
-                  },
-                ],
-                staticClass: "tasks-page-board align-items-start",
-                attrs: {
-                  move: _vm.detectMove,
-                  disabled: _vm.views.draggable == false,
-                  draggable: ".task-column",
-                },
-                on: {
-                  change: function ($event) {
-                    return _vm.moveColumn($event)
-                  },
-                },
-                model: {
-                  value: _vm.columns,
-                  callback: function ($$v) {
-                    _vm.columns = $$v
-                  },
-                  expression: "columns",
-                },
+                name: "dragscroll",
+                rawName: "v-dragscroll:nochilddrag",
+                arg: "nochilddrag",
               },
-              [
-                _vm._l(_vm.columns, function (column) {
-                  return _c(
-                    "div",
-                    { key: column.id, staticClass: "task-column" },
-                    [
-                      _c("div", { staticClass: "card-header" }, [
-                        _c(
-                          "div",
-                          { staticClass: "row align-items-center mb-2" },
-                          [
-                            _c("div", { staticClass: "col-9" }, [
-                              _vm.views.modals.changeColumnName == false
-                                ? _c(
-                                    "h5",
-                                    {
-                                      staticClass: "card-title mb-0",
-                                      on: {
-                                        click: function ($event) {
-                                          return _vm.openChangeColumnName(
-                                            column
-                                          )
-                                        },
-                                      },
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                " +
-                                          _vm._s(column.name) +
-                                          "\n                            "
-                                      ),
-                                    ]
-                                  )
-                                : _vm._e(),
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-3 text-end" }, [
-                              (column.board &&
-                                column.board.admin == _vm.$parent.user.id) ||
-                              (_vm.$parent.user.permissions &&
-                                _vm.$parent.user.permissions
-                                  .can_see_all_boards == true)
-                                ? _c(
-                                    "button",
-                                    {
-                                      staticClass:
-                                        "btn btn-sm btn-outline-primary",
-                                      on: {
-                                        click: function ($event) {
-                                          return _vm.openCreateTask(column.id)
-                                        },
-                                      },
-                                    },
-                                    [_vm._v("+")]
-                                  )
-                                : _vm._e(),
-                            ]),
-                          ]
-                        ),
-                      ]),
-                      _vm._v(" "),
-                      _vm.views.createTask && _vm.selected.column == column.id
-                        ? _c("CreateTask", {
-                            attrs: { column_id: _vm.selected.column },
-                          })
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c(
-                        "draggable",
-                        {
-                          staticClass: "task-column-body",
-                          attrs: {
-                            group: "tasks",
-                            move: _vm.detectMove,
-                            disabled: _vm.views.draggable == false,
-                          },
-                          on: {
-                            change: function ($event) {
-                              return _vm.moveTask($event, column)
-                            },
-                          },
-                          model: {
-                            value: column.tasks,
-                            callback: function ($$v) {
-                              _vm.$set(column, "tasks", $$v)
-                            },
-                            expression: "column.tasks",
-                          },
-                        },
-                        _vm._l(column.tasks, function (task) {
-                          return _c(
-                            "div",
-                            {
-                              key: task.id,
-                              staticClass: "card m-0",
-                              staticStyle: { "box-shadow": "none" },
-                              on: {
-                                click: function ($event) {
-                                  return _vm.openTask(task)
+            ],
+            staticClass: "tasks-page-board align-items-start",
+            attrs: {
+              move: _vm.detectMove,
+              disabled: _vm.views.draggable == false,
+              draggable: ".task-column",
+            },
+            on: {
+              change: function ($event) {
+                return _vm.moveColumn($event)
+              },
+            },
+            model: {
+              value: _vm.board.columns,
+              callback: function ($$v) {
+                _vm.$set(_vm.board, "columns", $$v)
+              },
+              expression: "board.columns",
+            },
+          },
+          [
+            _vm._l(_vm.board.columns, function (column) {
+              return _c(
+                "div",
+                { key: column.id, staticClass: "task-column" },
+                [
+                  _c("div", { staticClass: "card-header" }, [
+                    _c("div", { staticClass: "row align-items-center mb-2" }, [
+                      _c("div", { staticClass: "col-9" }, [
+                        _vm.views.modals.changeColumnName == false
+                          ? _c(
+                              "h5",
+                              {
+                                staticClass: "card-title mb-0",
+                                on: {
+                                  click: function ($event) {
+                                    return _vm.openChangeColumnName(
+                                      column,
+                                      _vm.board
+                                    )
+                                  },
                                 },
                               },
-                            },
-                            [
-                              _c(
-                                "div",
-                                {
-                                  staticClass: "card-body cursor-pointer p-3",
-                                  class: {
-                                    "bg-success text-white":
-                                      task.status == "completed",
-                                    "bg-light": task.status == "active",
+                              [
+                                _vm._v(
+                                  "\n                                " +
+                                    _vm._s(column.name) +
+                                    "\n                            "
+                                ),
+                              ]
+                            )
+                          : _vm._e(),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-3 text-end" }, [
+                        _vm.board.admin == _vm.$parent.user.id ||
+                        (_vm.$parent.user.permissions &&
+                          _vm.$parent.user.permissions.can_see_all_boards ==
+                            true)
+                          ? _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-sm btn-outline-primary",
+                                on: {
+                                  click: function ($event) {
+                                    return _vm.openCreateTask(column)
                                   },
-                                  staticStyle: { "white-space": "normal" },
                                 },
-                                [
-                                  _c("p", [
-                                    _vm._v(
-                                      "\n                                " +
-                                        _vm._s(task.name) +
-                                        "\n                                "
-                                    ),
-                                    task.notifications.length
-                                      ? _c(
-                                          "span",
-                                          {
-                                            staticClass:
-                                              "badge rounded-pill bg-danger",
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(task.notifications.length)
-                                            ),
-                                          ]
-                                        )
-                                      : _vm._e(),
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "mt-n1" }, [
-                                    _c(
-                                      "div",
-                                      { staticClass: "d-inline-flex me-2" },
-                                      _vm._l(task.users, function (user) {
-                                        return _c(
-                                          "div",
-                                          {
-                                            key: "task_user_" + user.id,
-                                            staticStyle: { margin: "0 2px" },
-                                          },
-                                          [
-                                            user.avatar
-                                              ? _c("img", {
-                                                  staticClass: "rounded-circle",
-                                                  attrs: {
-                                                    src: user.avatar,
-                                                    width: "18",
-                                                    height: "18",
-                                                    alt: user.name,
-                                                  },
-                                                })
-                                              : _c("img", {
-                                                  staticClass: "rounded-circle",
-                                                  attrs: {
-                                                    src: "/img/no-image.jpg",
-                                                    width: "18",
-                                                    height: "18",
-                                                    alt: user.name,
-                                                  },
-                                                }),
-                                          ]
-                                        )
-                                      }),
-                                      0
-                                    ),
-                                    _vm._v(" "),
-                                    task.comments && task.comments.length > 0
-                                      ? _c(
-                                          "span",
-                                          {
-                                            staticClass:
-                                              "btn btn-sm p-0 d-inline-flex align-items-center",
-                                          },
-                                          [
-                                            _c(
-                                              "svg",
-                                              {
-                                                staticClass:
-                                                  "feather feather-message-square",
-                                                staticStyle: {
-                                                  "margin-right": "3px",
-                                                },
-                                                attrs: {
-                                                  xmlns:
-                                                    "http://www.w3.org/2000/svg",
-                                                  width: "24",
-                                                  height: "24",
-                                                  viewBox: "0 0 24 24",
-                                                  fill: "none",
-                                                  stroke: "currentColor",
-                                                  "stroke-width": "2",
-                                                  "stroke-linecap": "round",
-                                                  "stroke-linejoin": "round",
-                                                },
-                                              },
-                                              [
-                                                _c("path", {
-                                                  attrs: {
-                                                    d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
-                                                  },
-                                                }),
-                                              ]
-                                            ),
-                                            _vm._v(
-                                              "\n                                    " +
-                                                _vm._s(task.comments.length) +
-                                                "\n                                "
-                                            ),
-                                          ]
-                                        )
-                                      : _vm._e(),
-                                  ]),
-                                ]
-                              ),
-                            ]
-                          )
-                        }),
-                        0
-                      ),
-                    ],
-                    1
-                  )
-                }),
-                _vm._v(" "),
-                _vm.selected.board.admin == _vm.$parent.user.id
-                  ? _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-outline-primary mt-4",
-                        on: {
-                          click: function ($event) {
-                            return _vm.openCreateColumn()
-                          },
+                              },
+                              [_vm._v("+")]
+                            )
+                          : _vm._e(),
+                      ]),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _vm.views.createTask && _vm.selected.column.id == column.id
+                    ? _c("CreateTask", {
+                        attrs: {
+                          column_id: _vm.selected.column.id,
+                          board_id: _vm.board.id,
+                        },
+                      })
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "draggable",
+                    {
+                      staticClass: "task-column-body",
+                      attrs: {
+                        group: "tasks",
+                        move: _vm.detectMove,
+                        disabled: _vm.views.draggable == false,
+                      },
+                      on: {
+                        change: function ($event) {
+                          return _vm.moveTask($event, column)
                         },
                       },
-                      [_vm._v("Добавить колонку")]
-                    )
-                  : _vm._e(),
-              ],
-              2
-            ),
-          ]
-        : _vm._e(),
+                      model: {
+                        value: column.tasks,
+                        callback: function ($$v) {
+                          _vm.$set(column, "tasks", $$v)
+                        },
+                        expression: "column.tasks",
+                      },
+                    },
+                    _vm._l(column.tasks, function (task) {
+                      return _c(
+                        "div",
+                        {
+                          key: task.id,
+                          staticClass: "card m-0",
+                          staticStyle: { "box-shadow": "none" },
+                          on: {
+                            click: function ($event) {
+                              return _vm.openTask(task)
+                            },
+                          },
+                        },
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "card-body cursor-pointer p-3",
+                              class: {
+                                "bg-success text-white":
+                                  task.status == "completed",
+                                "bg-light": task.status == "active",
+                              },
+                              staticStyle: { "white-space": "normal" },
+                            },
+                            [
+                              _c("p", [
+                                _vm._v(
+                                  "\n                                " +
+                                    _vm._s(task.name) +
+                                    "\n                                "
+                                ),
+                                task.notifications.length
+                                  ? _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "badge rounded-pill bg-danger",
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(task.notifications.length)
+                                        ),
+                                      ]
+                                    )
+                                  : _vm._e(),
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "mt-n1" }, [
+                                _c(
+                                  "div",
+                                  { staticClass: "d-inline-flex me-2" },
+                                  _vm._l(task.users, function (user) {
+                                    return _c(
+                                      "div",
+                                      {
+                                        key: "task_user_" + user.id,
+                                        staticStyle: { margin: "0 2px" },
+                                      },
+                                      [
+                                        user.avatar
+                                          ? _c("img", {
+                                              staticClass: "rounded-circle",
+                                              attrs: {
+                                                src: user.avatar,
+                                                width: "18",
+                                                height: "18",
+                                                alt: user.name,
+                                              },
+                                            })
+                                          : _c("img", {
+                                              staticClass: "rounded-circle",
+                                              attrs: {
+                                                src: "/img/no-image.jpg",
+                                                width: "18",
+                                                height: "18",
+                                                alt: user.name,
+                                              },
+                                            }),
+                                      ]
+                                    )
+                                  }),
+                                  0
+                                ),
+                                _vm._v(" "),
+                                task.comments && task.comments.length > 0
+                                  ? _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "btn btn-sm p-0 d-inline-flex align-items-center",
+                                      },
+                                      [
+                                        _c(
+                                          "svg",
+                                          {
+                                            staticClass:
+                                              "feather feather-message-square",
+                                            staticStyle: {
+                                              "margin-right": "3px",
+                                            },
+                                            attrs: {
+                                              xmlns:
+                                                "http://www.w3.org/2000/svg",
+                                              width: "24",
+                                              height: "24",
+                                              viewBox: "0 0 24 24",
+                                              fill: "none",
+                                              stroke: "currentColor",
+                                              "stroke-width": "2",
+                                              "stroke-linecap": "round",
+                                              "stroke-linejoin": "round",
+                                            },
+                                          },
+                                          [
+                                            _c("path", {
+                                              attrs: {
+                                                d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
+                                              },
+                                            }),
+                                          ]
+                                        ),
+                                        _vm._v(
+                                          "\n                                    " +
+                                            _vm._s(task.comments.length) +
+                                            "\n                                "
+                                        ),
+                                      ]
+                                    )
+                                  : _vm._e(),
+                              ]),
+                            ]
+                          ),
+                        ]
+                      )
+                    }),
+                    0
+                  ),
+                ],
+                1
+              )
+            }),
+            _vm._v(" "),
+            _vm.board.admin == _vm.$parent.user.id
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-outline-primary mt-4",
+                    on: {
+                      click: function ($event) {
+                        return _vm.openCreateColumn()
+                      },
+                    },
+                  },
+                  [_vm._v("Добавить колонку")]
+                )
+              : _vm._e(),
+          ],
+          2
+        ),
+      ],
       _vm._v(" "),
       _vm.views.modals.openTask
-        ? _c("TaskItem", { attrs: { task_id: _vm.selected.task.id } })
+        ? _c("TaskItem", {
+            attrs: {
+              task_id: _vm.selected.task.id,
+              board_id: _vm.$route.params.board_id,
+            },
+          })
         : _vm._e(),
       _vm._v(" "),
       _vm.views.modals.createColumn
-        ? _c("CreateColumn", { attrs: { board_id: _vm.selected.board.id } })
+        ? _c("CreateColumn", {
+            attrs: { board_id: _vm.$route.params.board_id },
+          })
         : _vm._e(),
       _vm._v(" "),
       _vm.views.modals.changeColumnName
-        ? _c("ChangeColumnName", { attrs: { column: _vm.selected.column } })
+        ? _c("ChangeColumnName", {
+            attrs: {
+              column: _vm.selected.column,
+              board_id: _vm.$route.params.board_id,
+            },
+          })
         : _vm._e(),
       _vm._v(" "),
       _vm.views.modals.showBackdrop
