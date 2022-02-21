@@ -53,7 +53,7 @@
                             <div v-for="stockItem in stockItemsFiltered" :key="'stock_item_' + stockItem.id" class="form-check">
                                 <input v-model="selected.stockItems" id="'stock_item_' + stockItem.id" :value="stockItem.id" class="form-check-input" type="checkbox">
                                 <label class="form-check-label" for="'stock_item_' + stockItem.id">
-                                    {{ stockItem.name }}
+                                    {{ stockItem.name }} - {{ middleBalancePrice(stockItem) | currency }} ₽
                                 </label>
                             </div>
                         </div>

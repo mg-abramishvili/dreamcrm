@@ -58679,7 +58679,13 @@ var render = function () {
                             _vm._v(
                               "\n                                " +
                                 _vm._s(stockItem.name) +
-                                "\n                            "
+                                " - " +
+                                _vm._s(
+                                  _vm._f("currency")(
+                                    _vm.middleBalancePrice(stockItem)
+                                  )
+                                ) +
+                                " ₽\n                            "
                             ),
                           ]
                         ),
@@ -59366,7 +59372,13 @@ var render = function () {
                             _vm._v(
                               "\n                                " +
                                 _vm._s(stockItem.name) +
-                                "\n                            "
+                                " - " +
+                                _vm._s(
+                                  _vm._f("currency")(
+                                    _vm.middleBalancePrice(stockItem)
+                                  )
+                                ) +
+                                " ₽\n                            "
                             ),
                           ]
                         ),
@@ -61039,7 +61051,13 @@ var render = function () {
                             _vm._v(
                               "\n                                " +
                                 _vm._s(stockItem.name) +
-                                "\n                            "
+                                " - " +
+                                _vm._s(
+                                  _vm._f("currency")(
+                                    _vm.middleBalancePrice(stockItem)
+                                  )
+                                ) +
+                                " ₽\n                            "
                             ),
                           ]
                         ),
@@ -61445,7 +61463,13 @@ var render = function () {
                             _vm._v(
                               "\n                                " +
                                 _vm._s(stockItem.name) +
-                                "\n                            "
+                                " - " +
+                                _vm._s(
+                                  _vm._f("currency")(
+                                    _vm.middleBalancePrice(stockItem)
+                                  )
+                                ) +
+                                " ₽\n                            "
                             ),
                           ]
                         ),
