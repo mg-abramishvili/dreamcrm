@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TaskBoard;
+use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -94,5 +95,34 @@ class TaskBoardController extends Controller
         $board->save();
 
         return $board;
+    }
+
+    public function update($id, Request $request)
+    {
+        $user = User::find($request->user()->id);
+
+        $board = TaskBoard::find($id);
+        
+        $board->name = $request->name;
+
+        $board->save();
+    }
+
+    public function delete($id)
+    {
+        $board = TaskBoard::find($id);
+        
+        foreach($board->columns as $column) {
+            foreach($column->tasks as $tsk) {
+                $task = Task::find($tsk->id);
+                $task->users()->detach();
+                $task->comments()->delete();
+                $task->files()->delete();
+                $task->delete();
+            }
+            $column->delete();
+        }
+
+        $board->delete();
     }
 }

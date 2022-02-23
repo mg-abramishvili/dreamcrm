@@ -1,19 +1,22 @@
 <template>
     <div class="tasks-page">
         <div class="row tasks-page-header">
-            <div class="col-12 col-lg-12">
-                <div class="d-inline-flex w-75">
-                    <template v-if="views.createTaskBoard == false" class="form-select w-50">
+            <div class="col-12 col-lg-9">
+                <div class="d-inline-flex w-100">
+                    <template v-if="views.boardCreate == false" class="form-select w-50">
                         <router-link :to="{name: 'Tasks', params: {board_id: board.id}}" v-for="board in boards" :key="'board_' + board.id" class="btn btn-pill me-1" :class="{'btn-primary': $route.params.board_id == board.id, 'btn-outline-primary': $route.params.board_id != board.id}">
                             {{ board.name }}
                             <span v-if="boardNotifications(board.id)" class="badge rounded-pill bg-danger">{{ boardNotifications(board.id) }}</span>
                         </router-link>
                     </template>
 
-                    <CreateTaskBoard v-if="views.createTaskBoard"></CreateTaskBoard>
+                    <BoardCreate v-if="views.boardCreate"></BoardCreate>
 
-                    <button v-if="$parent.user.permissions && $parent.user.permissions.can_see_all_boards == true && views.createTaskBoard == false" @click="openCreateTaskBoard()" class="btn btn-pill btn-outline-secondary">+</button>
+                    <button v-if="$parent.user.permissions && $parent.user.permissions.can_see_all_boards == true && views.boardCreate == false" @click="openBoardCreate()" class="btn btn-pill btn-outline-secondary">+</button>
                 </div>
+            </div>
+            <div class="col-12 col-lg-3 text-end">
+                <button @click="openBoardEdit()" class="btn btn-outline-secondary">Изменить доску</button>
             </div>
         </div>
         
@@ -23,7 +26,7 @@
                     <div class="card-header">
                         <div class="row align-items-center mb-2">
                             <div class="col-9">
-                                <h5 v-if="views.modals.changeColumnName == false" @click="openChangeColumnName(column, board)" class="card-title mb-0">
+                                <h5 v-if="views.modals.columnChangeName == false" @click="openColumnChangeName(column, board)" class="card-title mb-0">
                                     {{ column.name }}
                                     <!-- <span v-if="columnNotifications(column.id)" class="badge rounded-pill bg-danger">{{ columnNotifications(column.id) }}</span> -->
                                 </h5>
@@ -61,7 +64,7 @@
                         </div>
                     </draggable>
                 </div>
-                <button v-if="board.admin == $parent.user.id" @click="openCreateColumn()" class="btn btn-outline-primary mt-4">Добавить колонку</button>
+                <button v-if="board.admin == $parent.user.id" @click="openColumnCreate()" class="btn btn-outline-primary mt-4">Добавить колонку</button>
             </draggable>
         </template>
         <template v-else>
@@ -70,9 +73,11 @@
 
         <TaskItem v-if="views.modals.openTask" :task_id="selected.task.id" :board_id="$route.params.board_id"></TaskItem>
         
-        <CreateColumn v-if="views.modals.createColumn" :board_id="$route.params.board_id"></CreateColumn>
+        <ColumnCreate v-if="views.modals.columnCreate" :board_id="$route.params.board_id"></ColumnCreate>
         
-        <ChangeColumnName v-if="views.modals.changeColumnName" :column="selected.column" :board_id="$route.params.board_id"></ChangeColumnName>
+        <ColumnChangeName v-if="views.modals.columnChangeName" :column="selected.column" :board_id="$route.params.board_id"></ColumnChangeName>
+
+        <BoardEdit v-if="views.modals.boardEdit" :board="board"></BoardEdit>
 
         <div v-if="views.modals.showBackdrop" class="modal-backdrop fade show"></div>
     </div>
@@ -82,10 +87,11 @@
     import Loader from '../Loader.vue'
 
     import TaskItem from './Task.vue'
-    import CreateColumn from './CreateColumn.vue'
-    import ChangeColumnName from './ChangeColumnName.vue'
+    import BoardCreate from './BoardCreate.vue'
+    import BoardEdit from './BoardEdit.vue'
+    import ColumnCreate from './ColumnCreate.vue'
+    import ColumnChangeName from './ColumnChangeName.vue'
     import CreateTask from './CreateTask.vue'
-    import CreateTaskBoard from './CreateTaskBoard.vue'
 
     import draggable from 'vuedraggable'
 
@@ -107,11 +113,12 @@
                 views: {
                     draggable: false,
                     createTask: false,
-                    createTaskBoard: false,
+                    boardCreate: false,
+                    boardEdit: false,
                     modals: {
                         openTask: false,
-                        createColumn: false,
-                        changeColumnName: false,
+                        columnCreate: false,
+                        columnChangeName: false,
                         showBackdrop: false,
                     },
                 },
@@ -192,19 +199,23 @@
                 this.views.modals.openTask = true
                 this.views.modals.showBackdrop = true
             },
-            openCreateColumn() {
-                this.views.modals.createColumn = true
+            openColumnCreate() {
+                this.views.modals.columnCreate = true
                 this.views.modals.showBackdrop = true
             },
-            openChangeColumnName(column, board) {
+            openColumnChangeName(column, board) {
                 if(board.admin == this.$parent.user.id) {
                     this.selected.column = column
-                    this.views.modals.changeColumnName = true
+                    this.views.modals.columnChangeName = true
                     this.views.modals.showBackdrop = true
                 }
             },
-            openCreateTaskBoard() {
-                this.views.createTaskBoard = true
+            openBoardCreate() {
+                this.views.boardCreate = true
+            },
+            openBoardEdit() {
+                this.views.modals.showBackdrop = true
+                this.views.modals.boardEdit = true
             },
             openCreateTask(column) {
                 this.selected.column = column
@@ -267,10 +278,11 @@
         components: {
             Loader,
             TaskItem,
-            CreateColumn,
-            ChangeColumnName,
+            ColumnCreate,
+            ColumnChangeName,
             CreateTask,
-            CreateTaskBoard,
+            BoardCreate,
+            BoardEdit,
             draggable
         },
         directives: {

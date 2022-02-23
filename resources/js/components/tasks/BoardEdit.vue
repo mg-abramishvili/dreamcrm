@@ -3,7 +3,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Изменить колонку</h5>
+                    <h5 class="modal-title">Изменить доску</h5>
                     <button @click="closeModal()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body m-3">
@@ -13,10 +13,10 @@
 
                     <div class="row">
                         <div class="col-12 col-lg-6">
-                            <button @click="updateColumn()" class="btn btn-primary">Сохранить</button>
+                            <button @click="update()" class="btn btn-primary">Сохранить</button>
                         </div>
                         <div class="col-12 col-lg-6 text-end">
-                            <button @click="deleteColumn()" class="btn btn-outline-danger">Удалить колонку</button>
+                            <button @click="del()" class="btn btn-outline-danger">Удалить колонку</button>
                         </div>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
 
 <script>    
     export default {
-        props: ['column', 'board_id'],
+        props: ['board'],
         data() {
             return {
                 //
@@ -42,30 +42,30 @@
         },
         methods: {
             getName() {
-                this.name = this.column.name
+                this.name = this.board.name
             },
             closeModal() {
-                this.$parent.views.modals.changeColumnName = false
+                this.$parent.views.modals.boardEdit = false
                 this.$parent.views.modals.showBackdrop = false
                 document.body.style.overflow = "auto"
             },
-            updateColumn() {
+            update() {
                 axios
-                .put(`/api/tasks/column/${this.column.id}/rename`, {
+                .put(`/api/tasks/board/${this.board.id}/update`, {
                     name: this.name
                 })
                 .then(response => (
                     this.name = '',
-                    this.$parent.getBoard(this.board_id),
+                    this.$parent.getBoards(),
                     this.closeModal()
                 ))
             },
-            deleteColumn() {
+            del() {
                 if (confirm("Точно удалить?")) {
                     axios
-                    .delete(`/api/tasks/column/${this.column.id}/delete`)
+                    .delete(`/api/tasks/board/${this.board.id}/delete`)
                     .then(response => (
-                        this.$parent.getBoard(this.board_id),
+                        this.$parent.getBoards(),
                         this.closeModal()
                     ))
                 }
