@@ -38,11 +38,23 @@
                     <div class="col-12 col-lg-6">
                         <div class="d-flex justify-content-between">
                             <label>Совместимость</label>
-                            <button @click="selectAllBoxes()" class="btn btn-sm">выбрать все</button>
+                            <div>
+                                <button @click="selectAllBoxes()" class="btn btn-sm">выбрать все</button>
+                                <button @click="uncheckAllBoxes()" class="btn btn-sm">снять все</button>
+                            </div>
                         </div>
-                        <select v-model="selected.boxes" class="form-control mb-3" style="height: 295px;" multiple>
+                        <!-- <select v-model="selected.boxes" class="form-control mb-3" style="height: 295px;" multiple>
                             <option v-for="box in boxes" :key="'box_' + box.id" :value="box.id">{{ box.name }}</option>
-                        </select>
+                        </select> -->
+                        <input v-model="boxSearchInput" type="text" class="form-control mb-1" placeholder="Поиск по корпусам...">
+                        <div class="form-control" style="height: 180px; overflow-y: auto;">
+                            <div v-for="box in boxesFiltered" :key="'box_' + box.id" class="form-check">
+                                <input v-model="selected.boxes" :id="'box_' + box.id" :value="box.id" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" :for="'box_' + box.id">
+                                    {{ box.name }}
+                                </label>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-12 col-lg-6">
                         <div class="d-flex justify-content-between">
@@ -93,11 +105,17 @@
                 stockItems: [],
 
                 stockSearchInput: '',
+                boxSearchInput: '',
 
                 errors: [],
             }
         },
         computed: {
+            boxesFiltered() {
+                return this.boxes.filter(box => {
+                    return box.name.toLowerCase().includes(this.boxSearchInput.toLowerCase())
+                })
+            },
             stockItemsFiltered() {
                 return this.stockItems.filter(item => this.middleBalancePrice(item)).filter(stockItem => {
                     return stockItem.name.toLowerCase().includes(this.stockSearchInput.toLowerCase())
@@ -141,7 +159,10 @@
                     ))
             },
             selectAllBoxes() {
-                this.selected.boxes = this.boxes.map(box => box.id)
+                this.selected.boxes = this.boxesFiltered.map(box => box.id)
+            },
+            uncheckAllBoxes() {
+                this.selected.boxes = []
             },
             middleBalancePrice(stockItem) {
                 if(stockItem.balances.length) {

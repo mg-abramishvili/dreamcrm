@@ -4778,6 +4778,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -4792,28 +4804,36 @@ __webpack_require__.r(__webpack_exports__);
       boxes: [],
       stockItems: [],
       stockSearchInput: '',
+      boxSearchInput: '',
       errors: []
     };
   },
   computed: {
-    stockItemsFiltered: function stockItemsFiltered() {
+    boxesFiltered: function boxesFiltered() {
       var _this = this;
 
+      return this.boxes.filter(function (box) {
+        return box.name.toLowerCase().includes(_this.boxSearchInput.toLowerCase());
+      });
+    },
+    stockItemsFiltered: function stockItemsFiltered() {
+      var _this2 = this;
+
       return this.stockItems.filter(function (item) {
-        return _this.middleBalancePrice(item);
+        return _this2.middleBalancePrice(item);
       }).filter(function (stockItem) {
-        return stockItem.name.toLowerCase().includes(_this.stockSearchInput.toLowerCase());
+        return stockItem.name.toLowerCase().includes(_this2.stockSearchInput.toLowerCase());
       });
     },
     price: function price() {
-      var _this2 = this;
+      var _this3 = this;
 
       var stockItems = [];
       this.selected.stockItems.forEach(function (selectedItem) {
-        if (_this2.stockItems.find(function (item) {
+        if (_this3.stockItems.find(function (item) {
           return item.id == selectedItem;
         })) {
-          stockItems.push(_this2.stockItems.find(function (item) {
+          stockItems.push(_this3.stockItems.find(function (item) {
             return item.id == selectedItem;
           }));
         }
@@ -4838,34 +4858,37 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     loadCategories: function loadCategories() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.get('/api/catalog/categories').then(function (response) {
-        _this3.categories = response.data;
+        _this4.categories = response.data;
 
-        if (_this3.$route.params.category_id) {
-          _this3.selected.category = _this3.$route.params.category_id;
+        if (_this4.$route.params.category_id) {
+          _this4.selected.category = _this4.$route.params.category_id;
         }
       });
     },
     loadBoxes: function loadBoxes() {
-      var _this4 = this;
+      var _this5 = this;
 
       axios.get("/api/catalog/boxes").then(function (response) {
-        return _this4.boxes = response.data;
+        return _this5.boxes = response.data;
       });
     },
     loadStockItems: function loadStockItems() {
-      var _this5 = this;
+      var _this6 = this;
 
       axios.get("/api/stock/items").then(function (response) {
-        return _this5.stockItems = response.data;
+        return _this6.stockItems = response.data;
       });
     },
     selectAllBoxes: function selectAllBoxes() {
-      this.selected.boxes = this.boxes.map(function (box) {
+      this.selected.boxes = this.boxesFiltered.map(function (box) {
         return box.id;
       });
+    },
+    uncheckAllBoxes: function uncheckAllBoxes() {
+      this.selected.boxes = [];
     },
     middleBalancePrice: function middleBalancePrice(stockItem) {
       if (stockItem.balances.length) {
@@ -4879,7 +4902,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     save: function save() {
-      var _this6 = this;
+      var _this7 = this;
 
       this.errors = [];
 
@@ -4910,10 +4933,10 @@ __webpack_require__.r(__webpack_exports__);
         stock_items: this.selected.stockItems,
         boxes: this.selected.boxes
       }).then(function (response) {
-        return _this6.$router.push({
+        return _this7.$router.push({
           name: 'CatalogCategory',
           params: {
-            id: _this6.$route.params.category_id
+            id: _this7.$route.params.category_id
           }
         });
       })["catch"](function (error) {
@@ -5018,6 +5041,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -5033,28 +5068,36 @@ __webpack_require__.r(__webpack_exports__);
       boxes: [],
       stockItems: [],
       stockSearchInput: '',
+      boxSearchInput: '',
       errors: []
     };
   },
   computed: {
-    stockItemsFiltered: function stockItemsFiltered() {
+    boxesFiltered: function boxesFiltered() {
       var _this = this;
 
+      return this.boxes.filter(function (box) {
+        return box.name.toLowerCase().includes(_this.boxSearchInput.toLowerCase());
+      });
+    },
+    stockItemsFiltered: function stockItemsFiltered() {
+      var _this2 = this;
+
       return this.stockItems.filter(function (item) {
-        return _this.middleBalancePrice(item);
+        return _this2.middleBalancePrice(item);
       }).filter(function (stockItem) {
-        return stockItem.name.toLowerCase().includes(_this.stockSearchInput.toLowerCase());
+        return stockItem.name.toLowerCase().includes(_this2.stockSearchInput.toLowerCase());
       });
     },
     price: function price() {
-      var _this2 = this;
+      var _this3 = this;
 
       var stockItems = [];
       this.selected.stockItems.forEach(function (selectedItem) {
-        if (_this2.stockItems.find(function (item) {
+        if (_this3.stockItems.find(function (item) {
           return item.id == selectedItem;
         })) {
-          stockItems.push(_this2.stockItems.find(function (item) {
+          stockItems.push(_this3.stockItems.find(function (item) {
             return item.id == selectedItem;
           }));
         }
@@ -5080,45 +5123,48 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     loadCategories: function loadCategories() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.get('/api/catalog/categories').then(function (response) {
-        _this3.categories = response.data;
+        _this4.categories = response.data;
       });
     },
     loadBoxes: function loadBoxes() {
-      var _this4 = this;
+      var _this5 = this;
 
       axios.get("/api/catalog/boxes").then(function (response) {
-        return _this4.boxes = response.data;
+        return _this5.boxes = response.data;
       });
     },
     loadStockItems: function loadStockItems() {
-      var _this5 = this;
+      var _this6 = this;
 
       axios.get("/api/stock/items").then(function (response) {
-        return _this5.stockItems = response.data;
+        return _this6.stockItems = response.data;
       });
     },
     loadItem: function loadItem() {
-      var _this6 = this;
+      var _this7 = this;
 
       axios.get("/api/catalog/item/".concat(this.$route.params.id)).then(function (response) {
-        _this6.item = response.data;
-        _this6.name = response.data.name;
-        _this6.selected.category = response.data.category_id;
-        _this6.selected.boxes = response.data.boxes.map(function (box) {
+        _this7.item = response.data;
+        _this7.name = response.data.name;
+        _this7.selected.category = response.data.category_id;
+        _this7.selected.boxes = response.data.boxes.map(function (box) {
           return box.id;
         });
-        _this6.selected.stockItems = response.data.stock_items.map(function (item) {
+        _this7.selected.stockItems = response.data.stock_items.map(function (item) {
           return item.id;
         });
       });
     },
     selectAllBoxes: function selectAllBoxes() {
-      this.selected.boxes = this.boxes.map(function (box) {
+      this.selected.boxes = this.boxesFiltered.map(function (box) {
         return box.id;
       });
+    },
+    uncheckAllBoxes: function uncheckAllBoxes() {
+      this.selected.boxes = [];
     },
     middleBalancePrice: function middleBalancePrice(stockItem) {
       if (stockItem.balances.length) {
@@ -5132,7 +5178,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     save: function save(id) {
-      var _this7 = this;
+      var _this8 = this;
 
       this.errors = [];
 
@@ -5163,10 +5209,10 @@ __webpack_require__.r(__webpack_exports__);
         stock_items: this.selected.stockItems,
         boxes: this.selected.boxes
       }).then(function (response) {
-        return _this7.$router.push({
+        return _this8.$router.push({
           name: 'CatalogCategory',
           params: {
-            id: _this7.item.category_id
+            id: _this8.item.category_id
           }
         });
       })["catch"](function (error) {
@@ -5178,22 +5224,22 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     del: function del(id) {
-      var _this8 = this;
+      var _this9 = this;
 
       if (confirm("Точно удалить?")) {
         axios["delete"]("/api/catalog/item/".concat(id, "/delete")).then(function (response) {
-          return _this8.$router.push({
+          return _this9.$router.push({
             name: 'CatalogCategory',
             params: {
-              id: _this8.item.category_id
+              id: _this9.item.category_id
             }
           });
         })["catch"](function (error) {
           if (error.response) {
-            _this8.errors = [];
+            _this9.errors = [];
 
             for (var key in error.response.data.errors) {
-              _this8.errors.push(key);
+              _this9.errors.push(key);
             }
           }
         });
@@ -61316,59 +61362,132 @@ var render = function () {
                 _c("div", { staticClass: "d-flex justify-content-between" }, [
                   _c("label", [_vm._v("Совместимость")]),
                   _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-sm",
-                      on: {
-                        click: function ($event) {
-                          return _vm.selectAllBoxes()
+                  _c("div", [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-sm",
+                        on: {
+                          click: function ($event) {
+                            return _vm.selectAllBoxes()
+                          },
                         },
                       },
-                    },
-                    [_vm._v("выбрать все")]
-                  ),
+                      [_vm._v("выбрать все")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-sm",
+                        on: {
+                          click: function ($event) {
+                            return _vm.uncheckAllBoxes()
+                          },
+                        },
+                      },
+                      [_vm._v("снять все")]
+                    ),
+                  ]),
                 ]),
                 _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.selected.boxes,
-                        expression: "selected.boxes",
-                      },
-                    ],
-                    staticClass: "form-control mb-3",
-                    staticStyle: { height: "295px" },
-                    attrs: { multiple: "" },
-                    on: {
-                      change: function ($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function (o) {
-                            return o.selected
-                          })
-                          .map(function (o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.selected,
-                          "boxes",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      },
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.boxSearchInput,
+                      expression: "boxSearchInput",
+                    },
+                  ],
+                  staticClass: "form-control mb-1",
+                  attrs: { type: "text", placeholder: "Поиск по корпусам..." },
+                  domProps: { value: _vm.boxSearchInput },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.boxSearchInput = $event.target.value
                     },
                   },
-                  _vm._l(_vm.boxes, function (box) {
+                }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "form-control",
+                    staticStyle: { height: "180px", "overflow-y": "auto" },
+                  },
+                  _vm._l(_vm.boxesFiltered, function (box) {
                     return _c(
-                      "option",
-                      { key: "box_" + box.id, domProps: { value: box.id } },
-                      [_vm._v(_vm._s(box.name))]
+                      "div",
+                      { key: "box_" + box.id, staticClass: "form-check" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.selected.boxes,
+                              expression: "selected.boxes",
+                            },
+                          ],
+                          staticClass: "form-check-input",
+                          attrs: { id: "box_" + box.id, type: "checkbox" },
+                          domProps: {
+                            value: box.id,
+                            checked: Array.isArray(_vm.selected.boxes)
+                              ? _vm._i(_vm.selected.boxes, box.id) > -1
+                              : _vm.selected.boxes,
+                          },
+                          on: {
+                            change: function ($event) {
+                              var $$a = _vm.selected.boxes,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = box.id,
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 &&
+                                    _vm.$set(
+                                      _vm.selected,
+                                      "boxes",
+                                      $$a.concat([$$v])
+                                    )
+                                } else {
+                                  $$i > -1 &&
+                                    _vm.$set(
+                                      _vm.selected,
+                                      "boxes",
+                                      $$a
+                                        .slice(0, $$i)
+                                        .concat($$a.slice($$i + 1))
+                                    )
+                                }
+                              } else {
+                                _vm.$set(_vm.selected, "boxes", $$c)
+                              }
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "label",
+                          {
+                            staticClass: "form-check-label",
+                            attrs: { for: "box_" + box.id },
+                          },
+                          [
+                            _vm._v(
+                              "\n                                " +
+                                _vm._s(box.name) +
+                                "\n                            "
+                            ),
+                          ]
+                        ),
+                      ]
                     )
                   }),
                   0
@@ -61728,59 +61847,132 @@ var render = function () {
                 _c("div", { staticClass: "d-flex justify-content-between" }, [
                   _c("label", [_vm._v("Совместимость")]),
                   _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-sm",
-                      on: {
-                        click: function ($event) {
-                          return _vm.selectAllBoxes()
+                  _c("div", [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-sm",
+                        on: {
+                          click: function ($event) {
+                            return _vm.selectAllBoxes()
+                          },
                         },
                       },
-                    },
-                    [_vm._v("выбрать все")]
-                  ),
+                      [_vm._v("выбрать все")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-sm",
+                        on: {
+                          click: function ($event) {
+                            return _vm.uncheckAllBoxes()
+                          },
+                        },
+                      },
+                      [_vm._v("снять все")]
+                    ),
+                  ]),
                 ]),
                 _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.selected.boxes,
-                        expression: "selected.boxes",
-                      },
-                    ],
-                    staticClass: "form-control mb-3",
-                    staticStyle: { height: "295px" },
-                    attrs: { multiple: "" },
-                    on: {
-                      change: function ($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function (o) {
-                            return o.selected
-                          })
-                          .map(function (o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.selected,
-                          "boxes",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      },
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.boxSearchInput,
+                      expression: "boxSearchInput",
+                    },
+                  ],
+                  staticClass: "form-control mb-1",
+                  attrs: { type: "text", placeholder: "Поиск по корпусам..." },
+                  domProps: { value: _vm.boxSearchInput },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.boxSearchInput = $event.target.value
                     },
                   },
-                  _vm._l(_vm.boxes, function (box) {
+                }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "form-control",
+                    staticStyle: { height: "180px", "overflow-y": "auto" },
+                  },
+                  _vm._l(_vm.boxesFiltered, function (box) {
                     return _c(
-                      "option",
-                      { key: "box_" + box.id, domProps: { value: box.id } },
-                      [_vm._v(_vm._s(box.name))]
+                      "div",
+                      { key: "box_" + box.id, staticClass: "form-check" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.selected.boxes,
+                              expression: "selected.boxes",
+                            },
+                          ],
+                          staticClass: "form-check-input",
+                          attrs: { id: "box_" + box.id, type: "checkbox" },
+                          domProps: {
+                            value: box.id,
+                            checked: Array.isArray(_vm.selected.boxes)
+                              ? _vm._i(_vm.selected.boxes, box.id) > -1
+                              : _vm.selected.boxes,
+                          },
+                          on: {
+                            change: function ($event) {
+                              var $$a = _vm.selected.boxes,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = box.id,
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 &&
+                                    _vm.$set(
+                                      _vm.selected,
+                                      "boxes",
+                                      $$a.concat([$$v])
+                                    )
+                                } else {
+                                  $$i > -1 &&
+                                    _vm.$set(
+                                      _vm.selected,
+                                      "boxes",
+                                      $$a
+                                        .slice(0, $$i)
+                                        .concat($$a.slice($$i + 1))
+                                    )
+                                }
+                              } else {
+                                _vm.$set(_vm.selected, "boxes", $$c)
+                              }
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "label",
+                          {
+                            staticClass: "form-check-label",
+                            attrs: { for: "box_" + box.id },
+                          },
+                          [
+                            _vm._v(
+                              "\n                                " +
+                                _vm._s(box.name) +
+                                "\n                            "
+                            ),
+                          ]
+                        ),
+                      ]
                     )
                   }),
                   0
@@ -61837,7 +62029,7 @@ var render = function () {
                           ],
                           staticClass: "form-check-input",
                           attrs: {
-                            id: "'stock_item_' + stockItem.id",
+                            id: "stock_item_" + stockItem.id,
                             type: "checkbox",
                           },
                           domProps: {
@@ -61883,7 +62075,7 @@ var render = function () {
                           "label",
                           {
                             staticClass: "form-check-label",
-                            attrs: { for: "'stock_item_' + stockItem.id" },
+                            attrs: { for: "stock_item_" + stockItem.id },
                           },
                           [
                             _vm._v(
