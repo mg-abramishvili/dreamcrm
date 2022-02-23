@@ -5047,6 +5047,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -61995,82 +62000,96 @@ var render = function () {
                       "div",
                       {
                         key: "stock_item_" + stockItem.id,
-                        staticClass: "form-check",
+                        staticClass: "form-check form-check-flex",
                       },
                       [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.selected.stockItems,
-                              expression: "selected.stockItems",
+                        _c("div", [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.selected.stockItems,
+                                expression: "selected.stockItems",
+                              },
+                            ],
+                            staticClass: "form-check-input",
+                            attrs: {
+                              id: "stock_item_" + stockItem.id,
+                              type: "checkbox",
                             },
-                          ],
-                          staticClass: "form-check-input",
-                          attrs: {
-                            id: "stock_item_" + stockItem.id,
-                            type: "checkbox",
-                          },
-                          domProps: {
-                            value: stockItem.id,
-                            checked: Array.isArray(_vm.selected.stockItems)
-                              ? _vm._i(_vm.selected.stockItems, stockItem.id) >
-                                -1
-                              : _vm.selected.stockItems,
-                          },
-                          on: {
-                            change: function ($event) {
-                              var $$a = _vm.selected.stockItems,
-                                $$el = $event.target,
-                                $$c = $$el.checked ? true : false
-                              if (Array.isArray($$a)) {
-                                var $$v = stockItem.id,
-                                  $$i = _vm._i($$a, $$v)
-                                if ($$el.checked) {
-                                  $$i < 0 &&
-                                    _vm.$set(
-                                      _vm.selected,
-                                      "stockItems",
-                                      $$a.concat([$$v])
-                                    )
+                            domProps: {
+                              value: stockItem.id,
+                              checked: Array.isArray(_vm.selected.stockItems)
+                                ? _vm._i(
+                                    _vm.selected.stockItems,
+                                    stockItem.id
+                                  ) > -1
+                                : _vm.selected.stockItems,
+                            },
+                            on: {
+                              change: function ($event) {
+                                var $$a = _vm.selected.stockItems,
+                                  $$el = $event.target,
+                                  $$c = $$el.checked ? true : false
+                                if (Array.isArray($$a)) {
+                                  var $$v = stockItem.id,
+                                    $$i = _vm._i($$a, $$v)
+                                  if ($$el.checked) {
+                                    $$i < 0 &&
+                                      _vm.$set(
+                                        _vm.selected,
+                                        "stockItems",
+                                        $$a.concat([$$v])
+                                      )
+                                  } else {
+                                    $$i > -1 &&
+                                      _vm.$set(
+                                        _vm.selected,
+                                        "stockItems",
+                                        $$a
+                                          .slice(0, $$i)
+                                          .concat($$a.slice($$i + 1))
+                                      )
+                                  }
                                 } else {
-                                  $$i > -1 &&
-                                    _vm.$set(
-                                      _vm.selected,
-                                      "stockItems",
-                                      $$a
-                                        .slice(0, $$i)
-                                        .concat($$a.slice($$i + 1))
-                                    )
+                                  _vm.$set(_vm.selected, "stockItems", $$c)
                                 }
-                              } else {
-                                _vm.$set(_vm.selected, "stockItems", $$c)
-                              }
+                              },
                             },
-                          },
-                        }),
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "label",
+                            {
+                              staticClass: "form-check-label",
+                              attrs: { for: "stock_item_" + stockItem.id },
+                            },
+                            [
+                              _vm._v(
+                                "\n                                    " +
+                                  _vm._s(stockItem.name) +
+                                  " - " +
+                                  _vm._s(
+                                    _vm._f("currency")(
+                                      _vm.LatestBalancePrice(stockItem)
+                                    )
+                                  ) +
+                                  " ₽\n                                "
+                              ),
+                            ]
+                          ),
+                        ]),
                         _vm._v(" "),
-                        _c(
-                          "label",
-                          {
-                            staticClass: "form-check-label",
-                            attrs: { for: "stock_item_" + stockItem.id },
-                          },
-                          [
-                            _vm._v(
-                              "\n                                " +
-                                _vm._s(stockItem.name) +
-                                " - " +
-                                _vm._s(
-                                  _vm._f("currency")(
-                                    _vm.LatestBalancePrice(stockItem)
-                                  )
-                                ) +
-                                " ₽\n                            "
-                            ),
-                          ]
-                        ),
+                        _c("div", [
+                          _vm.selected.stockItems.includes(stockItem.id)
+                            ? _c("input", {
+                                staticClass:
+                                  "form-control form-control-mini-number",
+                                attrs: { type: "number" },
+                              })
+                            : _vm._e(),
+                        ]),
                       ]
                     )
                   }),
