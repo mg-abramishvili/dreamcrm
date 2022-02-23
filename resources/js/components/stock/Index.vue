@@ -71,6 +71,8 @@
 </template>
 
 <script>
+    import Loader from '../Loader.vue'
+    
     export default {
         data() {
             return {
