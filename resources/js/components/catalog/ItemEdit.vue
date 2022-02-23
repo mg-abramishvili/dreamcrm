@@ -40,9 +40,6 @@
                                 <button @click="uncheckAllBoxes()" class="btn btn-sm">снять все</button>
                             </div>
                         </div>
-                        <!-- <select v-model="selected.boxes" class="form-control mb-3" style="height: 295px;" multiple>
-                            <option v-for="box in boxes" :key="'box_' + box.id" :value="box.id">{{ box.name }}</option>
-                        </select> -->
                         <input v-model="boxSearchInput" type="text" class="form-control mb-1" placeholder="Поиск по корпусам...">
                         <div class="form-control" style="height: 180px; overflow-y: auto;">
                             <div v-for="box in boxesFiltered" :key="'box_' + box.id" class="form-check">
@@ -58,14 +55,11 @@
                             <label>Склад</label>
                         </div>
                         <input v-model="stockSearchInput" type="text" class="form-control mb-1" placeholder="Поиск по складу...">
-                        <!-- <select v-model="selected.stockItems" class="form-control mb-3" style="height: 165px;" multiple>
-                            <option v-for="stockItem in stockItemsFiltered" :key="'stock_item_' + stockItem.id" :value="stockItem.id">{{ stockItem.name }} - {{ middleBalancePrice(stockItem) | currency }} ₽</option>
-                        </select> -->
                         <div class="form-control" style="height: 180px; overflow-y: auto;">
                             <div v-for="stockItem in stockItemsFiltered" :key="'stock_item_' + stockItem.id" class="form-check">
                                 <input v-model="selected.stockItems" :id="'stock_item_' + stockItem.id" :value="stockItem.id" class="form-check-input" type="checkbox">
                                 <label class="form-check-label" :for="'stock_item_' + stockItem.id">
-                                    {{ stockItem.name }} - {{ middleBalancePrice(stockItem) | currency }} ₽
+                                    {{ stockItem.name }} - {{ LatestBalancePrice(stockItem) | currency }} ₽
                                 </label>
                             </div>
                         </div>
@@ -117,18 +111,14 @@
                 })
             },
             stockItemsFiltered() {
-                return this.stockItems.filter(item => this.middleBalancePrice(item)).filter(stockItem => {
+                return this.stockItems.filter(item => this.LatestBalancePrice(item)).filter(stockItem => {
                     return stockItem.name.toLowerCase().includes(this.stockSearchInput.toLowerCase())
                 })
             },
             price() {
-                let stockItems = []
-                this.selected.stockItems.forEach((selectedItem) => {
-                    if(this.stockItems.find(item => item.id == selectedItem)) {
-                        stockItems.push(this.stockItems.find(item => item.id == selectedItem))
-                    }
-                })
-                return stockItems.map(stockItem => stockItem.balances.map(a => a.price).reduce((a, b) => (parseInt(a) + parseInt(b))) / stockItem.balances.map(a => a.price).length).reduce((a, b) => a + b, 0)
+                let selectedStockItems = this.stockItems.filter(stockItem => this.selected.stockItems.includes(stockItem.id))
+
+                return selectedStockItems.map(stockItem => stockItem.balances[stockItem.balances.length - 1].price).reduce((a, b) => parseInt(a) + parseInt(b), 0)
             }
         },
         created() {
@@ -174,9 +164,9 @@
             uncheckAllBoxes() {
                 this.selected.boxes = []
             },
-            middleBalancePrice(stockItem) {
+            LatestBalancePrice(stockItem) {
                 if(stockItem.balances.length) {
-                    return stockItem.balances.map(a => a.price).reduce((a, b) => (parseInt(a) + parseInt(b))) / stockItem.balances.map(a => a.price).length
+                    return stockItem.balances[stockItem.balances.length - 1].price
                 }
             },
             save(id) {

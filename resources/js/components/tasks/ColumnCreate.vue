@@ -39,7 +39,7 @@
         },
         methods: {
             closeModal() {
-                this.$parent.views.modals.createColumn = false
+                this.$parent.views.modals.columnCreate = false
                 this.$parent.views.modals.showBackdrop = false
                 document.body.style.overflow = "auto"
             },

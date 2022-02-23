@@ -5047,12 +5047,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -5084,7 +5078,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       return this.stockItems.filter(function (item) {
-        return _this2.middleBalancePrice(item);
+        return _this2.LatestBalancePrice(item);
       }).filter(function (stockItem) {
         return stockItem.name.toLowerCase().includes(_this2.stockSearchInput.toLowerCase());
       });
@@ -5092,26 +5086,13 @@ __webpack_require__.r(__webpack_exports__);
     price: function price() {
       var _this3 = this;
 
-      var stockItems = [];
-      this.selected.stockItems.forEach(function (selectedItem) {
-        if (_this3.stockItems.find(function (item) {
-          return item.id == selectedItem;
-        })) {
-          stockItems.push(_this3.stockItems.find(function (item) {
-            return item.id == selectedItem;
-          }));
-        }
+      var selectedStockItems = this.stockItems.filter(function (stockItem) {
+        return _this3.selected.stockItems.includes(stockItem.id);
       });
-      return stockItems.map(function (stockItem) {
-        return stockItem.balances.map(function (a) {
-          return a.price;
-        }).reduce(function (a, b) {
-          return parseInt(a) + parseInt(b);
-        }) / stockItem.balances.map(function (a) {
-          return a.price;
-        }).length;
+      return selectedStockItems.map(function (stockItem) {
+        return stockItem.balances[stockItem.balances.length - 1].price;
       }).reduce(function (a, b) {
-        return a + b;
+        return parseInt(a) + parseInt(b);
       }, 0);
     }
   },
@@ -5166,15 +5147,9 @@ __webpack_require__.r(__webpack_exports__);
     uncheckAllBoxes: function uncheckAllBoxes() {
       this.selected.boxes = [];
     },
-    middleBalancePrice: function middleBalancePrice(stockItem) {
+    LatestBalancePrice: function LatestBalancePrice(stockItem) {
       if (stockItem.balances.length) {
-        return stockItem.balances.map(function (a) {
-          return a.price;
-        }).reduce(function (a, b) {
-          return parseInt(a) + parseInt(b);
-        }) / stockItem.balances.map(function (a) {
-          return a.price;
-        }).length;
+        return stockItem.balances[stockItem.balances.length - 1].price;
       }
     },
     save: function save(id) {
@@ -8008,7 +7983,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     closeModal: function closeModal() {
-      this.$parent.views.modals.createColumn = false;
+      this.$parent.views.modals.columnCreate = false;
       this.$parent.views.modals.showBackdrop = false;
       document.body.style.overflow = "auto";
     },
@@ -62089,7 +62064,7 @@ var render = function () {
                                 " - " +
                                 _vm._s(
                                   _vm._f("currency")(
-                                    _vm.middleBalancePrice(stockItem)
+                                    _vm.LatestBalancePrice(stockItem)
                                   )
                                 ) +
                                 " ₽\n                            "
