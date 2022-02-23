@@ -17,4 +17,11 @@
             @endcomponent
         @endslot
     @endisset
+
+    {{-- Footer --}}
+    @slot('footer')
+        @component('mail::footer')
+            
+        @endcomponent
+    @endslot
 @endcomponent
