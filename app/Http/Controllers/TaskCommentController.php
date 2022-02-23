@@ -29,6 +29,10 @@ class TaskCommentController extends Controller
         $task = Task::find($taskComment->task_id);
 
         foreach($task->users as $user) {
+            if($user->id == $taskComment->user_id) {
+                return;
+            }
+
             $notification = new Notification();
             $notification->task_id = $task->id;
             $notification->user_id = $user->id;
