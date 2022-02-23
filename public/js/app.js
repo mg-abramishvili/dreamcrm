@@ -2215,6 +2215,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _Loader_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Loader.vue */ "./resources/js/components/Loader.vue");
 //
 //
 //
@@ -2252,6 +2253,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2289,6 +2296,9 @@ __webpack_require__.r(__webpack_exports__);
     timeCurrent: function timeCurrent() {
       this.time = moment(this.time).add(1, 'seconds');
     }
+  },
+  components: {
+    Loader: _Loader_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
 });
 
@@ -4571,6 +4581,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _Loader_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Loader.vue */ "./resources/js/components/Loader.vue");
 //
 //
 //
@@ -4613,11 +4624,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       categories: [],
-      itemsToBuy: []
+      itemsToBuy: [],
+      views: {
+        loading: true
+      }
     };
   },
   created: function created() {
@@ -4628,9 +4645,12 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get('/api/catalog/categories').then(function (response) {
-        return _this.categories = response.data;
+        return _this.categories = response.data, _this.views.loading = false;
       });
     }
+  },
+  components: {
+    Loader: _Loader_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
 });
 
@@ -6790,11 +6810,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       categories: [],
-      itemsToBuy: []
+      itemsToBuy: [],
+      views: {
+        loading: true
+      }
     };
   },
   created: function created() {
@@ -6805,7 +6831,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get('/api/stock/categories').then(function (response) {
-        return _this.categories = response.data;
+        return _this.categories = response.data, _this.views.loading = false;
       });
     },
     loadItemsToBuy: function loadItemsToBuy() {
@@ -8311,14 +8337,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Task_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Task.vue */ "./resources/js/components/tasks/Task.vue");
-/* harmony import */ var _CreateColumn_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateColumn.vue */ "./resources/js/components/tasks/CreateColumn.vue");
-/* harmony import */ var _ChangeColumnName_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ChangeColumnName.vue */ "./resources/js/components/tasks/ChangeColumnName.vue");
-/* harmony import */ var _CreateTask_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./CreateTask.vue */ "./resources/js/components/tasks/CreateTask.vue");
-/* harmony import */ var _CreateTaskBoard_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CreateTaskBoard.vue */ "./resources/js/components/tasks/CreateTaskBoard.vue");
-/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.umd.js");
-/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var vue_dragscroll__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue-dragscroll */ "./node_modules/vue-dragscroll/src/main.js");
+/* harmony import */ var _Loader_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Loader.vue */ "./resources/js/components/Loader.vue");
+/* harmony import */ var _Task_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Task.vue */ "./resources/js/components/tasks/Task.vue");
+/* harmony import */ var _CreateColumn_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CreateColumn.vue */ "./resources/js/components/tasks/CreateColumn.vue");
+/* harmony import */ var _ChangeColumnName_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ChangeColumnName.vue */ "./resources/js/components/tasks/ChangeColumnName.vue");
+/* harmony import */ var _CreateTask_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CreateTask.vue */ "./resources/js/components/tasks/CreateTask.vue");
+/* harmony import */ var _CreateTaskBoard_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./CreateTaskBoard.vue */ "./resources/js/components/tasks/CreateTaskBoard.vue");
+/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.umd.js");
+/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var vue_dragscroll__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue-dragscroll */ "./node_modules/vue-dragscroll/src/main.js");
 //
 //
 //
@@ -8394,6 +8421,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+
 
 
 
@@ -8530,15 +8561,16 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   components: {
-    TaskItem: _Task_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    CreateColumn: _CreateColumn_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    ChangeColumnName: _ChangeColumnName_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    CreateTask: _CreateTask_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
-    CreateTaskBoard: _CreateTaskBoard_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
-    draggable: (vuedraggable__WEBPACK_IMPORTED_MODULE_5___default())
+    Loader: _Loader_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    TaskItem: _Task_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    CreateColumn: _CreateColumn_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    ChangeColumnName: _ChangeColumnName_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    CreateTask: _CreateTask_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+    CreateTaskBoard: _CreateTaskBoard_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
+    draggable: (vuedraggable__WEBPACK_IMPORTED_MODULE_6___default())
   },
   directives: {
-    dragscroll: vue_dragscroll__WEBPACK_IMPORTED_MODULE_6__.dragscroll
+    dragscroll: vue_dragscroll__WEBPACK_IMPORTED_MODULE_7__.dragscroll
   }
 });
 
@@ -56559,15 +56591,26 @@ var render = function () {
         _c("div", { staticClass: "card flex-fill" }, [
           _c("div", { staticClass: "card-body py-4" }, [
             _c("div", { staticClass: "d-flex align-items-center" }, [
-              _c("div", { staticClass: "flex-grow-1" }, [
-                _c("h1", { staticClass: "illustration-text lh-1 mb-2" }, [
-                  _vm._v(_vm._s(_vm._f("time")(_vm.time))),
-                ]),
-                _vm._v(" "),
-                _c("p", { staticClass: "mb-0 fw-normal lh-1" }, [
-                  _vm._v(_vm._s(_vm._f("dateFull")(_vm.date))),
-                ]),
-              ]),
+              _c(
+                "div",
+                { staticClass: "flex-grow-1" },
+                [
+                  _vm.time && _vm.date
+                    ? [
+                        _c(
+                          "h1",
+                          { staticClass: "illustration-text lh-1 mb-2" },
+                          [_vm._v(_vm._s(_vm._f("time")(_vm.time)))]
+                        ),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "mb-0 fw-normal lh-1" }, [
+                          _vm._v(_vm._s(_vm._f("dateFull")(_vm.date))),
+                        ]),
+                      ]
+                    : _c("Loader"),
+                ],
+                2
+              ),
             ]),
           ]),
         ]),
@@ -56577,19 +56620,28 @@ var render = function () {
         _c("div", { staticClass: "card flex-fill" }, [
           _c("div", { staticClass: "card-body py-4" }, [
             _c("div", { staticClass: "d-flex align-items-center" }, [
-              _c("div", { staticClass: "flex-grow-1" }, [
-                _c("p", { staticClass: "mb-3 lh-1" }, [
-                  _vm._v(
-                    "Курс доллара (" +
-                      _vm._s(_vm._f("dateMini")(_vm.usd.date)) +
-                      ")"
-                  ),
-                ]),
-                _vm._v(" "),
-                _c("h3", { staticClass: "mb-0 lh-1" }, [
-                  _vm._v(_vm._s(_vm.usd.kurs) + " ₽"),
-                ]),
-              ]),
+              _c(
+                "div",
+                { staticClass: "flex-grow-1" },
+                [
+                  _vm.usd.date && _vm.usd.kurs
+                    ? [
+                        _c("p", { staticClass: "mb-3 lh-1" }, [
+                          _vm._v(
+                            "Курс доллара (" +
+                              _vm._s(_vm._f("dateMini")(_vm.usd.date)) +
+                              ")"
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("h3", { staticClass: "mb-0 lh-1" }, [
+                          _vm._v(_vm._s(_vm.usd.kurs) + " ₽"),
+                        ]),
+                      ]
+                    : _c("Loader"),
+                ],
+                2
+              ),
               _vm._v(" "),
               _c("div", { staticClass: "d-inline-block ms-3" }, [
                 _c("div", { staticClass: "stat" }, [
@@ -60491,125 +60543,75 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "catalog-page" }, [
-    _c("div", { staticClass: "row align-items-center mb-4" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-12 col-lg-6 text-end" },
-        [
+  return _vm.views.loading == false
+    ? _c("div", { staticClass: "catalog-page" }, [
+        _c("div", { staticClass: "row align-items-center mb-4" }, [
+          _vm._m(0),
+          _vm._v(" "),
           _c(
-            "router-link",
-            {
-              staticClass: "catalog-page-search-icon",
-              attrs: { to: { name: "CatalogSearch" } },
-            },
+            "div",
+            { staticClass: "col-12 col-lg-6 text-end" },
             [
               _c(
-                "svg",
+                "router-link",
                 {
-                  staticClass: "feather feather-search align-middle",
-                  attrs: {
-                    xmlns: "http://www.w3.org/2000/svg",
-                    width: "24",
-                    height: "24",
-                    viewBox: "0 0 24 24",
-                    fill: "none",
-                    stroke: "currentColor",
-                    "stroke-width": "2",
-                    "stroke-linecap": "round",
-                    "stroke-linejoin": "round",
-                  },
+                  staticClass: "catalog-page-search-icon",
+                  attrs: { to: { name: "CatalogSearch" } },
                 },
                 [
-                  _c("circle", { attrs: { cx: "11", cy: "11", r: "8" } }),
-                  _c("line", {
-                    attrs: { x1: "21", y1: "21", x2: "16.65", y2: "16.65" },
-                  }),
+                  _c(
+                    "svg",
+                    {
+                      staticClass: "feather feather-search align-middle",
+                      attrs: {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        width: "24",
+                        height: "24",
+                        viewBox: "0 0 24 24",
+                        fill: "none",
+                        stroke: "currentColor",
+                        "stroke-width": "2",
+                        "stroke-linecap": "round",
+                        "stroke-linejoin": "round",
+                      },
+                    },
+                    [
+                      _c("circle", { attrs: { cx: "11", cy: "11", r: "8" } }),
+                      _c("line", {
+                        attrs: { x1: "21", y1: "21", x2: "16.65", y2: "16.65" },
+                      }),
+                    ]
+                  ),
                 ]
               ),
-            ]
+              _vm._v(" "),
+              _c(
+                "router-link",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { to: { name: "CatalogCategoryCreate" } },
+                },
+                [_vm._v("Создать категорию")]
+              ),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                {
+                  staticClass: "btn btn-outline-primary",
+                  attrs: { to: { name: "CatalogTypes" } },
+                },
+                [_vm._v("Управление типами")]
+              ),
+            ],
+            1
           ),
-          _vm._v(" "),
-          _c(
-            "router-link",
-            {
-              staticClass: "btn btn-primary",
-              attrs: { to: { name: "CatalogCategoryCreate" } },
-            },
-            [_vm._v("Создать категорию")]
-          ),
-          _vm._v(" "),
-          _c(
-            "router-link",
-            {
-              staticClass: "btn btn-outline-primary",
-              attrs: { to: { name: "CatalogTypes" } },
-            },
-            [_vm._v("Управление типами")]
-          ),
-        ],
-        1
-      ),
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "row" },
-      [
-        _c("div", { staticClass: "col-12 col-lg-6" }, [
-          _c("div", { staticClass: "card" }, [
-            _c(
-              "div",
-              { staticClass: "card-body p-0" },
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "p-4",
-                    attrs: { to: { name: "CatalogBoxes" } },
-                  },
-                  [
-                    _c(
-                      "svg",
-                      {
-                        staticClass: "feather feather-folder align-middle",
-                        attrs: {
-                          xmlns: "http://www.w3.org/2000/svg",
-                          width: "24",
-                          height: "24",
-                          viewBox: "0 0 24 24",
-                          fill: "none",
-                          stroke: "currentColor",
-                          "stroke-width": "2",
-                          "stroke-linecap": "round",
-                          "stroke-linejoin": "round",
-                        },
-                      },
-                      [
-                        _c("path", {
-                          attrs: {
-                            d: "M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z",
-                          },
-                        }),
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("span", [_vm._v("Корпуса")]),
-                  ]
-                ),
-              ],
-              1
-            ),
-          ]),
         ]),
         _vm._v(" "),
-        _vm._l(_vm.categories, function (category) {
-          return _c(
-            "div",
-            { key: "category_" + category.id, staticClass: "col-12 col-lg-6" },
-            [
+        _c(
+          "div",
+          { staticClass: "row" },
+          [
+            _c("div", { staticClass: "col-12 col-lg-6" }, [
               _c("div", { staticClass: "card" }, [
                 _c(
                   "div",
@@ -60619,12 +60621,7 @@ var render = function () {
                       "router-link",
                       {
                         staticClass: "p-4",
-                        attrs: {
-                          to: {
-                            name: "CatalogCategory",
-                            params: { id: category.id },
-                          },
-                        },
+                        attrs: { to: { name: "CatalogBoxes" } },
                       },
                       [
                         _c(
@@ -60652,20 +60649,81 @@ var render = function () {
                           ]
                         ),
                         _vm._v(" "),
-                        _c("span", [_vm._v(_vm._s(category.name))]),
+                        _c("span", [_vm._v("Корпуса")]),
                       ]
                     ),
                   ],
                   1
                 ),
               ]),
-            ]
-          )
-        }),
-      ],
-      2
-    ),
-  ])
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.categories, function (category) {
+              return _c(
+                "div",
+                {
+                  key: "category_" + category.id,
+                  staticClass: "col-12 col-lg-6",
+                },
+                [
+                  _c("div", { staticClass: "card" }, [
+                    _c(
+                      "div",
+                      { staticClass: "card-body p-0" },
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "p-4",
+                            attrs: {
+                              to: {
+                                name: "CatalogCategory",
+                                params: { id: category.id },
+                              },
+                            },
+                          },
+                          [
+                            _c(
+                              "svg",
+                              {
+                                staticClass:
+                                  "feather feather-folder align-middle",
+                                attrs: {
+                                  xmlns: "http://www.w3.org/2000/svg",
+                                  width: "24",
+                                  height: "24",
+                                  viewBox: "0 0 24 24",
+                                  fill: "none",
+                                  stroke: "currentColor",
+                                  "stroke-width": "2",
+                                  "stroke-linecap": "round",
+                                  "stroke-linejoin": "round",
+                                },
+                              },
+                              [
+                                _c("path", {
+                                  attrs: {
+                                    d: "M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z",
+                                  },
+                                }),
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("span", [_vm._v(_vm._s(category.name))]),
+                          ]
+                        ),
+                      ],
+                      1
+                    ),
+                  ]),
+                ]
+              )
+            }),
+          ],
+          2
+        ),
+      ])
+    : _c("div", [_c("Loader")], 1)
 }
 var staticRenderFns = [
   function () {
@@ -64113,90 +64171,96 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "catalog-page stock-page" }, [
-    _c("div", { staticClass: "row align-items-center mb-4" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-12 col-lg-6 text-end" },
-        [
+  return _vm.views.loading == false
+    ? _c("div", { staticClass: "catalog-page stock-page" }, [
+        _c("div", { staticClass: "row align-items-center mb-4" }, [
+          _vm._m(0),
+          _vm._v(" "),
           _c(
-            "router-link",
-            {
-              staticClass: "btn btn-primary",
-              attrs: { to: { name: "StockCategoryCreate" } },
-            },
-            [_vm._v("Создать категорию")]
-          ),
-        ],
-        1
-      ),
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "row" },
-      _vm._l(_vm.categories, function (category) {
-        return _c(
-          "div",
-          { key: "category_" + category.id, staticClass: "col-12 col-lg-6" },
-          [
-            _c("div", { staticClass: "card" }, [
+            "div",
+            { staticClass: "col-12 col-lg-6 text-end" },
+            [
               _c(
-                "div",
-                { staticClass: "card-body p-0" },
-                [
+                "router-link",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { to: { name: "StockCategoryCreate" } },
+                },
+                [_vm._v("Создать категорию")]
+              ),
+            ],
+            1
+          ),
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "row" },
+          _vm._l(_vm.categories, function (category) {
+            return _c(
+              "div",
+              {
+                key: "category_" + category.id,
+                staticClass: "col-12 col-lg-6",
+              },
+              [
+                _c("div", { staticClass: "card" }, [
                   _c(
-                    "router-link",
-                    {
-                      staticClass: "p-4",
-                      attrs: {
-                        to: {
-                          name: "StockCategory",
-                          params: { category_id: category.id },
-                        },
-                      },
-                    },
+                    "div",
+                    { staticClass: "card-body p-0" },
                     [
                       _c(
-                        "svg",
+                        "router-link",
                         {
-                          staticClass: "feather feather-folder align-middle",
+                          staticClass: "p-4",
                           attrs: {
-                            xmlns: "http://www.w3.org/2000/svg",
-                            width: "24",
-                            height: "24",
-                            viewBox: "0 0 24 24",
-                            fill: "none",
-                            stroke: "currentColor",
-                            "stroke-width": "2",
-                            "stroke-linecap": "round",
-                            "stroke-linejoin": "round",
+                            to: {
+                              name: "StockCategory",
+                              params: { category_id: category.id },
+                            },
                           },
                         },
                         [
-                          _c("path", {
-                            attrs: {
-                              d: "M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z",
+                          _c(
+                            "svg",
+                            {
+                              staticClass:
+                                "feather feather-folder align-middle",
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "24",
+                                height: "24",
+                                viewBox: "0 0 24 24",
+                                fill: "none",
+                                stroke: "currentColor",
+                                "stroke-width": "2",
+                                "stroke-linecap": "round",
+                                "stroke-linejoin": "round",
+                              },
                             },
-                          }),
+                            [
+                              _c("path", {
+                                attrs: {
+                                  d: "M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z",
+                                },
+                              }),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("span", [_vm._v(_vm._s(category.name))]),
                         ]
                       ),
-                      _vm._v(" "),
-                      _c("span", [_vm._v(_vm._s(category.name))]),
-                    ]
+                    ],
+                    1
                   ),
-                ],
-                1
-              ),
-            ]),
-          ]
-        )
-      }),
-      0
-    ),
-  ])
+                ]),
+              ]
+            )
+          }),
+          0
+        ),
+      ])
+    : _c("div", [_c("Loader")], 1)
 }
 var staticRenderFns = [
   function () {
@@ -66848,284 +66912,292 @@ var render = function () {
         ]),
       ]),
       _vm._v(" "),
-      [
-        _c(
-          "draggable",
-          {
-            directives: [
+      _vm.board.id
+        ? [
+            _c(
+              "draggable",
               {
-                name: "dragscroll",
-                rawName: "v-dragscroll:nochilddrag",
-                arg: "nochilddrag",
+                directives: [
+                  {
+                    name: "dragscroll",
+                    rawName: "v-dragscroll:nochilddrag",
+                    arg: "nochilddrag",
+                  },
+                ],
+                staticClass: "tasks-page-board align-items-start",
+                attrs: {
+                  move: _vm.detectMove,
+                  disabled: _vm.views.draggable == false,
+                  draggable: ".task-column",
+                },
+                on: {
+                  change: function ($event) {
+                    return _vm.moveColumn($event)
+                  },
+                },
+                model: {
+                  value: _vm.board.columns,
+                  callback: function ($$v) {
+                    _vm.$set(_vm.board, "columns", $$v)
+                  },
+                  expression: "board.columns",
+                },
               },
-            ],
-            staticClass: "tasks-page-board align-items-start",
-            attrs: {
-              move: _vm.detectMove,
-              disabled: _vm.views.draggable == false,
-              draggable: ".task-column",
-            },
-            on: {
-              change: function ($event) {
-                return _vm.moveColumn($event)
-              },
-            },
-            model: {
-              value: _vm.board.columns,
-              callback: function ($$v) {
-                _vm.$set(_vm.board, "columns", $$v)
-              },
-              expression: "board.columns",
-            },
-          },
-          [
-            _vm._l(_vm.board.columns, function (column) {
-              return _c(
-                "div",
-                { key: column.id, staticClass: "task-column" },
-                [
-                  _c("div", { staticClass: "card-header" }, [
-                    _c("div", { staticClass: "row align-items-center mb-2" }, [
-                      _c("div", { staticClass: "col-9" }, [
-                        _vm.views.modals.changeColumnName == false
-                          ? _c(
-                              "h5",
-                              {
-                                staticClass: "card-title mb-0",
-                                on: {
-                                  click: function ($event) {
-                                    return _vm.openChangeColumnName(
-                                      column,
-                                      _vm.board
-                                    )
-                                  },
-                                },
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                " +
-                                    _vm._s(column.name) +
-                                    "\n                            "
-                                ),
-                              ]
-                            )
-                          : _vm._e(),
+              [
+                _vm._l(_vm.board.columns, function (column) {
+                  return _c(
+                    "div",
+                    { key: column.id, staticClass: "task-column" },
+                    [
+                      _c("div", { staticClass: "card-header" }, [
+                        _c(
+                          "div",
+                          { staticClass: "row align-items-center mb-2" },
+                          [
+                            _c("div", { staticClass: "col-9" }, [
+                              _vm.views.modals.changeColumnName == false
+                                ? _c(
+                                    "h5",
+                                    {
+                                      staticClass: "card-title mb-0",
+                                      on: {
+                                        click: function ($event) {
+                                          return _vm.openChangeColumnName(
+                                            column,
+                                            _vm.board
+                                          )
+                                        },
+                                      },
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                " +
+                                          _vm._s(column.name) +
+                                          "\n                            "
+                                      ),
+                                    ]
+                                  )
+                                : _vm._e(),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-3 text-end" }, [
+                              _vm.board.admin == _vm.$parent.user.id ||
+                              (_vm.$parent.user.permissions &&
+                                _vm.$parent.user.permissions
+                                  .can_see_all_boards == true)
+                                ? _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-sm btn-outline-primary",
+                                      on: {
+                                        click: function ($event) {
+                                          return _vm.openCreateTask(column)
+                                        },
+                                      },
+                                    },
+                                    [_vm._v("+")]
+                                  )
+                                : _vm._e(),
+                            ]),
+                          ]
+                        ),
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-3 text-end" }, [
-                        _vm.board.admin == _vm.$parent.user.id ||
-                        (_vm.$parent.user.permissions &&
-                          _vm.$parent.user.permissions.can_see_all_boards ==
-                            true)
-                          ? _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-sm btn-outline-primary",
-                                on: {
-                                  click: function ($event) {
-                                    return _vm.openCreateTask(column)
-                                  },
-                                },
-                              },
-                              [_vm._v("+")]
-                            )
-                          : _vm._e(),
-                      ]),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _vm.views.createTask && _vm.selected.column.id == column.id
-                    ? _c("CreateTask", {
-                        attrs: {
-                          column_id: _vm.selected.column.id,
-                          board_id: _vm.board.id,
-                        },
-                      })
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c(
-                    "draggable",
-                    {
-                      staticClass: "task-column-body",
-                      attrs: {
-                        group: "tasks",
-                        move: _vm.detectMove,
-                        disabled: _vm.views.draggable == false,
-                      },
-                      on: {
-                        change: function ($event) {
-                          return _vm.moveTask($event, column)
-                        },
-                      },
-                      model: {
-                        value: column.tasks,
-                        callback: function ($$v) {
-                          _vm.$set(column, "tasks", $$v)
-                        },
-                        expression: "column.tasks",
-                      },
-                    },
-                    _vm._l(column.tasks, function (task) {
-                      return _c(
-                        "div",
+                      _vm.views.createTask &&
+                      _vm.selected.column.id == column.id
+                        ? _c("CreateTask", {
+                            attrs: {
+                              column_id: _vm.selected.column.id,
+                              board_id: _vm.board.id,
+                            },
+                          })
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c(
+                        "draggable",
                         {
-                          key: task.id,
-                          staticClass: "card m-0",
-                          staticStyle: { "box-shadow": "none" },
+                          staticClass: "task-column-body",
+                          attrs: {
+                            group: "tasks",
+                            move: _vm.detectMove,
+                            disabled: _vm.views.draggable == false,
+                          },
                           on: {
-                            click: function ($event) {
-                              return _vm.openTask(task)
+                            change: function ($event) {
+                              return _vm.moveTask($event, column)
                             },
                           },
+                          model: {
+                            value: column.tasks,
+                            callback: function ($$v) {
+                              _vm.$set(column, "tasks", $$v)
+                            },
+                            expression: "column.tasks",
+                          },
                         },
-                        [
-                          _c(
+                        _vm._l(column.tasks, function (task) {
+                          return _c(
                             "div",
                             {
-                              staticClass: "card-body cursor-pointer p-3",
-                              class: {
-                                "bg-success text-white":
-                                  task.status == "completed",
-                                "bg-light": task.status == "active",
+                              key: task.id,
+                              staticClass: "card m-0",
+                              staticStyle: { "box-shadow": "none" },
+                              on: {
+                                click: function ($event) {
+                                  return _vm.openTask(task)
+                                },
                               },
-                              staticStyle: { "white-space": "normal" },
                             },
                             [
-                              _c("p", [
-                                _vm._v(
-                                  "\n                                " +
-                                    _vm._s(task.name) +
-                                    "\n                                "
-                                ),
-                                task.notifications.length
-                                  ? _c(
-                                      "span",
-                                      {
-                                        staticClass:
-                                          "badge rounded-pill bg-danger",
-                                      },
-                                      [
-                                        _vm._v(
-                                          _vm._s(task.notifications.length)
-                                        ),
-                                      ]
-                                    )
-                                  : _vm._e(),
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "mt-n1" }, [
-                                _c(
-                                  "div",
-                                  { staticClass: "d-inline-flex me-2" },
-                                  _vm._l(task.users, function (user) {
-                                    return _c(
-                                      "div",
-                                      {
-                                        key: "task_user_" + user.id,
-                                        staticStyle: { margin: "0 2px" },
-                                      },
-                                      [
-                                        user.avatar
-                                          ? _c("img", {
-                                              staticClass: "rounded-circle",
-                                              attrs: {
-                                                src: user.avatar,
-                                                width: "18",
-                                                height: "18",
-                                                alt: user.name,
-                                              },
-                                            })
-                                          : _c("img", {
-                                              staticClass: "rounded-circle",
-                                              attrs: {
-                                                src: "/img/no-image.jpg",
-                                                width: "18",
-                                                height: "18",
-                                                alt: user.name,
-                                              },
-                                            }),
-                                      ]
-                                    )
-                                  }),
-                                  0
-                                ),
-                                _vm._v(" "),
-                                task.comments && task.comments.length > 0
-                                  ? _c(
-                                      "span",
-                                      {
-                                        staticClass:
-                                          "btn btn-sm p-0 d-inline-flex align-items-center",
-                                      },
-                                      [
-                                        _c(
-                                          "svg",
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "card-body cursor-pointer p-3",
+                                  class: {
+                                    "bg-success text-white":
+                                      task.status == "completed",
+                                    "bg-light": task.status == "active",
+                                  },
+                                  staticStyle: { "white-space": "normal" },
+                                },
+                                [
+                                  _c("p", [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(task.name) +
+                                        "\n                                "
+                                    ),
+                                    task.notifications.length
+                                      ? _c(
+                                          "span",
                                           {
                                             staticClass:
-                                              "feather feather-message-square",
-                                            staticStyle: {
-                                              "margin-right": "3px",
-                                            },
-                                            attrs: {
-                                              xmlns:
-                                                "http://www.w3.org/2000/svg",
-                                              width: "24",
-                                              height: "24",
-                                              viewBox: "0 0 24 24",
-                                              fill: "none",
-                                              stroke: "currentColor",
-                                              "stroke-width": "2",
-                                              "stroke-linecap": "round",
-                                              "stroke-linejoin": "round",
-                                            },
+                                              "badge rounded-pill bg-danger",
                                           },
                                           [
-                                            _c("path", {
-                                              attrs: {
-                                                d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
-                                              },
-                                            }),
+                                            _vm._v(
+                                              _vm._s(task.notifications.length)
+                                            ),
                                           ]
-                                        ),
-                                        _vm._v(
-                                          "\n                                    " +
-                                            _vm._s(task.comments.length) +
-                                            "\n                                "
-                                        ),
-                                      ]
-                                    )
-                                  : _vm._e(),
-                              ]),
+                                        )
+                                      : _vm._e(),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "mt-n1" }, [
+                                    _c(
+                                      "div",
+                                      { staticClass: "d-inline-flex me-2" },
+                                      _vm._l(task.users, function (user) {
+                                        return _c(
+                                          "div",
+                                          {
+                                            key: "task_user_" + user.id,
+                                            staticStyle: { margin: "0 2px" },
+                                          },
+                                          [
+                                            user.avatar
+                                              ? _c("img", {
+                                                  staticClass: "rounded-circle",
+                                                  attrs: {
+                                                    src: user.avatar,
+                                                    width: "18",
+                                                    height: "18",
+                                                    alt: user.name,
+                                                  },
+                                                })
+                                              : _c("img", {
+                                                  staticClass: "rounded-circle",
+                                                  attrs: {
+                                                    src: "/img/no-image.jpg",
+                                                    width: "18",
+                                                    height: "18",
+                                                    alt: user.name,
+                                                  },
+                                                }),
+                                          ]
+                                        )
+                                      }),
+                                      0
+                                    ),
+                                    _vm._v(" "),
+                                    task.comments && task.comments.length > 0
+                                      ? _c(
+                                          "span",
+                                          {
+                                            staticClass:
+                                              "btn btn-sm p-0 d-inline-flex align-items-center",
+                                          },
+                                          [
+                                            _c(
+                                              "svg",
+                                              {
+                                                staticClass:
+                                                  "feather feather-message-square",
+                                                staticStyle: {
+                                                  "margin-right": "3px",
+                                                },
+                                                attrs: {
+                                                  xmlns:
+                                                    "http://www.w3.org/2000/svg",
+                                                  width: "24",
+                                                  height: "24",
+                                                  viewBox: "0 0 24 24",
+                                                  fill: "none",
+                                                  stroke: "currentColor",
+                                                  "stroke-width": "2",
+                                                  "stroke-linecap": "round",
+                                                  "stroke-linejoin": "round",
+                                                },
+                                              },
+                                              [
+                                                _c("path", {
+                                                  attrs: {
+                                                    d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
+                                                  },
+                                                }),
+                                              ]
+                                            ),
+                                            _vm._v(
+                                              "\n                                    " +
+                                                _vm._s(task.comments.length) +
+                                                "\n                                "
+                                            ),
+                                          ]
+                                        )
+                                      : _vm._e(),
+                                  ]),
+                                ]
+                              ),
                             ]
-                          ),
-                        ]
-                      )
-                    }),
-                    0
-                  ),
-                ],
-                1
-              )
-            }),
-            _vm._v(" "),
-            _vm.board.admin == _vm.$parent.user.id
-              ? _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-outline-primary mt-4",
-                    on: {
-                      click: function ($event) {
-                        return _vm.openCreateColumn()
+                          )
+                        }),
+                        0
+                      ),
+                    ],
+                    1
+                  )
+                }),
+                _vm._v(" "),
+                _vm.board.admin == _vm.$parent.user.id
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-outline-primary mt-4",
+                        on: {
+                          click: function ($event) {
+                            return _vm.openCreateColumn()
+                          },
+                        },
                       },
-                    },
-                  },
-                  [_vm._v("Добавить колонку")]
-                )
-              : _vm._e(),
-          ],
-          2
-        ),
-      ],
+                      [_vm._v("Добавить колонку")]
+                    )
+                  : _vm._e(),
+              ],
+              2
+            ),
+          ]
+        : [_c("Loader")],
       _vm._v(" "),
       _vm.views.modals.openTask
         ? _c("TaskItem", {

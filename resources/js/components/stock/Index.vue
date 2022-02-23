@@ -1,5 +1,5 @@
 <template>
-    <div class="catalog-page stock-page">
+    <div v-if="views.loading == false" class="catalog-page stock-page">
         <!-- <div class="row">
             <div class="col-12 col-lg-3 d-flex">
                 <div class="card flex-fill">
@@ -65,6 +65,9 @@
             </div>
         </div>
     </div>
+    <div v-else>
+        <Loader></Loader>
+    </div>
 </template>
 
 <script>
@@ -74,6 +77,10 @@
                 categories: [],
 
                 itemsToBuy: [],
+
+                views: {
+                    loading: true,
+                }
             }
         },
         created() {
@@ -85,7 +92,8 @@
                 axios
                 .get('/api/stock/categories')
                 .then(response => (
-                    this.categories = response.data
+                    this.categories = response.data,
+                    this.views.loading = false
                 ));
             },
             loadItemsToBuy() {

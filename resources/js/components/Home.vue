@@ -7,9 +7,11 @@
                     <div class="card-body py-4">
                         <div class="d-flex align-items-center">
                             <div class="flex-grow-1">
-                                <h1 class="illustration-text lh-1 mb-2">{{ time | time }}</h1>
-                                <p class="mb-0 fw-normal lh-1">{{ date | dateFull }}</p>
-                                <!-- <p class="mb-0">AppStack Dashboard</p> -->
+                                <template v-if="time && date">
+                                    <h1 class="illustration-text lh-1 mb-2">{{ time | time }}</h1>
+                                    <p class="mb-0 fw-normal lh-1">{{ date | dateFull }}</p>
+                                </template>
+                                <Loader v-else></Loader>
                             </div>
                         </div>
                     </div>
@@ -20,8 +22,11 @@
                     <div class="card-body py-4">
                         <div class="d-flex align-items-center">
                             <div class="flex-grow-1">
-                                <p class="mb-3 lh-1">Курс доллара ({{ usd.date | dateMini }})</p>
-                                <h3 class="mb-0 lh-1">{{ usd.kurs }} ₽</h3>
+                                <template v-if="usd.date && usd.kurs">
+                                    <p class="mb-3 lh-1">Курс доллара ({{ usd.date | dateMini }})</p>
+                                    <h3 class="mb-0 lh-1">{{ usd.kurs }} ₽</h3>
+                                </template>
+                                <Loader v-else></Loader>
                             </div>
                             <div class="d-inline-block ms-3">
                                 <div class="stat">
@@ -35,7 +40,9 @@
 		</div>
     </div>
 </template>
-<script>    
+<script>
+    import Loader from './Loader.vue'
+
     export default {
         data() {
             return {
@@ -78,5 +85,8 @@
                 this.time = moment(this.time).add(1, 'seconds')
             },
         },
+        components: {
+            Loader
+        }
     }
 </script>

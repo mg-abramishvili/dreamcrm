@@ -16,7 +16,7 @@
             </div>
         </div>
         
-        <template>
+        <template v-if="board.id">
             <draggable v-dragscroll:nochilddrag v-model="board.columns" :move="detectMove" @change="moveColumn($event)" :disabled="views.draggable == false" draggable=".task-column" class="tasks-page-board align-items-start">
                 <div v-for="column in board.columns" :key="column.id" class="task-column">
                     <div class="card-header">
@@ -62,6 +62,9 @@
                 <button v-if="board.admin == $parent.user.id" @click="openCreateColumn()" class="btn btn-outline-primary mt-4">Добавить колонку</button>
             </draggable>
         </template>
+        <template v-else>
+            <Loader></Loader>
+        </template>
 
         <TaskItem v-if="views.modals.openTask" :task_id="selected.task.id" :board_id="$route.params.board_id"></TaskItem>
         
@@ -74,6 +77,8 @@
 </template>
 
 <script>
+    import Loader from '../Loader.vue'
+
     import TaskItem from './Task.vue'
     import CreateColumn from './CreateColumn.vue'
     import ChangeColumnName from './ChangeColumnName.vue'
@@ -218,6 +223,7 @@
             }
         },
         components: {
+            Loader,
             TaskItem,
             CreateColumn,
             ChangeColumnName,

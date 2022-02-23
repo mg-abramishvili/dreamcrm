@@ -1,6 +1,5 @@
 <template>
-    <div class="catalog-page">
-
+    <div v-if="views.loading == false" class="catalog-page">
         <div class="row align-items-center mb-4">
             <div class="col-12 col-lg-6">
                 <h1 class="h3 m-0" style="position:relative;">Каталог</h1>
@@ -38,15 +37,24 @@
             </div>
         </div>
     </div>
+    <div v-else>
+        <Loader></Loader>
+    </div>
 </template>
 
 <script>
+    import Loader from '../Loader.vue'
+
     export default {
         data() {
             return {
                 categories: [],
 
                 itemsToBuy: [],
+
+                views: {
+                    loading: true,
+                }
             }
         },
         created() {
@@ -58,9 +66,13 @@
                 axios
                 .get('/api/catalog/categories')
                 .then(response => (
-                    this.categories = response.data
+                    this.categories = response.data,
+                    this.views.loading = false
                 ));
             },
+        },
+        components: {
+            Loader
         }
     }
 </script>
