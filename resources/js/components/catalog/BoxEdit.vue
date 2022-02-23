@@ -28,14 +28,23 @@
                     <input v-model="name" type="text" class="form-control">
                 </div>
 
-                <div class="row">
+                <div class="row mb-4">
                     <div class="col-12 col-lg-6">
                         <div class="d-flex justify-content-between">
                             <label>Тип</label>
                         </div>
-                        <select v-model="selected.types" class="form-control mb-3" style="height: 225px;" multiple>
+                        <!-- <select v-model="selected.types" class="form-control mb-3" style="height: 225px;" multiple>
                             <option v-for="type in types" :key="'type_' + type.id" :value="type.id">{{ type.name }}</option>
-                        </select>
+                        </select> -->
+                        <input v-model="typeSearchInput" type="text" class="form-control mb-1" placeholder="Поиск по типу...">
+                        <div class="form-control" style="height: 220px; overflow-y: auto;">
+                            <div v-for="type in typesFiltered" :key="'type_' + type.id" class="form-check">
+                                <input v-model="selected.types" :id="'type_' + type.id" :value="type.id" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" :for="'type_' + type.id">
+                                    {{ type.name }}
+                                </label>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-12 col-lg-6">
                         <div class="d-flex justify-content-between">
@@ -45,10 +54,10 @@
                         <!-- <select v-model="selected.stockItems" class="form-control mb-3" style="height: 155px;" multiple>
                             <option v-for="stockItem in stockItemsFiltered" :key="'stock_item_' + stockItem.id" :value="stockItem.id">{{ stockItem.name }} - {{ middleBalancePrice(stockItem) | currency }} ₽</option>
                         </select> -->
-                        <div class="form-control" style="height: 180px; overflow-y: auto;">
+                        <div class="form-control" style="height: 220px; overflow-y: auto;">
                             <div v-for="stockItem in stockItemsFiltered" :key="'stock_item_' + stockItem.id" class="form-check">
-                                <input v-model="selected.stockItems" id="'stock_item_' + stockItem.id" :value="stockItem.id" class="form-check-input" type="checkbox">
-                                <label class="form-check-label" for="'stock_item_' + stockItem.id">
+                                <input v-model="selected.stockItems" :id="'stock_item_' + stockItem.id" :value="stockItem.id" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" :for="'stock_item_' + stockItem.id">
                                     {{ stockItem.name }} - {{ middleBalancePrice(stockItem) | currency }} ₽
                                 </label>
                             </div>
@@ -192,6 +201,7 @@
                 filepond_gallery_edit: [],
 
                 stockSearchInput: '',
+                typeSearchInput: '',
 
                 errors: [],
 
@@ -238,6 +248,11 @@
             }
         },
         computed: {
+            typesFiltered() {
+                return this.types.filter(type => {
+                    return type.name.toLowerCase().includes(this.typeSearchInput.toLowerCase())
+                })
+            },
             stockItemsFiltered() {
                 return this.stockItems.filter(item => this.middleBalancePrice(item)).filter(stockItem => {
                     return stockItem.name.toLowerCase().includes(this.stockSearchInput.toLowerCase())

@@ -3322,6 +3322,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3361,6 +3370,7 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
       filepond_gallery: [],
       filepond_gallery_edit: [],
       stockSearchInput: '',
+      typeSearchInput: '',
       errors: [],
       server: {
         remove: function remove(filename, load) {
@@ -3408,24 +3418,31 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
     };
   },
   computed: {
-    stockItemsFiltered: function stockItemsFiltered() {
+    typesFiltered: function typesFiltered() {
       var _this = this;
 
+      return this.types.filter(function (type) {
+        return type.name.toLowerCase().includes(_this.typeSearchInput.toLowerCase());
+      });
+    },
+    stockItemsFiltered: function stockItemsFiltered() {
+      var _this2 = this;
+
       return this.stockItems.filter(function (item) {
-        return _this.middleBalancePrice(item);
+        return _this2.middleBalancePrice(item);
       }).filter(function (stockItem) {
-        return stockItem.name.toLowerCase().includes(_this.stockSearchInput.toLowerCase());
+        return stockItem.name.toLowerCase().includes(_this2.stockSearchInput.toLowerCase());
       });
     },
     stockItemsPrice: function stockItemsPrice() {
-      var _this2 = this;
+      var _this3 = this;
 
       var stockItems = [];
       this.selected.stockItems.forEach(function (selectedItem) {
-        if (_this2.stockItems.find(function (item) {
+        if (_this3.stockItems.find(function (item) {
           return item.id == selectedItem;
         })) {
-          stockItems.push(_this2.stockItems.find(function (item) {
+          stockItems.push(_this3.stockItems.find(function (item) {
             return item.id == selectedItem;
           }));
         }
@@ -3464,31 +3481,31 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
   },
   methods: {
     loadTypes: function loadTypes() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.get("/api/catalog/types").then(function (response) {
-        return _this3.types = response.data;
+        return _this4.types = response.data;
       });
     },
     loadStockItems: function loadStockItems() {
-      var _this4 = this;
+      var _this5 = this;
 
       axios.get("/api/stock/items").then(function (response) {
-        return _this4.stockItems = response.data;
+        return _this5.stockItems = response.data;
       });
     },
     loadSborkaTarif: function loadSborkaTarif() {
-      var _this5 = this;
+      var _this6 = this;
 
       axios.get("/api/catalog/sborka").then(function (response) {
-        return _this5.sborkaTarif.arenda = response.data.arenda, _this5.sborkaTarif.person = response.data.person;
+        return _this6.sborkaTarif.arenda = response.data.arenda, _this6.sborkaTarif.person = response.data.person;
       });
     },
     loadUsd: function loadUsd() {
-      var _this6 = this;
+      var _this7 = this;
 
       axios.get('/api/usd').then(function (response) {
-        _this6.usd.kurs = response.data.kurs, _this6.usd.date = response.data.updated_at;
+        _this7.usd.kurs = response.data.kurs, _this7.usd.date = response.data.updated_at;
       });
     },
     selectAllBoxes: function selectAllBoxes() {
@@ -3508,7 +3525,7 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
       }
     },
     save: function save() {
-      var _this7 = this;
+      var _this8 = this;
 
       this.errors = [];
 
@@ -3548,7 +3565,7 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
         this.gallery = [];
         document.getElementsByName("gallery[]").forEach(function (galleryItem) {
           if (galleryItem.value) {
-            _this7.gallery.push(galleryItem.value);
+            _this8.gallery.push(galleryItem.value);
           }
         });
       }
@@ -3571,7 +3588,7 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
         comment: this.comment,
         gallery: this.gallery
       }).then(function (response) {
-        return _this7.$router.push({
+        return _this8.$router.push({
           name: 'CatalogBoxes'
         });
       })["catch"](function (error) {
@@ -3610,6 +3627,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var filepond_plugin_file_validate_type__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(filepond_plugin_file_validate_type__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var filepond_plugin_image_preview__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! filepond-plugin-image-preview */ "./node_modules/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js");
 /* harmony import */ var filepond_plugin_image_preview__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(filepond_plugin_image_preview__WEBPACK_IMPORTED_MODULE_5__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3791,6 +3817,7 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
       filepond_gallery: [],
       filepond_gallery_edit: [],
       stockSearchInput: '',
+      typeSearchInput: '',
       errors: [],
       server: {
         remove: function remove(filename, load) {
@@ -3838,24 +3865,31 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
     };
   },
   computed: {
-    stockItemsFiltered: function stockItemsFiltered() {
+    typesFiltered: function typesFiltered() {
       var _this = this;
 
+      return this.types.filter(function (type) {
+        return type.name.toLowerCase().includes(_this.typeSearchInput.toLowerCase());
+      });
+    },
+    stockItemsFiltered: function stockItemsFiltered() {
+      var _this2 = this;
+
       return this.stockItems.filter(function (item) {
-        return _this.middleBalancePrice(item);
+        return _this2.middleBalancePrice(item);
       }).filter(function (stockItem) {
-        return stockItem.name.toLowerCase().includes(_this.stockSearchInput.toLowerCase());
+        return stockItem.name.toLowerCase().includes(_this2.stockSearchInput.toLowerCase());
       });
     },
     stockItemsPrice: function stockItemsPrice() {
-      var _this2 = this;
+      var _this3 = this;
 
       var stockItems = [];
       this.selected.stockItems.forEach(function (selectedItem) {
-        if (_this2.stockItems.find(function (item) {
+        if (_this3.stockItems.find(function (item) {
           return item.id == selectedItem;
         })) {
-          stockItems.push(_this2.stockItems.find(function (item) {
+          stockItems.push(_this3.stockItems.find(function (item) {
             return item.id == selectedItem;
           }));
         }
@@ -3895,58 +3929,58 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
   },
   methods: {
     loadTypes: function loadTypes() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.get("/api/catalog/types").then(function (response) {
-        return _this3.types = response.data;
+        return _this4.types = response.data;
       });
     },
     loadStockItems: function loadStockItems() {
-      var _this4 = this;
+      var _this5 = this;
 
       axios.get("/api/stock/items").then(function (response) {
-        return _this4.stockItems = response.data;
+        return _this5.stockItems = response.data;
       });
     },
     loadSborkaTarif: function loadSborkaTarif() {
-      var _this5 = this;
+      var _this6 = this;
 
       axios.get("/api/catalog/sborka").then(function (response) {
-        return _this5.sborkaTarif.arenda = response.data.arenda, _this5.sborkaTarif.person = response.data.person;
+        return _this6.sborkaTarif.arenda = response.data.arenda, _this6.sborkaTarif.person = response.data.person;
       });
     },
     loadUsd: function loadUsd() {
-      var _this6 = this;
+      var _this7 = this;
 
       axios.get('/api/usd').then(function (response) {
-        _this6.usd.kurs = response.data.kurs, _this6.usd.date = response.data.updated_at;
+        _this7.usd.kurs = response.data.kurs, _this7.usd.date = response.data.updated_at;
       });
     },
     loadBox: function loadBox() {
-      var _this7 = this;
+      var _this8 = this;
 
       axios.get("/api/catalog/box/".concat(this.$route.params.id)).then(function (response) {
-        _this7.box = response.data;
-        _this7.name = response.data.name;
-        _this7.sborkaDays = response.data.sborka_days;
-        _this7.sborkaPersons = response.data.sborka_persons;
-        _this7.marzha = response.data.marzha;
-        _this7.length = response.data.length;
-        _this7.width = response.data.width;
-        _this7.height = response.data.height;
-        _this7.weight = response.data.weight;
-        _this7.description = response.data.description;
-        _this7.manager_description = response.data.manager_description;
-        _this7.comment = response.data.comment;
-        _this7.selected.types = response.data.types.map(function (type) {
+        _this8.box = response.data;
+        _this8.name = response.data.name;
+        _this8.sborkaDays = response.data.sborka_days;
+        _this8.sborkaPersons = response.data.sborka_persons;
+        _this8.marzha = response.data.marzha;
+        _this8.length = response.data.length;
+        _this8.width = response.data.width;
+        _this8.height = response.data.height;
+        _this8.weight = response.data.weight;
+        _this8.description = response.data.description;
+        _this8.manager_description = response.data.manager_description;
+        _this8.comment = response.data.comment;
+        _this8.selected.types = response.data.types.map(function (type) {
           return type.id;
         });
-        _this7.selected.stockItems = response.data.stock_items.map(function (item) {
+        _this8.selected.stockItems = response.data.stock_items.map(function (item) {
           return item.id;
         });
 
         if (response.data.gallery) {
-          _this7.filepond_gallery_edit = response.data.gallery.map(function (element) {
+          _this8.filepond_gallery_edit = response.data.gallery.map(function (element) {
             {
               return {
                 source: element,
@@ -3976,7 +4010,7 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
       }
     },
     save: function save(id) {
-      var _this8 = this;
+      var _this9 = this;
 
       this.errors = [];
 
@@ -4016,7 +4050,7 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
         this.gallery = [];
         document.getElementsByName("gallery[]").forEach(function (galleryItem) {
           if (galleryItem.value) {
-            _this8.gallery.push(galleryItem.value);
+            _this9.gallery.push(galleryItem.value);
           }
         });
       }
@@ -4039,7 +4073,7 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
         comment: this.comment,
         gallery: this.gallery
       }).then(function (response) {
-        return _this8.$router.push({
+        return _this9.$router.push({
           name: 'CatalogBoxes'
         });
       })["catch"](function (error) {
@@ -4051,19 +4085,19 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
       });
     },
     del: function del(id) {
-      var _this9 = this;
+      var _this10 = this;
 
       if (confirm("Точно удалить?")) {
         axios["delete"]("/api/catalog/box/".concat(id, "/delete")).then(function (response) {
-          return _this9.$router.push({
+          return _this10.$router.push({
             name: 'CatalogBoxes'
           });
         })["catch"](function (error) {
           if (error.response) {
-            _this9.errors = [];
+            _this10.errors = [];
 
             for (var key in error.response.data.errors) {
-              _this9.errors.push(key);
+              _this10.errors.push(key);
             }
           }
         });
@@ -58798,49 +58832,107 @@ var render = function () {
               }),
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "row mb-4" }, [
               _c("div", { staticClass: "col-12 col-lg-6" }, [
                 _vm._m(0),
                 _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.selected.types,
-                        expression: "selected.types",
-                      },
-                    ],
-                    staticClass: "form-control mb-3",
-                    staticStyle: { height: "225px" },
-                    attrs: { multiple: "" },
-                    on: {
-                      change: function ($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function (o) {
-                            return o.selected
-                          })
-                          .map(function (o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.selected,
-                          "types",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      },
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.typeSearchInput,
+                      expression: "typeSearchInput",
+                    },
+                  ],
+                  staticClass: "form-control mb-1",
+                  attrs: { type: "text", placeholder: "Поиск по типу..." },
+                  domProps: { value: _vm.typeSearchInput },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.typeSearchInput = $event.target.value
                     },
                   },
-                  _vm._l(_vm.types, function (type) {
+                }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "form-control",
+                    staticStyle: { height: "220px", "overflow-y": "auto" },
+                  },
+                  _vm._l(_vm.typesFiltered, function (type) {
                     return _c(
-                      "option",
-                      { key: "type_" + type.id, domProps: { value: type.id } },
-                      [_vm._v(_vm._s(type.name))]
+                      "div",
+                      { key: "type_" + type.id, staticClass: "form-check" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.selected.types,
+                              expression: "selected.types",
+                            },
+                          ],
+                          staticClass: "form-check-input",
+                          attrs: { id: "type_" + type.id, type: "checkbox" },
+                          domProps: {
+                            value: type.id,
+                            checked: Array.isArray(_vm.selected.types)
+                              ? _vm._i(_vm.selected.types, type.id) > -1
+                              : _vm.selected.types,
+                          },
+                          on: {
+                            change: function ($event) {
+                              var $$a = _vm.selected.types,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = type.id,
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 &&
+                                    _vm.$set(
+                                      _vm.selected,
+                                      "types",
+                                      $$a.concat([$$v])
+                                    )
+                                } else {
+                                  $$i > -1 &&
+                                    _vm.$set(
+                                      _vm.selected,
+                                      "types",
+                                      $$a
+                                        .slice(0, $$i)
+                                        .concat($$a.slice($$i + 1))
+                                    )
+                                }
+                              } else {
+                                _vm.$set(_vm.selected, "types", $$c)
+                              }
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "label",
+                          {
+                            staticClass: "form-check-label",
+                            attrs: { for: "type_" + type.id },
+                          },
+                          [
+                            _vm._v(
+                              "\n                                " +
+                                _vm._s(type.name) +
+                                "\n                            "
+                            ),
+                          ]
+                        ),
+                      ]
                     )
                   }),
                   0
@@ -58876,7 +58968,7 @@ var render = function () {
                   "div",
                   {
                     staticClass: "form-control",
-                    staticStyle: { height: "180px", "overflow-y": "auto" },
+                    staticStyle: { height: "220px", "overflow-y": "auto" },
                   },
                   _vm._l(_vm.stockItemsFiltered, function (stockItem) {
                     return _c(
@@ -58897,7 +58989,7 @@ var render = function () {
                           ],
                           staticClass: "form-check-input",
                           attrs: {
-                            id: "'stock_item_' + stockItem.id",
+                            id: "stock_item_" + stockItem.id,
                             type: "checkbox",
                           },
                           domProps: {
@@ -58943,7 +59035,7 @@ var render = function () {
                           "label",
                           {
                             staticClass: "form-check-label",
-                            attrs: { for: "'stock_item_' + stockItem.id" },
+                            attrs: { for: "stock_item_" + stockItem.id },
                           },
                           [
                             _vm._v(
@@ -59491,49 +59583,107 @@ var render = function () {
               }),
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "row mb-4" }, [
               _c("div", { staticClass: "col-12 col-lg-6" }, [
                 _vm._m(0),
                 _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.selected.types,
-                        expression: "selected.types",
-                      },
-                    ],
-                    staticClass: "form-control mb-3",
-                    staticStyle: { height: "225px" },
-                    attrs: { multiple: "" },
-                    on: {
-                      change: function ($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function (o) {
-                            return o.selected
-                          })
-                          .map(function (o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.selected,
-                          "types",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      },
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.typeSearchInput,
+                      expression: "typeSearchInput",
+                    },
+                  ],
+                  staticClass: "form-control mb-1",
+                  attrs: { type: "text", placeholder: "Поиск по типу..." },
+                  domProps: { value: _vm.typeSearchInput },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.typeSearchInput = $event.target.value
                     },
                   },
-                  _vm._l(_vm.types, function (type) {
+                }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "form-control",
+                    staticStyle: { height: "220px", "overflow-y": "auto" },
+                  },
+                  _vm._l(_vm.typesFiltered, function (type) {
                     return _c(
-                      "option",
-                      { key: "type_" + type.id, domProps: { value: type.id } },
-                      [_vm._v(_vm._s(type.name))]
+                      "div",
+                      { key: "type_" + type.id, staticClass: "form-check" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.selected.types,
+                              expression: "selected.types",
+                            },
+                          ],
+                          staticClass: "form-check-input",
+                          attrs: { id: "type_" + type.id, type: "checkbox" },
+                          domProps: {
+                            value: type.id,
+                            checked: Array.isArray(_vm.selected.types)
+                              ? _vm._i(_vm.selected.types, type.id) > -1
+                              : _vm.selected.types,
+                          },
+                          on: {
+                            change: function ($event) {
+                              var $$a = _vm.selected.types,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = type.id,
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 &&
+                                    _vm.$set(
+                                      _vm.selected,
+                                      "types",
+                                      $$a.concat([$$v])
+                                    )
+                                } else {
+                                  $$i > -1 &&
+                                    _vm.$set(
+                                      _vm.selected,
+                                      "types",
+                                      $$a
+                                        .slice(0, $$i)
+                                        .concat($$a.slice($$i + 1))
+                                    )
+                                }
+                              } else {
+                                _vm.$set(_vm.selected, "types", $$c)
+                              }
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "label",
+                          {
+                            staticClass: "form-check-label",
+                            attrs: { for: "type_" + type.id },
+                          },
+                          [
+                            _vm._v(
+                              "\n                                " +
+                                _vm._s(type.name) +
+                                "\n                            "
+                            ),
+                          ]
+                        ),
+                      ]
                     )
                   }),
                   0
@@ -59569,7 +59719,7 @@ var render = function () {
                   "div",
                   {
                     staticClass: "form-control",
-                    staticStyle: { height: "180px", "overflow-y": "auto" },
+                    staticStyle: { height: "220px", "overflow-y": "auto" },
                   },
                   _vm._l(_vm.stockItemsFiltered, function (stockItem) {
                     return _c(
@@ -59590,7 +59740,7 @@ var render = function () {
                           ],
                           staticClass: "form-check-input",
                           attrs: {
-                            id: "'stock_item_' + stockItem.id",
+                            id: "stock_item_" + stockItem.id,
                             type: "checkbox",
                           },
                           domProps: {
@@ -59636,7 +59786,7 @@ var render = function () {
                           "label",
                           {
                             staticClass: "form-check-label",
-                            attrs: { for: "'stock_item_' + stockItem.id" },
+                            attrs: { for: "stock_item_" + stockItem.id },
                           },
                           [
                             _vm._v(
