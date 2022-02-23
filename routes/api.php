@@ -150,6 +150,7 @@ Route::delete('task/{id}/delete', [TaskController::class, 'delete']);
 
 // NOTIFICATIONS
 Route::get('notifications/{user_id}', [NotificationController::class, 'index']);
+Route::put('notification/{id}/update', [NotificationController::class, 'update']);
 
 
 

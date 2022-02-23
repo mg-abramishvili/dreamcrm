@@ -6,6 +6,7 @@
                     <template v-if="views.createTaskBoard == false" class="form-select w-50">
                         <router-link :to="{name: 'Tasks', params: {board_id: board.id}}" v-for="board in boards" :key="'board_' + board.id" class="btn btn-pill me-1" :class="{'btn-primary': $route.params.board_id == board.id, 'btn-outline-primary': $route.params.board_id != board.id}">
                             {{ board.name }}
+                            <span v-if="boardNotifications(board.id)" class="badge rounded-pill bg-danger">{{ boardNotifications(board.id) }}</span>
                         </router-link>
                     </template>
 
@@ -24,6 +25,7 @@
                             <div class="col-9">
                                 <h5 v-if="views.modals.changeColumnName == false" @click="openChangeColumnName(column, board)" class="card-title mb-0">
                                     {{ column.name }}
+                                    <!-- <span v-if="columnNotifications(column.id)" class="badge rounded-pill bg-danger">{{ columnNotifications(column.id) }}</span> -->
                                 </h5>
                             </div>
                             <div class="col-3 text-end">
@@ -100,6 +102,8 @@
                     task: {},
                 },
 
+                notifications: [],
+
                 views: {
                     draggable: false,
                     createTask: false,
@@ -115,6 +119,7 @@
         },
         created() {
             this.getBoards()
+            this.getNotifications()
         },
         methods: {
             getBoards() {
@@ -144,6 +149,43 @@
                         this.views.draggable = false
                     }
                 }))
+            },
+            getNotifications() {
+                axios
+                .get(`/api/notifications/${this.$parent.user.id}`)
+                .then(response => (
+                    this.notifications = response.data
+                ))
+            },
+            boardNotifications(board_id) {
+                let notificationCounter = []
+
+                this.notifications.forEach(notification => {
+                    if(!notification.task) {
+                        return
+                    }
+
+                    if(notification.task.column.board_id == board_id) {
+                        notificationCounter.push(notification.task.column.board_id)
+                    }
+                })
+
+                return notificationCounter.length
+            },
+            columnNotifications(column_id) {
+                let notificationCounter = []
+
+                this.notifications.forEach(notification => {
+                    if(!notification.task) {
+                        return
+                    }
+
+                    if(notification.task.column.id == column_id) {
+                        notificationCounter.push(notification.task.column.id)
+                    }
+                })
+
+                return notificationCounter.length
             },
             openTask(task) {
                 this.selected.task = task

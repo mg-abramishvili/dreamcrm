@@ -8241,13 +8241,26 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get("/api/task/".concat(this.task_id)).then(function (response) {
-        return _this.task = response.data;
+        _this.task = response.data;
+
+        if (response.data.notifications) {
+          response.data.notifications.forEach(function (notification) {
+            _this.markNotificationsAsRead(notification.id);
+          });
+        }
+      });
+    },
+    markNotificationsAsRead: function markNotificationsAsRead(id) {
+      axios.put("/api/notification/".concat(id, "/update"), {
+        is_read: true
       });
     },
     closeModal: function closeModal() {
       this.$parent.views.modals.openTask = false;
       this.$parent.views.modals.showBackdrop = false;
       document.body.style.overflow = "auto";
+      this.$parent.getBoard(this.task.column.board.id);
+      this.$parent.getNotifications();
     },
     completeTask: function completeTask() {
       var _this2 = this;
@@ -8424,6 +8437,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -8441,6 +8456,7 @@ __webpack_require__.r(__webpack_exports__);
         column: {},
         task: {}
       },
+      notifications: [],
       views: {
         draggable: false,
         createTask: false,
@@ -8456,6 +8472,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.getBoards();
+    this.getNotifications();
   },
   methods: {
     getBoards: function getBoards() {
@@ -8492,6 +8509,39 @@ __webpack_require__.r(__webpack_exports__);
           _this2.views.draggable = false;
         }
       });
+    },
+    getNotifications: function getNotifications() {
+      var _this3 = this;
+
+      axios.get("/api/notifications/".concat(this.$parent.user.id)).then(function (response) {
+        return _this3.notifications = response.data;
+      });
+    },
+    boardNotifications: function boardNotifications(board_id) {
+      var notificationCounter = [];
+      this.notifications.forEach(function (notification) {
+        if (!notification.task) {
+          return;
+        }
+
+        if (notification.task.column.board_id == board_id) {
+          notificationCounter.push(notification.task.column.board_id);
+        }
+      });
+      return notificationCounter.length;
+    },
+    columnNotifications: function columnNotifications(column_id) {
+      var notificationCounter = [];
+      this.notifications.forEach(function (notification) {
+        if (!notification.task) {
+          return;
+        }
+
+        if (notification.task.column.id == column_id) {
+          notificationCounter.push(notification.task.column.id);
+        }
+      });
+      return notificationCounter.length;
     },
     openTask: function openTask(task) {
       this.selected.task = task;
@@ -66881,8 +66931,15 @@ var render = function () {
                         _vm._v(
                           "\n                        " +
                             _vm._s(board.name) +
-                            "\n                    "
+                            "\n                        "
                         ),
+                        _vm.boardNotifications(board.id)
+                          ? _c(
+                              "span",
+                              { staticClass: "badge rounded-pill bg-danger" },
+                              [_vm._v(_vm._s(_vm.boardNotifications(board.id)))]
+                            )
+                          : _vm._e(),
                       ]
                     )
                   })
@@ -66973,7 +67030,7 @@ var render = function () {
                                       _vm._v(
                                         "\n                                " +
                                           _vm._s(column.name) +
-                                          "\n                            "
+                                          "\n                                "
                                       ),
                                     ]
                                   )

@@ -135,14 +135,28 @@
             getTask() {
                 axios
                 .get(`/api/task/${this.task_id}`)
-                .then(response => (
+                .then((response => {
                     this.task = response.data
-                ))
+
+                    if(response.data.notifications) {
+                        response.data.notifications.forEach(notification => {
+                            this.markNotificationsAsRead(notification.id)
+                        })
+                    }
+                }))
+            },
+            markNotificationsAsRead(id) {
+                axios.put(`/api/notification/${id}/update`, {
+                is_read: true,
+            })
             },
             closeModal() {
                 this.$parent.views.modals.openTask = false
                 this.$parent.views.modals.showBackdrop = false
                 document.body.style.overflow = "auto"
+
+                this.$parent.getBoard(this.task.column.board.id)
+                this.$parent.getNotifications()
             },
             completeTask() {
                 if (confirm("Точно выполнена?")) {

@@ -7,12 +7,27 @@ use App\Models\User;
 use App\Models\TaskBoard;
 use App\Models\Notification;
 use Illuminate\Http\Request;
+use App\Mail\NotificationMail;
+use Illuminate\Support\Facades\Mail;
 
 class TaskController extends Controller
 {
-    public function task($id)
+    public function task($id, Request $request)
     {
-        return Task::with('users', 'comments', 'files.user', 'column.board')->find($id);
+        $user = User::find($request->user()->id);
+
+        return Task::with(
+            [
+                'users',
+                'comments',
+                'files.user',
+                'column.board',
+                'notifications' => function ($q) use($user) {
+                    $q->where('user_id', $user->id);
+                }
+            ]
+        )
+        ->find($id);
     }
 
     public function store(Request $request)
@@ -74,6 +89,7 @@ class TaskController extends Controller
                 $notification->is_read = false;
                 $notification->name = 'Задача выполнена';
                 $notification->save();
+                Mail::to(User::find($task->column->board->admin)->email)->send(new NotificationMail($notification));
             }
         }
 

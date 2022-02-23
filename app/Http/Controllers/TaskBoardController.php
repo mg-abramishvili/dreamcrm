@@ -36,7 +36,7 @@ class TaskBoardController extends Controller
                                         [
                                             'users',
                                             'comments',
-                                            'notifications' => function ($q) use($user) { $q->where('user_id', $user->id); }
+                                            'notifications' => function ($q) use($user) { $q->where('user_id', $user->id)->where('is_read', 0); }
                                         ]
                                     )
                                     ->orderBy('status', 'asc')
