@@ -6921,6 +6921,9 @@ __webpack_require__.r(__webpack_exports__);
         return _this2.itemsToBuy = response.data;
       });
     }
+  },
+  components: {
+    Loader: Loader
   }
 });
 

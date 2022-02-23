@@ -103,6 +103,9 @@
                     this.itemsToBuy = response.data
                 ));
             }
+        },
+        components: {
+            Loader
         }
     }
 </script>
