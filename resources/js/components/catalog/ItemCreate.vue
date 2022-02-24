@@ -159,6 +159,13 @@
             uncheckAllBoxes() {
                 this.selected.boxes = []
             },
+            LatestBalancePrice(stockItem) {
+                if(stockItem.balances.length) {
+                    let rub = stockItem.balances[stockItem.balances.length - 1].pre_rub
+                    let usd = stockItem.balances[stockItem.balances.length - 1].pre_usd * this.usd.kurs
+                    return Math.ceil((rub + usd) / 50) * 50
+                }
+            },
             middleBalancePrice(stockItem) {
                 if(stockItem.balances.length) {
                     return stockItem.balances.map(a => a.price).reduce((a, b) => (parseInt(a) + parseInt(b))) / stockItem.balances.map(a => a.price).length

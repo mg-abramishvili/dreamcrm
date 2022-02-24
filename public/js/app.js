@@ -4876,6 +4876,13 @@ __webpack_require__.r(__webpack_exports__);
     uncheckAllBoxes: function uncheckAllBoxes() {
       this.selected.boxes = [];
     },
+    LatestBalancePrice: function LatestBalancePrice(stockItem) {
+      if (stockItem.balances.length) {
+        var rub = stockItem.balances[stockItem.balances.length - 1].pre_rub;
+        var usd = stockItem.balances[stockItem.balances.length - 1].pre_usd * this.usd.kurs;
+        return Math.ceil((rub + usd) / 50) * 50;
+      }
+    },
     middleBalancePrice: function middleBalancePrice(stockItem) {
       if (stockItem.balances.length) {
         return stockItem.balances.map(function (a) {
