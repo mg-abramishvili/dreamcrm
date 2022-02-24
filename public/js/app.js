@@ -5243,8 +5243,7 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         var usd = stockItem.balances[stockItem.balances.length - 1].pre_usd * this.usd.kurs;
-        console.log(usd);
-        return Math.ceil((rub + usd) / 50) * 50;
+        return Math.ceil((rub + usd) / 50 * 50);
       }
     },
     selectedStockItems: function selectedStockItems(id) {

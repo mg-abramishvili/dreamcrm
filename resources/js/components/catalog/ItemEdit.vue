@@ -199,9 +199,7 @@
                     if(rub == 0) { rub = 1 }
 
                     let usd = stockItem.balances[stockItem.balances.length - 1].pre_usd * this.usd.kurs
-                    console.log(usd)
-                    return Math.ceil((rub + usd) / 50) * 50
-
+                    return Math.ceil(((rub + usd) / 50) * 50)
                 }
             },
             selectedStockItems(id) {
