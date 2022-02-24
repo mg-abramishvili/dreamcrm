@@ -4804,6 +4804,10 @@ __webpack_require__.r(__webpack_exports__);
       stockItems: [],
       stockSearchInput: '',
       boxSearchInput: '',
+      usd: {
+        kurs: '',
+        date: ''
+      },
       errors: []
     };
   },
@@ -4838,34 +4842,42 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
+    this.loadUsd();
     this.loadCategories();
     this.loadBoxes();
     this.loadStockItems();
   },
   methods: {
-    loadCategories: function loadCategories() {
+    loadUsd: function loadUsd() {
       var _this4 = this;
 
-      axios.get('/api/catalog/categories').then(function (response) {
-        _this4.categories = response.data;
+      axios.get('/api/usd').then(function (response) {
+        _this4.usd.kurs = response.data.kurs, _this4.usd.date = response.data.date;
+      });
+    },
+    loadCategories: function loadCategories() {
+      var _this5 = this;
 
-        if (_this4.$route.params.category_id) {
-          _this4.selected.category = _this4.$route.params.category_id;
+      axios.get('/api/catalog/categories').then(function (response) {
+        _this5.categories = response.data;
+
+        if (_this5.$route.params.category_id) {
+          _this5.selected.category = _this5.$route.params.category_id;
         }
       });
     },
     loadBoxes: function loadBoxes() {
-      var _this5 = this;
+      var _this6 = this;
 
       axios.get("/api/catalog/boxes").then(function (response) {
-        return _this5.boxes = response.data;
+        return _this6.boxes = response.data;
       });
     },
     loadStockItems: function loadStockItems() {
-      var _this6 = this;
+      var _this7 = this;
 
       axios.get("/api/stock/items").then(function (response) {
-        return _this6.stockItems = response.data;
+        return _this7.stockItems = response.data;
       });
     },
     selectAllBoxes: function selectAllBoxes() {
@@ -4895,7 +4907,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     save: function save() {
-      var _this7 = this;
+      var _this8 = this;
 
       this.errors = [];
 
@@ -4926,10 +4938,10 @@ __webpack_require__.r(__webpack_exports__);
         stock_items: this.selected.stockItems,
         boxes: this.selected.boxes
       }).then(function (response) {
-        return _this7.$router.push({
+        return _this8.$router.push({
           name: 'CatalogCategory',
           params: {
-            id: _this7.$route.params.category_id
+            id: _this8.$route.params.category_id
           }
         });
       })["catch"](function (error) {

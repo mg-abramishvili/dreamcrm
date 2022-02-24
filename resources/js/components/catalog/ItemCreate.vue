@@ -106,6 +106,11 @@
                 stockSearchInput: '',
                 boxSearchInput: '',
 
+                usd: {
+                    kurs: '',
+                    date: '',
+                },
+
                 errors: [],
             }
         },
@@ -127,11 +132,20 @@
             }
         },
         created() {
+            this.loadUsd()
             this.loadCategories()
             this.loadBoxes()
             this.loadStockItems()
         },
         methods: {
+            loadUsd() {
+                axios
+                .get('/api/usd')
+                .then((response => {
+                    this.usd.kurs = response.data.kurs,
+                    this.usd.date = response.data.date
+                }))
+            },
             loadCategories() {
                 axios.get('/api/catalog/categories')
                     .then((response => {
