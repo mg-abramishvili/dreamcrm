@@ -5164,7 +5164,7 @@ __webpack_require__.r(__webpack_exports__);
       }, 0);
     },
     price: function price() {
-      console.log(this.priceRub, this.priceUsd);
+      console.log(this.priceRub, this.priceUsd, this.priceUsd * this.usd.kurs);
       return Math.ceil((this.priceRub + this.priceUsd * this.usd.kurs) / 50) * 50;
     }
   },
