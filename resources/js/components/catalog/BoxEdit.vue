@@ -51,15 +51,17 @@
                             <label>Склад</label>
                         </div>
                         <input v-model="stockSearchInput" type="text" class="form-control mb-1" placeholder="Поиск по складу...">
-                        <!-- <select v-model="selected.stockItems" class="form-control mb-3" style="height: 155px;" multiple>
-                            <option v-for="stockItem in stockItemsFiltered" :key="'stock_item_' + stockItem.id" :value="stockItem.id">{{ stockItem.name }} - {{ middleBalancePrice(stockItem) | currency }} ₽</option>
-                        </select> -->
-                        <div class="form-control" style="height: 220px; overflow-y: auto;">
-                            <div v-for="stockItem in stockItemsFiltered" :key="'stock_item_' + stockItem.id" class="form-check">
-                                <input v-model="selected.stockItems" :id="'stock_item_' + stockItem.id" :value="stockItem.id" class="form-check-input" type="checkbox">
-                                <label class="form-check-label" :for="'stock_item_' + stockItem.id">
-                                    {{ stockItem.name }} - {{ middleBalancePrice(stockItem) | currency }} ₽
-                                </label>
+                        <div class="form-control" style="height: 180px; overflow-y: auto;">
+                            <div v-for="stockItem in stockItemsFiltered" :key="'stock_item_' + stockItem.id" class="form-check form-check-flex">
+                                <div>
+                                    <input v-model="selected.stockItems" @change="selectedStockItems(stockItem.id, $event)" :id="'stock_item_' + stockItem.id" :value="stockItem.id" class="form-check-input" type="checkbox">
+                                    <label class="form-check-label" :for="'stock_item_' + stockItem.id">
+                                        {{ stockItem.name }} - {{ LatestBalancePrice(stockItem) | currency }} ₽
+                                    </label>
+                                </div>
+                                <div>
+                                    <input v-if="selected.stockItems.includes(stockItem.id)" v-model="selected.stockItemsQty.find(q => q.id == stockItem.id).quantity" type="number" class="form-control form-control-mini-number">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -182,6 +184,7 @@
                 selected: {
                     types: [],
                     stockItems: [],
+                    stockItemsQty: [],
                 },
                 
                 types: [],
@@ -254,18 +257,24 @@
                 })
             },
             stockItemsFiltered() {
-                return this.stockItems.filter(item => this.middleBalancePrice(item)).filter(stockItem => {
-                    return stockItem.name.toLowerCase().includes(this.stockSearchInput.toLowerCase())
-                })
-            },
-            stockItemsPrice() {
-                let stockItems = []
-                this.selected.stockItems.forEach((selectedItem) => {
-                    if(this.stockItems.find(item => item.id == selectedItem)) {
-                        stockItems.push(this.stockItems.find(item => item.id == selectedItem))
+                return this.stockItems.filter(stockItem => {
+                    if(stockItem.balances && stockItem.balances.length > 0) {
+                        return stockItem.name.toLowerCase().includes(this.stockSearchInput.toLowerCase())
                     }
                 })
-                return stockItems.map(stockItem => stockItem.balances.map(a => a.price).reduce((a, b) => (parseInt(a) + parseInt(b))) / stockItem.balances.map(a => a.price).length).reduce((a, b) => a + b, 0)
+            },
+            priceRub() {
+                let selectedStockItems = this.stockItems.filter(stockItem => this.selected.stockItems.includes(stockItem.id))
+
+                return selectedStockItems.map(stockItem => stockItem.balances[stockItem.balances.length - 1].pre_rub * this.selected.stockItemsQty.find(q => q.id == stockItem.id).quantity).reduce((a, b) => parseInt(a) + parseInt(b), 0)
+            },
+            priceUsd() {
+                let selectedStockItems = this.stockItems.filter(stockItem => this.selected.stockItems.includes(stockItem.id))
+
+                return selectedStockItems.map(stockItem => stockItem.balances[stockItem.balances.length - 1].pre_usd * this.selected.stockItemsQty.find(q => q.id == stockItem.id).quantity).reduce((a, b) => parseInt(a) + parseInt(b), 0)
+            },
+            stockItemsPrice() {
+                return this.priceRub + (this.priceUsd * this.usd.kurs)
             },
             sborka() {
 
@@ -354,9 +363,19 @@
             selectAllBoxes() {
                 this.selected.boxes = this.boxes.map(box => box.id)
             },
-            middleBalancePrice(stockItem) {
-                if(stockItem.balances.length) {
-                    return stockItem.balances.map(a => a.price).reduce((a, b) => (parseInt(a) + parseInt(b))) / stockItem.balances.map(a => a.price).length
+            LatestBalancePrice(stockItem) {
+                if(stockItem.balances && stockItem.balances.length > 0) {
+                    let rub = parseInt(stockItem.balances[stockItem.balances.length - 1].pre_rub)
+                    let usd = parseInt(stockItem.balances[stockItem.balances.length - 1].pre_usd) * this.usd.kurs
+                    
+                    return Math.ceil((rub + usd) / 50) * 50
+                }
+            },
+            selectedStockItems(id) {
+                if(event.target.checked) {
+                    this.selected.stockItemsQty.push({id: id, quantity: 1})
+                } else {
+                    this.selected.stockItemsQty = this.selected.stockItemsQty.filter(qty => qty.id !== id)
                 }
             },
             save(id) {
@@ -404,9 +423,11 @@
                     sborka_persons: this.sborkaPersons,
                     sborka: this.sborka,
                     marzha: this.marzha,
+                    price: this.priceRub,
+                    price: this.priceUsd,
                     price: this.price,
                     types: this.selected.types,
-                    stock_items: this.selected.stockItems,
+                    stock_items: this.selected.stockItemsQty,
                     length: this.length,
                     width: this.width,
                     height: this.height,

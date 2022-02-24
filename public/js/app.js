@@ -3627,6 +3627,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var filepond_plugin_file_validate_type__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(filepond_plugin_file_validate_type__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var filepond_plugin_image_preview__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! filepond-plugin-image-preview */ "./node_modules/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js");
 /* harmony import */ var filepond_plugin_image_preview__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(filepond_plugin_image_preview__WEBPACK_IMPORTED_MODULE_5__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
 //
 //
 //
@@ -3802,7 +3806,8 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
       gallery: [],
       selected: {
         types: [],
-        stockItems: []
+        stockItems: [],
+        stockItemsQty: []
       },
       types: [],
       stockItems: [],
@@ -3875,36 +3880,42 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
     stockItemsFiltered: function stockItemsFiltered() {
       var _this2 = this;
 
-      return this.stockItems.filter(function (item) {
-        return _this2.middleBalancePrice(item);
-      }).filter(function (stockItem) {
-        return stockItem.name.toLowerCase().includes(_this2.stockSearchInput.toLowerCase());
-      });
-    },
-    stockItemsPrice: function stockItemsPrice() {
-      var _this3 = this;
-
-      var stockItems = [];
-      this.selected.stockItems.forEach(function (selectedItem) {
-        if (_this3.stockItems.find(function (item) {
-          return item.id == selectedItem;
-        })) {
-          stockItems.push(_this3.stockItems.find(function (item) {
-            return item.id == selectedItem;
-          }));
+      return this.stockItems.filter(function (stockItem) {
+        if (stockItem.balances && stockItem.balances.length > 0) {
+          return stockItem.name.toLowerCase().includes(_this2.stockSearchInput.toLowerCase());
         }
       });
-      return stockItems.map(function (stockItem) {
-        return stockItem.balances.map(function (a) {
-          return a.price;
-        }).reduce(function (a, b) {
-          return parseInt(a) + parseInt(b);
-        }) / stockItem.balances.map(function (a) {
-          return a.price;
-        }).length;
+    },
+    priceRub: function priceRub() {
+      var _this3 = this;
+
+      var selectedStockItems = this.stockItems.filter(function (stockItem) {
+        return _this3.selected.stockItems.includes(stockItem.id);
+      });
+      return selectedStockItems.map(function (stockItem) {
+        return stockItem.balances[stockItem.balances.length - 1].pre_rub * _this3.selected.stockItemsQty.find(function (q) {
+          return q.id == stockItem.id;
+        }).quantity;
       }).reduce(function (a, b) {
-        return a + b;
+        return parseInt(a) + parseInt(b);
       }, 0);
+    },
+    priceUsd: function priceUsd() {
+      var _this4 = this;
+
+      var selectedStockItems = this.stockItems.filter(function (stockItem) {
+        return _this4.selected.stockItems.includes(stockItem.id);
+      });
+      return selectedStockItems.map(function (stockItem) {
+        return stockItem.balances[stockItem.balances.length - 1].pre_usd * _this4.selected.stockItemsQty.find(function (q) {
+          return q.id == stockItem.id;
+        }).quantity;
+      }).reduce(function (a, b) {
+        return parseInt(a) + parseInt(b);
+      }, 0);
+    },
+    stockItemsPrice: function stockItemsPrice() {
+      return this.priceRub + this.priceUsd * this.usd.kurs;
     },
     sborka: function sborka() {
       return this.sborkaDays * (this.sborkaPersons * parseInt(this.sborkaTarif.person) + parseInt(this.sborkaTarif.arenda));
@@ -3929,58 +3940,58 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
   },
   methods: {
     loadTypes: function loadTypes() {
-      var _this4 = this;
+      var _this5 = this;
 
       axios.get("/api/catalog/types").then(function (response) {
-        return _this4.types = response.data;
+        return _this5.types = response.data;
       });
     },
     loadStockItems: function loadStockItems() {
-      var _this5 = this;
+      var _this6 = this;
 
       axios.get("/api/stock/items").then(function (response) {
-        return _this5.stockItems = response.data;
+        return _this6.stockItems = response.data;
       });
     },
     loadSborkaTarif: function loadSborkaTarif() {
-      var _this6 = this;
+      var _this7 = this;
 
       axios.get("/api/catalog/sborka").then(function (response) {
-        return _this6.sborkaTarif.arenda = response.data.arenda, _this6.sborkaTarif.person = response.data.person;
+        return _this7.sborkaTarif.arenda = response.data.arenda, _this7.sborkaTarif.person = response.data.person;
       });
     },
     loadUsd: function loadUsd() {
-      var _this7 = this;
+      var _this8 = this;
 
       axios.get('/api/usd').then(function (response) {
-        _this7.usd.kurs = response.data.kurs, _this7.usd.date = response.data.updated_at;
+        _this8.usd.kurs = response.data.kurs, _this8.usd.date = response.data.updated_at;
       });
     },
     loadBox: function loadBox() {
-      var _this8 = this;
+      var _this9 = this;
 
       axios.get("/api/catalog/box/".concat(this.$route.params.id)).then(function (response) {
-        _this8.box = response.data;
-        _this8.name = response.data.name;
-        _this8.sborkaDays = response.data.sborka_days;
-        _this8.sborkaPersons = response.data.sborka_persons;
-        _this8.marzha = response.data.marzha;
-        _this8.length = response.data.length;
-        _this8.width = response.data.width;
-        _this8.height = response.data.height;
-        _this8.weight = response.data.weight;
-        _this8.description = response.data.description;
-        _this8.manager_description = response.data.manager_description;
-        _this8.comment = response.data.comment;
-        _this8.selected.types = response.data.types.map(function (type) {
+        _this9.box = response.data;
+        _this9.name = response.data.name;
+        _this9.sborkaDays = response.data.sborka_days;
+        _this9.sborkaPersons = response.data.sborka_persons;
+        _this9.marzha = response.data.marzha;
+        _this9.length = response.data.length;
+        _this9.width = response.data.width;
+        _this9.height = response.data.height;
+        _this9.weight = response.data.weight;
+        _this9.description = response.data.description;
+        _this9.manager_description = response.data.manager_description;
+        _this9.comment = response.data.comment;
+        _this9.selected.types = response.data.types.map(function (type) {
           return type.id;
         });
-        _this8.selected.stockItems = response.data.stock_items.map(function (item) {
+        _this9.selected.stockItems = response.data.stock_items.map(function (item) {
           return item.id;
         });
 
         if (response.data.gallery) {
-          _this8.filepond_gallery_edit = response.data.gallery.map(function (element) {
+          _this9.filepond_gallery_edit = response.data.gallery.map(function (element) {
             {
               return {
                 source: element,
@@ -3998,19 +4009,28 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
         return box.id;
       });
     },
-    middleBalancePrice: function middleBalancePrice(stockItem) {
-      if (stockItem.balances.length) {
-        return stockItem.balances.map(function (a) {
-          return a.price;
-        }).reduce(function (a, b) {
-          return parseInt(a) + parseInt(b);
-        }) / stockItem.balances.map(function (a) {
-          return a.price;
-        }).length;
+    LatestBalancePrice: function LatestBalancePrice(stockItem) {
+      if (stockItem.balances && stockItem.balances.length > 0) {
+        var rub = parseInt(stockItem.balances[stockItem.balances.length - 1].pre_rub);
+        var usd = parseInt(stockItem.balances[stockItem.balances.length - 1].pre_usd) * this.usd.kurs;
+        return Math.ceil((rub + usd) / 50) * 50;
+      }
+    },
+    selectedStockItems: function selectedStockItems(id) {
+      if (event.target.checked) {
+        this.selected.stockItemsQty.push({
+          id: id,
+          quantity: 1
+        });
+      } else {
+        this.selected.stockItemsQty = this.selected.stockItemsQty.filter(function (qty) {
+          return qty.id !== id;
+        });
       }
     },
     save: function save(id) {
-      var _this9 = this;
+      var _this10 = this,
+          _axios$put;
 
       this.errors = [];
 
@@ -4050,30 +4070,20 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
         this.gallery = [];
         document.getElementsByName("gallery[]").forEach(function (galleryItem) {
           if (galleryItem.value) {
-            _this9.gallery.push(galleryItem.value);
+            _this10.gallery.push(galleryItem.value);
           }
         });
       }
 
-      axios.put("/api/catalog/box/".concat(id, "/update"), {
+      axios.put("/api/catalog/box/".concat(id, "/update"), (_axios$put = {
         name: this.name,
         sborka_days: this.sborkaDays,
         sborka_persons: this.sborkaPersons,
         sborka: this.sborka,
         marzha: this.marzha,
-        price: this.price,
-        types: this.selected.types,
-        stock_items: this.selected.stockItems,
-        length: this.length,
-        width: this.width,
-        height: this.height,
-        weight: this.weight,
-        description: this.description,
-        manager_description: this.manager_description,
-        comment: this.comment,
-        gallery: this.gallery
-      }).then(function (response) {
-        return _this9.$router.push({
+        price: this.priceRub
+      }, _defineProperty(_axios$put, "price", this.priceUsd), _defineProperty(_axios$put, "price", this.price), _defineProperty(_axios$put, "types", this.selected.types), _defineProperty(_axios$put, "stock_items", this.selected.stockItemsQty), _defineProperty(_axios$put, "length", this.length), _defineProperty(_axios$put, "width", this.width), _defineProperty(_axios$put, "height", this.height), _defineProperty(_axios$put, "weight", this.weight), _defineProperty(_axios$put, "description", this.description), _defineProperty(_axios$put, "manager_description", this.manager_description), _defineProperty(_axios$put, "comment", this.comment), _defineProperty(_axios$put, "gallery", this.gallery), _axios$put)).then(function (response) {
+        return _this10.$router.push({
           name: 'CatalogBoxes'
         });
       })["catch"](function (error) {
@@ -4085,19 +4095,19 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
       });
     },
     del: function del(id) {
-      var _this10 = this;
+      var _this11 = this;
 
       if (confirm("Точно удалить?")) {
         axios["delete"]("/api/catalog/box/".concat(id, "/delete")).then(function (response) {
-          return _this10.$router.push({
+          return _this11.$router.push({
             name: 'CatalogBoxes'
           });
         })["catch"](function (error) {
           if (error.response) {
-            _this10.errors = [];
+            _this11.errors = [];
 
             for (var key in error.response.data.errors) {
-              _this10.errors.push(key);
+              _this11.errors.push(key);
             }
           }
         });
@@ -59843,89 +59853,147 @@ var render = function () {
                   "div",
                   {
                     staticClass: "form-control",
-                    staticStyle: { height: "220px", "overflow-y": "auto" },
+                    staticStyle: { height: "180px", "overflow-y": "auto" },
                   },
                   _vm._l(_vm.stockItemsFiltered, function (stockItem) {
                     return _c(
                       "div",
                       {
                         key: "stock_item_" + stockItem.id,
-                        staticClass: "form-check",
+                        staticClass: "form-check form-check-flex",
                       },
                       [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.selected.stockItems,
-                              expression: "selected.stockItems",
+                        _c("div", [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.selected.stockItems,
+                                expression: "selected.stockItems",
+                              },
+                            ],
+                            staticClass: "form-check-input",
+                            attrs: {
+                              id: "stock_item_" + stockItem.id,
+                              type: "checkbox",
                             },
-                          ],
-                          staticClass: "form-check-input",
-                          attrs: {
-                            id: "stock_item_" + stockItem.id,
-                            type: "checkbox",
-                          },
-                          domProps: {
-                            value: stockItem.id,
-                            checked: Array.isArray(_vm.selected.stockItems)
-                              ? _vm._i(_vm.selected.stockItems, stockItem.id) >
-                                -1
-                              : _vm.selected.stockItems,
-                          },
-                          on: {
-                            change: function ($event) {
-                              var $$a = _vm.selected.stockItems,
-                                $$el = $event.target,
-                                $$c = $$el.checked ? true : false
-                              if (Array.isArray($$a)) {
-                                var $$v = stockItem.id,
-                                  $$i = _vm._i($$a, $$v)
-                                if ($$el.checked) {
-                                  $$i < 0 &&
-                                    _vm.$set(
-                                      _vm.selected,
-                                      "stockItems",
-                                      $$a.concat([$$v])
-                                    )
-                                } else {
-                                  $$i > -1 &&
-                                    _vm.$set(
-                                      _vm.selected,
-                                      "stockItems",
-                                      $$a
-                                        .slice(0, $$i)
-                                        .concat($$a.slice($$i + 1))
-                                    )
-                                }
-                              } else {
-                                _vm.$set(_vm.selected, "stockItems", $$c)
-                              }
+                            domProps: {
+                              value: stockItem.id,
+                              checked: Array.isArray(_vm.selected.stockItems)
+                                ? _vm._i(
+                                    _vm.selected.stockItems,
+                                    stockItem.id
+                                  ) > -1
+                                : _vm.selected.stockItems,
                             },
-                          },
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "label",
-                          {
-                            staticClass: "form-check-label",
-                            attrs: { for: "stock_item_" + stockItem.id },
-                          },
-                          [
-                            _vm._v(
-                              "\n                                " +
-                                _vm._s(stockItem.name) +
-                                " - " +
-                                _vm._s(
-                                  _vm._f("currency")(
-                                    _vm.middleBalancePrice(stockItem)
+                            on: {
+                              change: [
+                                function ($event) {
+                                  var $$a = _vm.selected.stockItems,
+                                    $$el = $event.target,
+                                    $$c = $$el.checked ? true : false
+                                  if (Array.isArray($$a)) {
+                                    var $$v = stockItem.id,
+                                      $$i = _vm._i($$a, $$v)
+                                    if ($$el.checked) {
+                                      $$i < 0 &&
+                                        _vm.$set(
+                                          _vm.selected,
+                                          "stockItems",
+                                          $$a.concat([$$v])
+                                        )
+                                    } else {
+                                      $$i > -1 &&
+                                        _vm.$set(
+                                          _vm.selected,
+                                          "stockItems",
+                                          $$a
+                                            .slice(0, $$i)
+                                            .concat($$a.slice($$i + 1))
+                                        )
+                                    }
+                                  } else {
+                                    _vm.$set(_vm.selected, "stockItems", $$c)
+                                  }
+                                },
+                                function ($event) {
+                                  return _vm.selectedStockItems(
+                                    stockItem.id,
+                                    $event
                                   )
-                                ) +
-                                " ₽\n                            "
-                            ),
-                          ]
-                        ),
+                                },
+                              ],
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "label",
+                            {
+                              staticClass: "form-check-label",
+                              attrs: { for: "stock_item_" + stockItem.id },
+                            },
+                            [
+                              _vm._v(
+                                "\n                                    " +
+                                  _vm._s(stockItem.name) +
+                                  " - " +
+                                  _vm._s(
+                                    _vm._f("currency")(
+                                      _vm.LatestBalancePrice(stockItem)
+                                    )
+                                  ) +
+                                  " ₽\n                                "
+                              ),
+                            ]
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("div", [
+                          _vm.selected.stockItems.includes(stockItem.id)
+                            ? _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.selected.stockItemsQty.find(
+                                      function (q) {
+                                        return q.id == stockItem.id
+                                      }
+                                    ).quantity,
+                                    expression:
+                                      "selected.stockItemsQty.find(q => q.id == stockItem.id).quantity",
+                                  },
+                                ],
+                                staticClass:
+                                  "form-control form-control-mini-number",
+                                attrs: { type: "number" },
+                                domProps: {
+                                  value: _vm.selected.stockItemsQty.find(
+                                    function (q) {
+                                      return q.id == stockItem.id
+                                    }
+                                  ).quantity,
+                                },
+                                on: {
+                                  input: function ($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.selected.stockItemsQty.find(function (
+                                        q
+                                      ) {
+                                        return q.id == stockItem.id
+                                      }),
+                                      "quantity",
+                                      $event.target.value
+                                    )
+                                  },
+                                },
+                              })
+                            : _vm._e(),
+                        ]),
                       ]
                     )
                   }),

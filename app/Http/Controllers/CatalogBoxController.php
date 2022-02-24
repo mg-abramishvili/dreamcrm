@@ -48,6 +48,8 @@ class CatalogBoxController extends Controller
         $box->sborka_persons = $request->sborka_persons;
         $box->sborka = $request->sborka;
         $box->price = $request->price;
+        $box->pre_rub = $request->pre_rub;
+        $box->pre_usd = $request->pre_usd;
         $box->length = $request->length;
         $box->width = $request->width;
         $box->height = $request->height;
@@ -63,8 +65,13 @@ class CatalogBoxController extends Controller
 
         $box->save();
 
-        $box->types()->attach($request->types, ['catalog_box_id' => $box->id]);
-        $box->stockItems()->attach($request->stock_items, ['catalog_box_id' => $box->id]);
+        $box->types()->sync($request->types);
+        
+        $stockItems = [];
+        foreach($request->stock_items as $stockItem) {
+            $stockItems[$stockItem['id']] = ['quantity' => $stockItem['quantity']];
+        }
+        $box->stockItems()->sync($stockItems);
     }
 
     public function update($id, Request $request)
@@ -93,6 +100,8 @@ class CatalogBoxController extends Controller
         $box->sborka_persons = $request->sborka_persons;
         $box->sborka = $request->sborka;
         $box->price = $request->price;
+        $box->pre_rub = $request->pre_rub;
+        $box->pre_usd = $request->pre_usd;
         $box->length = $request->length;
         $box->width = $request->width;
         $box->height = $request->height;
@@ -108,10 +117,13 @@ class CatalogBoxController extends Controller
 
         $box->save();
 
-        $box->types()->detach();
-        $box->types()->attach($request->types, ['catalog_box_id' => $box->id]);
-        $box->stockItems()->detach();
-        $box->stockItems()->attach($request->stock_items, ['catalog_box_id' => $box->id]);
+        $box->types()->sync($request->types);
+        
+        $stockItems = [];
+        foreach($request->stock_items as $stockItem) {
+            $stockItems[$stockItem['id']] = ['quantity' => $stockItem['quantity']];
+        }
+        $box->stockItems()->sync($stockItems);
     }
 
     public function delete($id)
