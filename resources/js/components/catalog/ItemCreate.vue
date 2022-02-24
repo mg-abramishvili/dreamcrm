@@ -122,8 +122,10 @@
                 })
             },
             stockItemsFiltered() {
-                return this.stockItems.filter(item => this.LatestBalancePrice(item)).filter(stockItem => {
-                    return stockItem.name.toLowerCase().includes(this.stockSearchInput.toLowerCase())
+                return this.stockItems.filter(stockItem => {
+                    if(stockItem.balances && stockItem.balances.length > 0) {
+                        return stockItem.name.toLowerCase().includes(this.stockSearchInput.toLowerCase())
+                    }
                 })
             },
             priceRub() {
@@ -183,11 +185,11 @@
                 this.selected.boxes = []
             },
             LatestBalancePrice(stockItem) {
-                if(stockItem.balances.length) {
+                if(stockItem.balances && stockItem.balances.length > 0) {
                     let rub = stockItem.balances[stockItem.balances.length - 1].pre_rub
                     if(rub == 0) { rub = 1 }
-                    
-                    let usd = stockItem.balances[stockItem.balances.length - 1].pre_usd * this.usd.kurs
+
+                    let usd = stockItem.balances[stockItem.balances.length - 1].pre_usd * parseInt(this.usd.kurs)
                     return Math.ceil((rub + usd) / 50) * 50
                 }
             },
