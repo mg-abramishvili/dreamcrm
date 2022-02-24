@@ -361,9 +361,6 @@
                     }
                 }))
             },
-            selectAllBoxes() {
-                this.selected.boxes = this.boxes.map(box => box.id)
-            },
             LatestBalancePrice(stockItem) {
                 if(stockItem.balances && stockItem.balances.length > 0) {
                     let rub = parseInt(stockItem.balances[stockItem.balances.length - 1].pre_rub)
