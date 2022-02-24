@@ -5155,6 +5155,13 @@ __webpack_require__.r(__webpack_exports__);
       var selectedStockItems = this.stockItems.filter(function (stockItem) {
         return _this4.selected.stockItems.includes(stockItem.id);
       });
+      console.log(selectedStockItems.map(function (stockItem) {
+        return stockItem.balances[stockItem.balances.length - 1].pre_usd * _this4.selected.stockItemsQty.find(function (q) {
+          return q.id == stockItem.id;
+        }).quantity;
+      }).reduce(function (a, b) {
+        return parseInt(a) + parseInt(b);
+      }, 0));
       return selectedStockItems.map(function (stockItem) {
         return stockItem.balances[stockItem.balances.length - 1].pre_usd * _this4.selected.stockItemsQty.find(function (q) {
           return q.id == stockItem.id;
