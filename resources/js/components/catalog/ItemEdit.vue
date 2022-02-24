@@ -194,7 +194,7 @@
                 this.selected.boxes = []
             },
             LatestBalancePrice(stockItem) {
-                if(stockItem.balances) {
+                if(stockItem.balances && stockItem.balances.length > 0) {
                     let rub = stockItem.balances[stockItem.balances.length - 1].pre_rub
                     if(rub == 0) { rub = 1 }
 

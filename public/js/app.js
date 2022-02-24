@@ -5235,7 +5235,7 @@ __webpack_require__.r(__webpack_exports__);
       this.selected.boxes = [];
     },
     LatestBalancePrice: function LatestBalancePrice(stockItem) {
-      if (stockItem.balances) {
+      if (stockItem.balances && stockItem.balances.length > 0) {
         var rub = stockItem.balances[stockItem.balances.length - 1].pre_rub;
 
         if (rub == 0) {
