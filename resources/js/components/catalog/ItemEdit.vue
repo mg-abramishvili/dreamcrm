@@ -184,7 +184,7 @@
 
                         this.selected.boxes = response.data.boxes.map(box => box.id)
                         this.selected.stockItems = response.data.stock_items.map(item => item.id)
-                        this.selected.stockItemsQty = response.data.stock_items.map(({id, quantity}) => ({id: id, quantity: 1}))
+                        this.selected.stockItemsQty = response.data.stock_items.map(({id, pivot}) => ({id: id, quantity: pivot.quantity}))
                     }))
             },
             selectAllBoxes() {
@@ -197,7 +197,7 @@
                 if(stockItem.balances.length) {
                     let rub = stockItem.balances[stockItem.balances.length - 1].pre_rub
                     if(rub == 0) { rub = 1 }
-                    
+
                     let usd = stockItem.balances[stockItem.balances.length - 1].pre_usd * this.usd.kurs
                     return Math.ceil((rub + usd) / 50) * 50
                 }
@@ -233,8 +233,10 @@
                 {
                     name: this.name,
                     price: this.price,
+                    pre_rub: this.priceRub,
+                    pre_usd: this.priceUsd,
                     category_id: this.selected.category,
-                    stock_items: this.selected.stockItems,
+                    stock_items: this.selected.stockItemsQty,
                     boxes: this.selected.boxes,
                 })
                 .then(response => (

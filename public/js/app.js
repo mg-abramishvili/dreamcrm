@@ -4972,7 +4972,7 @@ __webpack_require__.r(__webpack_exports__);
         name: this.name,
         price: this.price,
         category_id: this.selected.category,
-        stock_items: this.selected.stockItems,
+        stock_items: this.selected.stockItemsQty,
         boxes: this.selected.boxes
       }).then(function (response) {
         return _this9.$router.push({
@@ -5218,10 +5218,10 @@ __webpack_require__.r(__webpack_exports__);
         });
         _this9.selected.stockItemsQty = response.data.stock_items.map(function (_ref) {
           var id = _ref.id,
-              quantity = _ref.quantity;
+              pivot = _ref.pivot;
           return {
             id: id,
-            quantity: 1
+            quantity: pivot.quantity
           };
         });
       });
@@ -5286,8 +5286,10 @@ __webpack_require__.r(__webpack_exports__);
       axios.put("/api/catalog/item/".concat(id, "/update"), {
         name: this.name,
         price: this.price,
+        pre_rub: this.priceRub,
+        pre_usd: this.priceUsd,
         category_id: this.selected.category,
-        stock_items: this.selected.stockItems,
+        stock_items: this.selected.stockItemsQty,
         boxes: this.selected.boxes
       }).then(function (response) {
         return _this10.$router.push({

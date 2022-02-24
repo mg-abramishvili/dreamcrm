@@ -228,7 +228,7 @@
                     name: this.name,
                     price: this.price,
                     category_id: this.selected.category,
-                    stock_items: this.selected.stockItems,
+                    stock_items: this.selected.stockItemsQty,
                     boxes: this.selected.boxes,
                 })
                 .then(response => (

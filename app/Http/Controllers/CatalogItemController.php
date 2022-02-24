@@ -36,10 +36,18 @@ class CatalogItemController extends Controller
         $item = new CatalogItem();
         $item->name = $request->name;
         $item->price = $request->price;
+        $item->pre_rub = $request->pre_rub;
+        $item->pre_usd = $request->pre_usd;
         $item->category_id = $request->category_id;
         $item->save();
-        $item->boxes()->attach($request->boxes, ['catalog_item_id' => $item->id]);
-        $item->stockItems()->attach($request->stock_items, ['catalog_item_id' => $item->id]);
+
+        $item->boxes()->sync($request->boxes);
+        
+        $stockItems = [];
+        foreach($request->stock_items as $stockItem) {
+            $stockItems[$stockItem['id']] = ['quantity' => $stockItem['quantity']];
+        }
+        $item->stockItems()->sync($stockItems);
     }
 
     public function update($id, Request $request)
@@ -56,12 +64,18 @@ class CatalogItemController extends Controller
         $item = CatalogItem::find($id);
         $item->name = $request->name;
         $item->price = $request->price;
+        $item->pre_rub = $request->pre_rub;
+        $item->pre_usd = $request->pre_usd;
         $item->category_id = $request->category_id;
         $item->save();
-        $item->boxes()->detach();
-        $item->boxes()->attach($request->boxes, ['catalog_item_id' => $item->id]);
-        $item->stockItems()->detach();
-        $item->stockItems()->attach($request->stock_items, ['catalog_item_id' => $item->id]);
+        
+        $item->boxes()->sync($request->boxes);
+        
+        $stockItems = [];
+        foreach($request->stock_items as $stockItem) {
+            $stockItems[$stockItem['id']] = ['quantity' => $stockItem['quantity']];
+        }
+        $item->stockItems()->sync($stockItems);
     }
 
     public function delete($id)
