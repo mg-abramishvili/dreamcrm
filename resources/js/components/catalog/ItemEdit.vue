@@ -122,7 +122,7 @@
                 })
             },
             stockItemsFiltered() {
-                return this.stockItems.filter(item => this.LatestBalancePrice(item)).filter(stockItem => {
+                return this.stockItems.filter(stockItem => {
                     return stockItem.name.toLowerCase().includes(this.stockSearchInput.toLowerCase())
                 })
             },
@@ -199,7 +199,7 @@
                     if(rub == 0) { rub = 1 }
 
                     let usd = stockItem.balances[stockItem.balances.length - 1].pre_usd * this.usd.kurs
-                    return Math.ceil(((rub + usd) / 50) * 50)
+                    return Math.ceil((rub + usd) / 50) * 50
                 }
             },
             selectedStockItems(id) {

@@ -5129,9 +5129,7 @@ __webpack_require__.r(__webpack_exports__);
     stockItemsFiltered: function stockItemsFiltered() {
       var _this2 = this;
 
-      return this.stockItems.filter(function (item) {
-        return _this2.LatestBalancePrice(item);
-      }).filter(function (stockItem) {
+      return this.stockItems.filter(function (stockItem) {
         return stockItem.name.toLowerCase().includes(_this2.stockSearchInput.toLowerCase());
       });
     },
@@ -5243,7 +5241,7 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         var usd = stockItem.balances[stockItem.balances.length - 1].pre_usd * this.usd.kurs;
-        return Math.ceil((rub + usd) / 50 * 50);
+        return Math.ceil((rub + usd) / 50) * 50;
       }
     },
     selectedStockItems: function selectedStockItems(id) {
