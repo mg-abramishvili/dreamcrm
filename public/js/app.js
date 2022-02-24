@@ -5243,6 +5243,7 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         var usd = stockItem.balances[stockItem.balances.length - 1].pre_usd * this.usd.kurs;
+        console.log(rub, usd);
         return Math.ceil((rub + usd) / 50) * 50;
       }
     },
