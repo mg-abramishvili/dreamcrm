@@ -5130,7 +5130,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       return this.stockItems.filter(function (stockItem) {
-        if (_this2.LatestBalancePrice(stockItem)) {
+        if (stockItem.balances && stockItem.balances.length > 0) {
           return stockItem.name.toLowerCase().includes(_this2.stockSearchInput.toLowerCase());
         }
       });

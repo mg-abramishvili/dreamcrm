@@ -123,7 +123,7 @@
             },
             stockItemsFiltered() {
                 return this.stockItems.filter(stockItem => {
-                    if(this.LatestBalancePrice(stockItem)) {
+                    if(stockItem.balances && stockItem.balances.length > 0) {
                         return stockItem.name.toLowerCase().includes(this.stockSearchInput.toLowerCase())
                     }
                 })
