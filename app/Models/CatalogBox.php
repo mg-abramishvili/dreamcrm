@@ -23,7 +23,7 @@ class CatalogBox extends Model
 
     public function stockItems()
     {
-        return $this->belongsToMany(StockItem::class, 'catalog_box__stock_item', 'catalog_box_id', 'stock_item_id');
+        return $this->belongsToMany(StockItem::class, 'catalog_box__stock_item', 'catalog_box_id', 'stock_item_id')->withPivot(['quantity']);
     }
 
     public function calculations()

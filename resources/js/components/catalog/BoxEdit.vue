@@ -345,6 +345,7 @@
                     this.comment = response.data.comment
                     this.selected.types = response.data.types.map(type => type.id)
                     this.selected.stockItems = response.data.stock_items.map(item => item.id)
+                    this.selected.stockItemsQty = response.data.stock_items.map(({id, pivot}) => ({id: id, quantity: pivot.quantity}))
 
                     if(response.data.gallery) {
                         this.filepond_gallery_edit = response.data.gallery.map(function(element){

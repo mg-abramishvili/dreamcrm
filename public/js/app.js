@@ -3989,6 +3989,14 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
         _this9.selected.stockItems = response.data.stock_items.map(function (item) {
           return item.id;
         });
+        _this9.selected.stockItemsQty = response.data.stock_items.map(function (_ref) {
+          var id = _ref.id,
+              pivot = _ref.pivot;
+          return {
+            id: id,
+            quantity: pivot.quantity
+          };
+        });
 
         if (response.data.gallery) {
           _this9.filepond_gallery_edit = response.data.gallery.map(function (element) {
