@@ -196,6 +196,8 @@
             LatestBalancePrice(stockItem) {
                 if(stockItem.balances.length) {
                     let rub = stockItem.balances[stockItem.balances.length - 1].pre_rub
+                    if(rub == 0) { rub = 1 }
+                    
                     let usd = stockItem.balances[stockItem.balances.length - 1].pre_usd * this.usd.kurs
                     return Math.ceil((rub + usd) / 50) * 50
                 }
