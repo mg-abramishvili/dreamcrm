@@ -139,7 +139,6 @@
                 return selectedStockItems.map(stockItem => stockItem.balances[stockItem.balances.length - 1].pre_usd * this.selected.stockItemsQty.find(q => q.id == stockItem.id).quantity).reduce((a, b) => parseInt(a) + parseInt(b), 0)
             },
             price() {
-                console.log(this.priceRub, this.priceUsd, this.priceUsd * this.usd.kurs)
                 return Math.ceil((this.priceRub + (this.priceUsd * this.usd.kurs)) / 50) * 50
             },
         },
@@ -199,7 +198,7 @@
             LatestBalancePrice(stockItem) {
                 if(stockItem.balances && stockItem.balances.length > 0) {
                     let rub = parseInt(stockItem.balances[stockItem.balances.length - 1].pre_rub)
-                    let usd = parseInt(stockItem.balances[stockItem.balances.length - 1].pre_usd) * parseInt(this.usd.kurs)
+                    let usd = parseInt(stockItem.balances[stockItem.balances.length - 1].pre_usd) * this.usd.kurs
                     
                     return Math.ceil((rub + usd) / 50) * 50
                 }
