@@ -174,7 +174,7 @@
                 this.selected.boxes = []
             },
             LatestBalancePrice(stockItem) {
-                if(stockItem.balances.length) {
+                if(stockItem.balances.length > 0) {
                     let rub = stockItem.balances[stockItem.balances.length - 1].pre_rub
                     let usd = stockItem.balances[stockItem.balances.length - 1].pre_usd * this.usd.kurs
                     return Math.ceil((rub + usd) / 50) * 50
