@@ -135,4 +135,27 @@ class CatalogBoxController extends Controller
         
         $box->delete();
     }
+
+    public function updatePrices()
+    {
+        $kurs = Dollar::find(1)->kurs;
+
+        if(!$kurs) {
+            return;
+        }
+
+        $boxes = CatalogBox::all();
+
+        foreach ($boxes as $box) {
+            $rub = $box->pre_rub;
+            $usd = $box->pre_usd * $kurs;
+            $usd = $box->pre_usd * $kurs;
+
+            $box->price = ceil(($usd + $rub) / 50) * 50;
+            
+            $box->save();
+
+            return 'OK';
+        }       
+    }
 }

@@ -216,9 +216,6 @@
                 if (!this.name) {
                     this.errors.push('Укажите название');
                 }
-                if (!this.price) {
-                    this.errors.push('Укажите цену');
-                }
                 if (!this.selected.category) {
                     this.errors.push('Укажите категорию');
                 }

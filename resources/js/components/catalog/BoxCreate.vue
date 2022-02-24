@@ -344,9 +344,6 @@
                 if (!this.name) {
                     this.errors.push('Укажите название');
                 }
-                if (!this.price) {
-                    this.errors.push('Укажите цену');
-                }
                 if (!this.selected.types.length) {
                     this.errors.push('Укажите тип');
                 }

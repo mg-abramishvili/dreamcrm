@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CatalogItem;
+use App\Models\Dollar;
 use Illuminate\Http\Request;
 
 class CatalogItemController extends Controller
@@ -90,20 +91,23 @@ class CatalogItemController extends Controller
 
     public function updatePrices()
     {
-        $kurs = 0;
-        $currencies = simplexml_load_file("http://www.cbr.ru/scripts/XML_daily.asp");
-        foreach ($currencies->Valute as $currency) {
-            if ($currency["ID"] == 'R01235') {
-                $kurs = round(str_replace(',','.',$currency->Value), 2);
-            }
+        $kurs = Dollar::find(1)->kurs;
+
+        if(!$kurs) {
+            return;
         }
 
-        if($kurs && $kurs > 0) {
-            $elements = CatalogItem::get();
-            foreach ($elements as $element) {
-                $element->price = ceil((($element->pre_usd * $kurs) + $element->pre_rub) / 50) * 50;
-                $element->save();
-            }
-        }        
+        $items = CatalogItem::all();
+
+        foreach ($items as $item) {
+            $rub = $item->pre_rub;
+            $usd = $item->pre_usd * $kurs;
+
+            $item->price = ceil(($usd + $rub) / 50) * 50;
+            
+            $item->save();
+
+            return 'OK';
+        }       
     }
 }

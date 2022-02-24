@@ -3545,10 +3545,6 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
         this.errors.push('Укажите название');
       }
 
-      if (!this.price) {
-        this.errors.push('Укажите цену');
-      }
-
       if (!this.selected.types.length) {
         this.errors.push('Укажите тип');
       }
@@ -4051,10 +4047,6 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
 
       if (!this.name) {
         this.errors.push('Укажите название');
-      }
-
-      if (!this.price) {
-        this.errors.push('Укажите цену');
       }
 
       if (!this.selected.types.length) {
@@ -4972,10 +4964,6 @@ __webpack_require__.r(__webpack_exports__);
         this.errors.push('Укажите название');
       }
 
-      if (!this.price) {
-        this.errors.push('Укажите цену');
-      }
-
       if (!this.selected.category) {
         this.errors.push('Укажите категорию');
       }
@@ -5280,10 +5268,6 @@ __webpack_require__.r(__webpack_exports__);
 
       if (!this.name) {
         this.errors.push('Укажите название');
-      }
-
-      if (!this.price) {
-        this.errors.push('Укажите цену');
       }
 
       if (!this.selected.category) {
