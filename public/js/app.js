@@ -59231,7 +59231,7 @@ var render = function () {
                                 ],
                                 staticClass:
                                   "form-control form-control-mini-number",
-                                attrs: { type: "number" },
+                                attrs: { type: "number", min: "0" },
                                 domProps: {
                                   value: _vm.selected.stockItemsQty.find(
                                     function (q) {
@@ -60040,7 +60040,7 @@ var render = function () {
                                 ],
                                 staticClass:
                                   "form-control form-control-mini-number",
-                                attrs: { type: "number" },
+                                attrs: { type: "number", min: "0" },
                                 domProps: {
                                   value: _vm.selected.stockItemsQty.find(
                                     function (q) {
@@ -61856,7 +61856,7 @@ var render = function () {
                                 ],
                                 staticClass:
                                   "form-control form-control-mini-number",
-                                attrs: { type: "number" },
+                                attrs: { type: "number", min: "0" },
                                 domProps: {
                                   value: _vm.selected.stockItemsQty.find(
                                     function (q) {
@@ -62399,7 +62399,7 @@ var render = function () {
                                 ],
                                 staticClass:
                                   "form-control form-control-mini-number",
-                                attrs: { type: "number" },
+                                attrs: { type: "number", min: "0" },
                                 domProps: {
                                   value: _vm.selected.stockItemsQty.find(
                                     function (q) {

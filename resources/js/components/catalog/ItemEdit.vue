@@ -64,7 +64,7 @@
                                     </label>
                                 </div>
                                 <div>
-                                    <input v-if="selected.stockItems.includes(stockItem.id)" v-model="selected.stockItemsQty.find(q => q.id == stockItem.id).quantity" type="number" class="form-control form-control-mini-number">
+                                    <input v-if="selected.stockItems.includes(stockItem.id)" v-model="selected.stockItemsQty.find(q => q.id == stockItem.id).quantity" type="number" min="0" class="form-control form-control-mini-number">
                                 </div>
                             </div>
                         </div>
