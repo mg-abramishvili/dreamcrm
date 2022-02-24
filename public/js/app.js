@@ -4920,6 +4920,18 @@ __webpack_require__.r(__webpack_exports__);
         return Math.ceil((rub + usd) / 50) * 50;
       }
     },
+    selectedStockItems: function selectedStockItems(id) {
+      if (event.target.checked) {
+        this.selected.stockItemsQty.push({
+          id: id,
+          quantity: 1
+        });
+      } else {
+        this.selected.stockItemsQty = this.selected.stockItemsQty.filter(function (qty) {
+          return qty.id !== id;
+        });
+      }
+    },
     middleBalancePrice: function middleBalancePrice(stockItem) {
       if (stockItem.balances.length) {
         return stockItem.balances.map(function (a) {

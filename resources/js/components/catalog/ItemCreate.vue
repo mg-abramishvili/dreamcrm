@@ -191,6 +191,13 @@
                     return Math.ceil((rub + usd) / 50) * 50
                 }
             },
+            selectedStockItems(id) {
+                if(event.target.checked) {
+                    this.selected.stockItemsQty.push({id: id, quantity: 1})
+                } else {
+                    this.selected.stockItemsQty = this.selected.stockItemsQty.filter(qty => qty.id !== id)
+                }
+            },
             middleBalancePrice(stockItem) {
                 if(stockItem.balances.length) {
                     return stockItem.balances.map(a => a.price).reduce((a, b) => (parseInt(a) + parseInt(b))) / stockItem.balances.map(a => a.price).length
