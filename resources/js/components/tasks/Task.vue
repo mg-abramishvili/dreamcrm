@@ -147,8 +147,8 @@
             },
             markNotificationsAsRead(id) {
                 axios.put(`/api/notification/${id}/update`, {
-                is_read: true,
-            })
+                    is_read: true,
+                })
             },
             closeModal() {
                 this.$parent.views.modals.openTask = false
