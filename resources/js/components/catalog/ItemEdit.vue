@@ -197,10 +197,9 @@
             },
             LatestBalancePrice(stockItem) {
                 if(stockItem.balances && stockItem.balances.length > 0) {
-                    let rub = stockItem.balances[stockItem.balances.length - 1].pre_rub
-                    if(rub == 0) { rub = 1 }
-
+                    let rub = parseInt(stockItem.balances[stockItem.balances.length - 1].pre_rub)
                     let usd = parseInt(stockItem.balances[stockItem.balances.length - 1].pre_usd) * parseInt(this.usd.kurs)
+                    
                     return Math.ceil((rub + usd) / 50) * 50
                 }
             },
