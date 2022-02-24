@@ -3915,7 +3915,7 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
       }, 0);
     },
     stockItemsPrice: function stockItemsPrice() {
-      return this.priceRub + this.priceUsd * this.usd.kurs;
+      return Math.ceil((this.priceRub + this.priceUsd * this.usd.kurs) / 50) * 50;
     },
     sborka: function sborka() {
       return this.sborkaDays * (this.sborkaPersons * parseInt(this.sborkaTarif.person) + parseInt(this.sborkaTarif.arenda));

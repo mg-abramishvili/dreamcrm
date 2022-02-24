@@ -274,7 +274,7 @@
                 return selectedStockItems.map(stockItem => stockItem.balances[stockItem.balances.length - 1].pre_usd * this.selected.stockItemsQty.find(q => q.id == stockItem.id).quantity).reduce((a, b) => parseInt(a) + parseInt(b), 0)
             },
             stockItemsPrice() {
-                return this.priceRub + (this.priceUsd * this.usd.kurs)
+                return Math.ceil((this.priceRub + (this.priceUsd * this.usd.kurs)) / 50) * 50
             },
             sborka() {
 
