@@ -58,13 +58,13 @@
                         <div class="form-control" style="height: 180px; overflow-y: auto;">
                             <div v-for="stockItem in stockItemsFiltered" :key="'stock_item_' + stockItem.id" class="form-check form-check-flex">
                                 <div>
-                                    <input v-model="selected.stockItems" :id="'stock_item_' + stockItem.id" :value="stockItem.id" class="form-check-input" type="checkbox">
+                                    <input v-model="selected.stockItems" @change="selectedStockItems(stockItem.id, $event)" :id="'stock_item_' + stockItem.id" :value="stockItem.id" class="form-check-input" type="checkbox">
                                     <label class="form-check-label" :for="'stock_item_' + stockItem.id">
                                         {{ stockItem.name }} - {{ LatestBalancePrice(stockItem) | currency }} ₽
                                     </label>
                                 </div>
                                 <div>
-                                    <input v-if="selected.stockItems.includes(stockItem.id)" type="number" class="form-control form-control-mini-number">
+                                    <input v-if="selected.stockItems.includes(stockItem.id)" v-model="selected.stockItemsQty.find(q => q.id == stockItem.id).quantity" type="number" class="form-control form-control-mini-number">
                                 </div>
                             </div>
                         </div>
@@ -97,6 +97,7 @@
                     category: '',
                     boxes: [],
                     stockItems: [],
+                    stockItemsQty: [],
                 },
                 
                 categories: [],
@@ -105,6 +106,11 @@
 
                 stockSearchInput: '',
                 boxSearchInput: '',
+
+                usd: {
+                    kurs: '',
+                    date: '',
+                },
 
                 errors: [],
             }
@@ -120,19 +126,36 @@
                     return stockItem.name.toLowerCase().includes(this.stockSearchInput.toLowerCase())
                 })
             },
-            price() {
+            priceRub() {
                 let selectedStockItems = this.stockItems.filter(stockItem => this.selected.stockItems.includes(stockItem.id))
 
-                return selectedStockItems.map(stockItem => stockItem.balances[stockItem.balances.length - 1].price).reduce((a, b) => parseInt(a) + parseInt(b), 0)
-            }
+                return selectedStockItems.map(stockItem => stockItem.balances[stockItem.balances.length - 1].pre_rub * this.selected.stockItemsQty.find(q => q.id == stockItem.id).quantity).reduce((a, b) => parseInt(a) + parseInt(b), 0)
+            },
+            priceUsd() {
+                let selectedStockItems = this.stockItems.filter(stockItem => this.selected.stockItems.includes(stockItem.id))
+
+                return selectedStockItems.map(stockItem => stockItem.balances[stockItem.balances.length - 1].pre_usd * this.selected.stockItemsQty.find(q => q.id == stockItem.id).quantity).reduce((a, b) => parseInt(a) + parseInt(b), 0)
+            },
+            price() {
+                return Math.ceil((this.priceRub + (this.priceUsd * this.usd.kurs)) / 50) * 50
+            },
         },
         created() {
+            this.loadUsd()
             this.loadCategories()
             this.loadBoxes()
             this.loadStockItems()
             this.loadItem()
         },
         methods: {
+            loadUsd() {
+                axios
+                .get('/api/usd')
+                .then((response => {
+                    this.usd.kurs = response.data.kurs,
+                    this.usd.date = response.data.date
+                }))
+            },
             loadCategories() {
                 axios.get('/api/catalog/categories')
                     .then((response => {
@@ -161,6 +184,7 @@
 
                         this.selected.boxes = response.data.boxes.map(box => box.id)
                         this.selected.stockItems = response.data.stock_items.map(item => item.id)
+                        this.selected.stockItemsQty = response.data.stock_items.map(({id, quantity}) => ({id: id, quantity: 1}))
                     }))
             },
             selectAllBoxes() {
@@ -171,7 +195,16 @@
             },
             LatestBalancePrice(stockItem) {
                 if(stockItem.balances.length) {
-                    return stockItem.balances[stockItem.balances.length - 1].price
+                    let rub = stockItem.balances[stockItem.balances.length - 1].pre_rub
+                    let usd = stockItem.balances[stockItem.balances.length - 1].pre_usd * this.usd.kurs
+                    return Math.ceil((rub + usd) / 50) * 50
+                }
+            },
+            selectedStockItems(id) {
+                if(event.target.checked) {
+                    this.selected.stockItemsQty.push({id: id, quantity: 1})
+                } else {
+                    this.selected.stockItemsQty = this.selected.stockItemsQty.filter(qty => qty.id !== id)
                 }
             },
             save(id) {
