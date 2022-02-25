@@ -106,8 +106,6 @@ class CatalogItemController extends Controller
             $item->price = ceil(($usd + $rub) / 50) * 50;
             
             $item->save();
-
-            return 'OK';
         }       
     }
 }
