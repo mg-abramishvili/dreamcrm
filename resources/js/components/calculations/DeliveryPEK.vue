@@ -73,7 +73,7 @@
                 ax_params['deliver[town]'] = `${this.selected.code}`
 
                 axios
-                    .get('http://calc.pecom.ru/bitrix/components/pecom/calc/ajax.php', {
+                    .get('https://calc.pecom.ru/bitrix/components/pecom/calc/ajax.php', {
                         params: ax_params
                     })
                     .then(response => (

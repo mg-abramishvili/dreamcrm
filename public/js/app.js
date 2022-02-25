@@ -3155,7 +3155,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
       ax_params['take[town]'] = '-463';
       ax_params['deliver[town]'] = "".concat(this.selected.code);
-      axios.get('http://calc.pecom.ru/bitrix/components/pecom/calc/ajax.php', {
+      axios.get('https://calc.pecom.ru/bitrix/components/pecom/calc/ajax.php', {
         params: ax_params
       }).then(function (response) {
         return _this3.selected.price = response.data.auto[2], _this3.$parent.selected.delivery.price = response.data.auto[2].toFixed(0), _this3.$parent.selected.delivery.directionFrom = response.data.region_from.BranchName, _this3.$parent.selected.delivery.directionTo = response.data.region_to.BranchName, _this3.$parent.selected.delivery.days = response.data.periods_days, _this3.loading = false;
