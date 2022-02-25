@@ -225,6 +225,8 @@
                 {
                     name: this.name,
                     price: this.price,
+                    pre_rub: this.priceRub,
+                    pre_usd: this.priceUsd,
                     category_id: this.selected.category,
                     stock_items: this.selected.stockItemsQty,
                     boxes: this.selected.boxes,

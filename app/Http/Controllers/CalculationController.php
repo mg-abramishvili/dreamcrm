@@ -20,10 +20,11 @@ class CalculationController extends Controller
     public function store(Request $request)
     {
         $calculation = new Calculation();
+        $calculation->pre_rub = $request->pre_rub;
+        $calculation->pre_usd = $request->pre_usd;
         $calculation->price = $request->price;
         $calculation->quantity = $request->quantity;
-        $calculation->production_days = 30;
-        $calculation->type_id = $request->type;
+        $calculation->catalog_type_id = $request->type;
         $calculation->user_id = $request->user;
         $calculation->save();
 

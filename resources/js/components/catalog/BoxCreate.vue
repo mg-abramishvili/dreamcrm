@@ -381,6 +381,8 @@
                     sborka: this.sborka,
                     marzha: this.marzha,
                     price: this.price,
+                    pre_rub: this.priceRub,
+                    pre_usd: this.priceUsd,
                     types: this.selected.types,
                     stock_items: this.selected.stockItemsQty,
                     length: this.length,

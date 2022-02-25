@@ -2866,6 +2866,15 @@ __webpack_require__.r(__webpack_exports__);
       });
       return categoryItemsFiltered;
     },
+    prevCategory: function prevCategory(category) {
+      var index = this.categories.indexOf(category);
+
+      if (index > 0 && index < this.categories.length + 1) {
+        this.views.categoryCurrent = this.categories[index - 1].id;
+      } else {
+        this.viewBoxes();
+      }
+    },
     nextCategory: function nextCategory(category) {
       var index = this.categories.indexOf(category);
       var nextCategory = this.categories[index + 1];
@@ -2949,6 +2958,33 @@ __webpack_require__.r(__webpack_exports__);
       this.views.quantity = false;
       this.views.delivery = true;
       this.views.saveButton = true;
+    },
+    saveCalculation: function saveCalculation() {
+      var _this9 = this;
+
+      if (!this.selected.delivery.id) {
+        alert('Выберите доставку');
+        return;
+      }
+
+      if (this.selected.delivery.id == 3 && this.selected.delivery.price <= 0) {
+        alert('Укажите город доставки');
+        return;
+      }
+
+      axios.post("/api/calculations", {
+        type: this.selected.type.id,
+        box: this.selected.box,
+        catalog_items: this.selected.catalogItems,
+        quantity: this.quantity,
+        price: this.price,
+        delivery: this.selected.delivery,
+        user: this.$parent.user.id
+      }).then(function (response) {
+        return _this9.$router.push({
+          name: 'Calculations'
+        });
+      });
     }
   },
   components: {
@@ -3585,6 +3621,8 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
         sborka: this.sborka,
         marzha: this.marzha,
         price: this.price,
+        pre_rub: this.priceRub,
+        pre_usd: this.priceUsd,
         types: this.selected.types,
         stock_items: this.selected.stockItemsQty,
         length: this.length,
@@ -3635,8 +3673,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var filepond_plugin_file_validate_type__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(filepond_plugin_file_validate_type__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var filepond_plugin_image_preview__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! filepond-plugin-image-preview */ "./node_modules/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js");
 /* harmony import */ var filepond_plugin_image_preview__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(filepond_plugin_image_preview__WEBPACK_IMPORTED_MODULE_5__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -4040,8 +4076,7 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
       }
     },
     save: function save(id) {
-      var _this10 = this,
-          _axios$put;
+      var _this10 = this;
 
       this.errors = [];
 
@@ -4082,14 +4117,26 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
         });
       }
 
-      axios.put("/api/catalog/box/".concat(id, "/update"), (_axios$put = {
+      axios.put("/api/catalog/box/".concat(id, "/update"), {
         name: this.name,
         sborka_days: this.sborkaDays,
         sborka_persons: this.sborkaPersons,
         sborka: this.sborka,
         marzha: this.marzha,
-        price: this.priceRub
-      }, _defineProperty(_axios$put, "price", this.priceUsd), _defineProperty(_axios$put, "price", this.price), _defineProperty(_axios$put, "types", this.selected.types), _defineProperty(_axios$put, "stock_items", this.selected.stockItemsQty), _defineProperty(_axios$put, "length", this.length), _defineProperty(_axios$put, "width", this.width), _defineProperty(_axios$put, "height", this.height), _defineProperty(_axios$put, "weight", this.weight), _defineProperty(_axios$put, "description", this.description), _defineProperty(_axios$put, "manager_description", this.manager_description), _defineProperty(_axios$put, "comment", this.comment), _defineProperty(_axios$put, "gallery", this.gallery), _axios$put)).then(function (response) {
+        price: this.price,
+        pre_rub: this.priceRub,
+        pre_usd: this.priceUsd,
+        types: this.selected.types,
+        stock_items: this.selected.stockItemsQty,
+        length: this.length,
+        width: this.width,
+        height: this.height,
+        weight: this.weight,
+        description: this.description,
+        manager_description: this.manager_description,
+        comment: this.comment,
+        gallery: this.gallery
+      }).then(function (response) {
         return _this10.$router.push({
           name: 'CatalogBoxes'
         });
@@ -4979,6 +5026,8 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/api/catalog/items', {
         name: this.name,
         price: this.price,
+        pre_rub: this.priceRub,
+        pre_usd: this.priceUsd,
         category_id: this.selected.category,
         stock_items: this.selected.stockItemsQty,
         boxes: this.selected.boxes

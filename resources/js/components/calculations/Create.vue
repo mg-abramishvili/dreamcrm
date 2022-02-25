@@ -321,6 +321,14 @@
 
                 return categoryItemsFiltered
             },
+            prevCategory(category) {
+                var index = this.categories.indexOf(category)
+                if(index > 0 && index < this.categories.length + 1) {
+                    this.views.categoryCurrent = this.categories[index - 1].id
+                } else {
+                    this.viewBoxes()
+                }
+            },
             nextCategory(category) {
                 let index = this.categories.indexOf(category)
                 let nextCategory = this.categories[index + 1]
@@ -397,6 +405,31 @@
                 this.views.delivery = true
                 this.views.saveButton = true
             },
+            saveCalculation() {
+                if(!this.selected.delivery.id) {
+                    alert('Выберите доставку')
+                    return
+                }
+
+                if(this.selected.delivery.id == 3 && this.selected.delivery.price <= 0) {
+                    alert('Укажите город доставки')
+                    return
+                }
+
+                axios
+                .post(`/api/calculations`, {
+                    type: this.selected.type.id,
+                    box: this.selected.box,
+                    catalog_items: this.selected.catalogItems,
+                    quantity: this.quantity,
+                    price: this.price,
+                    delivery: this.selected.delivery,
+                    user: this.$parent.user.id,
+                })
+                .then(response => (
+                    this.$router.push({name: 'Calculations'})
+                ))
+            }
         },
         components: {
             Loader,
