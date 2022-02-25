@@ -24,7 +24,7 @@
                             <div class="flex-grow-1">
                                 <template v-if="usd.date && usd.kurs">
                                     <p class="mb-3 lh-1">Курс доллара ({{ usd.date | dateMini }})</p>
-                                    <h3 class="mb-0 lh-1">{{ usd.kurs }} ₽</h3>
+                                    <h3 class="mb-0 lh-1 illustration-text">{{ usd.kurs }} ₽</h3>
                                 </template>
                                 <Loader v-else></Loader>
                             </div>

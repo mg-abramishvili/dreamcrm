@@ -57121,9 +57121,11 @@ var render = function () {
                           ),
                         ]),
                         _vm._v(" "),
-                        _c("h3", { staticClass: "mb-0 lh-1" }, [
-                          _vm._v(_vm._s(_vm.usd.kurs) + " ₽"),
-                        ]),
+                        _c(
+                          "h3",
+                          { staticClass: "mb-0 lh-1 illustration-text" },
+                          [_vm._v(_vm._s(_vm.usd.kurs) + " ₽")]
+                        ),
                       ]
                     : _c("Loader"),
                 ],
@@ -57400,8 +57402,7 @@ var render = function () {
                     _c(
                       "svg",
                       {
-                        staticClass:
-                          "feather feather-monitor align-middle me-2",
+                        staticClass: "feather feather-monitor align-middle",
                         attrs: {
                           xmlns: "http://www.w3.org/2000/svg",
                           width: "24",
@@ -57460,8 +57461,7 @@ var render = function () {
                     _c(
                       "svg",
                       {
-                        staticClass:
-                          "feather feather-package align-middle me-2",
+                        staticClass: "feather feather-package align-middle",
                         attrs: {
                           xmlns: "http://www.w3.org/2000/svg",
                           width: "24",
@@ -57523,8 +57523,7 @@ var render = function () {
                     _c(
                       "svg",
                       {
-                        staticClass:
-                          "feather feather-briefcase align-middle me-2",
+                        staticClass: "feather feather-briefcase align-middle",
                         attrs: {
                           xmlns: "http://www.w3.org/2000/svg",
                           width: "24",
@@ -58845,78 +58844,71 @@ var render = function () {
       ),
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-body pt-1" }, [
-        _c(
-          "table",
-          {
-            staticClass:
-              "table table-striped table-hover dataTable no-footer dtr-inline",
-          },
-          [
-            _vm._m(1),
-            _vm._v(" "),
-            _c(
-              "tbody",
-              _vm._l(_vm.calculations, function (calculation) {
-                return _c(
-                  "tr",
-                  {
-                    key: calculation.id,
-                    on: {
-                      click: function ($event) {
-                        return _vm.goTo(calculation.id)
-                      },
+    _c("div", { staticClass: "card card-bordered" }, [
+      _c("div", { staticClass: "card-body p-0" }, [
+        _c("table", { staticClass: "table table-hover dataTable" }, [
+          _vm._m(1),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.calculations, function (calculation) {
+              return _c(
+                "tr",
+                {
+                  key: calculation.id,
+                  on: {
+                    click: function ($event) {
+                      return _vm.goTo(calculation.id)
                     },
                   },
-                  [
-                    _c("td", { staticClass: "align-middle" }, [
-                      _vm._v(
-                        "\n                            " +
-                          _vm._s(_vm._f("date")(calculation.created_at)) +
-                          "\n                        "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "align-middle" }, [
-                      _vm._v(
-                        "\n                            Расчет №" +
-                          _vm._s(calculation.id) +
-                          "\n                        "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "td",
-                      { staticClass: "align-middle" },
-                      [
-                        _vm._l(calculation.boxes, function (box) {
-                          return [
-                            _vm._v(
-                              "\n                                " +
-                                _vm._s(box.name) +
-                                "\n                            "
-                            ),
-                          ]
-                        }),
-                      ],
-                      2
+                },
+                [
+                  _c("td", { staticClass: "align-middle" }, [
+                    _vm._v(
+                      "\n                            " +
+                        _vm._s(_vm._f("date")(calculation.created_at)) +
+                        "\n                        "
                     ),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "align-middle" }, [
-                      _vm._v(
-                        "\n                            " +
-                          _vm._s(calculation.user.name) +
-                          "\n                        "
-                      ),
-                    ]),
-                  ]
-                )
-              }),
-              0
-            ),
-          ]
-        ),
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "align-middle" }, [
+                    _vm._v(
+                      "\n                            Расчет №" +
+                        _vm._s(calculation.id) +
+                        "\n                        "
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    { staticClass: "align-middle" },
+                    [
+                      _vm._l(calculation.boxes, function (box) {
+                        return [
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(box.name) +
+                              "\n                            "
+                          ),
+                        ]
+                      }),
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "align-middle" }, [
+                    _vm._v(
+                      "\n                            " +
+                        _vm._s(calculation.user.name) +
+                        "\n                        "
+                    ),
+                  ]),
+                ]
+              )
+            }),
+            0
+          ),
+        ]),
       ]),
     ]),
   ])
@@ -61329,7 +61321,7 @@ var render = function () {
           "div",
           { staticClass: "row" },
           [
-            _c("div", { staticClass: "col-12 col-lg-6" }, [
+            _c("div", { staticClass: "col-12 col-lg-4" }, [
               _c("div", { staticClass: "card" }, [
                 _c(
                   "div",
@@ -61381,7 +61373,7 @@ var render = function () {
                 "div",
                 {
                   key: "category_" + category.id,
-                  staticClass: "col-12 col-lg-6",
+                  staticClass: "col-12 col-lg-4",
                 },
                 [
                   _c("div", { staticClass: "card" }, [
@@ -68189,7 +68181,6 @@ var render = function () {
                                   class: {
                                     "bg-success text-white":
                                       task.status == "completed",
-                                    "bg-light": task.status == "active",
                                   },
                                   staticStyle: { "white-space": "normal" },
                                 },

@@ -14,7 +14,7 @@
         </div>
 
         <div class="row">
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-4">
                 <div class="card">
                     <div class="card-body p-0">
                         <router-link :to="{name: 'CatalogBoxes'}" class="p-4">
@@ -25,7 +25,7 @@
                 </div>
             </div>
 
-            <div v-for="category in categories" :key="'category_' + category.id" class="col-12 col-lg-6">
+            <div v-for="category in categories" :key="'category_' + category.id" class="col-12 col-lg-4">
                 <div class="card">
                     <div class="card-body p-0">
                         <router-link :to="{name: 'CatalogCategory', params: {id: category.id}}" class="p-4">

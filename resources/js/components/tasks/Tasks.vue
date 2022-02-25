@@ -41,7 +41,7 @@
                     
                     <draggable v-model="column.tasks" group="tasks" :move="detectMove" @change="moveTask($event, column)" :disabled="views.draggable == false" class="task-column-body">
                         <div @click="openTask(task)" v-for="task in column.tasks" :key="task.id" class="card m-0" style="box-shadow: none;">
-                            <div class="card-body cursor-pointer p-3" :class="{ 'bg-success text-white': task.status == 'completed', 'bg-light': task.status == 'active' }" style="white-space:normal">
+                            <div class="card-body cursor-pointer p-3" :class="{ 'bg-success text-white': task.status == 'completed' }" style="white-space:normal">
                                 <p>
                                     {{ task.name }}
                                     <span v-if="task.notifications.length" class="badge rounded-pill bg-danger">{{ task.notifications.length }}</span>

@@ -9,9 +9,9 @@
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-body pt-1">
-                <table class="table table-striped table-hover dataTable no-footer dtr-inline">
+        <div class="card card-bordered">
+            <div class="card-body p-0">
+                <table class="table table-hover dataTable">
                     <thead>
                         <tr>
                             <th>Дата расчета</th>

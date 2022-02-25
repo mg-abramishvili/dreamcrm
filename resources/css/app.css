@@ -7,6 +7,8 @@ html {
 body {
     font-size: 16px;
     overflow-y: auto;
+    background-color: #F7F6F4;
+    color: #1E2538 !important;
 }
 
 .modal-open {
@@ -14,7 +16,7 @@ body {
 }
 
 .content {
-    padding: 1.5rem 2.5rem;
+    padding: 0;
 }
 
 .input-group {
@@ -37,8 +39,17 @@ body {
 /* SIDEBAR */
 .sidebar {
     position: fixed;
-    height: 100vh;
-    overflow-y: auto;
+    height: calc(100% - 40px);
+    background-color: #fff !important;
+    border-radius: 20px;
+    top: 20px;
+    left: 20px;
+    min-width: auto;
+    max-width: none;
+    width: 120px;
+}
+.sidebar-content {
+    background: transparent !important;
 }
 .sidebar-brand a img {
     width: 30px;
@@ -57,7 +68,6 @@ body {
     color: #fff;
     font-weight: 500;
     text-align: center;
-    margin-top: 20px;
 }
 .sidebar-user a {
     display: block;
@@ -81,6 +91,37 @@ body {
 .badge-sidebar-secondary {
     top: 15px;
 }
+.sidebar-item {
+    margin-bottom: 10px;
+}
+.sidebar-link,
+a.sidebar-link {
+    color: #73757a !important;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+}
+.sidebar-link:hover,
+a.sidebar-link:hover,
+.sidebar-link:focus,
+a.sidebar-link:focus {
+    color: #fd7b38 !important;
+}
+.sidebar-link svg,
+a.sidebar-link svg {
+    color: #73757a !important;
+    width: 20px;
+    height: 20px;
+    margin: 0 auto;
+    display: block;
+}
+.sidebar-link:hover svg,
+a.sidebar-link:hover svg,
+.sidebar-link:focus svg,
+a.sidebar-link:focus svg {
+    color: #fd7b38 !important;
+}
 /* SIDEBAR */
 
 
@@ -89,6 +130,72 @@ body {
     right: 0;
 }
 /* NAVBER */
+
+.card {
+    box-shadow: none !important;
+    border-radius: 12px;
+}
+
+.row {
+    margin-left: -10px;
+    margin-right: -10px;
+    width: 100%;
+}
+.row>* {
+    padding-right: 10px;
+    padding-left: 10px;
+}
+.table-striped>tbody>tr:nth-of-type(odd) {
+    --bs-table-accent-bg: #f7f6f4;
+    background-color: #f7f6f4;
+}
+
+.table tbody,
+.table td,
+.table tfoot,
+.table th,
+.table thead,
+.table tr,
+.table>:not(:last-child)>:last-child>* {
+    border-color: #eeeae1;
+}
+
+.table tr:last-child td {
+    border: 0 !important;
+}
+
+.table {
+    font-size: 0.9rem;
+    color: #1E2538;
+}
+.table th {
+    font-size: 0.8rem;
+}
+table.dataTable {
+    margin: 0 !important;
+}
+.table-hover>tbody>tr:hover {
+    --bs-table-accent-bg: #f7f6f4;
+    color: #1E2538;
+}
+
+.btn-primary {
+    background-color: #fd7b38;
+    border-color: #fd7b38;
+}
+.illustration-text {
+    color: #fd7b38;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    color: #1E2538;
+}
+
+
+.card-bordered {
+    border: 1px solid #eeeae1;
+}
+
 
 .catalog-page h1 {
     display: flex;
@@ -144,28 +251,8 @@ body {
 }
 
 .main {
-    margin-left: 260px;
+    margin-left: 160px;
 }
-
-
-/* TABLE */
-.table {
-    margin-bottom: 0;
-    font-size: 0.9rem;
-}
-.table th {
-    font-size: 0.8rem;
-}
-.table .rounded-circle {
-    width: 30px;
-    height: 30px;
-}
-table.dataTable {
-    margin: 0;
-}
-/* TABLE */
-
-
 
 /* CALCULATION */
 .calculation-left-block-main-label {
@@ -289,11 +376,11 @@ table.dataTable {
     margin: 0 2.5rem;
 }
 .tasks-page-board::-webkit-scrollbar-thumb {
-    background: #3f80ea;
+    background: #fd7b38;
     border-radius: 5px;
 }
 .tasks-page-board::-webkit-scrollbar-thumb:hover {
-    background: #3f80ea;
+    background: #fd7b38;
 }
 .tasks-page-board .task-column {
     display: inline-block;
@@ -336,7 +423,8 @@ table.dataTable {
 .tasks-page-board .task-column-body .card-body {
     border-radius: 6px;
     border: 0;
-    box-shadow: 0 1.5px 0 rgba(0,0,0,0.25);
+    box-shadow: 0 1.5px 0 rgba(0,0,0,0.15);
+    background-color: #e6f7fb;
 }
 .sortable-ghost {
     transform: rotate(4deg) !important;
