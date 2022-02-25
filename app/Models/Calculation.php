@@ -11,7 +11,7 @@ class Calculation extends Model
 
     public function type()
     {
-        return $this->belongsTo(Type::class, 'catalog_type_id');
+        return $this->belongsTo(CatalogType::class, 'catalog_type_id');
     }
 
     public function boxes()
@@ -26,7 +26,7 @@ class Calculation extends Model
 
     public function delivery()
     {
-        return $this->belongsToMany(Delivery::class)->withPivot(['direction_from', 'direction_to', 'days', 'price']);
+        return $this->belongsToMany(CalculationDelivery::class, 'calculation__calculation_delivery')->withPivot(['direction_from', 'direction_to', 'days', 'price']);
     }
 
     public function user()
@@ -36,6 +36,6 @@ class Calculation extends Model
 
     public function offers()
     {
-        return $this->belongsToMany(Offer::class);
+        return $this->belongsToMany(Offer::class, 'calculation__offer');
     }
 }

@@ -217,6 +217,8 @@
                             category[1].forEach((i) => {
                                 if(i.id != null) {
                                     i.price = parseInt(this.catalogItems.filter(item => item.id == i.id)[0].price)
+                                    i.pre_rub = parseInt(this.catalogItems.filter(item => item.id == i.id)[0].pre_rub)
+                                    i.pre_usd = parseInt(this.catalogItems.filter(item => item.id == i.id)[0].pre_usd)
                                 }
                             })
                         }
@@ -225,6 +227,28 @@
             }
         },
         computed: {
+            pricePreRub() {
+                if(this.selected.box && this.selected.box.id > 0) {
+                    var price = []
+                    for (const category of Object.entries(this.selected.catalogItems)) {
+                        category[1].forEach((el) => {
+                            price.push(el.pre_rub)
+                        })
+                    }
+                    return parseInt(this.selected.box.pre_rub) + parseInt(this.selected.box.sborka) + parseInt(this.selected.box.marzha) + price.reduce((a, b) => a + b, 0)
+                }
+            },
+            pricePreUsd() {
+                if(this.selected.box && this.selected.box.id > 0) {
+                    var price = []
+                    for (const category of Object.entries(this.selected.catalogItems)) {
+                        category[1].forEach((el) => {
+                            price.push(el.pre_usd)
+                        })
+                    }
+                    return parseInt(this.selected.box.pre_usd) + price.reduce((a, b) => a + b, 0)
+                }
+            },
             price() {
                 if(this.selected.box && this.selected.box.id > 0) {
                     var price = []
@@ -292,7 +316,18 @@
                 
             },
             resetCatalogItems() {
-
+                for (const category of Object.entries(this.selected.catalogItems)) {
+                    if(category[1] && category[1].length > 0) {
+                        category[1].forEach((i) => {
+                            i.id = null,
+                            i.price = 0,
+                            i.pre_rub = 0,
+                            i.pre_usd = 0
+                        })
+                    }
+                }
+                this.quantity = 1
+                this.resetDelivery()
             },
             addCatalogItem(categorySlug) {
                 let checkEmpty = this.selected.catalogItems[categorySlug].filter(item => item.id === null)
@@ -301,7 +336,9 @@
                 }
                 this.selected.catalogItems[categorySlug].push({
                     id: null,
-                    price: 0
+                    price: 0,
+                    pre_rub: 0,
+                    pre_usd: 0
                 })
             },
             deleteCatalogItem(itemID, categorySlug) {

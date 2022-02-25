@@ -31,11 +31,11 @@
                             <td>{{ box.name }}</td>
                             <td class="text-end">{{ box.pivot.price | currency }} ₽</td>
                         </tr>
-                        <template v-for="element in calculation.elements">
-                        <tr v-if="element.pivot.price > 0">
-                            <td>{{ element.category.name }}</td>
-                            <td>{{ element.name }}</td>
-                            <td class="text-end">{{ element.pivot.price | currency }} ₽</td>
+                        <template v-for="item in calculation.catalog_items">
+                        <tr v-if="item.pivot.price > 0">
+                            <td>{{ item.category.name }}</td>
+                            <td>{{ item.name }}</td>
+                            <td class="text-end">{{ item.pivot.price | currency }} ₽</td>
                         </tr>
                         </template>
                         <tr style="border-width:2px;">
@@ -91,8 +91,8 @@
         },
         computed: {
             price() {
-                if(this.calculation.boxes && this.calculation.boxes[0] && this.calculation.boxes[0].price && this.calculation && this.calculation.elements && this.calculation.elements.length > 0) {
-                    return parseInt(this.calculation.boxes[0].pivot.price) + this.calculation.elements.reduce((a, b) => a + parseInt(b.pivot.price), 0)
+                if(this.calculation.boxes && this.calculation.boxes[0] && this.calculation.boxes[0].price && this.calculation && this.calculation.catalog_items && this.calculation.catalog_items.length > 0) {
+                    return parseInt(this.calculation.boxes[0].pivot.price) + this.calculation.catalog_items.reduce((a, b) => a + parseInt(b.pivot.price), 0)
                 }
             },
             priceTotal() {

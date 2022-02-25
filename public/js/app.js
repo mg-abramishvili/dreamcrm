@@ -2488,8 +2488,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     price: function price() {
-      if (this.calculation.boxes && this.calculation.boxes[0] && this.calculation.boxes[0].price && this.calculation && this.calculation.elements && this.calculation.elements.length > 0) {
-        return parseInt(this.calculation.boxes[0].pivot.price) + this.calculation.elements.reduce(function (a, b) {
+      if (this.calculation.boxes && this.calculation.boxes[0] && this.calculation.boxes[0].price && this.calculation && this.calculation.catalog_items && this.calculation.catalog_items.length > 0) {
+        return parseInt(this.calculation.boxes[0].pivot.price) + this.calculation.catalog_items.reduce(function (a, b) {
           return a + parseInt(b.pivot.price);
         }, 0);
       }
@@ -2751,6 +2751,12 @@ __webpack_require__.r(__webpack_exports__);
                 i.price = parseInt(_this.catalogItems.filter(function (item) {
                   return item.id == i.id;
                 })[0].price);
+                i.pre_rub = parseInt(_this.catalogItems.filter(function (item) {
+                  return item.id == i.id;
+                })[0].pre_rub);
+                i.pre_usd = parseInt(_this.catalogItems.filter(function (item) {
+                  return item.id == i.id;
+                })[0].pre_usd);
               }
             });
           }
@@ -2759,12 +2765,44 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   computed: {
-    price: function price() {
+    pricePreRub: function pricePreRub() {
       if (this.selected.box && this.selected.box.id > 0) {
         var price = [];
 
         for (var _i2 = 0, _Object$entries2 = Object.entries(this.selected.catalogItems); _i2 < _Object$entries2.length; _i2++) {
           var category = _Object$entries2[_i2];
+          category[1].forEach(function (el) {
+            price.push(el.pre_rub);
+          });
+        }
+
+        return parseInt(this.selected.box.pre_rub) + parseInt(this.selected.box.sborka) + parseInt(this.selected.box.marzha) + price.reduce(function (a, b) {
+          return a + b;
+        }, 0);
+      }
+    },
+    pricePreUsd: function pricePreUsd() {
+      if (this.selected.box && this.selected.box.id > 0) {
+        var price = [];
+
+        for (var _i3 = 0, _Object$entries3 = Object.entries(this.selected.catalogItems); _i3 < _Object$entries3.length; _i3++) {
+          var category = _Object$entries3[_i3];
+          category[1].forEach(function (el) {
+            price.push(el.pre_usd);
+          });
+        }
+
+        return parseInt(this.selected.box.pre_usd) + price.reduce(function (a, b) {
+          return a + b;
+        }, 0);
+      }
+    },
+    price: function price() {
+      if (this.selected.box && this.selected.box.id > 0) {
+        var price = [];
+
+        for (var _i4 = 0, _Object$entries4 = Object.entries(this.selected.catalogItems); _i4 < _Object$entries4.length; _i4++) {
+          var category = _Object$entries4[_i4];
           category[1].forEach(function (el) {
             price.push(el.price);
           });
@@ -2828,7 +2866,20 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
-    resetCatalogItems: function resetCatalogItems() {},
+    resetCatalogItems: function resetCatalogItems() {
+      for (var _i5 = 0, _Object$entries5 = Object.entries(this.selected.catalogItems); _i5 < _Object$entries5.length; _i5++) {
+        var category = _Object$entries5[_i5];
+
+        if (category[1] && category[1].length > 0) {
+          category[1].forEach(function (i) {
+            i.id = null, i.price = 0, i.pre_rub = 0, i.pre_usd = 0;
+          });
+        }
+      }
+
+      this.quantity = 1;
+      this.resetDelivery();
+    },
     addCatalogItem: function addCatalogItem(categorySlug) {
       var checkEmpty = this.selected.catalogItems[categorySlug].filter(function (item) {
         return item.id === null;
@@ -2840,7 +2891,9 @@ __webpack_require__.r(__webpack_exports__);
 
       this.selected.catalogItems[categorySlug].push({
         id: null,
-        price: 0
+        price: 0,
+        pre_rub: 0,
+        pre_usd: 0
       });
     },
     deleteCatalogItem: function deleteCatalogItem(itemID, categorySlug) {
@@ -57633,19 +57686,18 @@ var render = function () {
                       ])
                     }),
                     _vm._v(" "),
-                    _vm._l(_vm.calculation.elements, function (element) {
+                    _vm._l(_vm.calculation.catalog_items, function (item) {
                       return [
-                        element.pivot.price > 0
+                        item.pivot.price > 0
                           ? _c("tr", [
-                              _c("td", [_vm._v(_vm._s(element.category.name))]),
+                              _c("td", [_vm._v(_vm._s(item.category.name))]),
                               _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(element.name))]),
+                              _c("td", [_vm._v(_vm._s(item.name))]),
                               _vm._v(" "),
                               _c("td", { staticClass: "text-end" }, [
                                 _vm._v(
-                                  _vm._s(
-                                    _vm._f("currency")(element.pivot.price)
-                                  ) + " ₽"
+                                  _vm._s(_vm._f("currency")(item.pivot.price)) +
+                                    " ₽"
                                 ),
                               ]),
                             ])

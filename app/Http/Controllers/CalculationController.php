@@ -14,7 +14,7 @@ class CalculationController extends Controller
 
     public function calculation($id)
     {
-        return Calculation::with('type', 'boxes', 'elements.category', 'delivery', 'user', 'offers')->find($id);
+        return Calculation::with('type', 'boxes', 'catalogItems.category', 'delivery', 'user', 'offers')->find($id);
     }
 
     public function store(Request $request)
@@ -36,14 +36,14 @@ class CalculationController extends Controller
             'price' => $request->box['price'],
         ]);
 
-        foreach($request->elements as $key => $elements)
+        foreach($request->catalog_items as $key => $items)
         {
-            foreach($elements as $element)
+            foreach($items as $item)
             {
-                $calculation->elements()->attach($element['id'], [
-                    'price' => $element['price'],
-                    'pre_rub' => $element['pre_rub'],
-                    'pre_usd' => $element['pre_usd'],
+                $calculation->catalogItems()->attach($item['id'], [
+                    'price' => $item['price'],
+                    'pre_rub' => $item['pre_rub'],
+                    'pre_usd' => $item['pre_usd'],
                 ]);
             }
         }
