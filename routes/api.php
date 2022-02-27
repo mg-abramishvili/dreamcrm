@@ -14,6 +14,8 @@ use App\Http\Controllers\CatalogSborkaController;
 use App\Http\Controllers\CalculationController;
 use App\Http\Controllers\CalculationDeliveryController;
 
+use App\Http\Controllers\ProjectController;
+
 use App\Http\Controllers\OfferController;
 
 use App\Http\Controllers\TaskController;
@@ -92,6 +94,10 @@ Route::post('calculations', [CalculationController::class, 'store']);
 Route::get('offers', [OfferController::class, 'index']);
 Route::get('offer/{id}', [OfferController::class, 'offer']);
 Route::get('offer/{id}/pdf', [OfferController::class, 'offerPDF']);
+
+
+
+Route::get('projects', [ProjectController::class, 'index']);
 
 
 

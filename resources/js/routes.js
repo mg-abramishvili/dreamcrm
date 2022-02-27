@@ -21,6 +21,8 @@ import CalculationCreate from './components/calculations/Create.vue';
 import Offers from './components/offers/Offers.vue';
 import Offer from './components/offers/Offer.vue';
 
+import Projects from './components/projects/Index.vue';
+
 import Tasks from './components/tasks/Tasks.vue';
 
 import Clients from './components/clients/Clients.vue';
@@ -135,6 +137,11 @@ export const routes = [
         path: '/offer/:id',
         name: 'Offer',
         component: Offer
+    },
+    {
+        path: '/projects',
+        name: 'Projects',
+        component: Projects
     },
     {
         path: '/tasks/:board_id?',

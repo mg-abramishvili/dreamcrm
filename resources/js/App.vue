@@ -1,14 +1,12 @@
 <template>
-	<div v-if="views.loading == false">
-		<div v-if="authenticated == true" class="wrapper">
+	<div v-if="views.loading == false" class="wrapper">
+		<template v-if="authenticated == true">
 			<Sidebar :class="{ collapsed: views.sidebar === false }" />
 
 			<div class="main">
-				<main class="content">
-					<router-view :key="$route.path" />
-				</main>
+				<router-view :key="$route.path" />
 			</div>
-		</div>
+		</template>
 
 		<div v-if="authenticated == false" id="auth_form" class="main d-flex justify-content-center w-100" style="margin-left: 0;">
 			<main class="content d-flex p-0">

@@ -24,7 +24,7 @@
             <div class="card-body">
                 
                 
-                <table class="table table-striped table-hover dataTable no-footer dtr-inline">
+                <table class="table dataTable">
                     <tbody>
                         <tr v-for="box in calculation.boxes">
                             <td>Корпус</td>
