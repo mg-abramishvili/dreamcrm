@@ -2255,7 +2255,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -2400,6 +2399,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3181,6 +3189,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
 //
 //
 //
@@ -57303,7 +57315,7 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "home-page" }, [
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-12 col-sm-6 col-xxl-3 d-flex" }, [
         _c("div", { staticClass: "card flex-fill" }, [
@@ -57914,29 +57926,70 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "row align-items-center mb-4" }, [
-      _c("div", { staticClass: "col-12 col-lg-6" }, [
-        _c("h1", { staticClass: "h3 m-0" }, [
-          _vm._v(
-            "\n                Расчет №" +
-              _vm._s(_vm.calculation.id) +
-              " от " +
-              _vm._s(
-                _vm
-                  .moment(_vm.calculation.created_at)
-                  .utcOffset(180)
-                  .format("DD.MM.YYYY HH:mm")
-              ) +
-              "\n            "
-          ),
+  return _c("div", { staticClass: "calculations-page" }, [
+    _c("div", { staticClass: "card card-bordered" }, [
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "row align-items-center" }, [
+          _c("div", { staticClass: "col-12 col-lg-6" }, [
+            _c(
+              "h1",
+              { staticClass: "h3 m-0" },
+              [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "back-arrow",
+                    attrs: { to: { name: "Calculations" } },
+                  },
+                  [
+                    _c(
+                      "svg",
+                      {
+                        staticClass:
+                          "feather feather-arrow-left align-middle me-2",
+                        attrs: {
+                          xmlns: "http://www.w3.org/2000/svg",
+                          width: "24",
+                          height: "24",
+                          viewBox: "0 0 24 24",
+                          fill: "none",
+                          stroke: "currentColor",
+                          "stroke-width": "2",
+                          "stroke-linecap": "round",
+                          "stroke-linejoin": "round",
+                        },
+                      },
+                      [
+                        _c("line", {
+                          attrs: { x1: "19", y1: "12", x2: "5", y2: "12" },
+                        }),
+                        _c("polyline", {
+                          attrs: { points: "12 19 5 12 12 5" },
+                        }),
+                      ]
+                    ),
+                  ]
+                ),
+                _vm._v(" "),
+                _c("strong", [
+                  _vm._v(
+                    "\n                            Расчет №" +
+                      _vm._s(_vm.calculation.id) +
+                      " от " +
+                      _vm._s(
+                        _vm
+                          .moment(_vm.calculation.created_at)
+                          .utcOffset(180)
+                          .format("DD.MM.YYYY HH:mm")
+                      ) +
+                      "\n                            "
+                  ),
+                ]),
+              ],
+              1
+            ),
+          ]),
         ]),
-        _vm._v(" "),
-        _vm.calculation.user
-          ? _c("span", { staticClass: "text-sm" }, [
-              _vm._v("автор: " + _vm._s(_vm.calculation.user.name)),
-            ])
-          : _vm._e(),
       ]),
     ]),
     _vm._v(" "),
@@ -59098,25 +59151,29 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "row align-items-center mb-4" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-12 col-lg-6 text-end" },
-        [
+  return _c("div", { staticClass: "calculations-page" }, [
+    _c("div", { staticClass: "card card-bordered" }, [
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "row align-items-center" }, [
+          _vm._m(0),
+          _vm._v(" "),
           _c(
-            "router-link",
-            {
-              staticClass: "btn btn-primary",
-              attrs: { to: { name: "CalculationCreate" } },
-            },
-            [_vm._v("Создать")]
+            "div",
+            { staticClass: "col-12 col-lg-6 text-end" },
+            [
+              _c(
+                "router-link",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { to: { name: "CalculationCreate" } },
+                },
+                [_vm._v("Новый расчет")]
+              ),
+            ],
+            1
           ),
-        ],
-        1
-      ),
+        ]),
+      ]),
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "card card-bordered" }, [

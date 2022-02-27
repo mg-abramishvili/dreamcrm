@@ -1,23 +1,32 @@
 <template>
-    <div>
-        <div class="row align-items-center mb-4">
-            <div class="col-12 col-lg-6">
-                <h1 class="h3 m-0">
-                    Расчет №{{ calculation.id }} от {{moment(calculation.created_at).utcOffset(180).format('DD.MM.YYYY HH:mm')}}
-                </h1>    
-                <span v-if="calculation.user" class="text-sm">автор: {{ calculation.user.name }}</span>
+    <div class="calculations-page">
+        <div class="card card-bordered">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-12 col-lg-6">
+                        <h1 class="h3 m-0">
+                            <router-link :to="{name: 'Calculations'}" class="back-arrow">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left align-middle me-2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                            </router-link>
+                            <strong>
+                                Расчет №{{ calculation.id }} от {{moment(calculation.created_at).utcOffset(180).format('DD.MM.YYYY HH:mm')}}
+                                <!-- <span v-if="calculation.user" class="text-sm">автор: {{ calculation.user.name }}</span> -->
+                            </strong>
+                        </h1>    
+                    </div>
+                    <!-- <div class="col-12 col-lg-6 text-end">
+                        <template v-if="calculation.offers && calculation.offers.length">
+                            <div class="text-sm">У расчета есть КП: </div>
+                            <template v-for="offer in calculation.offers">
+                                <router-link :to="{name: 'Offer', params: {id: offer.id}}" class="btn btn-outline-primary">КП №{{offer.id}} от {{ offer.created_at | formatDate }}</router-link>
+                            </template>
+                        </template>
+                        <template v-if="calculation.offers && calculation.offers.length == 0">
+                            <router-link :to="{name: 'OfferCreate', params: {calculation_id: calculation.id}}" class="btn btn-primary">Создать КП из расчета</router-link>
+                        </template>
+                    </div> -->
+                </div>
             </div>
-            <!-- <div class="col-12 col-lg-6 text-end">
-                <template v-if="calculation.offers && calculation.offers.length">
-                    <div class="text-sm">У расчета есть КП: </div>
-                    <template v-for="offer in calculation.offers">
-                        <router-link :to="{name: 'Offer', params: {id: offer.id}}" class="btn btn-outline-primary">КП №{{offer.id}} от {{ offer.created_at | formatDate }}</router-link>
-                    </template>
-                </template>
-                <template v-if="calculation.offers && calculation.offers.length == 0">
-                    <router-link :to="{name: 'OfferCreate', params: {calculation_id: calculation.id}}" class="btn btn-primary">Создать КП из расчета</router-link>
-                </template>
-            </div> -->
         </div>
 
         <div v-if="calculation && calculation.id > 0" class="card">

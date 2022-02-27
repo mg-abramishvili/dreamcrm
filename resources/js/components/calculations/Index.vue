@@ -1,11 +1,15 @@
 <template>
-    <div>
-        <div class="row align-items-center mb-4">
-            <div class="col-12 col-lg-6">
-                <h1 class="h3 m-0">Расчеты</h1>
-            </div>
-            <div class="col-12 col-lg-6 text-end">
-                <router-link :to="{name: 'CalculationCreate'}" class="btn btn-primary">Создать</router-link>
+    <div class="calculations-page">
+        <div class="card card-bordered">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-12 col-lg-6">
+                        <h1 class="h3 m-0">Расчеты</h1>
+                    </div>
+                    <div class="col-12 col-lg-6 text-end">
+                        <router-link :to="{name: 'CalculationCreate'}" class="btn btn-primary">Новый расчет</router-link>
+                    </div>
+                </div>
             </div>
         </div>
 

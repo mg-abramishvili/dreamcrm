@@ -246,10 +246,26 @@ table.dataTable {
 }
 
 
-.catalog-page h1 {
+.calculations-page,
+.home-page {
+    margin-top: 20px;
+}
+
+
+.catalog-page h1,
+.calculations-page h1 {
     display: flex;
     align-items: center;
     line-height: 1;
+}
+
+.back-arrow {
+    display: flex;
+    color: #fd7b38;
+}
+
+.font-weight-bold, b, strong {
+    color: #1E2538;
 }
 
 .catalog-page .card a {
@@ -301,6 +317,7 @@ table.dataTable {
 
 .main {
     margin-left: 160px;
+    width: calc(100% - 180px);
 }
 
 /* CALCULATION */
