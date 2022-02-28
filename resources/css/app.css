@@ -142,7 +142,6 @@ a.sidebar-link:focus svg,
 .row {
     margin-left: -10px;
     margin-right: -10px;
-    width: 100%;
 }
 .row>* {
     padding-right: 10px;
@@ -211,7 +210,10 @@ table.dataTable {
 
 
 .calculations-page,
-.home-page {
+.home-page,
+.projects-page,
+.clients-page,
+.catalog-page {
     margin-top: 20px;
 }
 
@@ -232,33 +234,28 @@ table.dataTable {
     color: #1E2538;
 }
 
-.catalog-page .card a {
+.catalog-page .catalog-list-item {
     display: flex;
     align-items: center;
     font-size: 16px;
     font-weight: 500;
-    color: #495057;
+    color: #1E2538;
     text-decoration: none;
     height: 74px;
 }
-.catalog-page .card a:hover,
-.catalog-page .card a:focus {
-    color: #3f80ea;
+.catalog-page .catalog-list-item:hover,
+.catalog-page .catalog-list-item:focus {
+    color: #fd7b38;
 }
-.catalog-page .card a svg {
+.catalog-page .catalog-list-item svg {
     width: 24px;
     height: 24px;
     margin-right: 15px;
-    color: #3f80ea;
+    color: #fd7b38;
 }
 
-.catalog-page .card a span {
+.catalog-page .catalog-list-item span {
     width: calc(100% - 24px);
-}
-
-.catalog-page .card .table tr td a {
-    font-weight: 400;
-    height: auto;
 }
 
 .catalog-page-search-icon {

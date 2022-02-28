@@ -1,12 +1,16 @@
 <template>
-    <div>
-        <div class="row align-items-center mb-4">
-            <div class="col-12 col-lg-6">
-                <h1 class="h3 m-0">Проекты</h1>
+    <div class="projects-page">
+        <div class="card card-bordered">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-12 col-lg-6">
+                        <h1 class="h3 m-0">Проекты</h1>
+                    </div>
+                    <!-- <div class="col-12 col-lg-6 text-end">
+                        <router-link :to="{name: 'ProjectCreate'}" class="btn btn-primary">Создать</router-link>
+                    </div> -->
+                </div>
             </div>
-            <!-- <div class="col-12 col-lg-6 text-end">
-                <router-link :to="{name: 'ProjectCreate'}" class="btn btn-primary">Создать</router-link>
-            </div> -->
         </div>
 
         <div class="card card-bordered">

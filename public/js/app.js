@@ -4255,6 +4255,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _Loader_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Loader.vue */ "./resources/js/components/Loader.vue");
 //
 //
 //
@@ -4297,6 +4298,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -4322,6 +4329,9 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     }
+  },
+  components: {
+    Loader: _Loader_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
 });
 
@@ -4338,6 +4348,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _Loader_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Loader.vue */ "./resources/js/components/Loader.vue");
 //
 //
 //
@@ -4383,6 +4394,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -4408,6 +4425,9 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     }
+  },
+  components: {
+    Loader: _Loader_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
 });
 
@@ -4749,6 +4769,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Loader_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Loader.vue */ "./resources/js/components/Loader.vue");
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5464,6 +5492,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
 //
 //
 //
@@ -6567,6 +6599,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
 //
 //
 //
@@ -60918,101 +60954,124 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "catalog-page" }, [
-    _c("div", { staticClass: "row align-items-center mb-4" }, [
-      _c("div", { staticClass: "col-12 col-lg-6" }, [
-        _c(
-          "h1",
-          { staticClass: "h3 m-0" },
-          [
-            _c("router-link", { attrs: { to: { name: "Catalog" } } }, [
+  return _c(
+    "div",
+    { staticClass: "catalog-page" },
+    [
+      _c("div", { staticClass: "card card-bordered" }, [
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "row align-items-center" }, [
+            _c("div", { staticClass: "col-12 col-lg-6" }, [
               _c(
-                "svg",
-                {
-                  staticClass: "feather feather-arrow-left align-middle me-2",
-                  attrs: {
-                    xmlns: "http://www.w3.org/2000/svg",
-                    width: "24",
-                    height: "24",
-                    viewBox: "0 0 24 24",
-                    fill: "none",
-                    stroke: "currentColor",
-                    "stroke-width": "2",
-                    "stroke-linecap": "round",
-                    "stroke-linejoin": "round",
-                  },
-                },
+                "h1",
+                { staticClass: "h3 m-0" },
                 [
-                  _c("line", {
-                    attrs: { x1: "19", y1: "12", x2: "5", y2: "12" },
-                  }),
-                  _c("polyline", { attrs: { points: "12 19 5 12 12 5" } }),
-                ]
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "back-arrow",
+                      attrs: { to: { name: "Catalog" } },
+                    },
+                    [
+                      _c(
+                        "svg",
+                        {
+                          staticClass:
+                            "feather feather-arrow-left align-middle me-2",
+                          attrs: {
+                            xmlns: "http://www.w3.org/2000/svg",
+                            width: "24",
+                            height: "24",
+                            viewBox: "0 0 24 24",
+                            fill: "none",
+                            stroke: "currentColor",
+                            "stroke-width": "2",
+                            "stroke-linecap": "round",
+                            "stroke-linejoin": "round",
+                          },
+                        },
+                        [
+                          _c("line", {
+                            attrs: { x1: "19", y1: "12", x2: "5", y2: "12" },
+                          }),
+                          _c("polyline", {
+                            attrs: { points: "12 19 5 12 12 5" },
+                          }),
+                        ]
+                      ),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("strong", [
+                    _vm._v(
+                      "\n                            Корпуса\n                        "
+                    ),
+                  ]),
+                ],
+                1
               ),
             ]),
             _vm._v(" "),
-            _c("strong", [
-              _vm._v("\n                    Корпуса\n                "),
-            ]),
-          ],
-          1
-        ),
+            _c(
+              "div",
+              { staticClass: "col-12 col-lg-6 text-end" },
+              [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { to: { name: "CatalogBoxCreate" } },
+                  },
+                  [_vm._v("Добавить")]
+                ),
+              ],
+              1
+            ),
+          ]),
+        ]),
       ]),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-12 col-lg-6 text-end" },
-        [
-          _c(
-            "router-link",
-            {
-              staticClass: "btn btn-primary",
-              attrs: { to: { name: "CatalogBoxCreate" } },
-            },
-            [_vm._v("Добавить")]
-          ),
-        ],
-        1
-      ),
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "card" }, [
-      _c("table", { staticClass: "table" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c(
-          "tbody",
-          _vm._l(_vm.boxes, function (box) {
-            return _c(
-              "tr",
-              {
-                key: "box_" + box.id,
-                on: {
-                  click: function ($event) {
-                    return _vm.goTo(box.id)
-                  },
-                },
-              },
-              [
-                _c("td", { staticClass: "align-middle" }, [
-                  _c("a", [_vm._v(_vm._s(box.name))]),
-                ]),
-                _vm._v(" "),
-                _c("td", { staticClass: "align-middle" }, [
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(_vm._f("currency")(box.price)) +
-                      " ₽\n                    "
-                  ),
-                ]),
-              ]
-            )
-          }),
-          0
-        ),
-      ]),
-    ]),
-  ])
+      _vm.boxes.length
+        ? _c("div", { staticClass: "card" }, [
+            _c("table", { staticClass: "table" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.boxes, function (box) {
+                  return _c(
+                    "tr",
+                    {
+                      key: "box_" + box.id,
+                      on: {
+                        click: function ($event) {
+                          return _vm.goTo(box.id)
+                        },
+                      },
+                    },
+                    [
+                      _c("td", { staticClass: "align-middle" }, [
+                        _c("a", [_vm._v(_vm._s(box.name))]),
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "align-middle" }, [
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(_vm._f("currency")(box.price)) +
+                            " ₽\n                    "
+                        ),
+                      ]),
+                    ]
+                  )
+                }),
+                0
+              ),
+            ]),
+          ])
+        : _c("Loader"),
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function () {
@@ -61050,158 +61109,176 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.category.name && _vm.category.name.length > 0
-    ? _c("div", { staticClass: "catalog-page" }, [
-        _c("div", { staticClass: "row align-items-center mb-4" }, [
-          _c("div", { staticClass: "col-12 col-lg-6" }, [
-            _c(
-              "h1",
-              { staticClass: "h3 m-0" },
-              [
-                _c("router-link", { attrs: { to: { name: "Catalog" } } }, [
+  return _c(
+    "div",
+    { staticClass: "catalog-page" },
+    [
+      _c("div", { staticClass: "card card-bordered" }, [
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "row align-items-center" }, [
+            _c("div", { staticClass: "col-12 col-lg-6" }, [
+              _c(
+                "h1",
+                { staticClass: "h3 m-0" },
+                [
                   _c(
-                    "svg",
+                    "router-link",
                     {
-                      staticClass:
-                        "feather feather-arrow-left align-middle me-2",
+                      staticClass: "back-button",
+                      attrs: { to: { name: "Catalog" } },
+                    },
+                    [
+                      _c(
+                        "svg",
+                        {
+                          staticClass:
+                            "feather feather-arrow-left align-middle me-2",
+                          attrs: {
+                            xmlns: "http://www.w3.org/2000/svg",
+                            width: "24",
+                            height: "24",
+                            viewBox: "0 0 24 24",
+                            fill: "none",
+                            stroke: "currentColor",
+                            "stroke-width": "2",
+                            "stroke-linecap": "round",
+                            "stroke-linejoin": "round",
+                          },
+                        },
+                        [
+                          _c("line", {
+                            attrs: { x1: "19", y1: "12", x2: "5", y2: "12" },
+                          }),
+                          _c("polyline", {
+                            attrs: { points: "12 19 5 12 12 5" },
+                          }),
+                        ]
+                      ),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("strong", [
+                    _vm._v(
+                      "\n                            " +
+                        _vm._s(_vm.category.name) +
+                        "\n                        "
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "btn btn-sm ms-1",
+                      staticStyle: { opacity: "0.5" },
                       attrs: {
-                        xmlns: "http://www.w3.org/2000/svg",
-                        width: "24",
-                        height: "24",
-                        viewBox: "0 0 24 24",
-                        fill: "none",
-                        stroke: "currentColor",
-                        "stroke-width": "2",
-                        "stroke-linecap": "round",
-                        "stroke-linejoin": "round",
+                        to: {
+                          name: "CatalogCategoryEdit",
+                          params: { id: _vm.$route.params.id },
+                        },
                       },
                     },
                     [
-                      _c("line", {
-                        attrs: { x1: "19", y1: "12", x2: "5", y2: "12" },
-                      }),
-                      _c("polyline", { attrs: { points: "12 19 5 12 12 5" } }),
+                      _c(
+                        "svg",
+                        {
+                          staticClass: "feather feather-edit align-middle",
+                          attrs: {
+                            xmlns: "http://www.w3.org/2000/svg",
+                            width: "24",
+                            height: "24",
+                            viewBox: "0 0 24 24",
+                            fill: "none",
+                            stroke: "currentColor",
+                            "stroke-width": "2",
+                            "stroke-linecap": "round",
+                            "stroke-linejoin": "round",
+                          },
+                        },
+                        [
+                          _c("path", {
+                            attrs: {
+                              d: "M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7",
+                            },
+                          }),
+                          _c("path", {
+                            attrs: {
+                              d: "M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z",
+                            },
+                          }),
+                        ]
+                      ),
                     ]
                   ),
-                ]),
-                _vm._v(" "),
-                _c("strong", [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(_vm.category.name) +
-                      "\n                "
-                  ),
-                ]),
-                _vm._v(" "),
+                ],
+                1
+              ),
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-12 col-lg-6 text-end" },
+              [
                 _c(
                   "router-link",
                   {
-                    staticClass: "btn btn-sm ms-1",
-                    staticStyle: { opacity: "0.5" },
+                    staticClass: "btn btn-primary",
                     attrs: {
                       to: {
-                        name: "CatalogCategoryEdit",
-                        params: { id: _vm.$route.params.id },
+                        name: "CatalogItemCreate",
+                        params: { category_id: _vm.category.id },
                       },
                     },
                   },
-                  [
-                    _c(
-                      "svg",
-                      {
-                        staticClass: "feather feather-edit align-middle",
-                        attrs: {
-                          xmlns: "http://www.w3.org/2000/svg",
-                          width: "24",
-                          height: "24",
-                          viewBox: "0 0 24 24",
-                          fill: "none",
-                          stroke: "currentColor",
-                          "stroke-width": "2",
-                          "stroke-linecap": "round",
-                          "stroke-linejoin": "round",
-                        },
-                      },
-                      [
-                        _c("path", {
-                          attrs: {
-                            d: "M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7",
-                          },
-                        }),
-                        _c("path", {
-                          attrs: {
-                            d: "M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z",
-                          },
-                        }),
-                      ]
-                    ),
-                  ]
+                  [_vm._v("Добавить")]
                 ),
               ],
               1
             ),
           ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "col-12 col-lg-6 text-end" },
-            [
-              _c(
-                "router-link",
-                {
-                  staticClass: "btn btn-primary",
-                  attrs: {
-                    to: {
-                      name: "CatalogItemCreate",
-                      params: { category_id: _vm.category.id },
-                    },
-                  },
-                },
-                [_vm._v("Добавить")]
-              ),
-            ],
-            1
-          ),
         ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card" }, [
-          _c("table", { staticClass: "table" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c(
-              "tbody",
-              _vm._l(_vm.category.items, function (item) {
-                return _c(
-                  "tr",
-                  {
-                    key: "item_" + item.id,
-                    on: {
-                      click: function ($event) {
-                        return _vm.goTo(item.id)
+      ]),
+      _vm._v(" "),
+      _vm.category.items && _vm.category.items.length
+        ? _c("div", { staticClass: "card" }, [
+            _c("table", { staticClass: "table" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.category.items, function (item) {
+                  return _c(
+                    "tr",
+                    {
+                      key: "item_" + item.id,
+                      on: {
+                        click: function ($event) {
+                          return _vm.goTo(item.id)
+                        },
                       },
                     },
-                  },
-                  [
-                    _c("td", { staticClass: "align-middle" }, [
-                      _c("a", [_vm._v(_vm._s(item.name))]),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "align-middle" }, [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(_vm._f("currency")(item.price)) +
-                          " ₽\n                    "
-                      ),
-                    ]),
-                  ]
-                )
-              }),
-              0
-            ),
-          ]),
-        ]),
-      ])
-    : _vm._e()
+                    [
+                      _c("td", { staticClass: "align-middle" }, [
+                        _c("a", [_vm._v(_vm._s(item.name))]),
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "align-middle" }, [
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(_vm._f("currency")(item.price)) +
+                            " ₽\n                    "
+                        ),
+                      ]),
+                    ]
+                  )
+                }),
+                0
+              ),
+            ]),
+          ])
+        : _c("Loader"),
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function () {
@@ -61585,129 +61662,91 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.views.loading == false
-    ? _c("div", { staticClass: "catalog-page" }, [
-        _c("div", { staticClass: "row align-items-center mb-4" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "col-12 col-lg-6 text-end" },
-            [
+  return _c(
+    "div",
+    { staticClass: "catalog-page" },
+    [
+      _c("div", { staticClass: "card card-bordered" }, [
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "row align-items-center" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-12 col-lg-6 text-end" }, [
               _c(
-                "router-link",
-                {
-                  staticClass: "catalog-page-search-icon",
-                  attrs: { to: { name: "CatalogSearch" } },
-                },
+                "div",
                 [
                   _c(
-                    "svg",
+                    "router-link",
                     {
-                      staticClass: "feather feather-search align-middle",
-                      attrs: {
-                        xmlns: "http://www.w3.org/2000/svg",
-                        width: "24",
-                        height: "24",
-                        viewBox: "0 0 24 24",
-                        fill: "none",
-                        stroke: "currentColor",
-                        "stroke-width": "2",
-                        "stroke-linecap": "round",
-                        "stroke-linejoin": "round",
-                      },
+                      staticClass: "catalog-page-search-icon",
+                      attrs: { to: { name: "CatalogSearch" } },
                     },
                     [
-                      _c("circle", { attrs: { cx: "11", cy: "11", r: "8" } }),
-                      _c("line", {
-                        attrs: { x1: "21", y1: "21", x2: "16.65", y2: "16.65" },
-                      }),
+                      _c(
+                        "svg",
+                        {
+                          staticClass: "feather feather-search align-middle",
+                          attrs: {
+                            xmlns: "http://www.w3.org/2000/svg",
+                            width: "24",
+                            height: "24",
+                            viewBox: "0 0 24 24",
+                            fill: "none",
+                            stroke: "currentColor",
+                            "stroke-width": "2",
+                            "stroke-linecap": "round",
+                            "stroke-linejoin": "round",
+                          },
+                        },
+                        [
+                          _c("circle", {
+                            attrs: { cx: "11", cy: "11", r: "8" },
+                          }),
+                          _c("line", {
+                            attrs: {
+                              x1: "21",
+                              y1: "21",
+                              x2: "16.65",
+                              y2: "16.65",
+                            },
+                          }),
+                        ]
+                      ),
                     ]
                   ),
-                ]
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { to: { name: "CatalogCategoryCreate" } },
+                    },
+                    [_vm._v("Создать категорию")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "btn btn-outline-primary",
+                      attrs: { to: { name: "CatalogTypes" } },
+                    },
+                    [_vm._v("Управление типами")]
+                  ),
+                ],
+                1
               ),
-              _vm._v(" "),
-              _c(
-                "router-link",
-                {
-                  staticClass: "btn btn-primary",
-                  attrs: { to: { name: "CatalogCategoryCreate" } },
-                },
-                [_vm._v("Создать категорию")]
-              ),
-              _vm._v(" "),
-              _c(
-                "router-link",
-                {
-                  staticClass: "btn btn-outline-primary",
-                  attrs: { to: { name: "CatalogTypes" } },
-                },
-                [_vm._v("Управление типами")]
-              ),
-            ],
-            1
-          ),
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "row" },
-          [
-            _c("div", { staticClass: "col-12 col-lg-4" }, [
-              _c("div", { staticClass: "card" }, [
-                _c(
-                  "div",
-                  { staticClass: "card-body p-0" },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "p-4",
-                        attrs: { to: { name: "CatalogBoxes" } },
-                      },
-                      [
-                        _c(
-                          "svg",
-                          {
-                            staticClass: "feather feather-folder align-middle",
-                            attrs: {
-                              xmlns: "http://www.w3.org/2000/svg",
-                              width: "24",
-                              height: "24",
-                              viewBox: "0 0 24 24",
-                              fill: "none",
-                              stroke: "currentColor",
-                              "stroke-width": "2",
-                              "stroke-linecap": "round",
-                              "stroke-linejoin": "round",
-                            },
-                          },
-                          [
-                            _c("path", {
-                              attrs: {
-                                d: "M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z",
-                              },
-                            }),
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c("span", [_vm._v("Корпуса")]),
-                      ]
-                    ),
-                  ],
-                  1
-                ),
-              ]),
             ]),
-            _vm._v(" "),
-            _vm._l(_vm.categories, function (category) {
-              return _c(
-                "div",
-                {
-                  key: "category_" + category.id,
-                  staticClass: "col-12 col-lg-4",
-                },
-                [
+          ]),
+        ]),
+      ]),
+      _vm._v(" "),
+      _vm.views.loading == false
+        ? [
+            _c(
+              "div",
+              { staticClass: "row" },
+              [
+                _c("div", { staticClass: "col-12 col-lg-4" }, [
                   _c("div", { staticClass: "card" }, [
                     _c(
                       "div",
@@ -61716,13 +61755,8 @@ var render = function () {
                         _c(
                           "router-link",
                           {
-                            staticClass: "p-4",
-                            attrs: {
-                              to: {
-                                name: "CatalogCategory",
-                                params: { id: category.id },
-                              },
-                            },
+                            staticClass: "catalog-list-item p-4",
+                            attrs: { to: { name: "CatalogBoxes" } },
                           },
                           [
                             _c(
@@ -61751,21 +61785,84 @@ var render = function () {
                               ]
                             ),
                             _vm._v(" "),
-                            _c("span", [_vm._v(_vm._s(category.name))]),
+                            _c("span", [_vm._v("Корпуса")]),
                           ]
                         ),
                       ],
                       1
                     ),
                   ]),
-                ]
-              )
-            }),
-          ],
-          2
-        ),
-      ])
-    : _c("div", [_c("Loader")], 1)
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.categories, function (category) {
+                  return _c(
+                    "div",
+                    {
+                      key: "category_" + category.id,
+                      staticClass: "col-12 col-lg-4",
+                    },
+                    [
+                      _c("div", { staticClass: "card" }, [
+                        _c(
+                          "div",
+                          { staticClass: "card-body p-0" },
+                          [
+                            _c(
+                              "router-link",
+                              {
+                                staticClass: "catalog-list-item p-4",
+                                attrs: {
+                                  to: {
+                                    name: "CatalogCategory",
+                                    params: { id: category.id },
+                                  },
+                                },
+                              },
+                              [
+                                _c(
+                                  "svg",
+                                  {
+                                    staticClass:
+                                      "feather feather-folder align-middle",
+                                    attrs: {
+                                      xmlns: "http://www.w3.org/2000/svg",
+                                      width: "24",
+                                      height: "24",
+                                      viewBox: "0 0 24 24",
+                                      fill: "none",
+                                      stroke: "currentColor",
+                                      "stroke-width": "2",
+                                      "stroke-linecap": "round",
+                                      "stroke-linejoin": "round",
+                                    },
+                                  },
+                                  [
+                                    _c("path", {
+                                      attrs: {
+                                        d: "M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z",
+                                      },
+                                    }),
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("span", [_vm._v(_vm._s(category.name))]),
+                              ]
+                            ),
+                          ],
+                          1
+                        ),
+                      ]),
+                    ]
+                  )
+                }),
+              ],
+              2
+            ),
+          ]
+        : [_c("Loader")],
+    ],
+    2
+  )
 }
 var staticRenderFns = [
   function () {
@@ -62930,46 +63027,60 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "catalog-page" }, [
-    _c("div", { staticClass: "row align-items-center mb-4" }, [
-      _c("div", { staticClass: "col-12 col-lg-6" }, [
-        _c(
-          "h1",
-          { staticClass: "h3 m-0" },
-          [
-            _c("router-link", { attrs: { to: { name: "Catalog" } } }, [
-              _c(
-                "svg",
-                {
-                  staticClass: "feather feather-arrow-left align-middle me-2",
-                  attrs: {
-                    xmlns: "http://www.w3.org/2000/svg",
-                    width: "24",
-                    height: "24",
-                    viewBox: "0 0 24 24",
-                    fill: "none",
-                    stroke: "currentColor",
-                    "stroke-width": "2",
-                    "stroke-linecap": "round",
-                    "stroke-linejoin": "round",
+    _c("div", { staticClass: "card card-bordered" }, [
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "row align-items-center" }, [
+          _c("div", { staticClass: "col-12 col-lg-6" }, [
+            _c(
+              "h1",
+              { staticClass: "h3 m-0" },
+              [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "back-arrow",
+                    attrs: { to: { name: "Catalog" } },
                   },
-                },
-                [
-                  _c("line", {
-                    attrs: { x1: "19", y1: "12", x2: "5", y2: "12" },
-                  }),
-                  _c("polyline", { attrs: { points: "12 19 5 12 12 5" } }),
-                ]
-              ),
-            ]),
-            _vm._v(" "),
-            _c("strong", [
-              _vm._v(
-                "\n                    Поиск по каталогу\n                "
-              ),
-            ]),
-          ],
-          1
-        ),
+                  [
+                    _c(
+                      "svg",
+                      {
+                        staticClass:
+                          "feather feather-arrow-left align-middle me-2",
+                        attrs: {
+                          xmlns: "http://www.w3.org/2000/svg",
+                          width: "24",
+                          height: "24",
+                          viewBox: "0 0 24 24",
+                          fill: "none",
+                          stroke: "currentColor",
+                          "stroke-width": "2",
+                          "stroke-linecap": "round",
+                          "stroke-linejoin": "round",
+                        },
+                      },
+                      [
+                        _c("line", {
+                          attrs: { x1: "19", y1: "12", x2: "5", y2: "12" },
+                        }),
+                        _c("polyline", {
+                          attrs: { points: "12 19 5 12 12 5" },
+                        }),
+                      ]
+                    ),
+                  ]
+                ),
+                _vm._v(" "),
+                _c("strong", [
+                  _vm._v(
+                    "\n                            Поиск по каталогу\n                        "
+                  ),
+                ]),
+              ],
+              1
+            ),
+          ]),
+        ]),
       ]),
     ]),
     _vm._v(" "),
@@ -64826,7 +64937,7 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "projects-page" }, [
     _vm._m(0),
     _vm._v(" "),
     _c("div", { staticClass: "card card-bordered" }, [
@@ -64874,9 +64985,13 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row align-items-center mb-4" }, [
-      _c("div", { staticClass: "col-12 col-lg-6" }, [
-        _c("h1", { staticClass: "h3 m-0" }, [_vm._v("Проекты")]),
+    return _c("div", { staticClass: "card card-bordered" }, [
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "row align-items-center" }, [
+          _c("div", { staticClass: "col-12 col-lg-6" }, [
+            _c("h1", { staticClass: "h3 m-0" }, [_vm._v("Проекты")]),
+          ]),
+        ]),
       ]),
     ])
   },
