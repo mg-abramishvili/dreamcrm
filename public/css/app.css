@@ -249,13 +249,18 @@ table.dataTable {
 .home-page,
 .projects-page,
 .clients-page,
-.catalog-page {
+.catalog-page,
+.stock-page,
+.tasks-page {
     margin-top: 20px;
 }
 
 
 .catalog-page h1,
-.calculations-page h1 {
+.calculations-page h1,
+.stock-page h1,
+.projects-page h1,
+.clients-page h1 {
     display: flex;
     align-items: center;
     line-height: 1;
@@ -270,7 +275,8 @@ table.dataTable {
     color: #1E2538;
 }
 
-.catalog-page .catalog-list-item {
+.catalog-page .catalog-list-item,
+.stock-page .stock-list-item {
     display: flex;
     align-items: center;
     font-size: 16px;
@@ -280,17 +286,21 @@ table.dataTable {
     height: 74px;
 }
 .catalog-page .catalog-list-item:hover,
-.catalog-page .catalog-list-item:focus {
+.catalog-page .catalog-list-item:focus,
+.stock-page .stock-list-item:hover,
+.stock-page .stock-list-item:focus {
     color: #fd7b38;
 }
-.catalog-page .catalog-list-item svg {
+.catalog-page .catalog-list-item svg,
+.stock-page .stock-list-item svg {
     width: 24px;
     height: 24px;
     margin-right: 15px;
     color: #fd7b38;
 }
 
-.catalog-page .catalog-list-item span {
+.catalog-page .catalog-list-item span,
+.stock-page .stock-list-item span {
     width: calc(100% - 24px);
 }
 
@@ -420,15 +430,18 @@ table.dataTable {
 .tasks-page-header {
     align-items: center;
     height: 50px;
+    flex-direction: row;
+    padding: 0 15px;
+    margin-bottom: 0;
 }
 .tasks-page-board {
     overflow-x: auto;
     overflow-y: hidden;
 	white-space: nowrap;
-    margin-left: -2.5rem;
-    width: calc(100% + 5rem);
+    margin-left: 0;
+    width: 100%;
     height: calc(100vh - 100px);
-    padding: 0 2.5rem;
+    padding: 0;
     padding-bottom: 15px;
 }
 .tasks-page-board::-webkit-scrollbar {
@@ -455,8 +468,8 @@ table.dataTable {
     padding: 5px;
     padding-bottom: 10px;
     border-radius: 6px;
-    margin-top: 25px;
-    margin-bottom: 25px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 .tasks-page-board .card-header {
     padding: 5px;
@@ -488,6 +501,16 @@ table.dataTable {
     border: 0;
     box-shadow: 0 1.5px 0 rgba(0,0,0,0.15);
     background-color: #e6f7fb;
+}
+.tasks-page-board .task-column-body .card-body p {
+    margin: 0;
+    height: 65px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    line-height: 1.2;
+    padding: 0 10px;
 }
 .sortable-ghost {
     transform: rotate(4deg) !important;

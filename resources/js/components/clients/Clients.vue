@@ -1,17 +1,21 @@
 <template>
-    <div>
-        <div class="row align-items-center mb-4">
-            <div class="col-12 col-lg-6">
-                <h1 class="h3 m-0">Клиенты</h1>
-            </div>
-            <div class="col-12 col-lg-6 text-end">
-                <router-link :to="{name: 'ClientCreate'}" class="btn btn-primary">Добавить</router-link>
+    <div class="clients-page">
+        <div class="card card-bordered">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-12 col-lg-6">
+                        <h1 class="h3 m-0">Клиенты</h1>
+                    </div>
+                    <div class="col-12 col-lg-6 text-end">
+                        <router-link :to="{name: 'ClientCreate'}" class="btn btn-primary">Добавить</router-link>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-body pt-1">
-                <table class="table table-striped table-hover dataTable no-footer dtr-inline">
+        <div v-if="clients && clients.length" class="card card-bordered">
+            <div class="card-body p-0">
+                <table class="table table-hover dataTable">
                     <thead>
                         <tr>
                             <th>Имя</th>
@@ -27,10 +31,13 @@
                 </table>
             </div>
         </div>
+        <Loader v-else></Loader>
     </div>
 </template>
 
 <script>
+    import Loader from '../Loader.vue'
+
     export default {
         data() {
             return {
@@ -51,6 +58,9 @@
             goTo(id) {
                 this.$router.push({ name: 'Client', params: { id: id } });
             }
+        },
+        components: {
+            Loader
         },
     }
 </script>

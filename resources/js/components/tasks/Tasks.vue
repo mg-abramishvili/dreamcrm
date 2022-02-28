@@ -1,22 +1,26 @@
 <template>
     <div class="tasks-page">
-        <div class="row tasks-page-header">
-            <div class="col-12 col-lg-9">
-                <div class="d-inline-flex w-100">
-                    <template v-if="views.boardCreate == false" class="form-select w-50">
-                        <router-link :to="{name: 'Tasks', params: {board_id: board.id}}" v-for="board in boards" :key="'board_' + board.id" class="btn btn-pill me-1" :class="{'btn-primary': $route.params.board_id == board.id, 'btn-outline-primary': $route.params.board_id != board.id}">
-                            {{ board.name }}
-                            <span v-if="boardNotifications(board.id)" class="badge rounded-pill bg-danger">{{ boardNotifications(board.id) }}</span>
-                        </router-link>
-                    </template>
+        <div class="card card-bordered tasks-page-header">
+            <div class="card-body p-0">
+                <div class="row align-items-center">
+                    <div class="col-12 col-lg-9">
+                        <div class="d-inline-flex w-100">
+                            <template v-if="views.boardCreate == false" class="form-select w-50">
+                                <router-link :to="{name: 'Tasks', params: {board_id: board.id}}" v-for="board in boards" :key="'board_' + board.id" class="btn btn-pill me-1" :class="{'btn-primary': $route.params.board_id == board.id, 'btn-outline-primary': $route.params.board_id != board.id}">
+                                    {{ board.name }}
+                                    <span v-if="boardNotifications(board.id)" class="badge rounded-pill bg-danger">{{ boardNotifications(board.id) }}</span>
+                                </router-link>
+                            </template>
 
-                    <BoardCreate v-if="views.boardCreate"></BoardCreate>
+                            <BoardCreate v-if="views.boardCreate"></BoardCreate>
 
-                    <button v-if="$parent.user.permissions && $parent.user.permissions.can_see_all_boards == true && views.boardCreate == false" @click="openBoardCreate()" class="btn btn-pill btn-outline-secondary">+</button>
+                            <button v-if="$parent.user.permissions && $parent.user.permissions.can_see_all_boards == true && views.boardCreate == false" @click="openBoardCreate()" class="btn btn-pill btn-outline-secondary">+</button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-3 text-end">
+                        <button @click="openBoardEdit()" class="btn btn-outline-secondary">Изменить доску</button>
+                    </div>
                 </div>
-            </div>
-            <div class="col-12 col-lg-3 text-end">
-                <button @click="openBoardEdit()" class="btn btn-outline-secondary">Изменить доску</button>
             </div>
         </div>
         
@@ -41,12 +45,12 @@
                     
                     <draggable v-model="column.tasks" group="tasks" :move="detectMove" @change="moveTask($event, column)" :disabled="views.draggable == false" class="task-column-body">
                         <div @click="openTask(task)" v-for="task in column.tasks" :key="task.id" class="card m-0" style="box-shadow: none;">
-                            <div class="card-body cursor-pointer p-3" :class="{ 'bg-success text-white': task.status == 'completed' }" style="white-space:normal">
+                            <div class="card-body cursor-pointer p-0" :class="{ 'bg-success text-white': task.status == 'completed' }" style="white-space:normal">
                                 <p>
                                     {{ task.name }}
                                     <span v-if="task.notifications.length" class="badge rounded-pill bg-danger">{{ task.notifications.length }}</span>
                                 </p>
-                                <div class="mt-n1">
+                                <!-- <div class="mt-n1">
                                     <div class="d-inline-flex me-2">
                                         <div v-for="user in task.users" :key="'task_user_' + user.id" style="margin: 0 2px;">
                                             <img v-if="user.avatar" :src="user.avatar" width="18" height="18" class="rounded-circle" :alt="user.name">
@@ -59,7 +63,7 @@
                                         </svg>
                                         {{ task.comments.length }}
                                     </span>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </draggable>
