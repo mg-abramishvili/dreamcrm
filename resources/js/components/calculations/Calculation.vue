@@ -14,25 +14,17 @@
                             </strong>
                         </h1>    
                     </div>
-                    <!-- <div class="col-12 col-lg-6 text-end">
-                        <template v-if="calculation.offers && calculation.offers.length">
-                            <div class="text-sm">У расчета есть КП: </div>
-                            <template v-for="offer in calculation.offers">
-                                <router-link :to="{name: 'Offer', params: {id: offer.id}}" class="btn btn-outline-primary">КП №{{offer.id}} от {{ offer.created_at | formatDate }}</router-link>
-                            </template>
+                    <div class="col-12 col-lg-6 text-end">
+                        <template v-if="calculation.project">
+                            <button class="btn btn-primary">Перейти к проекту</button>
                         </template>
-                        <template v-if="calculation.offers && calculation.offers.length == 0">
-                            <router-link :to="{name: 'OfferCreate', params: {calculation_id: calculation.id}}" class="btn btn-primary">Создать КП из расчета</router-link>
-                        </template>
-                    </div> -->
+                    </div>
                 </div>
             </div>
         </div>
 
         <div v-if="calculation && calculation.id > 0" class="card">
             <div class="card-body">
-                
-                
                 <table class="table dataTable">
                     <tbody>
                         <tr v-for="box in calculation.boxes">
@@ -87,10 +79,13 @@
                 </table>
             </div>
         </div>
+        <Loader v-else></Loader>
     </div>
 </template>
 
 <script>
+    import Loader from '../Loader.vue'
+
     export default {
         data() {
             return {
@@ -124,6 +119,7 @@
                 ));
         },
         components: {
+            Loader
         }
     }
 </script>

@@ -34,8 +34,8 @@ class Calculation extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function offers()
+    public function project()
     {
-        return $this->belongsToMany(Offer::class, 'calculation__offer');
+        return $this->belongsTo(Project::class);
     }
 }

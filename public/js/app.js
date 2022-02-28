@@ -2399,6 +2399,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _Loader_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Loader.vue */ "./resources/js/components/Loader.vue");
 //
 //
 //
@@ -2484,13 +2485,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2525,7 +2520,9 @@ __webpack_require__.r(__webpack_exports__);
       return _this.calculation = response.data;
     });
   },
-  components: {}
+  components: {
+    Loader: _Loader_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  }
 });
 
 /***/ }),
@@ -57982,208 +57979,228 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "calculations-page" }, [
-    _c("div", { staticClass: "card card-bordered" }, [
-      _c("div", { staticClass: "card-body" }, [
-        _c("div", { staticClass: "row align-items-center" }, [
-          _c("div", { staticClass: "col-12 col-lg-6" }, [
-            _c(
-              "h1",
-              { staticClass: "h3 m-0" },
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "back-arrow",
-                    attrs: { to: { name: "Calculations" } },
-                  },
-                  [
-                    _c(
-                      "svg",
-                      {
-                        staticClass:
-                          "feather feather-arrow-left align-middle me-2",
-                        attrs: {
-                          xmlns: "http://www.w3.org/2000/svg",
-                          width: "24",
-                          height: "24",
-                          viewBox: "0 0 24 24",
-                          fill: "none",
-                          stroke: "currentColor",
-                          "stroke-width": "2",
-                          "stroke-linecap": "round",
-                          "stroke-linejoin": "round",
+  return _c(
+    "div",
+    { staticClass: "calculations-page" },
+    [
+      _c("div", { staticClass: "card card-bordered" }, [
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "row align-items-center" }, [
+            _c("div", { staticClass: "col-12 col-lg-6" }, [
+              _c(
+                "h1",
+                { staticClass: "h3 m-0" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "back-arrow",
+                      attrs: { to: { name: "Calculations" } },
+                    },
+                    [
+                      _c(
+                        "svg",
+                        {
+                          staticClass:
+                            "feather feather-arrow-left align-middle me-2",
+                          attrs: {
+                            xmlns: "http://www.w3.org/2000/svg",
+                            width: "24",
+                            height: "24",
+                            viewBox: "0 0 24 24",
+                            fill: "none",
+                            stroke: "currentColor",
+                            "stroke-width": "2",
+                            "stroke-linecap": "round",
+                            "stroke-linejoin": "round",
+                          },
                         },
-                      },
-                      [
-                        _c("line", {
-                          attrs: { x1: "19", y1: "12", x2: "5", y2: "12" },
-                        }),
-                        _c("polyline", {
-                          attrs: { points: "12 19 5 12 12 5" },
-                        }),
-                      ]
-                    ),
-                  ]
-                ),
-                _vm._v(" "),
-                _c("strong", [
-                  _vm._v(
-                    "\n                            Расчет №" +
-                      _vm._s(_vm.calculation.id) +
-                      " от " +
-                      _vm._s(
-                        _vm
-                          .moment(_vm.calculation.created_at)
-                          .utcOffset(180)
-                          .format("DD.MM.YYYY HH:mm")
-                      ) +
-                      "\n                            "
+                        [
+                          _c("line", {
+                            attrs: { x1: "19", y1: "12", x2: "5", y2: "12" },
+                          }),
+                          _c("polyline", {
+                            attrs: { points: "12 19 5 12 12 5" },
+                          }),
+                        ]
+                      ),
+                    ]
                   ),
-                ]),
+                  _vm._v(" "),
+                  _c("strong", [
+                    _vm._v(
+                      "\n                            Расчет №" +
+                        _vm._s(_vm.calculation.id) +
+                        " от " +
+                        _vm._s(
+                          _vm
+                            .moment(_vm.calculation.created_at)
+                            .utcOffset(180)
+                            .format("DD.MM.YYYY HH:mm")
+                        ) +
+                        "\n                            "
+                    ),
+                  ]),
+                ],
+                1
+              ),
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-12 col-lg-6 text-end" },
+              [
+                _vm.calculation.project
+                  ? [
+                      _c("button", { staticClass: "btn btn-primary" }, [
+                        _vm._v("Перейти к проекту"),
+                      ]),
+                    ]
+                  : _vm._e(),
               ],
-              1
+              2
             ),
           ]),
         ]),
       ]),
-    ]),
-    _vm._v(" "),
-    _vm.calculation && _vm.calculation.id > 0
-      ? _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-body" }, [
-            _c("table", { staticClass: "table dataTable" }, [
-              _c(
-                "tbody",
-                [
-                  _vm._l(_vm.calculation.boxes, function (box) {
-                    return _c("tr", [
-                      _c("td", [_vm._v("Корпус")]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(box.name))]),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "text-end" }, [
-                        _vm._v(
-                          _vm._s(_vm._f("currency")(box.pivot.price)) + " ₽"
-                        ),
-                      ]),
-                    ])
-                  }),
-                  _vm._v(" "),
-                  _vm._l(_vm.calculation.catalog_items, function (item) {
-                    return [
-                      item.pivot.price > 0
-                        ? _c("tr", [
-                            _c("td", [_vm._v(_vm._s(item.category.name))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(item.name))]),
-                            _vm._v(" "),
-                            _c("td", { staticClass: "text-end" }, [
-                              _vm._v(
-                                _vm._s(_vm._f("currency")(item.pivot.price)) +
-                                  " ₽"
-                              ),
-                            ]),
-                          ])
-                        : _vm._e(),
-                    ]
-                  }),
-                  _vm._v(" "),
-                  _c("tr", { staticStyle: { "border-width": "2px" } }, [
-                    _c("td"),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-end" }, [
-                      _vm._v(
-                        "\n                            Стоимость за ед.\n                        "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-end" }, [
-                      _vm._v(
-                        "\n                            " +
-                          _vm._s(_vm._f("currency")(_vm.price)) +
-                          " ₽\n                        "
-                      ),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("tr", [
-                    _c("td"),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-end" }, [
-                      _vm._v(
-                        "\n                            Кол-во\n                        "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-end" }, [
-                      _vm._v(
-                        "\n                            " +
-                          _vm._s(_vm.calculation.quantity) +
-                          " шт.\n                        "
-                      ),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _vm.calculation.delivery &&
-                  _vm.calculation.delivery.length > 0
-                    ? _c("tr", { staticClass: "m-0" }, [
-                        _c("td"),
+      _vm._v(" "),
+      _vm.calculation && _vm.calculation.id > 0
+        ? _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "card-body" }, [
+              _c("table", { staticClass: "table dataTable" }, [
+                _c(
+                  "tbody",
+                  [
+                    _vm._l(_vm.calculation.boxes, function (box) {
+                      return _c("tr", [
+                        _c("td", [_vm._v("Корпус")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(box.name))]),
                         _vm._v(" "),
                         _c("td", { staticClass: "text-end" }, [
                           _vm._v(
-                            "\n                            Доставка " +
-                              _vm._s(_vm.calculation.delivery[0].name) +
-                              "\n                        "
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "text-end" }, [
-                          _vm._v(
-                            "\n                            " +
-                              _vm._s(
-                                _vm._f("currency")(
-                                  _vm.calculation.delivery[0].pivot.price
-                                )
-                              ) +
-                              " ₽\n                        "
+                            _vm._s(_vm._f("currency")(box.pivot.price)) + " ₽"
                           ),
                         ]),
                       ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c("tr", [
-                    _c("td"),
+                    }),
                     _vm._v(" "),
-                    _c("td", { staticClass: "text-end" }, [
-                      _vm._v(
-                        "\n                            Итого\n                        "
-                      ),
-                    ]),
+                    _vm._l(_vm.calculation.catalog_items, function (item) {
+                      return [
+                        item.pivot.price > 0
+                          ? _c("tr", [
+                              _c("td", [_vm._v(_vm._s(item.category.name))]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(item.name))]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "text-end" }, [
+                                _vm._v(
+                                  _vm._s(_vm._f("currency")(item.pivot.price)) +
+                                    " ₽"
+                                ),
+                              ]),
+                            ])
+                          : _vm._e(),
+                      ]
+                    }),
                     _vm._v(" "),
-                    _c(
-                      "td",
-                      {
-                        staticClass: "text-end text-primary",
-                        staticStyle: { "font-weight": "700" },
-                      },
-                      [
+                    _c("tr", { staticStyle: { "border-width": "2px" } }, [
+                      _c("td"),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-end" }, [
+                        _vm._v(
+                          "\n                            Стоимость за ед.\n                        "
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-end" }, [
                         _vm._v(
                           "\n                            " +
-                            _vm._s(_vm._f("currency")(_vm.priceTotal)) +
+                            _vm._s(_vm._f("currency")(_vm.price)) +
                             " ₽\n                        "
                         ),
-                      ]
-                    ),
-                  ]),
-                ],
-                2
-              ),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("tr", [
+                      _c("td"),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-end" }, [
+                        _vm._v(
+                          "\n                            Кол-во\n                        "
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-end" }, [
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(_vm.calculation.quantity) +
+                            " шт.\n                        "
+                        ),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _vm.calculation.delivery &&
+                    _vm.calculation.delivery.length > 0
+                      ? _c("tr", { staticClass: "m-0" }, [
+                          _c("td"),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "text-end" }, [
+                            _vm._v(
+                              "\n                            Доставка " +
+                                _vm._s(_vm.calculation.delivery[0].name) +
+                                "\n                        "
+                            ),
+                          ]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "text-end" }, [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(
+                                  _vm._f("currency")(
+                                    _vm.calculation.delivery[0].pivot.price
+                                  )
+                                ) +
+                                " ₽\n                        "
+                            ),
+                          ]),
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("tr", [
+                      _c("td"),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-end" }, [
+                        _vm._v(
+                          "\n                            Итого\n                        "
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        {
+                          staticClass: "text-end text-primary",
+                          staticStyle: { "font-weight": "700" },
+                        },
+                        [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(_vm._f("currency")(_vm.priceTotal)) +
+                              " ₽\n                        "
+                          ),
+                        ]
+                      ),
+                    ]),
+                  ],
+                  2
+                ),
+              ]),
             ]),
-          ]),
-        ])
-      : _vm._e(),
-  ])
+          ])
+        : _c("Loader"),
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
