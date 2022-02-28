@@ -7966,11 +7966,11 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/api/tasks/boards", {
         name: this.name
       }).then(function (response) {
-        return _this.name = '', _this.$parent.views.createTaskBoard = false, _this.$parent.getBoards(response.data.id);
+        return _this.name = '', _this.$parent.views.boardCreate = false, _this.$parent.getBoard(response.data.id);
       });
     },
     cancelCreateTaskBoard: function cancelCreateTaskBoard() {
-      this.name = '', this.$parent.views.createTaskBoard = false;
+      this.name = '', this.$parent.views.boardCreate = false;
     }
   }
 });
@@ -9452,7 +9452,6 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('currency', function (value) 
 });
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('truncate', function (value) {
   if (!value) return '';
-  console.log(value.length);
 
   if (value.length > 100) {
     return value.substring(0, 100) + '...';

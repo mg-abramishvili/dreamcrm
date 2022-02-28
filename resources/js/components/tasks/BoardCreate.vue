@@ -24,13 +24,13 @@ export default {
                 })
                 .then(response => (
                     this.name = '',
-                    this.$parent.views.createTaskBoard = false,
-                    this.$parent.getBoards(response.data.id)
+                    this.$parent.views.boardCreate = false,
+                    this.$parent.getBoard(response.data.id)
                 ))
             },
             cancelCreateTaskBoard() {
                 this.name = '',
-                this.$parent.views.createTaskBoard = false
+                this.$parent.views.boardCreate = false
             },
         },
     }
