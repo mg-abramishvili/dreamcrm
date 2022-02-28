@@ -3189,6 +3189,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _Loader_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Loader.vue */ "./resources/js/components/Loader.vue");
 //
 //
 //
@@ -3239,6 +3240,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -3262,7 +3266,9 @@ __webpack_require__.r(__webpack_exports__);
       });
     }
   },
-  components: {}
+  components: {
+    Loader: _Loader_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  }
 });
 
 /***/ }),
@@ -59192,99 +59198,106 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "calculations-page" }, [
-    _c("div", { staticClass: "card card-bordered" }, [
-      _c("div", { staticClass: "card-body" }, [
-        _c("div", { staticClass: "row align-items-center" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "col-12 col-lg-6 text-end" },
-            [
-              _c(
-                "router-link",
-                {
-                  staticClass: "btn btn-primary",
-                  attrs: { to: { name: "CalculationCreate" } },
-                },
-                [_vm._v("Новый расчет")]
-              ),
-            ],
-            1
-          ),
-        ]),
-      ]),
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "card card-bordered" }, [
-      _c("div", { staticClass: "card-body p-0" }, [
-        _c("table", { staticClass: "table table-hover dataTable" }, [
-          _vm._m(1),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.calculations, function (calculation) {
-              return _c(
-                "tr",
-                {
-                  key: calculation.id,
-                  on: {
-                    click: function ($event) {
-                      return _vm.goTo(calculation.id)
-                    },
+  return _c(
+    "div",
+    { staticClass: "calculations-page" },
+    [
+      _c("div", { staticClass: "card card-bordered" }, [
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "row align-items-center" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-12 col-lg-6 text-end" },
+              [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { to: { name: "CalculationCreate" } },
                   },
-                },
-                [
-                  _c("td", { staticClass: "align-middle" }, [
-                    _vm._v(
-                      "\n                            " +
-                        _vm._s(_vm._f("date")(calculation.created_at)) +
-                        "\n                        "
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "align-middle" }, [
-                    _vm._v(
-                      "\n                            Расчет №" +
-                        _vm._s(calculation.id) +
-                        "\n                        "
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    { staticClass: "align-middle" },
-                    [
-                      _vm._l(calculation.boxes, function (box) {
-                        return [
-                          _vm._v(
-                            "\n                                " +
-                              _vm._s(box.name) +
-                              "\n                            "
-                          ),
-                        ]
-                      }),
-                    ],
-                    2
-                  ),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "align-middle" }, [
-                    _vm._v(
-                      "\n                            " +
-                        _vm._s(calculation.user.name) +
-                        "\n                        "
-                    ),
-                  ]),
-                ]
-              )
-            }),
-            0
-          ),
+                  [_vm._v("Новый расчет")]
+                ),
+              ],
+              1
+            ),
+          ]),
         ]),
       ]),
-    ]),
-  ])
+      _vm._v(" "),
+      _vm.calculations && _vm.calculations.length
+        ? _c("div", { staticClass: "card card-bordered" }, [
+            _c("div", { staticClass: "card-body p-0" }, [
+              _c("table", { staticClass: "table table-hover dataTable" }, [
+                _vm._m(1),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.calculations, function (calculation) {
+                    return _c(
+                      "tr",
+                      {
+                        key: calculation.id,
+                        on: {
+                          click: function ($event) {
+                            return _vm.goTo(calculation.id)
+                          },
+                        },
+                      },
+                      [
+                        _c("td", { staticClass: "align-middle" }, [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(_vm._f("date")(calculation.created_at)) +
+                              "\n                        "
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "align-middle" }, [
+                          _vm._v(
+                            "\n                            Расчет №" +
+                              _vm._s(calculation.id) +
+                              "\n                        "
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "td",
+                          { staticClass: "align-middle" },
+                          [
+                            _vm._l(calculation.boxes, function (box) {
+                              return [
+                                _vm._v(
+                                  "\n                                " +
+                                    _vm._s(box.name) +
+                                    "\n                            "
+                                ),
+                              ]
+                            }),
+                          ],
+                          2
+                        ),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "align-middle" }, [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(calculation.user.name) +
+                              "\n                        "
+                          ),
+                        ]),
+                      ]
+                    )
+                  }),
+                  0
+                ),
+              ]),
+            ]),
+          ])
+        : _c("Loader"),
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function () {

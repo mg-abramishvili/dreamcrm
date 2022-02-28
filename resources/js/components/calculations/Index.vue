@@ -13,7 +13,7 @@
             </div>
         </div>
 
-        <div class="card card-bordered">
+        <div v-if="calculations && calculations.length" class="card card-bordered">
             <div class="card-body p-0">
                 <table class="table table-hover dataTable">
                     <thead>
@@ -45,10 +45,14 @@
                 </table>
             </div>
         </div>
+
+        <Loader v-else></Loader>
     </div>
 </template>
 
 <script>
+    import Loader from '../Loader.vue'
+
     export default {
         data() {
             return {
@@ -68,6 +72,7 @@
             }
         },
         components: {
+            Loader
         }
     }
 </script>
