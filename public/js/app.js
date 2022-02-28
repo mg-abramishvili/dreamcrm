@@ -7966,7 +7966,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/api/tasks/boards", {
         name: this.name
       }).then(function (response) {
-        return _this.name = '', _this.$parent.views.boardCreate = false, _this.$parent.getBoard(response.data.id);
+        return _this.name = '', _this.$parent.views.boardCreate = false, _this.$parent.getBoards();
       });
     },
     cancelCreateTaskBoard: function cancelCreateTaskBoard() {

@@ -25,7 +25,7 @@ export default {
                 .then(response => (
                     this.name = '',
                     this.$parent.views.boardCreate = false,
-                    this.$parent.getBoard(response.data.id)
+                    this.$parent.getBoards()
                 ))
             },
             cancelCreateTaskBoard() {
