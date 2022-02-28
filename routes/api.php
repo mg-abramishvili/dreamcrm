@@ -98,6 +98,7 @@ Route::get('offer/{id}/pdf', [OfferController::class, 'offerPDF']);
 
 
 Route::get('projects', [ProjectController::class, 'index']);
+Route::get('project/{id}', [ProjectController::class, 'project']);
 
 
 

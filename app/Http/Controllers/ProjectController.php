@@ -11,4 +11,9 @@ class ProjectController extends Controller
     {
         return Project::all();
     }
+
+    public function project($id)
+    {
+        return Project::find($id);
+    }
 }

@@ -22,6 +22,7 @@ import Offers from './components/offers/Offers.vue';
 import Offer from './components/offers/Offer.vue';
 
 import Projects from './components/projects/Index.vue';
+import Project from './components/projects/Project.vue';
 
 import Tasks from './components/tasks/Tasks.vue';
 
@@ -142,6 +143,11 @@ export const routes = [
         path: '/projects',
         name: 'Projects',
         component: Projects
+    },
+    {
+        path: '/project/:id',
+        name: 'Project',
+        component: Project
     },
     {
         path: '/tasks/:board_id?',
