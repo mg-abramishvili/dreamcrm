@@ -19,31 +19,25 @@
 
         <div v-if="project && project.id > 0" class="tab">
             <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item"><a class="nav-link" href="#tab-1" data-bs-toggle="tab" role="tab" aria-selected="false">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#tab-2" data-bs-toggle="tab" role="tab" aria-selected="false">Profile</a></li>
-                <li class="nav-item"><a class="nav-link active" href="#tab-3" data-bs-toggle="tab" role="tab" aria-selected="true">Messages</a></li>
+                <li class="nav-item">
+                    <a @click="selectTab('general')" class="nav-link" :class="{'active': selected.tab == 'general'}" role="tab">Общая информация</a>
+                </li>
+                <li class="nav-item">
+                    <a @click="selectTab('calculations')" class="nav-link" :class="{'active': selected.tab == 'calculations'}" role="tab">Расчеты</a>
+                </li>
+                <li class="nav-item">
+                    <a @click="selectTab('offers')" class="nav-link" :class="{'active': selected.tab == 'offers'}" role="tab">КП</a>
+                </li>
             </ul>
             <div class="tab-content">
-                <div class="tab-pane" id="tab-1" role="tabpanel">
-                    <h4 class="tab-title">Default tabs</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor tellus eget condimentum rhoncus. Aenean massa. Cum sociis natoque
-                        penatibus et magnis neque dis parturient montes, nascetur ridiculus mus.</p>
-                    <p>Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate
-                        eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.</p>
+                <div class="tab-pane" :class="{'active': selected.tab == 'general'}" role="tabpanel">
+                    <h4 class="tab-title">Общая информация</h4>
                 </div>
-                <div class="tab-pane" id="tab-2" role="tabpanel">
-                    <h4 class="tab-title">Another one</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor tellus eget condimentum rhoncus. Aenean massa. Cum sociis natoque
-                        penatibus et magnis neque dis parturient montes, nascetur ridiculus mus.</p>
-                    <p>Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate
-                        eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.</p>
+                <div class="tab-pane" :class="{'active': selected.tab == 'calculations'}" role="tabpanel">
+                    <h4 class="tab-title">Расчеты</h4>
                 </div>
-                <div class="tab-pane active" id="tab-3" role="tabpanel">
-                    <h4 class="tab-title">One more</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor tellus eget condimentum rhoncus. Aenean massa. Cum sociis natoque
-                        penatibus et magnis neque dis parturient montes, nascetur ridiculus mus.</p>
-                    <p>Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate
-                        eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.</p>
+                <div class="tab-pane" :class="{'active': selected.tab == 'offers'}" role="tabpanel">
+                    <h4 class="tab-title">КП</h4>
                 </div>
             </div>
         </div>
@@ -57,6 +51,10 @@
         data() {
             return {
                 project: {},
+
+                selected: {
+                    tab: 'general',
+                },
             }
         },
         created() {
@@ -65,6 +63,11 @@
                 .then(response => (
                     this.project = response.data
                 ));
+        },
+        methods: {
+            selectTab(tab) {
+                this.selected.tab = tab
+            },
         },
         components: {
             Loader

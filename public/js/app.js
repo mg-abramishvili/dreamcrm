@@ -6773,17 +6773,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      project: {}
+      project: {},
+      selected: {
+        tab: 'general'
+      }
     };
   },
   created: function created() {
@@ -6792,6 +6789,11 @@ __webpack_require__.r(__webpack_exports__);
     axios.get("/api/project/".concat(this.$route.params.id)).then(function (response) {
       return _this.project = response.data;
     });
+  },
+  methods: {
+    selectTab: function selectTab(tab) {
+      this.selected.tab = tab;
+    }
   },
   components: {
     Loader: _Loader_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -65447,139 +65449,104 @@ var render = function () {
     ]),
     _vm._v(" "),
     _vm.project && _vm.project.id > 0
-      ? _c("div", { staticClass: "tab" }, [_vm._m(0), _vm._v(" "), _vm._m(1)])
+      ? _c("div", { staticClass: "tab" }, [
+          _c(
+            "ul",
+            { staticClass: "nav nav-tabs", attrs: { role: "tablist" } },
+            [
+              _c("li", { staticClass: "nav-item" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "nav-link",
+                    class: { active: _vm.selected.tab == "general" },
+                    attrs: { role: "tab" },
+                    on: {
+                      click: function ($event) {
+                        return _vm.selectTab("general")
+                      },
+                    },
+                  },
+                  [_vm._v("Общая информация")]
+                ),
+              ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "nav-item" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "nav-link",
+                    class: { active: _vm.selected.tab == "calculations" },
+                    attrs: { role: "tab" },
+                    on: {
+                      click: function ($event) {
+                        return _vm.selectTab("calculations")
+                      },
+                    },
+                  },
+                  [_vm._v("Расчеты")]
+                ),
+              ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "nav-item" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "nav-link",
+                    class: { active: _vm.selected.tab == "offers" },
+                    attrs: { role: "tab" },
+                    on: {
+                      click: function ($event) {
+                        return _vm.selectTab("offers")
+                      },
+                    },
+                  },
+                  [_vm._v("КП")]
+                ),
+              ]),
+            ]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "tab-content" }, [
+            _c(
+              "div",
+              {
+                staticClass: "tab-pane",
+                class: { active: _vm.selected.tab == "general" },
+                attrs: { role: "tabpanel" },
+              },
+              [
+                _c("h4", { staticClass: "tab-title" }, [
+                  _vm._v("Общая информация"),
+                ]),
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "tab-pane",
+                class: { active: _vm.selected.tab == "calculations" },
+                attrs: { role: "tabpanel" },
+              },
+              [_c("h4", { staticClass: "tab-title" }, [_vm._v("Расчеты")])]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "tab-pane",
+                class: { active: _vm.selected.tab == "offers" },
+                attrs: { role: "tabpanel" },
+              },
+              [_c("h4", { staticClass: "tab-title" }, [_vm._v("КП")])]
+            ),
+          ]),
+        ])
       : _vm._e(),
   ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "ul",
-      { staticClass: "nav nav-tabs", attrs: { role: "tablist" } },
-      [
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link",
-              attrs: {
-                href: "#tab-1",
-                "data-bs-toggle": "tab",
-                role: "tab",
-                "aria-selected": "false",
-              },
-            },
-            [_vm._v("Home")]
-          ),
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link",
-              attrs: {
-                href: "#tab-2",
-                "data-bs-toggle": "tab",
-                role: "tab",
-                "aria-selected": "false",
-              },
-            },
-            [_vm._v("Profile")]
-          ),
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link active",
-              attrs: {
-                href: "#tab-3",
-                "data-bs-toggle": "tab",
-                role: "tab",
-                "aria-selected": "true",
-              },
-            },
-            [_vm._v("Messages")]
-          ),
-        ]),
-      ]
-    )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "tab-content" }, [
-      _c(
-        "div",
-        { staticClass: "tab-pane", attrs: { id: "tab-1", role: "tabpanel" } },
-        [
-          _c("h4", { staticClass: "tab-title" }, [_vm._v("Default tabs")]),
-          _vm._v(" "),
-          _c("p", [
-            _vm._v(
-              "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor tellus eget condimentum rhoncus. Aenean massa. Cum sociis natoque\n                    penatibus et magnis neque dis parturient montes, nascetur ridiculus mus."
-            ),
-          ]),
-          _vm._v(" "),
-          _c("p", [
-            _vm._v(
-              "Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate\n                    eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo."
-            ),
-          ]),
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "tab-pane", attrs: { id: "tab-2", role: "tabpanel" } },
-        [
-          _c("h4", { staticClass: "tab-title" }, [_vm._v("Another one")]),
-          _vm._v(" "),
-          _c("p", [
-            _vm._v(
-              "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor tellus eget condimentum rhoncus. Aenean massa. Cum sociis natoque\n                    penatibus et magnis neque dis parturient montes, nascetur ridiculus mus."
-            ),
-          ]),
-          _vm._v(" "),
-          _c("p", [
-            _vm._v(
-              "Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate\n                    eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo."
-            ),
-          ]),
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "tab-pane active",
-          attrs: { id: "tab-3", role: "tabpanel" },
-        },
-        [
-          _c("h4", { staticClass: "tab-title" }, [_vm._v("One more")]),
-          _vm._v(" "),
-          _c("p", [
-            _vm._v(
-              "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor tellus eget condimentum rhoncus. Aenean massa. Cum sociis natoque\n                    penatibus et magnis neque dis parturient montes, nascetur ridiculus mus."
-            ),
-          ]),
-          _vm._v(" "),
-          _c("p", [
-            _vm._v(
-              "Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate\n                    eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo."
-            ),
-          ]),
-        ]
-      ),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
