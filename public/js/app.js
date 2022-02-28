@@ -9450,6 +9450,15 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('currency', function (value) 
   if (!value) return '';
   return parseInt(value).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 });
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('truncate', function (value) {
+  if (!value) return '';
+
+  if (value.length > 150) {
+    return value.substring(0, 150) + '...';
+  }
+
+  return value;
+});
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('date', function (value) {
   if (!value) return '';
   return moment__WEBPACK_IMPORTED_MODULE_0___default().utc(value).utcOffset(3).format('DD.MM.YYYY');
@@ -68833,7 +68842,7 @@ var render = function () {
                                   _c("p", [
                                     _vm._v(
                                       "\n                                " +
-                                        _vm._s(task.name) +
+                                        _vm._s(_vm._f("truncate")(task.name)) +
                                         "\n                                "
                                     ),
                                     task.notifications.length

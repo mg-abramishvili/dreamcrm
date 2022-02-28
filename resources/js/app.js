@@ -27,6 +27,13 @@ Vue.filter('currency', function (value) {
     if (!value) return ''
     return parseInt(value).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") 
 })
+Vue.filter('truncate', function (value) {
+    if (!value) return ''
+    if (value.length > 150) {
+        return value.substring(0, 150) + '...'
+    }
+    return value
+})
 Vue.filter('date', function (value) {
     if (!value) return ''
     return moment.utc(value).utcOffset(3).format('DD.MM.YYYY')

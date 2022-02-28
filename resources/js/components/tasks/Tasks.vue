@@ -47,7 +47,7 @@
                         <div @click="openTask(task)" v-for="task in column.tasks" :key="task.id" class="card m-0" style="box-shadow: none;">
                             <div class="card-body cursor-pointer p-0" :class="{ 'bg-success text-white': task.status == 'completed' }" style="white-space:normal">
                                 <p>
-                                    {{ task.name }}
+                                    {{ task.name | truncate }}
                                     <span v-if="task.notifications.length" class="badge rounded-pill bg-danger">{{ task.notifications.length }}</span>
                                 </p>
                                 <!-- <div class="mt-n1">
