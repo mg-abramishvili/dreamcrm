@@ -30,8 +30,8 @@ Vue.filter('currency', function (value) {
 Vue.filter('truncate', function (value) {
     if (!value) return ''
     console.log(value.length)
-    if (value.length > 150) {
-        return value.substring(0, 150) + '...'
+    if (value.length > 100) {
+        return value.substring(0, 100) + '...'
     }
     return value
 })
