@@ -1,19 +1,23 @@
 <template>
-    <div v-if="usd.kurs && usd.kurs > 0">
-        <div class="row align-items-center mb-4">
-            <div class="col-12 col-lg-6">
-                <h1 class="h3 m-0">
-                    <router-link :to="{name: 'CatalogBoxes'}">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left align-middle me-2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                    </router-link>
-                    <strong>
-                        Новый корпус
-                    </strong>
-                </h1>
+    <div class="catalog-page">
+        <div class="card card-bordered">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-12 col-lg-6">
+                        <h1 class="h3 m-0">
+                            <router-link :to="{name: 'CatalogBoxes'}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left align-middle me-2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                            </router-link>
+                            <strong>
+                                Новый корпус
+                            </strong>
+                        </h1>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="card">
+        <div v-if="usd.kurs && usd.kurs > 0" class="card">
             <div class="card-body">
                 <div v-if="errors && errors.length > 0" class="alert alert-danger">
                     <div class="alert-message">
@@ -143,9 +147,7 @@
                 <button @click="save()" class="btn btn-primary">Сохранить</button>
             </div>
         </div>
-    </div>
-    <div v-else>
-        <Loader></Loader>
+        <Loader v-else></Loader>
     </div>
 </template>
 

@@ -1,155 +1,173 @@
 <template>
-    <div>
-        <h1 class="h3 m-0 mb-4">Новый расчет</h1>
+    <div class="calculations-page">
+        <div class="card card-bordered">
+            <div class="card-body">
+                <h1 class="h3 m-0">Новый расчет</h1>
+            </div>
+        </div>
         
         <div v-if="types.length" class="row">
             <div class="col-12 col-lg-5">
-                <div class="calculation-left-block bg-white px-4 py-4" style="position: sticky; top: 20px;">
-                    <div v-if="views.types" class="mb-4">
-                        <div class="calculation-left-block-main-label">
-                            <strong>Тип</strong>
+                <div class="card card-bordered" style="position: sticky; top: 20px;">
+                    <div class="card-body">
+                        <div v-if="views.types" class="mb-4">
+                            <div class="calculation-left-block-main-label">
+                                <strong>Тип</strong>
+                            </div>
+                            <select v-model="selected.type" @change="loadBoxes(); resetCatalogItems()" class="form-select form-select-lg mt-2 mb-3">
+                                <option v-for="type in types" :key="'type_' + type.id" :value="type">{{ type.name }}</option>
+                            </select>
+                            <div class="mt-4">
+                                <button class="btn btn-outline-primary" disabled>Назад</button>
+                                <button @click="viewBoxes()" class="btn btn-outline-primary">Далее</button>
+                            </div>
                         </div>
-                        <select v-model="selected.type" @change="loadBoxes(); resetCatalogItems()" class="form-select form-select-lg mt-2 mb-3">
-                            <option v-for="type in types" :key="'type_' + type.id" :value="type">{{ type.name }}</option>
-                        </select>
-                        <div class="mt-4">
-                            <button class="btn btn-outline-primary" disabled>Назад</button>
-                            <button @click="viewBoxes()" class="btn btn-outline-primary">Далее</button>
-                        </div>
-                    </div>
 
-                    <div v-if="views.boxes" class="mb-4">
-                        <div class="calculation-left-block-main-label">
-                            <strong>Корпус</strong>
+                        <div v-if="views.boxes" class="mb-4">
+                            <div class="calculation-left-block-main-label">
+                                <strong>Корпус</strong>
+                            </div>
+                            <select v-model="selected.box" @change="loadCatalogItems(); resetCatalogItems()" class="form-select form-select-lg mt-2 mb-3">
+                                <template v-for="box in boxes">
+                                    <option v-if="box.width > 0 && box.length > 0 && box.height > 0 && box.weight > 0" :key="'box_' + box.id" :value="box">{{ box.name }} &mdash; {{ box.price | currency }} ₽</option>
+                                </template>
+                            </select>
+                            <div class="mt-4">
+                                <button @click="viewTypes()" class="btn btn-outline-primary">Назад</button>
+                                <button @click="viewCategories()" class="btn btn-outline-primary">Далее</button>
+                            </div>
                         </div>
-                        <select v-model="selected.box" @change="loadCatalogItems(); resetCatalogItems()" class="form-select form-select-lg mt-2 mb-3">
-                            <template v-for="box in boxes">
-                                <option v-if="box.width > 0 && box.length > 0 && box.height > 0 && box.weight > 0" :key="'box_' + box.id" :value="box">{{ box.name }} &mdash; {{ box.price | currency }} ₽</option>
-                            </template>
-                        </select>
-                        <div class="mt-4">
-                            <button @click="viewTypes()" class="btn btn-outline-primary">Назад</button>
-                            <button @click="viewCategories()" class="btn btn-outline-primary">Далее</button>
-                        </div>
-                    </div>
 
-                    <div v-if="views.categories" class="mb-4">
-                        <div v-for="category in categories" :key="'category_' + category.id">
-                            <div v-show="views.categoryCurrent == category.id">
-                                <div class="calculation-left-block-main-label">
-                                    <strong>{{ category.name }}</strong>
-                                    <button @click="addCatalogItem(category.slug)" class="btn btn-sm btn-outline-danger">+</button>
+                        <div v-if="views.categories" class="mb-4">
+                            <div v-for="category in categories" :key="'category_' + category.id">
+                                <div v-show="views.categoryCurrent == category.id">
+                                    <div class="calculation-left-block-main-label">
+                                        <strong>{{ category.name }}</strong>
+                                        <button @click="addCatalogItem(category.slug)" class="btn btn-sm btn-outline-danger">+</button>
+                                    </div>
+                                    
+                                    <div v-for="(catalogItem, index) in selected.catalogItems[category.slug]" :key="index" style="position: relative;">
+                                        <select v-model="catalogItem.id" class="form-select form-select-lg mt-2 mb-3">
+                                            <template v-for="catalogItem in catalogItems">
+                                                <option v-if="catalogItem.category_id == category.id" :key="'catalogItem_' + catalogItem.id" :value="catalogItem.id">
+                                                    {{ catalogItem.name }} <template v-if="catalogItem.price > 0">&mdash; {{ catalogItem.price | currency }} ₽</template>
+                                                </option>
+                                            </template>
+                                        </select>
+                                        <button v-if="index > 0 && selected.catalogItems[category.slug].length > 1" @click="deleteCatalogItem(catalogItem.id, category.slug)" class="btn btn-sm btn-outline-danger" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); padding: 0; width: 20px; margin-right: -21px;">&ndash;</button>
+                                    </div>
+
+                                    <div class="mt-4">
+                                        <button @click="prevCategory(category)" class="btn btn-outline-primary">Назад</button>
+                                        <button @click="nextCategory(category)" class="btn btn-outline-primary">Далее</button>
+                                    </div>
                                 </div>
-                                
-                                <div v-for="(catalogItem, index) in selected.catalogItems[category.slug]" :key="index" style="position: relative;">
-                                    <select v-model="catalogItem.id" class="form-select form-select-lg mt-2 mb-3">
-                                        <template v-for="catalogItem in catalogItems">
-                                            <option v-if="catalogItem.category_id == category.id" :key="'catalogItem_' + catalogItem.id" :value="catalogItem.id">
-                                                {{ catalogItem.name }} <template v-if="catalogItem.price > 0">&mdash; {{ catalogItem.price | currency }} ₽</template>
-                                            </option>
-                                        </template>
-                                    </select>
-                                    <button v-if="index > 0 && selected.catalogItems[category.slug].length > 1" @click="deleteCatalogItem(catalogItem.id, category.slug)" class="btn btn-sm btn-outline-danger" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); padding: 0; width: 20px; margin-right: -21px;">&ndash;</button>
+                            </div>
+                        </div>
+
+                        <div v-if="views.quantity" class="mb-4">
+                            <div class="calculation-left-block-main-label">
+                                <strong>Количество</strong>
+                            </div>
+
+                            <input @change="resetDelivery()" v-model="quantity" type="number" class="form-control">
+
+                            <div class="mt-4">
+                                <button @click="viewCategories()" class="btn btn-outline-primary">Назад</button>
+                                <button @click="viewDelivery()" class="btn btn-outline-primary">Далее</button>
+                            </div>
+                        </div>
+
+                        <div v-if="views.delivery" class="mb-4">
+                            <div class="calculation-left-block-main-label">
+                                <strong>Доставка</strong>
+                            </div>
+
+                            <select @change="changeDelivery()" v-model="selected.delivery.id" class="form-select">
+                                <option v-for="delivery in deliveries" :key="'delivery_' + delivery.id" :value="delivery.id">{{ delivery.name }} &mdash; {{ delivery.price }}</option>
+                            </select>
+
+                            <DeliveryPEK v-if="selected.delivery.id == 3" :box="selected.box" :quantity="quantity" :delivery="selected.delivery"></DeliveryPEK>
+
+                            <div class="mt-4">
+                                <button @click="viewQuantity()" class="btn btn-outline-primary">Назад</button>
+                                <button class="btn btn-outline-primary" disabled>Далее</button>
+                            </div>
+                        </div>
+
+                        <div class="total">
+                            <div v-if="price && price > 0" class="row align-items-center mb-3">
+                                <div class="col-6"><strong>Цена за 1 ед:</strong></div>
+                                <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">
+                                    {{ price | currency }} ₽
                                 </div>
-
-                                <div class="mt-4">
-                                    <button @click="prevCategory(category)" class="btn btn-outline-primary">Назад</button>
-                                    <button @click="nextCategory(category)" class="btn btn-outline-primary">Далее</button>
+                            </div>
+                            <div v-if="quantity > 1 && priceWithQuantity && priceWithQuantity > 0" class="row align-items-center mb-3">
+                                <div class="col-6">
+                                    <strong>Цена за {{ quantity }} ед:</strong>
                                 </div>
+                                <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ priceWithQuantity | currency }} ₽</div>
+                            </div>
+                            <div v-if="selected.delivery.name" class="row align-items-center mb-3">
+                                <div class="col-6">
+                                    <strong>Доставка</strong> <br>
+                                    <small style="line-height: 1.3; display: block; cursor: pointer;">
+                                        {{ selected.delivery.name }} <br>
+                                        <template v-if="selected.delivery.directionTo && selected.delivery.directionTo.length > 0">({{ selected.delivery.directionTo }}, {{ selected.delivery.days }} дн.)</template>
+                                    </small>
+                                </div>
+                                <div v-if="selected.delivery.price" class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ selected.delivery.price | currency }} ₽</div>
+                            </div>
+                            <div v-if="selected.delivery.name && selected.delivery.name.length > 0 && priceWithDelivery && priceWithDelivery > 0" class="row align-items-center">
+                                <div class="col-6"><strong>Итого</strong></div>
+                                <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ priceWithDelivery | currency }} ₽</div>
                             </div>
                         </div>
+                        <button v-if="views.saveButton" @click="saveCalculation()" class="btn btn-lg btn-primary w-100">Сохранить расчет</button>
                     </div>
-
-                    <div v-if="views.quantity" class="mb-4">
-                        <div class="calculation-left-block-main-label">
-                            <strong>Количество</strong>
-                        </div>
-
-                        <input @change="resetDelivery()" v-model="quantity" type="number" class="form-control">
-
-                        <div class="mt-4">
-                            <button @click="viewCategories()" class="btn btn-outline-primary">Назад</button>
-                            <button @click="viewDelivery()" class="btn btn-outline-primary">Далее</button>
-                        </div>
+                </div>
+                <div v-if="selected.box && selected.box.id" class="card card-bordered mt-3">
+                    <div class="card-body">
+                        <p class="text-primary fw-bold">Примечание:</p>
+                        {{ selected.box.manager_description }}
                     </div>
-
-                    <div v-if="views.delivery" class="mb-4">
-                        <div class="calculation-left-block-main-label">
-                            <strong>Доставка</strong>
-                        </div>
-
-                        <select @change="changeDelivery()" v-model="selected.delivery.id" class="form-select">
-                            <option v-for="delivery in deliveries" :key="'delivery_' + delivery.id" :value="delivery.id">{{ delivery.name }} &mdash; {{ delivery.price }}</option>
-                        </select>
-
-                        <DeliveryPEK v-if="selected.delivery.id == 3" :box="selected.box" :quantity="quantity" :delivery="selected.delivery"></DeliveryPEK>
-
-                        <div class="mt-4">
-                            <button @click="viewQuantity()" class="btn btn-outline-primary">Назад</button>
-                            <button class="btn btn-outline-primary" disabled>Далее</button>
-                        </div>
-                    </div>
-
-                    <div class="total">
-                        <div v-if="price && price > 0" class="row align-items-center mb-3">
-                            <div class="col-6"><strong>Цена за 1 ед:</strong></div>
-                            <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">
-                                {{ price | currency }} ₽
-                            </div>
-                        </div>
-                        <div v-if="quantity > 1 && priceWithQuantity && priceWithQuantity > 0" class="row align-items-center mb-3">
-                            <div class="col-6">
-                                <strong>Цена за {{ quantity }} ед:</strong>
-                            </div>
-                            <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ priceWithQuantity | currency }} ₽</div>
-                        </div>
-                        <div v-if="selected.delivery.name" class="row align-items-center mb-3">
-                            <div class="col-6">
-                                <strong>Доставка</strong> <br>
-                                <small style="line-height: 1.3; display: block; cursor: pointer;">
-                                    {{ selected.delivery.name }} <br>
-                                    <template v-if="selected.delivery.directionTo && selected.delivery.directionTo.length > 0">({{ selected.delivery.directionTo }}, {{ selected.delivery.days }} дн.)</template>
-                                </small>
-                            </div>
-                            <div v-if="selected.delivery.price" class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ selected.delivery.price | currency }} ₽</div>
-                        </div>
-                        <div v-if="selected.delivery.name && selected.delivery.name.length > 0 && priceWithDelivery && priceWithDelivery > 0" class="row align-items-center">
-                            <div class="col-6"><strong>Итого</strong></div>
-                            <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ priceWithDelivery | currency }} ₽</div>
-                        </div>
-                    </div>
-                    <button v-if="views.saveButton" @click="saveCalculation()" class="btn btn-lg btn-primary w-100">Сохранить расчет</button>
                 </div>
             </div>
             <div class="col-12 col-lg-7">
-                <div class="mb-3 bg-white px-3 py-3">
-                    <small style="color: rgb(136, 136, 136);">Тип</small>
-                    <div v-if="selected.type && selected.type.id > 0" class="row align-items-center">
-                        <div class="col-12">
-                            <strong class="d-block">{{ selected.type.name }}</strong>
+                <div class="card card-bordered mb-2">
+                    <div class="card-body py-2 px-3">
+                        <small style="color: rgb(136, 136, 136);">Тип</small>
+                        <div v-if="selected.type && selected.type.id > 0" class="row align-items-center">
+                            <div class="col-12">
+                                <strong class="d-block">{{ selected.type.name }}</strong>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="mb-3 bg-white px-3 py-3">
-                    <small style="color: rgb(136, 136, 136);">Корпус</small>
-                    <div v-if="selected.box && selected.box.id > 0" class="row align-items-center">
-                        <div class="col-8">
-                            <strong class="d-block">{{ selected.box.name }}</strong>
-                        </div>
-                        <div class="col-4 text-end">
-                            <strong class="text-primary">{{ selected.box.price | currency }} ₽</strong>
+                <div class="card card-bordered mb-2">
+                    <div class="card-body py-2 px-3">
+                        <small style="color: rgb(136, 136, 136);">Корпус</small>
+                        <div v-if="selected.box && selected.box.id > 0" class="row align-items-center">
+                            <div class="col-8">
+                                <strong class="d-block">{{ selected.box.name }}</strong>
+                            </div>
+                            <div class="col-4 text-end">
+                                <strong class="text-primary">{{ selected.box.price | currency }} ₽</strong>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div v-for="category in categories" :key="'category_' + category.id" class="mb-3 bg-white px-3 py-3">
-                    <small style="color: rgb(136, 136, 136);">{{ category.name }}</small>
-                    <div v-for="item in catalogItemsByCategory(category)" class="row align-items-center">
-                        <div class="col-8">
-                            <strong class="d-block">{{ item.name }}</strong>
-                        </div>
-                        <div class="col-4 text-end">
-                            <strong class="text-primary">{{ item.price | currency }} ₽</strong>
+                <div v-for="category in categories" :key="'category_' + category.id" class="card card-bordered mb-2">
+                    <div class="card-body py-2 px-3">
+                        <small style="color: rgb(136, 136, 136);">{{ category.name }}</small>
+                        <div v-for="item in catalogItemsByCategory(category)" class="row align-items-center">
+                            <div class="col-8">
+                                <strong class="d-block">{{ item.name }}</strong>
+                            </div>
+                            <div class="col-4 text-end">
+                                <strong class="text-primary">{{ item.price | currency }} ₽</strong>
+                            </div>
                         </div>
                     </div>
                 </div>

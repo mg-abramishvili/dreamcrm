@@ -24,7 +24,7 @@
         </div>
 
         <div v-if="items && items.length" class="card">
-            <table class="table">
+            <table class="table dataTable">
                 <thead>
                     <tr>
                         <th>Наименование</th>
