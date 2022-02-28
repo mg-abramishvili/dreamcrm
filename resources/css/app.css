@@ -137,6 +137,7 @@ a.sidebar-link:focus svg,
     box-shadow: none !important;
     border-radius: 12px;
     border: 1px solid #eeeae1;
+    margin-bottom: 20px;
 }
 
 .row {
