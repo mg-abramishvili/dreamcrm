@@ -48,6 +48,7 @@ class OfferController extends Controller
         // if(public_path() . '/uploads/offers/' . 'kp_' . $offer->id . '.pdf') {
         //     unlink(public_path() . '/uploads/offers/' . 'kp_' . $offer->id . '.pdf');
         // }
+        echo ini_get('open_basedir');
         $pdf->save(public_path() . '/uploads' . 'kp_' . $offer->id . '.pdf');
     }
 

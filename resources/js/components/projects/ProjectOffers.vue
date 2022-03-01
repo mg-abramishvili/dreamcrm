@@ -76,6 +76,7 @@
                             console.log(key)
                         }
                     }
+                    console.log(error.response)
                 })
             }
         },
