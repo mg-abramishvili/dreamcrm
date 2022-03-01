@@ -58718,34 +58718,38 @@ var render = function () {
               ),
             ]),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-12 col-lg-6 text-end" },
-              [
-                _vm.calculation.project
-                  ? [
-                      _c("button", { staticClass: "btn btn-primary" }, [
-                        _vm._v("Перейти к проекту"),
-                      ]),
-                    ]
-                  : [
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "btn btn-primary",
-                          attrs: {
-                            to: {
-                              name: "ProjectCreate",
-                              params: { calculation_id: _vm.calculation.id },
+            _vm.calculation && _vm.calculation.id > 0
+              ? _c(
+                  "div",
+                  { staticClass: "col-12 col-lg-6 text-end" },
+                  [
+                    _vm.calculation.project
+                      ? [
+                          _c("button", { staticClass: "btn btn-primary" }, [
+                            _vm._v("Перейти к проекту"),
+                          ]),
+                        ]
+                      : [
+                          _c(
+                            "router-link",
+                            {
+                              staticClass: "btn btn-primary",
+                              attrs: {
+                                to: {
+                                  name: "ProjectCreate",
+                                  params: {
+                                    calculation_id: _vm.calculation.id,
+                                  },
+                                },
+                              },
                             },
-                          },
-                        },
-                        [_vm._v("Создать проект")]
-                      ),
-                    ],
-              ],
-              2
-            ),
+                            [_vm._v("Создать проект")]
+                          ),
+                        ],
+                  ],
+                  2
+                )
+              : _vm._e(),
           ]),
         ]),
       ]),

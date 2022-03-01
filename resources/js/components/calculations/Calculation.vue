@@ -14,7 +14,7 @@
                             </strong>
                         </h1>    
                     </div>
-                    <div class="col-12 col-lg-6 text-end">
+                    <div v-if="calculation && calculation.id > 0" class="col-12 col-lg-6 text-end">
                         <template v-if="calculation.project">
                             <button class="btn btn-primary">Перейти к проекту</button>
                         </template>
