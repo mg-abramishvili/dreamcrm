@@ -2,7 +2,7 @@
     <div class="catalog-page">
         <div class="card card-bordered">
             <div class="card-body">
-                <div class="row align-items-center mb-4">
+                <div class="row align-items-center">
                     <div class="col-12 col-lg-6">
                         <h1 class="h3 m-0">
                             <router-link :to="{name: 'CatalogCategory', params: {id: item.category_id}}">

@@ -62794,7 +62794,7 @@ var render = function () {
     [
       _c("div", { staticClass: "card card-bordered" }, [
         _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "row align-items-center mb-4" }, [
+          _c("div", { staticClass: "row align-items-center" }, [
             _c("div", { staticClass: "col-12 col-lg-6" }, [
               _c(
                 "h1",
