@@ -50,8 +50,7 @@ class OfferController extends Controller
         //     unlink(public_path() . '/uploads/offers/' . 'kp_' . $offer->id . '.pdf');
         // }
         
-        return sys_get_temp_dir();
-        // $pdf->save(public_path() . '/uploads/offers/' . 'kp_' . $offer->id . '.pdf');
+        $pdf->save(public_path('uploads/offers/') . '/' . 'kp_' . $offer->id . '.pdf');
     }
 
     // public function offerPDF($id)
