@@ -69,6 +69,7 @@
                 axios.get(`/api/offer/${id}/pdf`)
                 .then((response => {
                     this.views.recreatePdfButton = true
+                    console.log(response)
                 }))
                 .catch((error) => {
                     if(error.response) {
