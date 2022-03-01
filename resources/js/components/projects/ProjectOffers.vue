@@ -71,7 +71,11 @@
                     this.views.recreatePdfButton = true
                 }))
                 .catch((error) => {
-                    console.log(error.response)
+                    if(error.response) {
+                        for(var key in error.response.data.errors){
+                            console.log(key)
+                        }
+                    }
                 })
             }
         },
