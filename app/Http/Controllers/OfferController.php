@@ -6,7 +6,7 @@ use App\Models\Calculation;
 use App\Models\Offer;
 use App\Models\Project;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\Pdf;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 class OfferController extends Controller
 {
