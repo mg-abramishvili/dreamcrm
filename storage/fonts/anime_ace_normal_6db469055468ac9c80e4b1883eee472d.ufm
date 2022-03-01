@@ -1,0 +1,2625 @@
+StartFontMetrics 4.1
+Notice Converted by PHP-font-lib
+Comment https://github.com/PhenX/php-font-lib
+EncodingScheme FontSpecific
+Copyright (c) Eruialath
+FontName Anime Ace v05
+FontSubfamily Regular
+UniqueID Anime Ace v05
+FullName Anime Ace v05
+Version 5.0
+PostScriptName AnimeAcev05
+Weight Medium
+ItalicAngle 0
+IsFixedPitch false
+UnderlineThickness 0
+UnderlinePosition 0
+FontHeightOffset 0
+Ascender 946
+Descender -156
+FontBBox 0 -212 1286 1081
+StartCharMetrics 263
+U 32 ; WX 595 ; N space ; G 3
+U 33 ; WX 428 ; N exclam ; G 25
+U 34 ; WX 392 ; N quotedbl ; G 26
+U 35 ; WX 727 ; N numbersign ; G 27
+U 36 ; WX 778 ; N dollar ; G 28
+U 37 ; WX 869 ; N percent ; G 29
+U 38 ; WX 743 ; N ampersand ; G 30
+U 39 ; WX 308 ; N quotesingle ; G 31
+U 40 ; WX 575 ; N parenleft ; G 32
+U 41 ; WX 575 ; N parenright ; G 33
+U 42 ; WX 434 ; N asterisk ; G 34
+U 43 ; WX 647 ; N plus ; G 35
+U 44 ; WX 309 ; N comma ; G 36
+U 45 ; WX 646 ; N hyphen ; G 37
+U 46 ; WX 209 ; N period ; G 38
+U 47 ; WX 741 ; N slash ; G 39
+U 48 ; WX 984 ; N zero ; G 40
+U 49 ; WX 347 ; N one ; G 41
+U 50 ; WX 783 ; N two ; G 42
+U 51 ; WX 727 ; N three ; G 43
+U 52 ; WX 782 ; N four ; G 44
+U 53 ; WX 655 ; N five ; G 45
+U 54 ; WX 822 ; N six ; G 46
+U 55 ; WX 744 ; N seven ; G 47
+U 56 ; WX 800 ; N eight ; G 48
+U 57 ; WX 801 ; N nine ; G 49
+U 58 ; WX 236 ; N colon ; G 50
+U 59 ; WX 309 ; N semicolon ; G 51
+U 60 ; WX 766 ; N less ; G 52
+U 61 ; WX 701 ; N equal ; G 53
+U 62 ; WX 765 ; N greater ; G 54
+U 63 ; WX 776 ; N question ; G 55
+U 64 ; WX 955 ; N at ; G 56
+U 65 ; WX 847 ; N A ; G 57
+U 66 ; WX 785 ; N B ; G 58
+U 67 ; WX 808 ; N C ; G 59
+U 68 ; WX 839 ; N D ; G 60
+U 69 ; WX 778 ; N E ; G 61
+U 70 ; WX 731 ; N F ; G 62
+U 71 ; WX 898 ; N G ; G 63
+U 72 ; WX 757 ; N H ; G 64
+U 73 ; WX 599 ; N I ; G 65
+U 74 ; WX 828 ; N J ; G 66
+U 75 ; WX 733 ; N K ; G 67
+U 76 ; WX 698 ; N L ; G 68
+U 77 ; WX 1016 ; N M ; G 69
+U 78 ; WX 793 ; N N ; G 70
+U 79 ; WX 984 ; N O ; G 71
+U 80 ; WX 762 ; N P ; G 72
+U 81 ; WX 982 ; N Q ; G 73
+U 82 ; WX 781 ; N R ; G 74
+U 83 ; WX 858 ; N S ; G 75
+U 84 ; WX 699 ; N T ; G 76
+U 85 ; WX 724 ; N U ; G 77
+U 86 ; WX 677 ; N V ; G 78
+U 87 ; WX 1017 ; N W ; G 79
+U 88 ; WX 704 ; N X ; G 80
+U 89 ; WX 809 ; N Y ; G 81
+U 90 ; WX 796 ; N Z ; G 82
+U 91 ; WX 536 ; N bracketleft ; G 83
+U 92 ; WX 741 ; N backslash ; G 84
+U 93 ; WX 535 ; N bracketright ; G 85
+U 94 ; WX 527 ; N asciicircum ; G 241
+U 95 ; WX 824 ; N underscore ; G 86
+U 96 ; WX 440 ; N accent ; G 262
+U 97 ; WX 847 ; N a ; G 87
+U 98 ; WX 785 ; N b ; G 88
+U 99 ; WX 808 ; N c ; G 89
+U 100 ; WX 839 ; N d ; G 90
+U 101 ; WX 778 ; N e ; G 91
+U 102 ; WX 731 ; N f ; G 92
+U 103 ; WX 898 ; N g ; G 93
+U 104 ; WX 757 ; N h ; G 94
+U 105 ; WX 599 ; N i ; G 95
+U 106 ; WX 830 ; N j ; G 96
+U 107 ; WX 733 ; N k ; G 97
+U 108 ; WX 698 ; N l ; G 98
+U 109 ; WX 1016 ; N m ; G 99
+U 110 ; WX 793 ; N n ; G 100
+U 111 ; WX 984 ; N o ; G 101
+U 112 ; WX 762 ; N p ; G 102
+U 113 ; WX 982 ; N q ; G 103
+U 114 ; WX 781 ; N r ; G 104
+U 115 ; WX 858 ; N s ; G 105
+U 116 ; WX 699 ; N t ; G 106
+U 117 ; WX 724 ; N u ; G 107
+U 118 ; WX 677 ; N v ; G 108
+U 119 ; WX 1017 ; N w ; G 109
+U 120 ; WX 704 ; N x ; G 110
+U 121 ; WX 809 ; N y ; G 111
+U 122 ; WX 796 ; N z ; G 112
+U 123 ; WX 817 ; N braceleft ; G 113
+U 124 ; WX 219 ; N bar ; G 114
+U 125 ; WX 818 ; N braceright ; G 115
+U 126 ; WX 625 ; N asciitilde ; G 116
+U 168 ; WX 778 ; N dieresis ; G 145
+U 169 ; WX 956 ; N copyright ; G 143
+U 171 ; WX 723 ; N guillemotleft ; G 147
+U 174 ; WX 956 ; N registered ; G 142
+U 184 ; WX 778 ; N cedilla ; G 173
+U 187 ; WX 723 ; N guillemotright ; G 148
+U 192 ; WX 847 ; N Agrave ; G 150
+U 193 ; WX 798 ; N Aacute ; G 158
+U 194 ; WX 785 ; N Acircumflex ; G 156
+U 195 ; WX 732 ; N Atilde ; G 151
+U 196 ; WX 1059 ; N Adieresis ; G 117
+U 197 ; WX 778 ; N Aring ; G 118
+U 198 ; WX 1267 ; N AE ; G 146
+U 199 ; WX 727 ; N Ccedilla ; G 119
+U 200 ; WX 724 ; N Egrave ; G 160
+U 201 ; WX 724 ; N Eacute ; G 120
+U 202 ; WX 733 ; N Ecircumflex ; G 157
+U 203 ; WX 694 ; N Edieresis ; G 159
+U 204 ; WX 1016 ; N Igrave ; G 164
+U 205 ; WX 757 ; N Iacute ; G 161
+U 206 ; WX 984 ; N Icircumflex ; G 162
+U 207 ; WX 703 ; N Idieresis ; G 163
+U 208 ; WX 762 ; N Eth ; G 6
+U 209 ; WX 808 ; N Ntilde ; G 121
+U 210 ; WX 699 ; N Ograve ; G 7
+U 211 ; WX 809 ; N Oacute ; G 8
+U 212 ; WX 1280 ; N Ocircumflex ; G 9
+U 213 ; WX 704 ; N Otilde ; G 15
+U 214 ; WX 842 ; N Odieresis ; G 122
+U 215 ; WX 699 ; N multiply ; G 16
+U 216 ; WX 885 ; N Oslash ; G 23
+U 217 ; WX 944 ; N Ugrave ; G 4
+U 218 ; WX 1122 ; N Uacute ; G 5
+U 219 ; WX 1046 ; N Ucircumflex ; G 10
+U 220 ; WX 798 ; N Udieresis ; G 123
+U 221 ; WX 911 ; N germandbls ; G 12
+U 222 ; WX 1325 ; N Thorn ; G 13
+U 223 ; WX 818 ; N ch28 ; G 24
+U 224 ; WX 847 ; N agrave ; G 19
+U 225 ; WX 798 ; N aacute ; G 124
+U 226 ; WX 785 ; N acircumflex ; G 125
+U 227 ; WX 732 ; N atilde ; G 22
+U 228 ; WX 1059 ; N adieresis ; G 126
+U 229 ; WX 778 ; N aring ; G 127
+U 230 ; WX 1267 ; N ae ; G 21
+U 231 ; WX 727 ; N ccedilla ; G 128
+U 232 ; WX 724 ; N egrave ; G 17
+U 233 ; WX 724 ; N eacute ; G 129
+U 234 ; WX 733 ; N ecircumflex ; G 130
+U 235 ; WX 694 ; N edieresis ; G 131
+U 236 ; WX 1016 ; N igrave ; G 18
+U 237 ; WX 757 ; N iacute ; G 132
+U 238 ; WX 984 ; N icircumflex ; G 133
+U 239 ; WX 703 ; N idieresis ; G 134
+U 240 ; WX 762 ; N eth ; G 20
+U 241 ; WX 808 ; N ntilde ; G 135
+U 242 ; WX 699 ; N ograve ; G 165
+U 243 ; WX 809 ; N oacute ; G 136
+U 244 ; WX 1280 ; N ocircumflex ; G 137
+U 245 ; WX 704 ; N otilde ; G 166
+U 246 ; WX 842 ; N odieresis ; G 138
+U 247 ; WX 699 ; N divide ; G 167
+U 248 ; WX 885 ; N oslash ; G 168
+U 249 ; WX 944 ; N ugrave ; G 139
+U 250 ; WX 1122 ; N uacute ; G 169
+U 251 ; WX 1046 ; N ucircumflex ; G 140
+U 252 ; WX 798 ; N udieresis ; G 141
+U 253 ; WX 911 ; N yacute ; G 170
+U 254 ; WX 1325 ; N thorn ; G 171
+U 255 ; WX 818 ; N ydieresis ; G 172
+U 1025 ; WX 778 ; N ch247 ; G 174
+U 1028 ; WX 911 ; N ie ; G 252
+U 1030 ; WX 599 ; N I ; G 250
+U 1031 ; WX 599 ; N .notdef ; G 254
+U 1038 ; WX 809 ; N .notdef ; G 255
+U 1040 ; WX 804 ; N ch248 ; G 175
+U 1041 ; WX 798 ; N ch249 ; G 176
+U 1042 ; WX 785 ; N ch250 ; G 177
+U 1043 ; WX 732 ; N ch251 ; G 178
+U 1044 ; WX 977 ; N ch252 ; G 179
+U 1045 ; WX 778 ; N ch253 ; G 180
+U 1046 ; WX 1267 ; N ch254 ; G 181
+U 1047 ; WX 727 ; N ch255 ; G 182
+U 1048 ; WX 724 ; N ch256 ; G 183
+U 1049 ; WX 724 ; N ch257 ; G 184
+U 1050 ; WX 733 ; N ch258 ; G 185
+U 1051 ; WX 694 ; N ch259 ; G 186
+U 1052 ; WX 1016 ; N ch260 ; G 187
+U 1053 ; WX 757 ; N ch261 ; G 188
+U 1054 ; WX 984 ; N ch262 ; G 189
+U 1055 ; WX 703 ; N ch263 ; G 190
+U 1056 ; WX 762 ; N ch264 ; G 191
+U 1057 ; WX 808 ; N ch265 ; G 192
+U 1058 ; WX 699 ; N ch266 ; G 193
+U 1059 ; WX 809 ; N ch267 ; G 194
+U 1060 ; WX 1280 ; N ch268 ; G 195
+U 1061 ; WX 704 ; N ch269 ; G 196
+U 1062 ; WX 877 ; N ch270 ; G 197
+U 1063 ; WX 699 ; N ch271 ; G 198
+U 1064 ; WX 886 ; N ch272 ; G 199
+U 1065 ; WX 964 ; N ch273 ; G 200
+U 1066 ; WX 1122 ; N ch274 ; G 201
+U 1067 ; WX 980 ; N ch275 ; G 202
+U 1068 ; WX 798 ; N ch276 ; G 203
+U 1069 ; WX 911 ; N ch277 ; G 204
+U 1070 ; WX 1325 ; N ch278 ; G 205
+U 1071 ; WX 802 ; N ch279 ; G 206
+U 1072 ; WX 804 ; N ch280 ; G 207
+U 1073 ; WX 798 ; N ch281 ; G 208
+U 1074 ; WX 785 ; N ch282 ; G 209
+U 1075 ; WX 732 ; N ch283 ; G 210
+U 1076 ; WX 977 ; N ch284 ; G 211
+U 1077 ; WX 778 ; N ch285 ; G 212
+U 1078 ; WX 1267 ; N ch286 ; G 213
+U 1079 ; WX 727 ; N ch287 ; G 214
+U 1080 ; WX 724 ; N ch288 ; G 215
+U 1081 ; WX 724 ; N ch289 ; G 216
+U 1082 ; WX 733 ; N ch290 ; G 217
+U 1083 ; WX 694 ; N ch291 ; G 218
+U 1084 ; WX 1016 ; N ch292 ; G 219
+U 1085 ; WX 757 ; N ch293 ; G 220
+U 1086 ; WX 984 ; N ch294 ; G 221
+U 1087 ; WX 703 ; N ch295 ; G 222
+U 1088 ; WX 762 ; N ch296 ; G 223
+U 1089 ; WX 808 ; N ch297 ; G 224
+U 1090 ; WX 699 ; N ch298 ; G 225
+U 1091 ; WX 809 ; N ch299 ; G 226
+U 1092 ; WX 1280 ; N ch300 ; G 227
+U 1093 ; WX 704 ; N ch301 ; G 228
+U 1094 ; WX 877 ; N ch302 ; G 229
+U 1095 ; WX 699 ; N ch303 ; G 230
+U 1096 ; WX 886 ; N ch304 ; G 231
+U 1097 ; WX 964 ; N ch305 ; G 232
+U 1098 ; WX 1122 ; N ch306 ; G 233
+U 1099 ; WX 980 ; N ch307 ; G 234
+U 1100 ; WX 798 ; N ch308 ; G 235
+U 1101 ; WX 911 ; N ch309 ; G 236
+U 1102 ; WX 1325 ; N ch310 ; G 237
+U 1103 ; WX 802 ; N ch311 ; G 238
+U 1105 ; WX 778 ; N ch312 ; G 239
+U 1108 ; WX 911 ; N .notdef ; G 253
+U 1110 ; WX 599 ; N i ; G 251
+U 1111 ; WX 599 ; N .notdef ; G 257
+U 1118 ; WX 809 ; N .notdef ; G 256
+U 1122 ; WX 879 ; N yatcpt ; G 247
+U 1123 ; WX 879 ; N yatsmall ; G 248
+U 1138 ; WX 927 ; N fitacpt ; G 258
+U 1139 ; WX 928 ; N fitasmall ; G 259
+U 8208 ; WX 646 ; N hyphen ; G 37
+U 8212 ; WX 811 ; N mdash ; G 240
+U 8216 ; WX 308 ; N quoteleft ; G 154
+U 8217 ; WX 308 ; N quoteright ; G 155
+U 8220 ; WX 490 ; N quotedblleft ; G 152
+U 8221 ; WX 490 ; N quotedblright ; G 153
+U 8222 ; WX 490 ; N lowquote ; G 244
+U 8226 ; WX 293 ; N minorspace ; G 261
+U 8230 ; WX 696 ; N ellipsis ; G 149
+U 8482 ; WX 925 ; N trademark ; G 144
+U 9786 ; WX 723 ; N quot1 ; G 242
+U 9787 ; WX 723 ; N quot2 ; G 243
+U 9824 ; WX 927 ; N fita ; G 260
+U 9827 ; WX 490 ; N quot5 ; G 246
+U 9829 ; WX 879 ; N yat ; G 249
+U 9830 ; WX 490 ; N quot4 ; G 245
+EndCharMetrics
+StartKernData 
+StartKernPairs 3885
+
+KPX quotedbl dollar -442
+KPX quotedbl percent 106
+KPX quotedbl ampersand -442
+KPX quotedbl two 106
+KPX quotedbl three 106
+KPX quotedbl eth 106
+KPX quotedbl ntilde 106
+KPX quotedbl otilde 106
+
+KPX dollar quotedbl 106
+KPX dollar dollar -68
+KPX dollar percent 106
+KPX dollar t 106
+KPX dollar eth 106
+KPX dollar ntilde 106
+KPX dollar odieresis 106
+
+KPX percent seven -58
+KPX percent Aacute -112
+KPX percent Acircumflex -60
+KPX percent Adieresis -68
+KPX percent Igrave -112
+KPX percent Idieresis -62
+KPX percent Oacute -111
+KPX percent Otilde -160
+KPX percent Odieresis -61
+KPX percent Uacute -62
+KPX percent aacute -112
+KPX percent acircumflex -60
+KPX percent adieresis -68
+KPX percent igrave -112
+KPX percent odieresis 106
+KPX percent divide -115
+KPX percent oslash -115
+KPX percent ugrave -115
+KPX percent uacute -62
+KPX percent ucircumflex -62
+KPX percent thorn -62
+KPX percent ydieresis -60
+
+KPX ampersand quotedbl 106
+KPX ampersand dollar -61
+KPX ampersand percent 106
+KPX ampersand ampersand 35
+KPX ampersand two 35
+KPX ampersand three -35
+KPX ampersand seven 4
+KPX ampersand t 106
+KPX ampersand eth 106
+KPX ampersand ntilde 106
+KPX ampersand odieresis 106
+
+KPX two quotedbl 106
+KPX two cedilla 62
+KPX two Ntilde 46
+KPX two Ocircumflex 46
+KPX two multiply 62
+KPX two Oslash 62
+KPX two Ugrave 62
+KPX two Udieresis 62
+KPX two germandbls 62
+KPX two ch28 46
+KPX two idieresis 46
+KPX two ocircumflex -89
+KPX two otilde -89
+KPX two odieresis 106
+
+KPX three quotedbl 106
+KPX three three -68
+KPX three seven -57
+KPX three odieresis 106
+
+KPX seven percent -95
+KPX seven ampersand -265
+KPX seven two -42
+KPX seven three -95
+KPX seven seven -50
+KPX seven guillemotright -92
+KPX seven Igrave -62
+KPX seven Idieresis -196
+KPX seven Oacute -245
+KPX seven Uacute -146
+KPX seven Ucircumflex -92
+KPX seven igrave -62
+KPX seven eth -95
+KPX seven ntilde -95
+KPX seven ograve -163
+KPX seven udieresis -94
+KPX seven yacute -94
+
+KPX t quotedbl -43
+KPX t three -79
+KPX t seven -51
+KPX t registered 42
+KPX t cedilla 57
+KPX t guillemotright -69
+KPX t Agrave 42
+KPX t Aacute -94
+KPX t Acircumflex -42
+KPX t Adieresis -36
+KPX t Eacute -242
+KPX t Igrave -141
+KPX t Idieresis -126
+KPX t Ntilde 42
+KPX t Oacute -191
+KPX t Ocircumflex 57
+KPX t Otilde -141
+KPX t Odieresis -42
+KPX t multiply 57
+KPX t Oslash 57
+KPX t Ugrave 57
+KPX t Uacute -111
+KPX t Ucircumflex -69
+KPX t Udieresis 57
+KPX t germandbls 57
+KPX t ch28 42
+KPX t agrave 42
+KPX t aacute -94
+KPX t acircumflex -42
+KPX t adieresis -36
+KPX t eacute -242
+KPX t igrave -141
+KPX t idieresis 42
+KPX t oacute -94
+KPX t divide -43
+KPX t oslash -43
+KPX t ugrave -43
+KPX t uacute -43
+KPX t ucircumflex -43
+KPX t thorn -43
+KPX t ydieresis -42
+
+KPX registered quotedbl -102
+KPX registered dollar -164
+KPX registered percent -46
+KPX registered ampersand -46
+KPX registered two -46
+KPX registered three -118
+KPX registered seven -45
+KPX registered guillemotright -45
+KPX registered Aacute -69
+KPX registered Acircumflex -65
+KPX registered Adieresis -61
+KPX registered Eacute -151
+KPX registered Ecircumflex -41
+KPX registered Edieresis -41
+KPX registered Igrave -89
+KPX registered Idieresis -55
+KPX registered Eth -65
+KPX registered Oacute -48
+KPX registered Otilde -117
+KPX registered Odieresis -45
+KPX registered Uacute -87
+KPX registered Ucircumflex -45
+KPX registered aacute -69
+KPX registered acircumflex -65
+KPX registered adieresis -61
+KPX registered eacute -151
+KPX registered ecircumflex -41
+KPX registered edieresis -41
+KPX registered igrave -89
+KPX registered eth -46
+KPX registered ntilde -46
+KPX registered ograve -85
+KPX registered oacute -69
+KPX registered ocircumflex -46
+KPX registered otilde -46
+KPX registered odieresis -46
+KPX registered divide -98
+KPX registered oslash -98
+KPX registered ugrave -98
+KPX registered uacute -85
+KPX registered ucircumflex -85
+KPX registered udieresis -121
+KPX registered yacute -121
+KPX registered thorn -69
+KPX registered ydieresis -65
+
+KPX cedilla dollar -58
+KPX cedilla cedilla 45
+KPX cedilla guillemotright 45
+KPX cedilla Acircumflex 45
+KPX cedilla Adieresis 45
+KPX cedilla Odieresis 45
+KPX cedilla multiply 45
+KPX cedilla Oslash 45
+KPX cedilla Ugrave 45
+KPX cedilla Ucircumflex 45
+KPX cedilla Udieresis 45
+KPX cedilla acircumflex 45
+KPX cedilla adieresis 45
+KPX cedilla ocircumflex -58
+KPX cedilla otilde -58
+KPX cedilla ydieresis 45
+
+KPX guillemotright quotedbl -186
+KPX guillemotright dollar -76
+KPX guillemotright percent -108
+KPX guillemotright three -62
+KPX guillemotright t -123
+KPX guillemotright Aacute -162
+KPX guillemotright Acircumflex -146
+KPX guillemotright Atilde -123
+KPX guillemotright AE -60
+KPX guillemotright Eacute -221
+KPX guillemotright Iacute -45
+KPX guillemotright Icircumflex -132
+KPX guillemotright Eth -56
+KPX guillemotright germandbls -52
+KPX guillemotright Thorn -45
+KPX guillemotright aacute -162
+KPX guillemotright acircumflex -146
+KPX guillemotright atilde -123
+KPX guillemotright ae -60
+KPX guillemotright eacute -221
+KPX guillemotright iacute -45
+KPX guillemotright icircumflex -132
+KPX guillemotright eth -108
+KPX guillemotright ntilde -92
+KPX guillemotright ograve -108
+KPX guillemotright ocircumflex -92
+KPX guillemotright otilde -92
+KPX guillemotright odieresis -186
+KPX guillemotright divide -177
+KPX guillemotright oslash -177
+KPX guillemotright ugrave -177
+KPX guillemotright udieresis -112
+KPX guillemotright yacute -112
+KPX guillemotright ydieresis -146
+
+KPX Agrave quotedbl -68
+KPX Agrave dollar -162
+KPX Agrave ampersand -52
+KPX Agrave two -52
+KPX Agrave three -132
+KPX Agrave seven -58
+KPX Agrave guillemotright -44
+KPX Agrave Atilde -99
+KPX Agrave Adieresis -44
+KPX Agrave Eacute -87
+KPX Agrave Igrave -151
+KPX Agrave Icircumflex -108
+KPX Agrave Idieresis -54
+KPX Agrave Eth -48
+KPX Agrave Ntilde -44
+KPX Agrave Otilde -84
+KPX Agrave Odieresis -75
+KPX Agrave Uacute -70
+KPX Agrave Ucircumflex -44
+KPX Agrave atilde -99
+KPX Agrave adieresis -44
+KPX Agrave eacute -87
+KPX Agrave igrave -151
+KPX Agrave icircumflex -108
+KPX Agrave ograve -25
+KPX Agrave oacute -68
+KPX Agrave ocircumflex -178
+KPX Agrave otilde -178
+KPX Agrave odieresis -68
+KPX Agrave divide -129
+KPX Agrave oslash -129
+KPX Agrave ugrave -129
+KPX Agrave uacute -68
+KPX Agrave ucircumflex -68
+KPX Agrave udieresis -88
+KPX Agrave yacute -88
+KPX Agrave thorn -68
+
+KPX Aacute dollar -196
+KPX Aacute percent -99
+KPX Aacute ampersand -100
+KPX Aacute two -132
+KPX Aacute three -192
+KPX Aacute t -99
+KPX Aacute guillemotright -185
+KPX Aacute Agrave -216
+KPX Aacute Atilde -130
+KPX Aacute Ecircumflex -54
+KPX Aacute Edieresis -54
+KPX Aacute Igrave -134
+KPX Aacute Icircumflex -123
+KPX Aacute Idieresis -226
+KPX Aacute Ntilde -90
+KPX Aacute Oacute -251
+KPX Aacute Odieresis -59
+KPX Aacute Uacute -258
+KPX Aacute Ucircumflex -185
+KPX Aacute germandbls -137
+KPX Aacute ch28 -90
+KPX Aacute agrave -216
+KPX Aacute atilde -130
+KPX Aacute ecircumflex -54
+KPX Aacute edieresis -54
+KPX Aacute igrave -134
+KPX Aacute icircumflex -123
+KPX Aacute eth -99
+KPX Aacute ntilde -99
+KPX Aacute ograve -165
+KPX Aacute ocircumflex -196
+KPX Aacute otilde -196
+KPX Aacute divide -247
+KPX Aacute oslash -247
+KPX Aacute ugrave -247
+KPX Aacute udieresis -276
+KPX Aacute yacute -276
+
+KPX Acircumflex dollar -317
+KPX Acircumflex percent -99
+KPX Acircumflex ampersand -212
+KPX Acircumflex two -132
+KPX Acircumflex three -192
+KPX Acircumflex t -99
+KPX Acircumflex registered -45
+KPX Acircumflex guillemotright -202
+KPX Acircumflex Agrave -202
+KPX Acircumflex Atilde -148
+KPX Acircumflex Ccedilla -69
+KPX Acircumflex Egrave -69
+KPX Acircumflex Ecircumflex -56
+KPX Acircumflex Edieresis -56
+KPX Acircumflex Igrave -167
+KPX Acircumflex Icircumflex -141
+KPX Acircumflex Idieresis -307
+KPX Acircumflex Eth -49
+KPX Acircumflex Ntilde -108
+KPX Acircumflex Ograve -40
+KPX Acircumflex Oacute -281
+KPX Acircumflex Odieresis -76
+KPX Acircumflex Uacute -291
+KPX Acircumflex Ucircumflex -202
+KPX Acircumflex germandbls -155
+KPX Acircumflex ch28 -108
+KPX Acircumflex agrave -202
+KPX Acircumflex atilde -148
+KPX Acircumflex ccedilla -69
+KPX Acircumflex egrave -69
+KPX Acircumflex ecircumflex -56
+KPX Acircumflex edieresis -56
+KPX Acircumflex igrave -167
+KPX Acircumflex icircumflex -141
+KPX Acircumflex idieresis -45
+KPX Acircumflex eth -99
+KPX Acircumflex ntilde -99
+KPX Acircumflex ograve -165
+KPX Acircumflex oacute -53
+KPX Acircumflex ocircumflex -317
+KPX Acircumflex otilde -317
+KPX Acircumflex odieresis -69
+KPX Acircumflex divide -76
+KPX Acircumflex oslash -76
+KPX Acircumflex ugrave -76
+KPX Acircumflex udieresis -293
+KPX Acircumflex yacute -293
+
+KPX Atilde dollar -196
+KPX Atilde ampersand -99
+KPX Atilde three -72
+KPX Atilde seven -45
+KPX Atilde registered 48
+KPX Atilde cedilla 64
+KPX Atilde guillemotright -78
+KPX Atilde Adieresis -46
+KPX Atilde Eacute -89
+KPX Atilde Igrave -138
+KPX Atilde Idieresis -119
+KPX Atilde Ntilde 64
+KPX Atilde Oacute -161
+KPX Atilde Ocircumflex 48
+KPX Atilde Otilde -102
+KPX Atilde multiply 64
+KPX Atilde Oslash 64
+KPX Atilde Ugrave 64
+KPX Atilde Uacute -120
+KPX Atilde Ucircumflex -78
+KPX Atilde Udieresis 64
+KPX Atilde ch28 64
+KPX Atilde adieresis -46
+KPX Atilde eacute -89
+KPX Atilde igrave -138
+KPX Atilde idieresis 48
+KPX Atilde oacute -55
+KPX Atilde ocircumflex -196
+KPX Atilde otilde -196
+
+KPX Adieresis dollar -119
+KPX Adieresis percent -99
+KPX Adieresis ampersand -41
+KPX Adieresis two -41
+KPX Adieresis three -89
+KPX Adieresis t -99
+KPX Adieresis Atilde -151
+KPX Adieresis AE -41
+KPX Adieresis Ccedilla -41
+KPX Adieresis Egrave -41
+KPX Adieresis Ecircumflex -44
+KPX Adieresis Edieresis -44
+KPX Adieresis Igrave -45
+KPX Adieresis Icircumflex -99
+KPX Adieresis Eth -52
+KPX Adieresis Ntilde -64
+KPX Adieresis Uacute -58
+KPX Adieresis germandbls -64
+KPX Adieresis atilde -151
+KPX Adieresis ae -41
+KPX Adieresis ccedilla -41
+KPX Adieresis egrave -41
+KPX Adieresis ecircumflex -44
+KPX Adieresis edieresis -44
+KPX Adieresis igrave -45
+KPX Adieresis icircumflex -99
+KPX Adieresis eth -99
+KPX Adieresis ntilde -99
+KPX Adieresis ograve -104
+KPX Adieresis oacute -41
+KPX Adieresis ocircumflex -119
+KPX Adieresis otilde -119
+KPX Adieresis odieresis -56
+KPX Adieresis divide -79
+KPX Adieresis oslash -79
+KPX Adieresis ugrave -79
+KPX Adieresis udieresis -123
+KPX Adieresis yacute -123
+
+KPX Aring quotedbl -115
+KPX Aring dollar -83
+KPX Aring percent -99
+KPX Aring three -53
+KPX Aring seven -42
+KPX Aring t -99
+KPX Aring Aacute -75
+KPX Aring Acircumflex -75
+KPX Aring Atilde -130
+KPX Aring Adieresis -43
+KPX Aring Eacute -118
+KPX Aring Icircumflex -123
+KPX Aring Eth -47
+KPX Aring aacute -75
+KPX Aring acircumflex -75
+KPX Aring atilde -130
+KPX Aring adieresis -43
+KPX Aring eacute -118
+KPX Aring icircumflex -123
+KPX Aring eth -99
+KPX Aring ntilde -99
+KPX Aring ograve -130
+KPX Aring ocircumflex -83
+KPX Aring otilde -83
+KPX Aring odieresis -130
+KPX Aring divide -121
+KPX Aring oslash -121
+KPX Aring ugrave -121
+KPX Aring udieresis -71
+KPX Aring yacute -71
+KPX Aring ydieresis -75
+
+KPX AE dollar -43
+KPX AE registered 44
+KPX AE cedilla 60
+KPX AE guillemotright 60
+KPX AE Agrave 60
+KPX AE Aacute 44
+KPX AE Acircumflex 60
+KPX AE Adieresis 60
+KPX AE Idieresis 50
+KPX AE Ntilde 44
+KPX AE Oacute 41
+KPX AE Ocircumflex 44
+KPX AE Odieresis 60
+KPX AE multiply 60
+KPX AE Oslash 60
+KPX AE Ugrave 60
+KPX AE Ucircumflex 60
+KPX AE Udieresis 60
+KPX AE germandbls 44
+KPX AE ch28 44
+KPX AE agrave 60
+KPX AE aacute 44
+KPX AE acircumflex 60
+KPX AE adieresis 60
+KPX AE idieresis 44
+KPX AE ocircumflex -43
+KPX AE otilde -43
+KPX AE ydieresis 60
+
+KPX Ccedilla dollar -61
+KPX Ccedilla registered 42
+KPX Ccedilla cedilla 58
+KPX Ccedilla guillemotright 42
+KPX Ccedilla Agrave 42
+KPX Ccedilla Aacute 58
+KPX Ccedilla Acircumflex 58
+KPX Ccedilla Adieresis 58
+KPX Ccedilla Idieresis 48
+KPX Ccedilla Ntilde 42
+KPX Ccedilla Ocircumflex 42
+KPX Ccedilla Odieresis 42
+KPX Ccedilla multiply 58
+KPX Ccedilla Oslash 58
+KPX Ccedilla Ugrave 58
+KPX Ccedilla Ucircumflex 42
+KPX Ccedilla Udieresis 58
+KPX Ccedilla germandbls 42
+KPX Ccedilla ch28 42
+KPX Ccedilla agrave 42
+KPX Ccedilla aacute 58
+KPX Ccedilla acircumflex 58
+KPX Ccedilla adieresis 58
+KPX Ccedilla idieresis 42
+KPX Ccedilla ocircumflex -61
+KPX Ccedilla otilde -61
+KPX Ccedilla ydieresis 58
+
+KPX Egrave quotedbl -62
+KPX Egrave cedilla 57
+KPX Egrave guillemotright 73
+KPX Egrave Agrave 57
+KPX Egrave Atilde -78
+KPX Egrave Eacute -65
+KPX Egrave Icircumflex -36
+KPX Egrave Idieresis 48
+KPX Egrave Oacute 54
+KPX Egrave Odieresis 73
+KPX Egrave multiply 57
+KPX Egrave Oslash 57
+KPX Egrave Ugrave 57
+KPX Egrave Ucircumflex 73
+KPX Egrave Udieresis 41
+KPX Egrave ch28 41
+KPX Egrave agrave 57
+KPX Egrave atilde -78
+KPX Egrave eacute -65
+KPX Egrave icircumflex -36
+KPX Egrave ograve -78
+KPX Egrave ocircumflex -46
+KPX Egrave otilde -46
+KPX Egrave odieresis -62
+KPX Egrave divide -69
+KPX Egrave oslash -69
+KPX Egrave ugrave -69
+KPX Egrave udieresis -50
+KPX Egrave yacute -50
+
+KPX Eacute quotedbl -92
+KPX Eacute dollar -189
+KPX Eacute ampersand -79
+KPX Eacute three -96
+KPX Eacute seven -53
+KPX Eacute registered 40
+KPX Eacute cedilla 40
+KPX Eacute guillemotright -55
+KPX Eacute Agrave 40
+KPX Eacute Aacute -99
+KPX Eacute Acircumflex -52
+KPX Eacute Adieresis -52
+KPX Eacute Eacute -250
+KPX Eacute Igrave -130
+KPX Eacute Idieresis -81
+KPX Eacute Eth -43
+KPX Eacute Oacute -58
+KPX Eacute Ocircumflex 40
+KPX Eacute Otilde -174
+KPX Eacute Odieresis -40
+KPX Eacute multiply 40
+KPX Eacute Oslash 40
+KPX Eacute Ugrave 40
+KPX Eacute Uacute -97
+KPX Eacute Ucircumflex -55
+KPX Eacute germandbls 40
+KPX Eacute agrave 40
+KPX Eacute aacute -99
+KPX Eacute acircumflex -52
+KPX Eacute adieresis -52
+KPX Eacute eacute -250
+KPX Eacute igrave -130
+KPX Eacute idieresis 40
+KPX Eacute oacute -95
+KPX Eacute ocircumflex -189
+KPX Eacute otilde -189
+KPX Eacute odieresis -93
+KPX Eacute divide -180
+KPX Eacute oslash -180
+KPX Eacute ugrave -180
+KPX Eacute uacute -142
+KPX Eacute ucircumflex -142
+KPX Eacute thorn -142
+KPX Eacute ydieresis -134
+
+KPX Ecircumflex dollar -60
+KPX Ecircumflex cedilla 43
+KPX Ecircumflex guillemotright 43
+KPX Ecircumflex Acircumflex 43
+KPX Ecircumflex Adieresis 43
+KPX Ecircumflex Odieresis 43
+KPX Ecircumflex multiply 43
+KPX Ecircumflex Oslash 43
+KPX Ecircumflex Ugrave 43
+KPX Ecircumflex Ucircumflex 43
+KPX Ecircumflex acircumflex 43
+KPX Ecircumflex adieresis 43
+KPX Ecircumflex ocircumflex -60
+KPX Ecircumflex otilde -60
+KPX Ecircumflex ydieresis 43
+
+KPX Edieresis quotedbl -92
+KPX Edieresis dollar -188
+KPX Edieresis ampersand -78
+KPX Edieresis three -111
+KPX Edieresis seven -68
+KPX Edieresis guillemotright -54
+KPX Edieresis Aacute -99
+KPX Edieresis Acircumflex -52
+KPX Edieresis Adieresis -52
+KPX Edieresis Eacute -250
+KPX Edieresis Igrave -145
+KPX Edieresis Idieresis -79
+KPX Edieresis Eth -58
+KPX Edieresis Oacute -73
+KPX Edieresis Otilde -188
+KPX Edieresis Odieresis -40
+KPX Edieresis Uacute -96
+KPX Edieresis Ucircumflex -54
+KPX Edieresis aacute -99
+KPX Edieresis acircumflex -52
+KPX Edieresis adieresis -52
+KPX Edieresis eacute -250
+KPX Edieresis igrave -145
+KPX Edieresis oacute -109
+KPX Edieresis ocircumflex -188
+KPX Edieresis otilde -188
+KPX Edieresis odieresis -92
+KPX Edieresis divide -226
+KPX Edieresis oslash -226
+KPX Edieresis ugrave -226
+KPX Edieresis uacute -157
+KPX Edieresis ucircumflex -157
+KPX Edieresis thorn -157
+KPX Edieresis ydieresis -164
+
+KPX Igrave dollar -272
+KPX Igrave ampersand -161
+KPX Igrave three -68
+KPX Igrave seven -41
+KPX Igrave registered 52
+KPX Igrave guillemotright -74
+KPX Igrave Eacute -70
+KPX Igrave Igrave -150
+KPX Igrave Idieresis -131
+KPX Igrave Oacute -140
+KPX Igrave Ocircumflex 52
+KPX Igrave Otilde -83
+KPX Igrave Odieresis -43
+KPX Igrave Uacute -116
+KPX Igrave Ucircumflex -74
+KPX Igrave ch28 52
+KPX Igrave eacute -70
+KPX Igrave igrave -150
+KPX Igrave idieresis 52
+KPX Igrave oacute -51
+KPX Igrave ocircumflex -272
+KPX Igrave otilde -272
+
+KPX Iacute dollar -134
+KPX Iacute three -71
+KPX Iacute registered 49
+KPX Iacute cedilla 65
+KPX Iacute guillemotright -61
+KPX Iacute Agrave 49
+KPX Iacute Eacute -72
+KPX Iacute Igrave -136
+KPX Iacute Idieresis -87
+KPX Iacute Oacute -96
+KPX Iacute Ocircumflex 65
+KPX Iacute Otilde -85
+KPX Iacute multiply 65
+KPX Iacute Oslash 65
+KPX Iacute Ugrave 65
+KPX Iacute Uacute -87
+KPX Iacute Ucircumflex -61
+KPX Iacute Udieresis 65
+KPX Iacute germandbls 65
+KPX Iacute ch28 49
+KPX Iacute agrave 49
+KPX Iacute eacute -72
+KPX Iacute igrave -136
+KPX Iacute idieresis 49
+KPX Iacute ocircumflex -130
+KPX Iacute otilde -130
+
+KPX Icircumflex dollar -92
+KPX Icircumflex ampersand -45
+KPX Icircumflex two -45
+KPX Icircumflex three -62
+KPX Icircumflex seven 44
+KPX Icircumflex registered 43
+KPX Icircumflex cedilla 74
+KPX Icircumflex Acircumflex 74
+KPX Icircumflex Adieresis 58
+KPX Icircumflex Igrave -49
+KPX Icircumflex Ocircumflex 43
+KPX Icircumflex multiply 74
+KPX Icircumflex Oslash 74
+KPX Icircumflex Ugrave 74
+KPX Icircumflex Uacute -47
+KPX Icircumflex Udieresis 74
+KPX Icircumflex acircumflex 74
+KPX Icircumflex adieresis 58
+KPX Icircumflex igrave -49
+KPX Icircumflex idieresis 43
+KPX Icircumflex ocircumflex -92
+KPX Icircumflex otilde -92
+KPX Icircumflex ydieresis 74
+
+KPX Idieresis quotedbl -243
+KPX Idieresis percent -101
+KPX Idieresis t -117
+KPX Idieresis cedilla 49
+KPX Idieresis guillemotright 65
+KPX Idieresis Aacute -74
+KPX Idieresis Acircumflex -74
+KPX Idieresis Atilde -133
+KPX Idieresis Eacute -180
+KPX Idieresis Icircumflex -75
+KPX Idieresis Idieresis 55
+KPX Idieresis Oacute 46
+KPX Idieresis Odieresis 65
+KPX Idieresis multiply 49
+KPX Idieresis Oslash 49
+KPX Idieresis Ugrave 49
+KPX Idieresis Ucircumflex 65
+KPX Idieresis aacute -74
+KPX Idieresis acircumflex -74
+KPX Idieresis atilde -133
+KPX Idieresis eacute -180
+KPX Idieresis icircumflex -75
+KPX Idieresis eth -101
+KPX Idieresis ntilde -85
+KPX Idieresis ograve -101
+KPX Idieresis ocircumflex -54
+KPX Idieresis otilde -54
+KPX Idieresis odieresis -227
+KPX Idieresis divide -171
+KPX Idieresis oslash -171
+KPX Idieresis ugrave -171
+KPX Idieresis udieresis -74
+KPX Idieresis yacute -74
+KPX Idieresis ydieresis -74
+
+KPX Eth quotedbl -69
+KPX Eth dollar -117
+KPX Eth three -87
+KPX Eth seven -59
+KPX Eth t -85
+KPX Eth Aacute -45
+KPX Eth Atilde -101
+KPX Eth Eacute -72
+KPX Eth Igrave -42
+KPX Eth Icircumflex -94
+KPX Eth Eth -49
+KPX Eth Otilde -69
+KPX Eth Uacute -56
+KPX Eth aacute -45
+KPX Eth atilde -101
+KPX Eth eacute -72
+KPX Eth igrave -42
+KPX Eth icircumflex -94
+KPX Eth ocircumflex -117
+KPX Eth otilde -117
+KPX Eth odieresis -101
+KPX Eth divide -168
+KPX Eth oslash -168
+KPX Eth ugrave -168
+KPX Eth uacute -54
+KPX Eth ucircumflex -54
+KPX Eth thorn -54
+
+KPX Ntilde quotedbl -61
+KPX Ntilde dollar -124
+KPX Ntilde percent -54
+KPX Ntilde three -94
+KPX Ntilde seven -51
+KPX Ntilde t -54
+KPX Ntilde Atilde -61
+KPX Ntilde Adieresis -52
+KPX Ntilde Eacute -200
+KPX Ntilde Igrave -49
+KPX Ntilde Icircumflex -69
+KPX Ntilde Eth -41
+KPX Ntilde Otilde -92
+KPX Ntilde Uacute -47
+KPX Ntilde atilde -61
+KPX Ntilde adieresis -52
+KPX Ntilde eacute -200
+KPX Ntilde igrave -49
+KPX Ntilde icircumflex -69
+KPX Ntilde eth -54
+KPX Ntilde ntilde -54
+KPX Ntilde ograve -54
+KPX Ntilde ocircumflex -108
+KPX Ntilde otilde -108
+KPX Ntilde odieresis -61
+KPX Ntilde divide -99
+KPX Ntilde oslash -99
+KPX Ntilde ugrave -99
+KPX Ntilde uacute -61
+KPX Ntilde ucircumflex -61
+KPX Ntilde udieresis -80
+KPX Ntilde yacute -80
+KPX Ntilde thorn -61
+
+KPX Ograve dollar -317
+KPX Ograve percent -99
+KPX Ograve ampersand -215
+KPX Ograve two -130
+KPX Ograve three -194
+KPX Ograve t -99
+KPX Ograve cedilla 61
+KPX Ograve guillemotright -144
+KPX Ograve Agrave -160
+KPX Ograve Aacute 61
+KPX Ograve Acircumflex 61
+KPX Ograve Atilde -90
+KPX Ograve Adieresis 61
+KPX Ograve Igrave -94
+KPX Ograve Icircumflex -83
+KPX Ograve Idieresis -233
+KPX Ograve Ntilde -50
+KPX Ograve Oacute -368
+KPX Ograve multiply 61
+KPX Ograve Oslash 61
+KPX Ograve Ugrave 61
+KPX Ograve Uacute -218
+KPX Ograve Ucircumflex -144
+KPX Ograve Udieresis 61
+KPX Ograve germandbls -97
+KPX Ograve ch28 -50
+KPX Ograve agrave -160
+KPX Ograve aacute 61
+KPX Ograve acircumflex 61
+KPX Ograve atilde -90
+KPX Ograve adieresis 61
+KPX Ograve igrave -94
+KPX Ograve icircumflex -83
+KPX Ograve eth -99
+KPX Ograve ntilde -99
+KPX Ograve ograve -104
+KPX Ograve ocircumflex -317
+KPX Ograve otilde -317
+KPX Ograve udieresis -235
+KPX Ograve yacute -235
+KPX Ograve ydieresis 61
+
+KPX Oacute quotedbl -122
+KPX Oacute dollar -64
+KPX Oacute ampersand 46
+KPX Oacute two 46
+KPX Oacute cedilla 70
+KPX Oacute guillemotright 54
+KPX Oacute Agrave 86
+KPX Oacute Aacute -99
+KPX Oacute Acircumflex -72
+KPX Oacute Atilde -49
+KPX Oacute AE 46
+KPX Oacute Ccedilla 46
+KPX Oacute Egrave 46
+KPX Oacute Eacute -199
+KPX Oacute Ecircumflex 43
+KPX Oacute Edieresis 43
+KPX Oacute Icircumflex -46
+KPX Oacute Idieresis 44
+KPX Oacute Ograve 43
+KPX Oacute Oacute 51
+KPX Oacute Odieresis 54
+KPX Oacute multiply 70
+KPX Oacute Oslash 70
+KPX Oacute Ugrave 70
+KPX Oacute Ucircumflex 54
+KPX Oacute Udieresis 70
+KPX Oacute germandbls 70
+KPX Oacute ch28 70
+KPX Oacute agrave 86
+KPX Oacute aacute -99
+KPX Oacute acircumflex -72
+KPX Oacute atilde -49
+KPX Oacute ae 46
+KPX Oacute ccedilla 46
+KPX Oacute egrave 46
+KPX Oacute eacute -199
+KPX Oacute ecircumflex 43
+KPX Oacute edieresis 43
+KPX Oacute icircumflex -46
+KPX Oacute ograve -49
+KPX Oacute ocircumflex -64
+KPX Oacute otilde -64
+KPX Oacute odieresis -102
+KPX Oacute divide -166
+KPX Oacute oslash -166
+KPX Oacute ugrave -166
+KPX Oacute ydieresis -72
+
+KPX Ocircumflex quotedbl -102
+KPX Ocircumflex dollar -164
+KPX Ocircumflex percent -46
+KPX Ocircumflex ampersand -46
+KPX Ocircumflex two -54
+KPX Ocircumflex three -118
+KPX Ocircumflex seven -45
+KPX Ocircumflex guillemotright -45
+KPX Ocircumflex Aacute -69
+KPX Ocircumflex Acircumflex -65
+KPX Ocircumflex Adieresis -61
+KPX Ocircumflex Eacute -151
+KPX Ocircumflex Ecircumflex -41
+KPX Ocircumflex Edieresis -41
+KPX Ocircumflex Igrave -89
+KPX Ocircumflex Idieresis -55
+KPX Ocircumflex Eth -65
+KPX Ocircumflex Oacute -48
+KPX Ocircumflex Otilde -117
+KPX Ocircumflex Odieresis -45
+KPX Ocircumflex Uacute -87
+KPX Ocircumflex Ucircumflex -45
+KPX Ocircumflex aacute -69
+KPX Ocircumflex acircumflex -65
+KPX Ocircumflex adieresis -65
+KPX Ocircumflex eacute -151
+KPX Ocircumflex ecircumflex -41
+KPX Ocircumflex edieresis -41
+KPX Ocircumflex igrave -89
+KPX Ocircumflex eth -56
+KPX Ocircumflex ntilde -56
+KPX Ocircumflex ograve -101
+KPX Ocircumflex oacute -69
+KPX Ocircumflex ocircumflex -164
+KPX Ocircumflex otilde -164
+KPX Ocircumflex odieresis -46
+KPX Ocircumflex divide -98
+KPX Ocircumflex oslash -98
+KPX Ocircumflex ugrave -98
+KPX Ocircumflex uacute -85
+KPX Ocircumflex ucircumflex -85
+KPX Ocircumflex udieresis -121
+KPX Ocircumflex yacute -121
+KPX Ocircumflex thorn -85
+KPX Ocircumflex ydieresis -65
+
+KPX Otilde dollar -57
+KPX Otilde percent -99
+KPX Otilde three -42
+KPX Otilde t -88
+KPX Otilde Atilde -135
+KPX Otilde Icircumflex -99
+KPX Otilde Odieresis 46
+KPX Otilde multiply 62
+KPX Otilde Oslash 62
+KPX Otilde Udieresis 46
+KPX Otilde germandbls -49
+KPX Otilde atilde -135
+KPX Otilde icircumflex -99
+KPX Otilde eth -99
+KPX Otilde ntilde -99
+KPX Otilde ograve -104
+KPX Otilde ocircumflex -72
+KPX Otilde otilde -72
+KPX Otilde divide -63
+KPX Otilde oslash -63
+KPX Otilde ugrave -63
+KPX Otilde udieresis -124
+KPX Otilde yacute -124
+
+KPX Odieresis quotedbl -158
+KPX Odieresis dollar -158
+KPX Odieresis ampersand -48
+KPX Odieresis two -48
+KPX Odieresis three -112
+KPX Odieresis seven -69
+KPX Odieresis Aacute -118
+KPX Odieresis Acircumflex -118
+KPX Odieresis Atilde -48
+KPX Odieresis Adieresis -118
+KPX Odieresis Eacute -177
+KPX Odieresis Igrave -99
+KPX Odieresis Icircumflex -57
+KPX Odieresis Idieresis -65
+KPX Odieresis Eth -59
+KPX Odieresis Otilde -142
+KPX Odieresis Odieresis -71
+KPX Odieresis Uacute -81
+KPX Odieresis aacute -118
+KPX Odieresis acircumflex -118
+KPX Odieresis atilde -48
+KPX Odieresis adieresis -118
+KPX Odieresis eacute -177
+KPX Odieresis igrave -99
+KPX Odieresis icircumflex -57
+KPX Odieresis oacute -64
+KPX Odieresis ocircumflex -158
+KPX Odieresis otilde -158
+KPX Odieresis odieresis -158
+KPX Odieresis divide -149
+KPX Odieresis oslash -149
+KPX Odieresis ugrave -149
+KPX Odieresis uacute -111
+KPX Odieresis ucircumflex -111
+KPX Odieresis thorn -111
+KPX Odieresis ydieresis -118
+
+KPX multiply dollar -76
+KPX multiply percent -45
+KPX multiply three -46
+KPX multiply t -45
+KPX multiply Atilde -45
+KPX multiply atilde -45
+KPX multiply eth -45
+KPX multiply ntilde -45
+KPX multiply ograve -45
+KPX multiply ocircumflex -76
+KPX multiply otilde -76
+KPX multiply udieresis -49
+KPX multiply yacute -49
+
+KPX Oslash dollar -76
+KPX Oslash percent -45
+KPX Oslash three -46
+KPX Oslash t -45
+KPX Oslash Atilde -45
+KPX Oslash atilde -45
+KPX Oslash eth -45
+KPX Oslash ntilde -45
+KPX Oslash ograve -45
+KPX Oslash ocircumflex -76
+KPX Oslash otilde -76
+KPX Oslash udieresis -49
+KPX Oslash yacute -49
+
+KPX Ugrave dollar -102
+KPX Ugrave percent -99
+KPX Ugrave three -72
+KPX Ugrave t -99
+KPX Ugrave Agrave -62
+KPX Ugrave Atilde -165
+KPX Ugrave Ecircumflex -42
+KPX Ugrave Edieresis -42
+KPX Ugrave Igrave -43
+KPX Ugrave Icircumflex -158
+KPX Ugrave Eth -62
+KPX Ugrave Ntilde -62
+KPX Ugrave Uacute -41
+KPX Ugrave germandbls -99
+KPX Ugrave agrave -62
+KPX Ugrave atilde -165
+KPX Ugrave ecircumflex -42
+KPX Ugrave edieresis -42
+KPX Ugrave igrave -43
+KPX Ugrave icircumflex -99
+KPX Ugrave eth -99
+KPX Ugrave ntilde -99
+KPX Ugrave ograve -104
+KPX Ugrave ocircumflex -102
+KPX Ugrave otilde -102
+KPX Ugrave odieresis -55
+KPX Ugrave divide -93
+KPX Ugrave oslash -93
+KPX Ugrave ugrave -93
+KPX Ugrave udieresis -169
+KPX Ugrave yacute -169
+
+KPX Uacute quotedbl -130
+KPX Uacute percent -83
+KPX Uacute t -99
+KPX Uacute cedilla 51
+KPX Uacute guillemotright 51
+KPX Uacute Aacute -106
+KPX Uacute Acircumflex -90
+KPX Uacute Atilde -99
+KPX Uacute AE -52
+KPX Uacute Eacute -149
+KPX Uacute Icircumflex -92
+KPX Uacute Idieresis 41
+KPX Uacute multiply 51
+KPX Uacute Oslash 51
+KPX Uacute Ugrave 51
+KPX Uacute Ucircumflex 51
+KPX Uacute aacute -106
+KPX Uacute acircumflex -90
+KPX Uacute atilde -99
+KPX Uacute ae -52
+KPX Uacute eacute -149
+KPX Uacute icircumflex -92
+KPX Uacute eth -83
+KPX Uacute ntilde -67
+KPX Uacute ograve -83
+KPX Uacute odieresis -130
+KPX Uacute divide -121
+KPX Uacute oslash -121
+KPX Uacute ugrave -121
+KPX Uacute udieresis -87
+KPX Uacute yacute -87
+KPX Uacute ydieresis -90
+
+KPX Ucircumflex quotedbl -186
+KPX Ucircumflex dollar -76
+KPX Ucircumflex percent -108
+KPX Ucircumflex three -62
+KPX Ucircumflex t -123
+KPX Ucircumflex Aacute -162
+KPX Ucircumflex Acircumflex -146
+KPX Ucircumflex Atilde -123
+KPX Ucircumflex AE -60
+KPX Ucircumflex Eacute -221
+KPX Ucircumflex Iacute -45
+KPX Ucircumflex Icircumflex -132
+KPX Ucircumflex Eth -56
+KPX Ucircumflex germandbls -52
+KPX Ucircumflex Thorn -45
+KPX Ucircumflex aacute -162
+KPX Ucircumflex acircumflex -146
+KPX Ucircumflex atilde -123
+KPX Ucircumflex ae -60
+KPX Ucircumflex eacute -221
+KPX Ucircumflex iacute -45
+KPX Ucircumflex icircumflex -132
+KPX Ucircumflex eth -108
+KPX Ucircumflex ntilde -92
+KPX Ucircumflex ograve -108
+KPX Ucircumflex ocircumflex -92
+KPX Ucircumflex otilde -92
+KPX Ucircumflex odieresis -186
+KPX Ucircumflex divide -177
+KPX Ucircumflex oslash -177
+KPX Ucircumflex ugrave -177
+KPX Ucircumflex udieresis -112
+KPX Ucircumflex yacute -112
+KPX Ucircumflex ydieresis -146
+
+KPX Udieresis quotedbl -79
+KPX Udieresis dollar -126
+KPX Udieresis percent -95
+KPX Udieresis ampersand -63
+KPX Udieresis two -47
+KPX Udieresis three -112
+KPX Udieresis seven -69
+KPX Udieresis Eacute -82
+KPX Udieresis Igrave -67
+KPX Udieresis Eth -59
+KPX Udieresis Oacute -58
+KPX Udieresis Otilde -79
+KPX Udieresis Uacute -65
+KPX Udieresis eacute -82
+KPX Udieresis igrave -67
+KPX Udieresis eth -95
+KPX Udieresis ntilde -95
+KPX Udieresis ograve -63
+KPX Udieresis oacute -63
+KPX Udieresis ocircumflex -142
+KPX Udieresis otilde -142
+KPX Udieresis odieresis -79
+KPX Udieresis divide -70
+KPX Udieresis oslash -70
+KPX Udieresis ugrave -70
+KPX Udieresis uacute -63
+KPX Udieresis ucircumflex -63
+KPX Udieresis udieresis -99
+KPX Udieresis yacute -99
+KPX Udieresis thorn -63
+
+KPX germandbls quotedbl -60
+KPX germandbls dollar -233
+KPX germandbls ampersand -123
+KPX germandbls three -109
+KPX germandbls seven -81
+KPX germandbls guillemotright -83
+KPX germandbls Acircumflex -51
+KPX germandbls Adieresis -67
+KPX germandbls Eacute -110
+KPX germandbls Igrave -174
+KPX germandbls Idieresis -109
+KPX germandbls Eth -40
+KPX germandbls Oacute -102
+KPX germandbls Otilde -123
+KPX germandbls Odieresis -51
+KPX germandbls Uacute -125
+KPX germandbls Ucircumflex -83
+KPX germandbls acircumflex -51
+KPX germandbls adieresis -67
+KPX germandbls eacute -110
+KPX germandbls igrave -174
+KPX germandbls oacute -91
+KPX germandbls ocircumflex -217
+KPX germandbls otilde -217
+KPX germandbls odieresis -44
+KPX germandbls uacute -60
+KPX germandbls ucircumflex -60
+KPX germandbls thorn -60
+KPX germandbls ydieresis -51
+
+KPX Thorn dollar -47
+KPX Thorn cedilla 56
+KPX Thorn guillemotright 56
+KPX Thorn Agrave 40
+KPX Thorn Aacute 56
+KPX Thorn Acircumflex 56
+KPX Thorn Adieresis 56
+KPX Thorn Idieresis 46
+KPX Thorn Ntilde 40
+KPX Thorn Odieresis 56
+KPX Thorn multiply 56
+KPX Thorn Oslash 56
+KPX Thorn Ugrave 56
+KPX Thorn Ucircumflex 56
+KPX Thorn Udieresis 56
+KPX Thorn germandbls 40
+KPX Thorn ch28 40
+KPX Thorn agrave 40
+KPX Thorn aacute 56
+KPX Thorn acircumflex 56
+KPX Thorn adieresis 56
+KPX Thorn ocircumflex -47
+KPX Thorn otilde -47
+KPX Thorn ydieresis 56
+
+KPX ch28 dollar -317
+KPX ch28 percent -84
+KPX ch28 ampersand -215
+KPX ch28 two -68
+KPX ch28 three -133
+KPX ch28 guillemotright -138
+KPX ch28 Eacute -71
+KPX ch28 Ecircumflex -40
+KPX ch28 Edieresis -40
+KPX ch28 Igrave -135
+KPX ch28 Idieresis -196
+KPX ch28 Oacute -233
+KPX ch28 Otilde -84
+KPX ch28 Uacute -180
+KPX ch28 Ucircumflex -138
+KPX ch28 eacute -71
+KPX ch28 ecircumflex -40
+KPX ch28 edieresis -40
+KPX ch28 igrave -135
+KPX ch28 eth -84
+KPX ch28 ntilde -100
+KPX ch28 ograve -84
+KPX ch28 ocircumflex -317
+KPX ch28 otilde -317
+KPX ch28 udieresis -104
+KPX ch28 yacute -104
+
+KPX agrave quotedbl -68
+KPX agrave dollar -162
+KPX agrave ampersand -52
+KPX agrave two -52
+KPX agrave three -132
+KPX agrave seven -58
+KPX agrave guillemotright -44
+KPX agrave Atilde -99
+KPX agrave Adieresis -44
+KPX agrave Eacute -87
+KPX agrave Igrave -151
+KPX agrave Icircumflex -108
+KPX agrave Idieresis -54
+KPX agrave Eth -48
+KPX agrave Ntilde -44
+KPX agrave Otilde -84
+KPX agrave Odieresis -75
+KPX agrave Uacute -70
+KPX agrave Ucircumflex -44
+KPX agrave atilde -99
+KPX agrave adieresis -44
+KPX agrave eacute -87
+KPX agrave igrave -151
+KPX agrave icircumflex -108
+KPX agrave ograve -25
+KPX agrave oacute -68
+KPX agrave ocircumflex -178
+KPX agrave otilde -178
+KPX agrave odieresis -68
+KPX agrave divide -129
+KPX agrave oslash -129
+KPX agrave ugrave -129
+KPX agrave uacute -68
+KPX agrave ucircumflex -68
+KPX agrave udieresis -88
+KPX agrave yacute -88
+KPX agrave thorn -68
+
+KPX aacute dollar -196
+KPX aacute percent -99
+KPX aacute ampersand -99
+KPX aacute two -132
+KPX aacute three -192
+KPX aacute t -99
+KPX aacute guillemotright -185
+KPX aacute Agrave -216
+KPX aacute Atilde -130
+KPX aacute Ecircumflex -54
+KPX aacute Edieresis -54
+KPX aacute Igrave -134
+KPX aacute Icircumflex -123
+KPX aacute Idieresis -226
+KPX aacute Ntilde -90
+KPX aacute Oacute -251
+KPX aacute Odieresis -59
+KPX aacute Uacute -258
+KPX aacute Ucircumflex -185
+KPX aacute germandbls -137
+KPX aacute ch28 -90
+KPX aacute agrave -216
+KPX aacute atilde -130
+KPX aacute ecircumflex -54
+KPX aacute edieresis -54
+KPX aacute igrave -134
+KPX aacute icircumflex -123
+KPX aacute eth -99
+KPX aacute ntilde -99
+KPX aacute ograve -165
+KPX aacute ocircumflex -319
+KPX aacute otilde -319
+KPX aacute divide -247
+KPX aacute oslash -247
+KPX aacute ugrave -247
+KPX aacute udieresis -276
+KPX aacute yacute -276
+
+KPX acircumflex dollar -317
+KPX acircumflex percent -99
+KPX acircumflex ampersand -212
+KPX acircumflex two -132
+KPX acircumflex three -192
+KPX acircumflex t -99
+KPX acircumflex registered -45
+KPX acircumflex guillemotright -202
+KPX acircumflex Agrave -202
+KPX acircumflex Atilde -148
+KPX acircumflex Ccedilla -69
+KPX acircumflex Egrave -69
+KPX acircumflex Ecircumflex -56
+KPX acircumflex Edieresis -56
+KPX acircumflex Igrave -167
+KPX acircumflex Icircumflex -141
+KPX acircumflex Idieresis -212
+KPX acircumflex Eth -49
+KPX acircumflex Ntilde -108
+KPX acircumflex Ograve -40
+KPX acircumflex Oacute -281
+KPX acircumflex Odieresis -76
+KPX acircumflex Uacute -291
+KPX acircumflex Ucircumflex -202
+KPX acircumflex germandbls -155
+KPX acircumflex ch28 -108
+KPX acircumflex agrave -202
+KPX acircumflex atilde -148
+KPX acircumflex ccedilla -69
+KPX acircumflex egrave -69
+KPX acircumflex ecircumflex -56
+KPX acircumflex edieresis -56
+KPX acircumflex igrave -167
+KPX acircumflex icircumflex -141
+KPX acircumflex idieresis -45
+KPX acircumflex eth -99
+KPX acircumflex ntilde -99
+KPX acircumflex ograve -165
+KPX acircumflex oacute -53
+KPX acircumflex ocircumflex -317
+KPX acircumflex otilde -317
+KPX acircumflex odieresis -69
+KPX acircumflex divide -76
+KPX acircumflex oslash -76
+KPX acircumflex ugrave -76
+KPX acircumflex udieresis -293
+KPX acircumflex yacute -293
+
+KPX atilde dollar -196
+KPX atilde ampersand -99
+KPX atilde three -72
+KPX atilde seven -45
+KPX atilde registered 48
+KPX atilde cedilla 64
+KPX atilde guillemotright -78
+KPX atilde Adieresis -46
+KPX atilde Eacute -89
+KPX atilde Igrave -138
+KPX atilde Idieresis -119
+KPX atilde Ntilde 64
+KPX atilde Oacute -161
+KPX atilde Ocircumflex 48
+KPX atilde Otilde -102
+KPX atilde multiply 64
+KPX atilde Oslash 64
+KPX atilde Ugrave 64
+KPX atilde Uacute -120
+KPX atilde Ucircumflex -78
+KPX atilde Udieresis 64
+KPX atilde ch28 64
+KPX atilde adieresis -46
+KPX atilde eacute -89
+KPX atilde igrave -138
+KPX atilde idieresis 48
+KPX atilde oacute -55
+KPX atilde ocircumflex -196
+KPX atilde otilde -196
+
+KPX adieresis dollar -119
+KPX adieresis percent -99
+KPX adieresis ampersand -41
+KPX adieresis two -41
+KPX adieresis three -89
+KPX adieresis t -99
+KPX adieresis Atilde -151
+KPX adieresis AE -41
+KPX adieresis Ccedilla -41
+KPX adieresis Egrave -41
+KPX adieresis Ecircumflex -44
+KPX adieresis Edieresis -44
+KPX adieresis Igrave -45
+KPX adieresis Icircumflex -99
+KPX adieresis Eth -52
+KPX adieresis Ntilde -64
+KPX adieresis Uacute -58
+KPX adieresis germandbls -49
+KPX adieresis atilde -151
+KPX adieresis ae -41
+KPX adieresis ccedilla -41
+KPX adieresis egrave -41
+KPX adieresis ecircumflex -44
+KPX adieresis edieresis -44
+KPX adieresis igrave -45
+KPX adieresis icircumflex -99
+KPX adieresis eth -99
+KPX adieresis ntilde -99
+KPX adieresis ograve -104
+KPX adieresis oacute -41
+KPX adieresis ocircumflex -119
+KPX adieresis otilde -119
+KPX adieresis odieresis -56
+KPX adieresis divide -79
+KPX adieresis oslash -79
+KPX adieresis ugrave -79
+KPX adieresis udieresis -123
+KPX adieresis yacute -123
+
+KPX aring quotedbl -115
+KPX aring dollar -83
+KPX aring percent -99
+KPX aring three -53
+KPX aring seven -42
+KPX aring t -130
+KPX aring Aacute -75
+KPX aring Acircumflex -75
+KPX aring Atilde -130
+KPX aring Adieresis -43
+KPX aring Eacute -118
+KPX aring Icircumflex -123
+KPX aring Eth -47
+KPX aring aacute -75
+KPX aring acircumflex -75
+KPX aring atilde -130
+KPX aring adieresis -43
+KPX aring eacute -118
+KPX aring icircumflex -123
+KPX aring eth -99
+KPX aring ntilde -99
+KPX aring ograve -130
+KPX aring ocircumflex -83
+KPX aring otilde -83
+KPX aring odieresis -130
+KPX aring divide -121
+KPX aring oslash -121
+KPX aring ugrave -121
+KPX aring udieresis -71
+KPX aring yacute -71
+KPX aring ydieresis -75
+
+KPX ae dollar -43
+KPX ae registered 44
+KPX ae cedilla 60
+KPX ae guillemotright 60
+KPX ae Agrave 60
+KPX ae Aacute 44
+KPX ae Acircumflex 60
+KPX ae Adieresis 60
+KPX ae Idieresis 50
+KPX ae Ntilde 44
+KPX ae Oacute 41
+KPX ae Ocircumflex 44
+KPX ae Odieresis 60
+KPX ae multiply 60
+KPX ae Oslash 60
+KPX ae Ugrave 60
+KPX ae Ucircumflex 60
+KPX ae Udieresis 60
+KPX ae germandbls 44
+KPX ae ch28 44
+KPX ae agrave 60
+KPX ae aacute 44
+KPX ae acircumflex 60
+KPX ae adieresis 60
+KPX ae idieresis 44
+KPX ae ocircumflex -43
+KPX ae otilde -43
+KPX ae ydieresis 60
+
+KPX ccedilla dollar -61
+KPX ccedilla registered 42
+KPX ccedilla cedilla 58
+KPX ccedilla guillemotright 42
+KPX ccedilla Agrave 42
+KPX ccedilla Aacute 58
+KPX ccedilla Acircumflex 58
+KPX ccedilla Adieresis 58
+KPX ccedilla Idieresis 48
+KPX ccedilla Ntilde 42
+KPX ccedilla Ocircumflex 42
+KPX ccedilla Odieresis 42
+KPX ccedilla multiply 58
+KPX ccedilla Oslash 58
+KPX ccedilla Ugrave 58
+KPX ccedilla Ucircumflex 42
+KPX ccedilla Udieresis 58
+KPX ccedilla germandbls 42
+KPX ccedilla ch28 42
+KPX ccedilla agrave 42
+KPX ccedilla aacute 58
+KPX ccedilla acircumflex 58
+KPX ccedilla adieresis 58
+KPX ccedilla idieresis 42
+KPX ccedilla ocircumflex -61
+KPX ccedilla otilde -61
+KPX ccedilla ydieresis 58
+
+KPX egrave quotedbl -62
+KPX egrave cedilla 57
+KPX egrave guillemotright 73
+KPX egrave Agrave 57
+KPX egrave Atilde -78
+KPX egrave Eacute -65
+KPX egrave Icircumflex -71
+KPX egrave Idieresis 48
+KPX egrave Oacute 54
+KPX egrave Odieresis 73
+KPX egrave multiply 57
+KPX egrave Oslash 57
+KPX egrave Ugrave 57
+KPX egrave Ucircumflex 73
+KPX egrave Udieresis 41
+KPX egrave ch28 41
+KPX egrave agrave 57
+KPX egrave atilde -78
+KPX egrave eacute -65
+KPX egrave icircumflex -36
+KPX egrave ograve -78
+KPX egrave ocircumflex -46
+KPX egrave otilde -46
+KPX egrave odieresis -62
+KPX egrave divide -69
+KPX egrave oslash -69
+KPX egrave ugrave -69
+KPX egrave udieresis -50
+KPX egrave yacute -50
+
+KPX eacute quotedbl -92
+KPX eacute dollar -189
+KPX eacute ampersand -79
+KPX eacute three -96
+KPX eacute seven -53
+KPX eacute registered 40
+KPX eacute cedilla 40
+KPX eacute guillemotright -55
+KPX eacute Agrave 40
+KPX eacute Aacute -99
+KPX eacute Acircumflex -52
+KPX eacute Adieresis -52
+KPX eacute Eacute -250
+KPX eacute Igrave -130
+KPX eacute Idieresis -81
+KPX eacute Eth -43
+KPX eacute Oacute -58
+KPX eacute Ocircumflex 40
+KPX eacute Otilde -174
+KPX eacute Odieresis -40
+KPX eacute multiply 40
+KPX eacute Oslash 40
+KPX eacute Ugrave 40
+KPX eacute Uacute -97
+KPX eacute Ucircumflex -55
+KPX eacute germandbls 40
+KPX eacute agrave 40
+KPX eacute aacute -99
+KPX eacute acircumflex -52
+KPX eacute adieresis -52
+KPX eacute eacute -250
+KPX eacute igrave -130
+KPX eacute idieresis 40
+KPX eacute oacute -95
+KPX eacute ocircumflex -189
+KPX eacute otilde -189
+KPX eacute odieresis -92
+KPX eacute divide -180
+KPX eacute oslash -180
+KPX eacute ugrave -180
+KPX eacute uacute -142
+KPX eacute ucircumflex -142
+KPX eacute thorn -142
+KPX eacute ydieresis -52
+
+KPX ecircumflex dollar -60
+KPX ecircumflex cedilla 43
+KPX ecircumflex guillemotright 43
+KPX ecircumflex Acircumflex 43
+KPX ecircumflex Adieresis 43
+KPX ecircumflex Odieresis 43
+KPX ecircumflex multiply 43
+KPX ecircumflex Oslash 43
+KPX ecircumflex Ugrave 43
+KPX ecircumflex Ucircumflex 43
+KPX ecircumflex acircumflex 43
+KPX ecircumflex adieresis 43
+KPX ecircumflex ocircumflex -60
+KPX ecircumflex otilde -60
+KPX ecircumflex ydieresis 43
+
+KPX edieresis quotedbl -92
+KPX edieresis dollar -188
+KPX edieresis ampersand -78
+KPX edieresis three -111
+KPX edieresis seven -68
+KPX edieresis guillemotright -54
+KPX edieresis Aacute -99
+KPX edieresis Acircumflex -52
+KPX edieresis Adieresis -52
+KPX edieresis Eacute -250
+KPX edieresis Igrave -145
+KPX edieresis Idieresis -79
+KPX edieresis Eth -58
+KPX edieresis Oacute -73
+KPX edieresis Otilde -188
+KPX edieresis Odieresis -40
+KPX edieresis Uacute -96
+KPX edieresis Ucircumflex -54
+KPX edieresis aacute -99
+KPX edieresis acircumflex -52
+KPX edieresis adieresis -52
+KPX edieresis eacute -250
+KPX edieresis igrave -145
+KPX edieresis oacute -109
+KPX edieresis ocircumflex -188
+KPX edieresis otilde -188
+KPX edieresis odieresis -92
+KPX edieresis divide -226
+KPX edieresis oslash -226
+KPX edieresis ugrave -226
+KPX edieresis uacute -157
+KPX edieresis ucircumflex -157
+KPX edieresis thorn -157
+KPX edieresis ydieresis -164
+
+KPX igrave dollar -272
+KPX igrave ampersand -161
+KPX igrave three -68
+KPX igrave seven -41
+KPX igrave registered 52
+KPX igrave guillemotright -74
+KPX igrave Eacute -70
+KPX igrave Igrave -150
+KPX igrave Idieresis -131
+KPX igrave Oacute -140
+KPX igrave Ocircumflex 52
+KPX igrave Otilde -83
+KPX igrave Odieresis -43
+KPX igrave Uacute -116
+KPX igrave Ucircumflex -74
+KPX igrave Udieresis 68
+KPX igrave ch28 52
+KPX igrave eacute -70
+KPX igrave igrave -150
+KPX igrave idieresis 52
+KPX igrave oacute -51
+KPX igrave ocircumflex -272
+KPX igrave otilde -272
+
+KPX iacute dollar -227
+KPX iacute ampersand -117
+KPX iacute three -71
+KPX iacute registered 49
+KPX iacute cedilla 65
+KPX iacute guillemotright -61
+KPX iacute Agrave 49
+KPX iacute Eacute -72
+KPX iacute Igrave -136
+KPX iacute Idieresis -87
+KPX iacute Ntilde 65
+KPX iacute Oacute -96
+KPX iacute Ocircumflex 65
+KPX iacute Otilde -85
+KPX iacute multiply 65
+KPX iacute Oslash 65
+KPX iacute Ugrave 65
+KPX iacute Uacute -87
+KPX iacute Ucircumflex -61
+KPX iacute Udieresis 65
+KPX iacute germandbls 65
+KPX iacute ch28 49
+KPX iacute agrave 49
+KPX iacute eacute -72
+KPX iacute igrave -136
+KPX iacute idieresis 49
+KPX iacute ocircumflex -227
+KPX iacute otilde -227
+
+KPX icircumflex dollar -92
+KPX icircumflex ampersand -45
+KPX icircumflex two -45
+KPX icircumflex three -62
+KPX icircumflex seven 44
+KPX icircumflex registered 43
+KPX icircumflex cedilla 74
+KPX icircumflex Aacute 74
+KPX icircumflex Acircumflex 74
+KPX icircumflex Adieresis 58
+KPX icircumflex Igrave -49
+KPX icircumflex Ocircumflex 43
+KPX icircumflex multiply 74
+KPX icircumflex Oslash 74
+KPX icircumflex Ugrave 74
+KPX icircumflex Uacute -47
+KPX icircumflex Udieresis 74
+KPX icircumflex aacute 74
+KPX icircumflex acircumflex 74
+KPX icircumflex adieresis 58
+KPX icircumflex igrave -49
+KPX icircumflex idieresis 43
+KPX icircumflex ocircumflex -92
+KPX icircumflex otilde -92
+KPX icircumflex ydieresis 74
+
+KPX idieresis quotedbl -164
+KPX idieresis dollar -164
+KPX idieresis percent -353
+KPX idieresis ampersand -69
+KPX idieresis two -54
+KPX idieresis three -118
+KPX idieresis seven -107
+KPX idieresis guillemotright -45
+KPX idieresis Aacute -108
+KPX idieresis Acircumflex -108
+KPX idieresis Adieresis -108
+KPX idieresis Eacute -151
+KPX idieresis Ecircumflex -41
+KPX idieresis Edieresis -41
+KPX idieresis Igrave -89
+KPX idieresis Idieresis -55
+KPX idieresis Eth -65
+KPX idieresis Oacute -48
+KPX idieresis Otilde -117
+KPX idieresis Odieresis -45
+KPX idieresis Uacute -87
+KPX idieresis Ucircumflex -45
+KPX idieresis aacute -108
+KPX idieresis acircumflex -108
+KPX idieresis adieresis -108
+KPX idieresis eacute -151
+KPX idieresis ecircumflex -41
+KPX idieresis edieresis -41
+KPX idieresis igrave -89
+KPX idieresis eth -353
+KPX idieresis ntilde -369
+KPX idieresis ograve -85
+KPX idieresis oacute -69
+KPX idieresis ocircumflex -164
+KPX idieresis otilde -164
+KPX idieresis odieresis -164
+KPX idieresis divide -249
+KPX idieresis oslash -249
+KPX idieresis ugrave -249
+KPX idieresis uacute -85
+KPX idieresis ucircumflex -85
+KPX idieresis udieresis -121
+KPX idieresis yacute -121
+KPX idieresis thorn -85
+KPX idieresis ydieresis -108
+
+KPX eth quotedbl 106
+KPX eth dollar 106
+KPX eth ampersand 106
+KPX eth three -80
+KPX eth seven -52
+KPX eth registered 56
+KPX eth cedilla 56
+KPX eth guillemotright -70
+KPX eth Agrave 41
+KPX eth Aacute -79
+KPX eth Acircumflex -78
+KPX eth Adieresis -78
+KPX eth Eacute -333
+KPX eth Igrave -158
+KPX eth Idieresis -111
+KPX eth Oacute -215
+KPX eth Ocircumflex 56
+KPX eth Otilde -127
+KPX eth multiply 56
+KPX eth Oslash 56
+KPX eth Ugrave 56
+KPX eth Uacute -112
+KPX eth Ucircumflex -70
+KPX eth Udieresis 41
+KPX eth germandbls 56
+KPX eth ch28 41
+KPX eth agrave 41
+KPX eth aacute -79
+KPX eth acircumflex -78
+KPX eth adieresis -78
+KPX eth eacute -333
+KPX eth igrave -158
+KPX eth idieresis 56
+KPX eth oacute -127
+KPX eth odieresis 106
+KPX eth divide -83
+KPX eth oslash -83
+KPX eth ugrave -83
+KPX eth uacute -60
+KPX eth ucircumflex -60
+KPX eth thorn -60
+KPX eth ydieresis -52
+
+KPX ntilde three -89
+KPX ntilde seven -62
+KPX ntilde registered 47
+KPX ntilde cedilla 47
+KPX ntilde guillemotright -63
+KPX ntilde Aacute -72
+KPX ntilde Acircumflex -54
+KPX ntilde Adieresis -54
+KPX ntilde Eacute -333
+KPX ntilde Igrave -158
+KPX ntilde Idieresis -105
+KPX ntilde Oacute -138
+KPX ntilde Ocircumflex 47
+KPX ntilde Otilde -127
+KPX ntilde multiply 47
+KPX ntilde Oslash 47
+KPX ntilde Ugrave 47
+KPX ntilde Uacute -105
+KPX ntilde Ucircumflex -63
+KPX ntilde germandbls 47
+KPX ntilde aacute -72
+KPX ntilde acircumflex -54
+KPX ntilde adieresis -54
+KPX ntilde eacute -342
+KPX ntilde igrave -158
+KPX ntilde idieresis 47
+KPX ntilde oacute -120
+KPX ntilde divide -83
+KPX ntilde oslash -83
+KPX ntilde ugrave -83
+KPX ntilde uacute -60
+KPX ntilde ucircumflex -60
+KPX ntilde thorn -60
+KPX ntilde ydieresis -54
+
+KPX ograve dollar -51
+KPX ograve cedilla 68
+KPX ograve guillemotright 52
+KPX ograve Aacute 68
+KPX ograve Acircumflex 68
+KPX ograve Atilde -51
+KPX ograve Adieresis 52
+KPX ograve Idieresis 42
+KPX ograve Odieresis 52
+KPX ograve multiply 68
+KPX ograve Oslash 68
+KPX ograve Ugrave 68
+KPX ograve Ucircumflex 52
+KPX ograve Udieresis 68
+KPX ograve aacute 68
+KPX ograve acircumflex 68
+KPX ograve atilde -51
+KPX ograve adieresis 52
+KPX ograve ograve -209
+KPX ograve ocircumflex -51
+KPX ograve otilde -51
+KPX ograve udieresis -71
+KPX ograve yacute -71
+KPX ograve ydieresis 68
+
+KPX oacute quotedbl -41
+KPX oacute dollar -191
+KPX oacute ampersand -88
+KPX oacute three -68
+KPX oacute seven -41
+KPX oacute registered 68
+KPX oacute cedilla 68
+KPX oacute guillemotright -43
+KPX oacute Agrave 68
+KPX oacute Idieresis -68
+KPX oacute Oacute -172
+KPX oacute Ocircumflex 68
+KPX oacute multiply 68
+KPX oacute Oslash 68
+KPX oacute Ugrave 68
+KPX oacute Uacute -69
+KPX oacute Ucircumflex -43
+KPX oacute Udieresis 52
+KPX oacute germandbls 68
+KPX oacute ch28 52
+KPX oacute agrave 68
+KPX oacute idieresis 68
+KPX oacute oacute -209
+KPX oacute ocircumflex -191
+KPX oacute otilde -191
+KPX oacute odieresis -41
+
+KPX ocircumflex dollar -49
+KPX ocircumflex guillemotright 54
+KPX ocircumflex Aacute -99
+KPX ocircumflex Acircumflex -99
+KPX ocircumflex Atilde -99
+KPX ocircumflex AE -99
+KPX ocircumflex Eacute -300
+KPX ocircumflex Icircumflex -99
+KPX ocircumflex Idieresis 44
+KPX ocircumflex Eth -45
+KPX ocircumflex Odieresis 54
+KPX ocircumflex Ucircumflex 54
+KPX ocircumflex germandbls -57
+KPX ocircumflex aacute -99
+KPX ocircumflex acircumflex -99
+KPX ocircumflex atilde -99
+KPX ocircumflex ae -99
+KPX ocircumflex eacute -300
+KPX ocircumflex icircumflex -99
+KPX ocircumflex ograve -99
+KPX ocircumflex ocircumflex -49
+KPX ocircumflex otilde -49
+KPX ocircumflex odieresis 106
+KPX ocircumflex divide -198
+KPX ocircumflex oslash -198
+KPX ocircumflex ugrave -198
+KPX ocircumflex udieresis -101
+KPX ocircumflex yacute -101
+KPX ocircumflex ydieresis -99
+
+KPX otilde dollar -49
+KPX otilde guillemotright 54
+KPX otilde Aacute -99
+KPX otilde Acircumflex -99
+KPX otilde Atilde -99
+KPX otilde AE -99
+KPX otilde Eacute -300
+KPX otilde Icircumflex -99
+KPX otilde Idieresis 44
+KPX otilde Eth -45
+KPX otilde Odieresis 54
+KPX otilde Ucircumflex 54
+KPX otilde germandbls -57
+KPX otilde aacute -99
+KPX otilde acircumflex -99
+KPX otilde atilde -99
+KPX otilde ae -99
+KPX otilde eacute -300
+KPX otilde icircumflex -99
+KPX otilde ograve -99
+KPX otilde ocircumflex -49
+KPX otilde otilde -49
+KPX otilde odieresis 106
+KPX otilde divide -198
+KPX otilde oslash -198
+KPX otilde ugrave -198
+KPX otilde udieresis -101
+KPX otilde yacute -101
+KPX otilde ydieresis -99
+
+KPX odieresis guillemotright -99
+KPX odieresis Agrave -151
+KPX odieresis Atilde -97
+KPX odieresis Ccedilla -49
+KPX odieresis Egrave -49
+KPX odieresis Igrave -148
+KPX odieresis Icircumflex -105
+KPX odieresis Idieresis -99
+KPX odieresis Ntilde -57
+KPX odieresis Oacute -149
+KPX odieresis Odieresis -57
+KPX odieresis Uacute -99
+KPX odieresis Ucircumflex -99
+KPX odieresis germandbls -99
+KPX odieresis ch28 -57
+KPX odieresis agrave -151
+KPX odieresis atilde -97
+KPX odieresis ccedilla -49
+KPX odieresis egrave -49
+KPX odieresis igrave -148
+KPX odieresis icircumflex -105
+KPX odieresis ograve -99
+KPX odieresis ocircumflex 106
+KPX odieresis otilde 106
+KPX odieresis odieresis -49
+KPX odieresis divide -56
+KPX odieresis oslash -56
+KPX odieresis ugrave -56
+KPX odieresis udieresis -99
+KPX odieresis yacute -99
+
+KPX divide quotedbl -99
+KPX divide dollar -99
+KPX divide three -64
+KPX divide registered 72
+KPX divide cedilla 72
+KPX divide Agrave 72
+KPX divide Aacute -99
+KPX divide Acircumflex -54
+KPX divide Adieresis -54
+KPX divide Eacute -239
+KPX divide Igrave -82
+KPX divide Ocircumflex 72
+KPX divide Otilde -110
+KPX divide multiply 72
+KPX divide Oslash 72
+KPX divide Ugrave 72
+KPX divide Uacute -49
+KPX divide Udieresis 56
+KPX divide germandbls 72
+KPX divide ch28 56
+KPX divide agrave 72
+KPX divide aacute -99
+KPX divide acircumflex -54
+KPX divide adieresis -54
+KPX divide eacute -239
+KPX divide igrave -82
+KPX divide idieresis 72
+KPX divide oacute -47
+KPX divide ocircumflex -126
+KPX divide otilde -126
+KPX divide odieresis -99
+KPX divide divide -180
+KPX divide oslash -180
+KPX divide ugrave -180
+KPX divide uacute -78
+KPX divide ucircumflex -78
+KPX divide thorn -78
+KPX divide ydieresis -54
+
+KPX oslash quotedbl -99
+KPX oslash dollar -141
+KPX oslash three -64
+KPX oslash registered 72
+KPX oslash cedilla 72
+KPX oslash Agrave 72
+KPX oslash Aacute -99
+KPX oslash Acircumflex -54
+KPX oslash Adieresis -54
+KPX oslash Eacute -239
+KPX oslash Igrave -82
+KPX oslash Ocircumflex 72
+KPX oslash Otilde -110
+KPX oslash multiply 72
+KPX oslash Oslash 72
+KPX oslash Ugrave 72
+KPX oslash Uacute -49
+KPX oslash Udieresis 56
+KPX oslash germandbls 72
+KPX oslash ch28 56
+KPX oslash agrave 72
+KPX oslash aacute -99
+KPX oslash acircumflex -54
+KPX oslash adieresis -54
+KPX oslash eacute -239
+KPX oslash igrave -82
+KPX oslash idieresis 72
+KPX oslash oacute -47
+KPX oslash ocircumflex -126
+KPX oslash otilde -126
+KPX oslash odieresis -99
+KPX oslash divide -180
+KPX oslash oslash -180
+KPX oslash ugrave -180
+KPX oslash uacute -78
+KPX oslash ucircumflex -78
+KPX oslash thorn -78
+KPX oslash ydieresis -54
+
+KPX ugrave quotedbl -99
+KPX ugrave dollar -141
+KPX ugrave three -64
+KPX ugrave registered 72
+KPX ugrave cedilla 72
+KPX ugrave Agrave 72
+KPX ugrave Aacute -99
+KPX ugrave Acircumflex -54
+KPX ugrave Adieresis -54
+KPX ugrave Eacute -239
+KPX ugrave Igrave -82
+KPX ugrave Ocircumflex 72
+KPX ugrave Otilde -110
+KPX ugrave multiply 72
+KPX ugrave Oslash 72
+KPX ugrave Ugrave 72
+KPX ugrave Uacute -49
+KPX ugrave Udieresis 56
+KPX ugrave germandbls 72
+KPX ugrave ch28 56
+KPX ugrave agrave 72
+KPX ugrave aacute -99
+KPX ugrave acircumflex -54
+KPX ugrave adieresis -54
+KPX ugrave eacute -239
+KPX ugrave igrave -82
+KPX ugrave idieresis 72
+KPX ugrave oacute -47
+KPX ugrave ocircumflex -126
+KPX ugrave otilde -126
+KPX ugrave odieresis -99
+KPX ugrave divide -180
+KPX ugrave oslash -180
+KPX ugrave ugrave -180
+KPX ugrave uacute -78
+KPX ugrave ucircumflex -78
+KPX ugrave thorn -78
+KPX ugrave ydieresis -164
+
+KPX uacute dollar -66
+KPX uacute percent -99
+KPX uacute t -99
+KPX uacute cedilla 53
+KPX uacute Aacute 53
+KPX uacute Acircumflex 53
+KPX uacute Atilde -113
+KPX uacute Adieresis 53
+KPX uacute Icircumflex -106
+KPX uacute multiply 53
+KPX uacute Oslash 53
+KPX uacute Ugrave 53
+KPX uacute Udieresis 53
+KPX uacute aacute 53
+KPX uacute acircumflex 53
+KPX uacute atilde -113
+KPX uacute adieresis 53
+KPX uacute icircumflex -106
+KPX uacute eth -99
+KPX uacute ntilde -99
+KPX uacute ograve -99
+KPX uacute ocircumflex -66
+KPX uacute otilde -66
+KPX uacute divide -183
+KPX uacute oslash -183
+KPX uacute ugrave -183
+KPX uacute udieresis -70
+KPX uacute yacute -70
+KPX uacute ydieresis 53
+
+KPX ucircumflex dollar -66
+KPX ucircumflex percent -99
+KPX ucircumflex t -99
+KPX ucircumflex cedilla 53
+KPX ucircumflex Aacute 53
+KPX ucircumflex Acircumflex 53
+KPX ucircumflex Atilde -113
+KPX ucircumflex Adieresis 53
+KPX ucircumflex Icircumflex -106
+KPX ucircumflex multiply 53
+KPX ucircumflex Oslash 53
+KPX ucircumflex Ugrave 53
+KPX ucircumflex Udieresis 53
+KPX ucircumflex aacute 53
+KPX ucircumflex acircumflex 53
+KPX ucircumflex atilde -113
+KPX ucircumflex adieresis 53
+KPX ucircumflex icircumflex -106
+KPX ucircumflex eth -99
+KPX ucircumflex ntilde -99
+KPX ucircumflex ograve -99
+KPX ucircumflex ocircumflex -66
+KPX ucircumflex otilde -66
+KPX ucircumflex divide -183
+KPX ucircumflex oslash -183
+KPX ucircumflex ugrave -183
+KPX ucircumflex udieresis -70
+KPX ucircumflex yacute -70
+KPX ucircumflex ydieresis 53
+
+KPX udieresis dollar -114
+KPX udieresis percent -99
+KPX udieresis three -84
+KPX udieresis seven 53
+KPX udieresis t -99
+KPX udieresis cedilla 83
+KPX udieresis Aacute 68
+KPX udieresis Acircumflex 83
+KPX udieresis Atilde -67
+KPX udieresis Adieresis 83
+KPX udieresis Aring 43
+KPX udieresis Eacute 40
+KPX udieresis Iacute 43
+KPX udieresis Icircumflex -60
+KPX udieresis Otilde 43
+KPX udieresis multiply 83
+KPX udieresis Oslash 83
+KPX udieresis Ugrave 83
+KPX udieresis Uacute -53
+KPX udieresis Udieresis 68
+KPX udieresis germandbls -58
+KPX udieresis aacute 68
+KPX udieresis acircumflex 83
+KPX udieresis atilde -67
+KPX udieresis adieresis 83
+KPX udieresis aring 43
+KPX udieresis eacute 40
+KPX udieresis iacute 43
+KPX udieresis icircumflex -60
+KPX udieresis eth -99
+KPX udieresis ntilde -99
+KPX udieresis ograve -99
+KPX udieresis ocircumflex -114
+KPX udieresis otilde -114
+KPX udieresis uacute 43
+KPX udieresis ucircumflex 43
+KPX udieresis udieresis -118
+KPX udieresis yacute -118
+KPX udieresis thorn 43
+KPX udieresis ydieresis 83
+
+KPX yacute dollar -114
+KPX yacute percent -99
+KPX yacute three -84
+KPX yacute seven 53
+KPX yacute t -99
+KPX yacute cedilla 83
+KPX yacute Aacute 68
+KPX yacute Acircumflex 83
+KPX yacute Atilde -67
+KPX yacute Adieresis 83
+KPX yacute Aring 43
+KPX yacute Eacute 40
+KPX yacute Iacute 43
+KPX yacute Icircumflex -60
+KPX yacute Otilde 43
+KPX yacute multiply 83
+KPX yacute Oslash 83
+KPX yacute Ugrave 83
+KPX yacute Uacute -53
+KPX yacute Udieresis 68
+KPX yacute germandbls -58
+KPX yacute aacute 68
+KPX yacute acircumflex 83
+KPX yacute atilde -67
+KPX yacute adieresis 83
+KPX yacute aring 43
+KPX yacute eacute 40
+KPX yacute iacute 43
+KPX yacute icircumflex -60
+KPX yacute eth -99
+KPX yacute ntilde -99
+KPX yacute ograve -99
+KPX yacute ocircumflex -114
+KPX yacute otilde -114
+KPX yacute uacute 43
+KPX yacute ucircumflex 43
+KPX yacute udieresis -118
+KPX yacute yacute -118
+KPX yacute thorn 43
+KPX yacute ydieresis 83
+
+KPX thorn dollar -66
+KPX thorn percent -99
+KPX thorn t -99
+KPX thorn cedilla 53
+KPX thorn Aacute 53
+KPX thorn Acircumflex 53
+KPX thorn Atilde -113
+KPX thorn Adieresis 53
+KPX thorn Icircumflex -106
+KPX thorn Idieresis 43
+KPX thorn multiply 53
+KPX thorn Oslash 53
+KPX thorn Ugrave 53
+KPX thorn Udieresis 53
+KPX thorn aacute 53
+KPX thorn acircumflex 53
+KPX thorn atilde -113
+KPX thorn adieresis 53
+KPX thorn icircumflex -106
+KPX thorn eth -99
+KPX thorn ntilde -99
+KPX thorn ograve -99
+KPX thorn ocircumflex -66
+KPX thorn otilde -66
+KPX thorn divide -183
+KPX thorn oslash -183
+KPX thorn ugrave -183
+KPX thorn udieresis -70
+KPX thorn yacute -70
+KPX thorn ydieresis 53
+
+KPX ydieresis dollar -317
+KPX ydieresis percent -212
+KPX ydieresis ampersand -212
+KPX ydieresis two -242
+KPX ydieresis three -307
+KPX ydieresis t -212
+KPX ydieresis registered -45
+KPX ydieresis guillemotright -202
+KPX ydieresis Agrave -202
+KPX ydieresis Atilde -148
+KPX ydieresis Ccedilla -69
+KPX ydieresis Egrave -69
+KPX ydieresis Ecircumflex -56
+KPX ydieresis Edieresis -56
+KPX ydieresis Igrave -167
+KPX ydieresis Icircumflex -141
+KPX ydieresis Idieresis -225
+KPX ydieresis Eth -49
+KPX ydieresis Ntilde -108
+KPX ydieresis Ograve -40
+KPX ydieresis Oacute -281
+KPX ydieresis Odieresis -76
+KPX ydieresis Uacute -291
+KPX ydieresis Ucircumflex -202
+KPX ydieresis germandbls -155
+KPX ydieresis ch28 -108
+KPX ydieresis agrave -202
+KPX ydieresis atilde -148
+KPX ydieresis ccedilla -69
+KPX ydieresis egrave -69
+KPX ydieresis ecircumflex -56
+KPX ydieresis edieresis -56
+KPX ydieresis igrave -167
+KPX ydieresis icircumflex -141
+KPX ydieresis idieresis -45
+KPX ydieresis eth -212
+KPX ydieresis ntilde -212
+KPX ydieresis ograve -212
+KPX ydieresis oacute -53
+KPX ydieresis ocircumflex -317
+KPX ydieresis otilde -317
+KPX ydieresis odieresis -69
+KPX ydieresis divide -76
+KPX ydieresis oslash -76
+KPX ydieresis ugrave -76
+KPX ydieresis udieresis -293
+KPX ydieresis yacute -293
+EndKernPairs
+EndKernData
+EndFontMetrics

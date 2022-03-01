@@ -6,7 +6,7 @@
 
     <style>
         @page { margin: 0px; }
-        body { margin: 0px; position: relative; }
+        body { margin: 0px; position: relative; color: #000; }
 
         @font-face {
             font-family: 'Roboto';
@@ -18,6 +18,12 @@
             font-family: 'Roboto';
             src: url("{{ storage_path('fonts/Roboto-Bold.ttf') }}") format("truetype");
             font-weight: 700;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Anime Ace';
+            src: url("{{ storage_path('fonts/anime-ace-v05.ttf') }}") format("truetype");
+            font-weight: 400;
             font-style: normal;
         }
 
@@ -73,6 +79,7 @@
             line-height: 1;
             margin: 0;
             width: 100%;
+            font-family: 'Anime Ace', sans-serif;
         }
         .name {
             margin-top: 0;
@@ -80,8 +87,15 @@
             line-height: 1;
             display: inline-block;
             width: 100%;
+            font-family: 'Anime Ace', sans-serif;
             font-size: 28px;
-            font-weight: bold;
+        }
+        .slogan {
+            display: block;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 13px;
+            font-family: 'Anime Ace', sans-serif;
         }
     </style>
 </head>
@@ -130,32 +144,59 @@
             </tbody>
         </table>
 
-        <span style="display:block;margin-bottom: 20px; text-align: center; font-size: 12px; color: #888;">www.dreamapp.ru | Интерактивная автоматизация | Профессиональное сенсорное оборудование</span>
+        <span class="slogan">Интерактивная автоматизация | Профессиональное сенсорное оборудование</span>
         
         <span style="display:block;margin-bottom: 20px; text-align: center; font-size: 22px; font-weight: bold;">
             Коммерческое предложение №{{ $offer->id }} от {{ Carbon\Carbon::parse($offer->created_at)->format('d.m.Y') }}
         </span>
 
         <table class="table" style="width: 90%; margin: 0 auto;">
+            <thead>
+                <tr>
+                    <th style="width: 63%;">Характеристика</th>
+                    <th style="width: 10%; text-align: center;">Кол-во</th>
+                    <th style="width: 13.5%; text-align: center;">Цена</th>
+                    <th style="width: 13.5%; text-align: center;">Стоимость</th>
+                </tr>
+            </thead>
             <tbody>
                 @foreach($offer->calculations as $calculation)
                     <td>
-                        @foreach($calculation->elements as $element)
-                            @if($element->price > 0)
-                                <span style="font-weight: bold">{{ $element->category->name }}:</span>
-                                <span>{{ $element->name }}</span>
+                        @foreach($calculation->boxes as $box)
+                            <span style="font-weight: bold">Корпус:</span>
+                            <span>{{ $box->name }}</span>
+                            <br>
+                            <br>
+
+                            @if($box->description)
+                                {{ $box->description }}
+                                <br>
+                                <br>
+                            @endif
+                        @endforeach
+
+                        @foreach($calculation->catalogItems as $item)
+                            @if($item->price > 0)
+                                <span style="font-weight: bold">{{ $item->category->name }}:</span>
+                                <span>{{ $item->name }}</span>
                                 <br>
                             @endif
                         @endforeach
                     </td>
-                    <td>
+                    <td style="text-align: center;">
                         {{ $calculation->quantity }} шт.
                     </td>
-                    <td>
-                        0
+                    <td style="text-align: center;">
+                        @php
+                            echo number_format($calculation->price,0,","," ");
+                        @endphp
+                        ₽
                     </td>
-                    <td>
-                        0
+                    <td style="text-align: center;">
+                        @php
+                            echo number_format($calculation->price * $calculation->quantity,0,","," ");
+                        @endphp
+                        ₽
                     </td>
                 @endforeach
             </tbody>

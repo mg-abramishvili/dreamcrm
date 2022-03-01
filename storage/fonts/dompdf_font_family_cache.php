@@ -82,5 +82,8 @@ return array (
     'normal' => $fontDir . '/roboto_normal_1dc7df9273ee6520337f32cd99197b41',
     'bold' => $fontDir . '/roboto_bold_b45b1a8c9c4a5fcc2ed167486c227490',
   ),
+  'anime ace' => array(
+    'normal' => $fontDir . '/anime_ace_normal_6db469055468ac9c80e4b1883eee472d',
+  ),
 );
 }; ?>

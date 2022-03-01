@@ -18,6 +18,9 @@
                         <template v-if="calculation.project">
                             <button class="btn btn-primary">Перейти к проекту</button>
                         </template>
+                        <template v-else>
+                            <router-link :to="{name: 'ProjectCreate', params: {calculation_id: calculation.id}}" class="btn btn-primary">Создать проект</router-link>
+                        </template>
                     </div>
                 </div>
             </div>

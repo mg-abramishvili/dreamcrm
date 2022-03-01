@@ -49,7 +49,7 @@
                 quantity: 0,
                 pre_rub: 0,
                 pre_usd: 0,
-                date: '',
+                date: moment().format('YYYY-MM-DD'),
 
                 usd: {
                     kurs: '',

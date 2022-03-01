@@ -31,13 +31,14 @@
             </ul>
             <div class="tab-content">
                 <div class="tab-pane" :class="{'active': selected.tab == 'general'}" role="tabpanel">
-                    <h4 class="tab-title">Общая информация</h4>
+                    <p><strong>Клиент:</strong> {{ project.client.name }}</p>
+                    <p><strong>Ответственный:</strong> {{ project.user.name }}</p>
                 </div>
                 <div class="tab-pane" :class="{'active': selected.tab == 'calculations'}" role="tabpanel">
                     <ProjectCalculations :calculations="project.calculations"></ProjectCalculations>
                 </div>
                 <div class="tab-pane" :class="{'active': selected.tab == 'offers'}" role="tabpanel">
-                    <ProjectOffers :offers="project.offers"></ProjectOffers>
+                    <ProjectOffers :project_id="project.id" :offers="project.offers"></ProjectOffers>
                 </div>
             </div>
         </div>

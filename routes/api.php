@@ -92,12 +92,15 @@ Route::post('calculations', [CalculationController::class, 'store']);
 
 
 Route::get('offers', [OfferController::class, 'index']);
+Route::post('offers', [OfferController::class, 'store']);
 Route::get('offer/{id}', [OfferController::class, 'offer']);
-Route::get('offer/{id}/pdf', [OfferController::class, 'offerPDF']);
+Route::get('offer/{id}/pdf', [OfferController::class, 'pdf']);
 
 
 
 Route::get('projects', [ProjectController::class, 'index']);
+Route::get('projects/inn_check/{inn}', [ProjectController::class, 'innCheck']);
+Route::post('projects', [ProjectController::class, 'store']);
 Route::get('project/{id}', [ProjectController::class, 'project']);
 
 

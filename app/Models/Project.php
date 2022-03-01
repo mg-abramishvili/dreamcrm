@@ -18,4 +18,14 @@ class Project extends Model
     {
         return $this->hasMany(Offer::class, 'project_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
+    }
 }

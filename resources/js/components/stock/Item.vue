@@ -84,7 +84,7 @@
                         </div>
                     </div>
                 </div>
-                <EditBalance v-if="views.editBalance" :item="item" :balance="balance"></EditBalance>
+                <EditBalance v-if="views.editBalance && selected.balance == balance.id" :item="item" :balance="balance"></EditBalance>
             </div>
         </template>
         <template v-else>
@@ -107,6 +107,10 @@
                 category: '',
 
                 categories: [],
+
+                selected: {
+                    balance: '',
+                },
 
                 views: {
                     addBalance: false,
@@ -142,7 +146,8 @@
             closeAddBalance() {
                 this.views.addBalance = false
             },
-            openEditBalance() {
+            openEditBalance(id) {
+                this.selected.balance = id
                 this.views.editBalance = true
             },
             closeEditBalance() {

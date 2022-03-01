@@ -13,7 +13,7 @@
             </div>
         </div>
 
-        <div class="card card-bordered">
+        <div v-if="!views.loading" class="card card-bordered">
             <div class="card-body p-0">
                 <table class="table table-hover dataTable">
                     <thead>
@@ -40,21 +40,29 @@
                 </table>
             </div>
         </div>
+        <Loader v-else></Loader>
     </div>
 </template>
 
 <script>
+    import Loader from '../Loader.vue'
+
     export default {
         data() {
             return {
                 projects: [],
+
+                views: {
+                    loading: true
+                }
             }
         },
         created() {
             axios
                 .get('/api/projects')
                 .then(response => (
-                    this.projects = response.data
+                    this.projects = response.data,
+                    this.views.loading = false
                 ));
         },
         methods: {
@@ -63,6 +71,7 @@
             }
         },
         components: {
+            Loader
         }
     }
 </script>
