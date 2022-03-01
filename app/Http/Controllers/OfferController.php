@@ -7,6 +7,7 @@ use App\Models\Offer;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use PDF;
+use Illuminate\Support\Facades\File;
 
 class OfferController extends Controller
 {
@@ -52,9 +53,11 @@ class OfferController extends Controller
         ])
         ->loadView('offers.pdf', compact('offer'));
         
-        // if(public_path() . '/uploads/offers/' . 'kp_' . $offer->id . '.pdf') {
-        //     unlink(public_path() . '/uploads/offers/' . 'kp_' . $offer->id . '.pdf');
-        // }
+        $filename = public_path('uploads/offers/') . '/' . 'kp_' . $offer->id . '.pdf';
+        
+        if(isset($filename)) {
+            File::delete($filename);
+        }
         
         $pdf->save(public_path('uploads/offers/') . '/' . 'kp_' . $offer->id . '.pdf');
     }
