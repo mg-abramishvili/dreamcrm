@@ -46,8 +46,8 @@ class OfferController extends Controller
 
         $pdf = PDF::setOptions([
             'tempDir' => storage_path('uploads'),
-            'fontDir' => storage_path('fonts/'),
-            'fontCache' => storage_path('fonts/'),
+            'fontDir' => storage_path('fonts'),
+            'fontCache' => storage_path('fonts'),
             'logOutputFile' => public_path('uploads') . '/' . 'log.htm',
         ])
         ->loadView('offers.pdf', compact('offer'));
