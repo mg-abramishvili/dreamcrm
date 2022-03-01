@@ -46,7 +46,7 @@ class OfferController extends Controller
 
         $pdf = PDF::loadView('offers.pdf', compact('offer'));
         // unlink(public_path() . '/uploads/offers/' . 'kp_' . $offer->id . '.pdf');
-        $pdf->setOptions(['tempDir' => public_path() . '/uploads/offers'])->save(public_path() . '/uploads/offers/' . 'kp_' . $offer->id . '.pdf');
+        $pdf->setOptions(['tempDir' => storage_path('fonts/')])->save(public_path() . '/uploads/offers/' . 'kp_' . $offer->id . '.pdf');
     }
 
     // public function offerPDF($id)
