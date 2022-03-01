@@ -52,7 +52,7 @@
             width: 100vw;
             height: 100vh;
             position: relative;
-            background: url('{{ public_path('img/offer-bg.png') }}');
+            background: url(@include('offers.offer-bg'));
             background-size: cover;
             background-position: center center;
         }
@@ -120,20 +120,20 @@
                         @endforeach
                     </td>
                     <td style="width: 50%; border: 0; vertical-align:top; position: relative;">
-                        <img src="{{ public_path('img/logo-h.png') }}" style="width: auto; height: 60px; position: absolute; top: -35px; right: 60px;"/>
+                        <img src="@include('offers.logo-h')" style="width: auto; height: 60px; position: absolute; top: -35px; right: 60px;"/>
                         
                         <div class="table-top-row">
-                            <img src="{{ public_path('img/envelope-fill.png') }}" class="table-top-cell-icon" />
+                            <img src="@include('offers.envelope')" class="table-top-cell-icon" />
                             <span class="table-top-cell-text">8 800 301-09-39</span>
                         </div>
 
                         <div class="table-top-row">
-                            <img src="{{ public_path('img/envelope-fill.png') }}" class="table-top-cell-icon" />
+                            <img src="@include('offers.envelope')" class="table-top-cell-icon" />
                             <span class="table-top-cell-text">mg@dreamapp.ru | info@dreamapp.ru</span>
                         </div>
 
                         <div class="table-top-row">
-                            <img src="{{ public_path('img/envelope-fill.png') }}" class="table-top-cell-icon" />
+                            <img src="@include('offers.envelope')" class="table-top-cell-icon" />
                             <span class="table-top-cell-text">
                                 г. Москва, ул. Марии Поливановой, д. 9<br>
                                 г. Санкт-Петербург, шоссе Революции, д. 69, офис 4
