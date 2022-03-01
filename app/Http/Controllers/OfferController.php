@@ -45,7 +45,7 @@ class OfferController extends Controller
         $offer = Offer::with('calculations.boxes', 'calculations.catalogItems')->find($id);
 
         $pdf = PDF::setOptions([
-            'tempDir' => storage_path('uploads'),
+            'tempDir' => storage_path('tmp'),
             'fontDir' => storage_path('fonts'),
             'fontCache' => storage_path('fonts'),
             'logOutputFile' => public_path('uploads') . '/' . 'log.htm',
