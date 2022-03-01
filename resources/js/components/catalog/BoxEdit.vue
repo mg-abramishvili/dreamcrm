@@ -413,6 +413,8 @@
                     });
                 }
 
+                console.log(this.gallery)
+
                 axios.put(`/api/catalog/box/${id}/update`,
                 {
                     name: this.name,

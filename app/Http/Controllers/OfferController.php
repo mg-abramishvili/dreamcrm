@@ -49,6 +49,7 @@ class OfferController extends Controller
             'tempDir' => storage_path('tmp'),
             'fontDir' => storage_path('fonts'),
             'fontCache' => storage_path('fonts'),
+            'chroot' => realpath(base_path()),
             'logOutputFile' => public_path('uploads') . '/' . 'log.htm',
         ])
         ->loadView('offers.pdf', compact('offer'));

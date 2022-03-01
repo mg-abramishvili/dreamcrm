@@ -4214,6 +4214,7 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
         });
       }
 
+      console.log(this.gallery);
       axios.put("/api/catalog/box/".concat(id, "/update"), {
         name: this.name,
         sborka_days: this.sborkaDays,

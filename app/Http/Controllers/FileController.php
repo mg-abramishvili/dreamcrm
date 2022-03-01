@@ -28,7 +28,7 @@ class FileController extends Controller
             $gallery = request()->file('gallery');
             for ($i = 0; $i < count($gallery); $i++) {
                 $galleryItem = $gallery[$i];
-                $galleryItem_name = time().'.'.$galleryItem->extension();
+                $galleryItem_name = time() . rand(1, 100000) . '.' . $galleryItem->extension();
 
                 $galleryItem->move(public_path() . '/uploads/catalog', $galleryItem_name);
 

@@ -52,7 +52,7 @@
             width: 100vw;
             height: 100vh;
             position: relative;
-            background: url(@include('offers.offer-bg'));
+            background: url('{{ public_path('img/offer-bg.png') }}');
             background-size: cover;
             background-position: center center;
         }
@@ -97,6 +97,20 @@
             font-size: 13px;
             font-family: 'Anime Ace', sans-serif;
         }
+
+        .box-images {
+            text-align: center;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .box-images img {
+            width: auto;
+            height: 150px;
+            margin: 0 5px;
+            display: inline-block;
+            vertical-align: middle;
+        }
     </style>
 </head>
 <body>
@@ -120,20 +134,20 @@
                         @endforeach
                     </td>
                     <td style="width: 50%; border: 0; vertical-align:top; position: relative;">
-                        <img src="@include('offers.logo-h')" style="width: auto; height: 60px; position: absolute; top: -35px; right: 60px;"/>
+                        <img src="{{ public_path('img/logo-h.png') }}" style="width: auto; height: 60px; position: absolute; top: -35px; right: 60px;"/>
                         
                         <div class="table-top-row">
-                            <img src="@include('offers.envelope')" class="table-top-cell-icon" />
+                            <img src="{{ public_path('img/envelope-fill.png') }}" class="table-top-cell-icon" />
                             <span class="table-top-cell-text">8 800 301-09-39</span>
                         </div>
 
                         <div class="table-top-row">
-                            <img src="@include('offers.envelope')" class="table-top-cell-icon" />
+                            <img src="{{ public_path('img/envelope-fill.png') }}" class="table-top-cell-icon" />
                             <span class="table-top-cell-text">mg@dreamapp.ru | info@dreamapp.ru</span>
                         </div>
 
                         <div class="table-top-row">
-                            <img src="@include('offers.envelope')" class="table-top-cell-icon" />
+                            <img src="{{ public_path('img/envelope-fill.png') }}" class="table-top-cell-icon" />
                             <span class="table-top-cell-text">
                                 г. Москва, ул. Марии Поливановой, д. 9<br>
                                 г. Санкт-Петербург, шоссе Революции, д. 69, офис 4
@@ -149,6 +163,16 @@
         <span style="display:block;margin-bottom: 20px; text-align: center; font-size: 22px; font-weight: bold;">
             Коммерческое предложение №{{ $offer->id }} от {{ Carbon\Carbon::parse($offer->created_at)->format('d.m.Y') }}
         </span>
+
+        <div class="box-images">
+            @foreach($offer->calculations as $calculation)
+                @foreach($calculation->boxes as $box)
+                    @foreach(array_slice($box->gallery, 0, 3) as $galleryItem)
+                        <img src="{{ public_path($galleryItem) }}" />
+                    @endforeach
+                @endforeach
+            @endforeach
+        </div>
 
         <table class="table" style="width: 90%; margin: 0 auto;">
             <thead>
