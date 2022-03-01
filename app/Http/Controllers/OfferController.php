@@ -45,9 +45,7 @@ class OfferController extends Controller
         $offer = Offer::with('calculations.boxes', 'calculations.catalogItems')->find($id);
 
         $pdf = PDF::loadView('offers.pdf', compact('offer'));
-        if(public_path() . '/uploads/offers/' . 'kp_' . $offer->id . '.pdf') {
-            unlink(public_path() . '/uploads/offers/' . 'kp_' . $offer->id . '.pdf');
-        }
+        // unlink(public_path() . '/uploads/offers/' . 'kp_' . $offer->id . '.pdf');
         $pdf->save(public_path() . '/uploads/offers/' . 'kp_' . $offer->id . '.pdf');
     }
 
