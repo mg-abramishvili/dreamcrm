@@ -7045,6 +7045,8 @@ __webpack_require__.r(__webpack_exports__);
       this.views.recreatePdfButton = false;
       axios.get("/api/offer/".concat(id, "/pdf")).then(function (response) {
         _this2.views.recreatePdfButton = true;
+      })["catch"](function (error) {
+        console.log(error);
       });
     }
   }

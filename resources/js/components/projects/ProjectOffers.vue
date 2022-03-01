@@ -70,6 +70,9 @@
                 .then((response => {
                     this.views.recreatePdfButton = true
                 }))
+                .catch((error) => {
+                    console.log(error)
+                })
             }
         },
     }
