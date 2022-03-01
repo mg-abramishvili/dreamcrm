@@ -11,6 +11,11 @@ class Project extends Model
 
     public function calculations()
     {
-        return $this->hasMany(Project::class, 'project_id');
+        return $this->hasMany(Calculation::class, 'project_id');
+    }
+
+    public function offers()
+    {
+        return $this->hasMany(Offer::class, 'project_id');
     }
 }

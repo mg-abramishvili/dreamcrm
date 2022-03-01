@@ -6729,6 +6729,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Loader_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Loader.vue */ "./resources/js/components/Loader.vue");
+/* harmony import */ var _ProjectCalculations_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ProjectCalculations.vue */ "./resources/js/components/projects/ProjectCalculations.vue");
+/* harmony import */ var _ProjectOffers_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ProjectOffers.vue */ "./resources/js/components/projects/ProjectOffers.vue");
 //
 //
 //
@@ -6775,6 +6777,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -6798,7 +6803,75 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   components: {
-    Loader: _Loader_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    Loader: _Loader_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    ProjectCalculations: _ProjectCalculations_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    ProjectOffers: _ProjectOffers_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/projects/ProjectCalculations.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/projects/ProjectCalculations.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['calculations'],
+  data: function data() {
+    return {//
+    };
+  },
+  created: function created() {//
+  },
+  methods: {
+    goTo: function goTo(id) {
+      this.$router.push({
+        name: 'Calculation',
+        params: {
+          id: id
+        }
+      });
+    }
   }
 });
 
@@ -54613,6 +54686,82 @@ component.options.__file = "resources/js/components/projects/Project.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/projects/ProjectCalculations.vue":
+/*!******************************************************************!*\
+  !*** ./resources/js/components/projects/ProjectCalculations.vue ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ProjectCalculations_vue_vue_type_template_id_e69debce___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ProjectCalculations.vue?vue&type=template&id=e69debce& */ "./resources/js/components/projects/ProjectCalculations.vue?vue&type=template&id=e69debce&");
+/* harmony import */ var _ProjectCalculations_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ProjectCalculations.vue?vue&type=script&lang=js& */ "./resources/js/components/projects/ProjectCalculations.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ProjectCalculations_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ProjectCalculations_vue_vue_type_template_id_e69debce___WEBPACK_IMPORTED_MODULE_0__.render,
+  _ProjectCalculations_vue_vue_type_template_id_e69debce___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/projects/ProjectCalculations.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/projects/ProjectOffers.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/projects/ProjectOffers.vue ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ProjectOffers_vue_vue_type_template_id_a07530b4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ProjectOffers.vue?vue&type=template&id=a07530b4& */ "./resources/js/components/projects/ProjectOffers.vue?vue&type=template&id=a07530b4&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+var script = {}
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  script,
+  _ProjectOffers_vue_vue_type_template_id_a07530b4___WEBPACK_IMPORTED_MODULE_0__.render,
+  _ProjectOffers_vue_vue_type_template_id_a07530b4___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/projects/ProjectOffers.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/stock/Category.vue":
 /*!****************************************************!*\
   !*** ./resources/js/components/stock/Category.vue ***!
@@ -55960,6 +56109,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/projects/ProjectCalculations.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/projects/ProjectCalculations.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProjectCalculations_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ProjectCalculations.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/projects/ProjectCalculations.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProjectCalculations_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/stock/Category.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************!*\
   !*** ./resources/js/components/stock/Category.vue?vue&type=script&lang=js& ***!
@@ -56882,6 +57047,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Project_vue_vue_type_template_id_d750aaa2___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Project_vue_vue_type_template_id_d750aaa2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Project.vue?vue&type=template&id=d750aaa2& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/projects/Project.vue?vue&type=template&id=d750aaa2&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/projects/ProjectCalculations.vue?vue&type=template&id=e69debce&":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/projects/ProjectCalculations.vue?vue&type=template&id=e69debce& ***!
+  \*************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProjectCalculations_vue_vue_type_template_id_e69debce___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProjectCalculations_vue_vue_type_template_id_e69debce___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProjectCalculations_vue_vue_type_template_id_e69debce___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ProjectCalculations.vue?vue&type=template&id=e69debce& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/projects/ProjectCalculations.vue?vue&type=template&id=e69debce&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/projects/ProjectOffers.vue?vue&type=template&id=a07530b4&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/projects/ProjectOffers.vue?vue&type=template&id=a07530b4& ***!
+  \*******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProjectOffers_vue_vue_type_template_id_a07530b4___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProjectOffers_vue_vue_type_template_id_a07530b4___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProjectOffers_vue_vue_type_template_id_a07530b4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ProjectOffers.vue?vue&type=template&id=a07530b4& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/projects/ProjectOffers.vue?vue&type=template&id=a07530b4&");
 
 
 /***/ }),
@@ -65407,163 +65606,309 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "projects-page" }, [
-    _c("div", { staticClass: "card card-bordered" }, [
-      _c("div", { staticClass: "card-body" }, [
-        _c("div", { staticClass: "row align-items-center" }, [
-          _c("div", { staticClass: "col-12 col-lg-6" }, [
-            _c(
-              "h1",
-              { staticClass: "h3 m-0" },
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "back-arrow",
-                    attrs: { to: { name: "Projects" } },
-                  },
-                  [
-                    _c(
-                      "svg",
-                      {
-                        staticClass:
-                          "feather feather-arrow-left align-middle me-2",
-                        attrs: {
-                          xmlns: "http://www.w3.org/2000/svg",
-                          width: "24",
-                          height: "24",
-                          viewBox: "0 0 24 24",
-                          fill: "none",
-                          stroke: "currentColor",
-                          "stroke-width": "2",
-                          "stroke-linecap": "round",
-                          "stroke-linejoin": "round",
+  return _c(
+    "div",
+    { staticClass: "projects-page" },
+    [
+      _c("div", { staticClass: "card card-bordered" }, [
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "row align-items-center" }, [
+            _c("div", { staticClass: "col-12 col-lg-6" }, [
+              _c(
+                "h1",
+                { staticClass: "h3 m-0" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "back-arrow",
+                      attrs: { to: { name: "Projects" } },
+                    },
+                    [
+                      _c(
+                        "svg",
+                        {
+                          staticClass:
+                            "feather feather-arrow-left align-middle me-2",
+                          attrs: {
+                            xmlns: "http://www.w3.org/2000/svg",
+                            width: "24",
+                            height: "24",
+                            viewBox: "0 0 24 24",
+                            fill: "none",
+                            stroke: "currentColor",
+                            "stroke-width": "2",
+                            "stroke-linecap": "round",
+                            "stroke-linejoin": "round",
+                          },
                         },
-                      },
-                      [
-                        _c("line", {
-                          attrs: { x1: "19", y1: "12", x2: "5", y2: "12" },
-                        }),
-                        _c("polyline", {
-                          attrs: { points: "12 19 5 12 12 5" },
-                        }),
-                      ]
-                    ),
-                  ]
-                ),
-                _vm._v(" "),
-                _c("strong", [
-                  _vm._v(
-                    "\n                            " +
-                      _vm._s(_vm.project.name) +
-                      "\n                        "
+                        [
+                          _c("line", {
+                            attrs: { x1: "19", y1: "12", x2: "5", y2: "12" },
+                          }),
+                          _c("polyline", {
+                            attrs: { points: "12 19 5 12 12 5" },
+                          }),
+                        ]
+                      ),
+                    ]
                   ),
-                ]),
-              ],
-              1
-            ),
+                  _vm._v(" "),
+                  _c("strong", [
+                    _vm._v(
+                      "\n                            " +
+                        _vm._s(_vm.project.name) +
+                        "\n                        "
+                    ),
+                  ]),
+                ],
+                1
+              ),
+            ]),
           ]),
         ]),
       ]),
-    ]),
-    _vm._v(" "),
-    _vm.project && _vm.project.id > 0
-      ? _c("div", { staticClass: "tab" }, [
-          _c(
-            "ul",
-            { staticClass: "nav nav-tabs", attrs: { role: "tablist" } },
-            [
-              _c("li", { staticClass: "nav-item" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "nav-link",
-                    class: { active: _vm.selected.tab == "general" },
-                    attrs: { role: "tab" },
-                    on: {
-                      click: function ($event) {
-                        return _vm.selectTab("general")
-                      },
-                    },
-                  },
-                  [_vm._v("Общая информация")]
-                ),
-              ]),
-              _vm._v(" "),
-              _c("li", { staticClass: "nav-item" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "nav-link",
-                    class: { active: _vm.selected.tab == "calculations" },
-                    attrs: { role: "tab" },
-                    on: {
-                      click: function ($event) {
-                        return _vm.selectTab("calculations")
-                      },
-                    },
-                  },
-                  [_vm._v("Расчеты")]
-                ),
-              ]),
-              _vm._v(" "),
-              _c("li", { staticClass: "nav-item" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "nav-link",
-                    class: { active: _vm.selected.tab == "offers" },
-                    attrs: { role: "tab" },
-                    on: {
-                      click: function ($event) {
-                        return _vm.selectTab("offers")
-                      },
-                    },
-                  },
-                  [_vm._v("КП")]
-                ),
-              ]),
-            ]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "tab-content" }, [
+      _vm._v(" "),
+      _vm.project && _vm.project.id > 0
+        ? _c("div", { staticClass: "tab" }, [
             _c(
-              "div",
-              {
-                staticClass: "tab-pane",
-                class: { active: _vm.selected.tab == "general" },
-                attrs: { role: "tabpanel" },
-              },
+              "ul",
+              { staticClass: "nav nav-tabs", attrs: { role: "tablist" } },
               [
-                _c("h4", { staticClass: "tab-title" }, [
-                  _vm._v("Общая информация"),
+                _c("li", { staticClass: "nav-item" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "nav-link",
+                      class: { active: _vm.selected.tab == "general" },
+                      attrs: { role: "tab" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.selectTab("general")
+                        },
+                      },
+                    },
+                    [_vm._v("Общая информация")]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("li", { staticClass: "nav-item" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "nav-link",
+                      class: { active: _vm.selected.tab == "calculations" },
+                      attrs: { role: "tab" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.selectTab("calculations")
+                        },
+                      },
+                    },
+                    [_vm._v("Расчеты")]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("li", { staticClass: "nav-item" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "nav-link",
+                      class: { active: _vm.selected.tab == "offers" },
+                      attrs: { role: "tab" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.selectTab("offers")
+                        },
+                      },
+                    },
+                    [_vm._v("КП")]
+                  ),
                 ]),
               ]
             ),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "tab-pane",
-                class: { active: _vm.selected.tab == "calculations" },
-                attrs: { role: "tabpanel" },
+            _c("div", { staticClass: "tab-content" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "tab-pane",
+                  class: { active: _vm.selected.tab == "general" },
+                  attrs: { role: "tabpanel" },
+                },
+                [
+                  _c("h4", { staticClass: "tab-title" }, [
+                    _vm._v("Общая информация"),
+                  ]),
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "tab-pane",
+                  class: { active: _vm.selected.tab == "calculations" },
+                  attrs: { role: "tabpanel" },
+                },
+                [
+                  _c("ProjectCalculations", {
+                    attrs: { calculations: _vm.project.calculations },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "tab-pane",
+                  class: { active: _vm.selected.tab == "offers" },
+                  attrs: { role: "tabpanel" },
+                },
+                [
+                  _c("ProjectOffers", {
+                    attrs: { offers: _vm.project.offers },
+                  }),
+                ],
+                1
+              ),
+            ]),
+          ])
+        : _c("Loader"),
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/projects/ProjectCalculations.vue?vue&type=template&id=e69debce&":
+/*!****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/projects/ProjectCalculations.vue?vue&type=template&id=e69debce& ***!
+  \****************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("table", { staticClass: "table table-hover dataTable" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.calculations, function (calculation) {
+          return _c(
+            "tr",
+            {
+              key: calculation.id,
+              on: {
+                click: function ($event) {
+                  return _vm.goTo(calculation.id)
+                },
               },
-              [_c("h4", { staticClass: "tab-title" }, [_vm._v("Расчеты")])]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "tab-pane",
-                class: { active: _vm.selected.tab == "offers" },
-                attrs: { role: "tabpanel" },
-              },
-              [_c("h4", { staticClass: "tab-title" }, [_vm._v("КП")])]
-            ),
-          ]),
-        ])
-      : _vm._e(),
+            },
+            [
+              _c("td", { staticClass: "align-middle" }, [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm._f("date")(calculation.created_at)) +
+                    "\n                "
+                ),
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "align-middle" }, [
+                _vm._v(
+                  "\n                    Расчет №" +
+                    _vm._s(calculation.id) +
+                    "\n                "
+                ),
+              ]),
+              _vm._v(" "),
+              _c(
+                "td",
+                { staticClass: "align-middle" },
+                [
+                  _vm._l(calculation.boxes, function (box) {
+                    return [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(box.name) +
+                          "\n                    "
+                      ),
+                    ]
+                  }),
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c("td", { staticClass: "align-middle" }, [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm._f("currency")(calculation.price)) +
+                    " ₽\n                "
+                ),
+              ]),
+            ]
+          )
+        }),
+        0
+      ),
+    ]),
   ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Дата расчета")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("№")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Корпус")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Стоимость")]),
+      ]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/projects/ProjectOffers.vue?vue&type=template&id=a07530b4&":
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/projects/ProjectOffers.vue?vue&type=template&id=a07530b4& ***!
+  \**********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [_vm._v("\n    КП\n")])
 }
 var staticRenderFns = []
 render._withStripped = true

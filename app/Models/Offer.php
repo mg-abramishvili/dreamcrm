@@ -13,4 +13,9 @@ class Offer extends Model
     {
         return $this->belongsToMany(Calculation::class);
     }
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
 }

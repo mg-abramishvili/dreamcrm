@@ -34,18 +34,21 @@
                     <h4 class="tab-title">Общая информация</h4>
                 </div>
                 <div class="tab-pane" :class="{'active': selected.tab == 'calculations'}" role="tabpanel">
-                    <h4 class="tab-title">Расчеты</h4>
+                    <ProjectCalculations :calculations="project.calculations"></ProjectCalculations>
                 </div>
                 <div class="tab-pane" :class="{'active': selected.tab == 'offers'}" role="tabpanel">
-                    <h4 class="tab-title">КП</h4>
+                    <ProjectOffers :offers="project.offers"></ProjectOffers>
                 </div>
             </div>
         </div>
+        <Loader v-else></Loader>
     </div>
 </template>
 
 <script>
     import Loader from '../Loader.vue'
+    import ProjectCalculations from './ProjectCalculations.vue'
+    import ProjectOffers from './ProjectOffers.vue'
 
     export default {
         data() {
@@ -70,7 +73,9 @@
             },
         },
         components: {
-            Loader
+            Loader,
+            ProjectCalculations,
+            ProjectOffers
         }
     }
 </script>

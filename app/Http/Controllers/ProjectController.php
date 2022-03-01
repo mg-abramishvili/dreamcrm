@@ -14,6 +14,6 @@ class ProjectController extends Controller
 
     public function project($id)
     {
-        return Project::find($id);
+        return Project::with('calculations.boxes', 'offers')->find($id);
     }
 }
