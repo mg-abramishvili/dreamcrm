@@ -60072,18 +60072,10 @@ var render = function () {
                             calculation.project && calculation.project.id
                               ? [
                                   _c(
-                                    "router-link",
+                                    "span",
                                     {
                                       staticClass:
                                         "btn btn-sm btn-outline-primary",
-                                      attrs: {
-                                        to: {
-                                          name: "Project",
-                                          params: {
-                                            id: calculation.project.id,
-                                          },
-                                        },
-                                      },
                                     },
                                     [_vm._v(_vm._s(calculation.project.name))]
                                   ),

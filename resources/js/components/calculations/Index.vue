@@ -43,7 +43,7 @@
                             </td>
                             <td class="align-middle">
                                 <template v-if="calculation.project && calculation.project.id">
-                                    <router-link :to="{name: 'Project', params: {id: calculation.project.id}}" class="btn btn-sm btn-outline-primary">{{ calculation.project.name }}</router-link>
+                                    <span class="btn btn-sm btn-outline-primary">{{ calculation.project.name }}</span>
                                 </template>
                             </td>
                         </tr>
