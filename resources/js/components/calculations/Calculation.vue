@@ -16,7 +16,7 @@
                     </div>
                     <div v-if="calculation && calculation.id > 0" class="col-12 col-lg-6 text-end">
                         <template v-if="calculation.project">
-                            <button class="btn btn-primary">Перейти к проекту</button>
+                            <router-link :to="{name: 'Project', params: {id: calculation.project.id}}" class="btn btn-primary">Перейти к проекту</router-link>
                         </template>
                         <template v-else>
                             <router-link :to="{name: 'ProjectCreate', params: {calculation_id: calculation.id}}" class="btn btn-primary">Создать проект</router-link>

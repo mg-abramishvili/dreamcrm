@@ -58732,9 +58732,19 @@ var render = function () {
                   [
                     _vm.calculation.project
                       ? [
-                          _c("button", { staticClass: "btn btn-primary" }, [
-                            _vm._v("Перейти к проекту"),
-                          ]),
+                          _c(
+                            "router-link",
+                            {
+                              staticClass: "btn btn-primary",
+                              attrs: {
+                                to: {
+                                  name: "Project",
+                                  params: { id: _vm.calculation.project.id },
+                                },
+                              },
+                            },
+                            [_vm._v("Перейти к проекту")]
+                          ),
                         ]
                       : [
                           _c(
