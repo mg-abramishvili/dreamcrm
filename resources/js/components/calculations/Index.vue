@@ -22,6 +22,7 @@
                             <th>№</th>
                             <th>Корпус</th>
                             <th>Автор расчета</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -39,6 +40,11 @@
                             </td>
                             <td class="align-middle">
                                 {{ calculation.user.name }}
+                            </td>
+                            <td class="align-middle">
+                                <template v-if="calculation.project && calculation.project.id">
+                                    <router-link :to="{name: 'Project', params: {id: calculation.project.id}}" class="btn btn-sm btn-outline-primary">{{ calculation.project.name }}</router-link>
+                                </template>
                             </td>
                         </tr>
                     </tbody>

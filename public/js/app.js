@@ -3260,6 +3260,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -60058,6 +60064,34 @@ var render = function () {
                               "\n                        "
                           ),
                         ]),
+                        _vm._v(" "),
+                        _c(
+                          "td",
+                          { staticClass: "align-middle" },
+                          [
+                            calculation.project && calculation.project.id
+                              ? [
+                                  _c(
+                                    "router-link",
+                                    {
+                                      staticClass:
+                                        "btn btn-sm btn-outline-primary",
+                                      attrs: {
+                                        to: {
+                                          name: "Project",
+                                          params: {
+                                            id: calculation.project.id,
+                                          },
+                                        },
+                                      },
+                                    },
+                                    [_vm._v(_vm._s(calculation.project.name))]
+                                  ),
+                                ]
+                              : _vm._e(),
+                          ],
+                          2
+                        ),
                       ]
                     )
                   }),
@@ -60093,6 +60127,8 @@ var staticRenderFns = [
         _c("th", [_vm._v("Корпус")]),
         _vm._v(" "),
         _c("th", [_vm._v("Автор расчета")]),
+        _vm._v(" "),
+        _c("th"),
       ]),
     ])
   },

@@ -9,7 +9,7 @@ class CalculationController extends Controller
 {
     public function index()
     {
-        return Calculation::with('user', 'boxes')->orderBy('created_at', 'desc')->get();
+        return Calculation::with('user', 'boxes', 'project')->orderBy('created_at', 'desc')->get();
     }
 
     public function calculation($id)
