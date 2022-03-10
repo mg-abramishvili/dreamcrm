@@ -279,7 +279,6 @@
                 return Math.ceil((this.priceRub + (this.priceUsd * this.usd.kurs)) / 50) * 50
             },
             sborka() {
-
                 return this.sborkaDays * (this.sborkaPersons * parseInt(this.sborkaTarif.person) + parseInt(this.sborkaTarif.arenda))
             },
             price() {
