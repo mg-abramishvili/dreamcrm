@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <div v-if="usd.kurs && usd.kurs > 0" class="card">
+        <div v-if="usd.kurs && usd.kurs > 0 && stockItems && stockItems.length > 0" class="card">
             <div class="card-body">
                 <div v-if="errors && errors.length > 0" class="alert alert-danger">
                     <div class="alert-message">
