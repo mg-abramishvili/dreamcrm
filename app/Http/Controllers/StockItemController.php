@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class StockItemController extends Controller
 {
     public function index() {
-        return StockItem::with('balances')->get();
+        return StockItem::with('balances')->orderBy('name', 'asc')->get();
     }
 
     public function item($id)
