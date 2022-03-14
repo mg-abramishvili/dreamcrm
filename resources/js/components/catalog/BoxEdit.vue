@@ -37,11 +37,8 @@
                         <div class="d-flex justify-content-between">
                             <label>Тип</label>
                         </div>
-                        <!-- <select v-model="selected.types" class="form-control mb-3" style="height: 225px;" multiple>
-                            <option v-for="type in types" :key="'type_' + type.id" :value="type.id">{{ type.name }}</option>
-                        </select> -->
                         <input v-model="typeSearchInput" type="text" class="form-control mb-1" placeholder="Поиск по типу...">
-                        <div class="form-control" style="height: 300px; overflow-y: auto;">
+                        <div class="form-control mb-3" style="height: 150px; overflow-y: auto;">
                             <div v-for="type in typesFiltered" :key="'type_' + type.id" class="form-check">
                                 <input v-model="selected.types" :id="'type_' + type.id" :value="type.id" class="form-check-input" type="checkbox">
                                 <label class="form-check-label" :for="'type_' + type.id">
@@ -49,13 +46,89 @@
                                 </label>
                             </div>
                         </div>
+
+                        <div class="row mb-3">
+                            <div class="col-4">
+                                <label>Сборка дни</label>
+                                <input v-model="sborkaDays" type="number" min="0" class="form-control">
+                            </div>
+                            <div class="col-4">
+                                <label>Сборка люди</label>
+                                <input v-model="sborkaPersons" type="number" min="0" class="form-control">
+                            </div>
+                            <div class="col-4">
+                                <label>Сборка итог</label>
+                                <input v-model="sborka" disabled type="number" class="form-control">
+                            </div>
+                            <div class="col-4">
+                                <label>Маржа</label>
+                                <input v-model="marzha" type="number" min="0" class="form-control">
+                            </div>
+                            <div class="col-4">
+                                <label>Склад</label>
+                                <input v-model="stockItemsPrice" disabled type="number" class="form-control">
+                            </div>
+                            <div class="col-4">
+                                <label>Цена финал</label>
+                                <input v-model="price" disabled type="number" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-3">
+                                <label>Глубина, мм</label>
+                                <input v-model="length" type="number" min="0" class="form-control">
+                            </div>
+                            <div class="col-3">
+                                <label>Ширина, мм</label>
+                                <input v-model="width" type="number" min="0" class="form-control">
+                            </div>
+                            <div class="col-3">
+                                <label>Высота, мм</label>
+                                <input v-model="height" type="number" min="0" class="form-control">
+                            </div>
+                            <div class="col-3">
+                                <label>Вес, кг</label>
+                                <input v-model="weight" type="number" min="0" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label>Описание</label>
+                            <textarea v-model="description" class="form-control" style="resize: vertical"></textarea>
+                        </div>
+                        <div class="mb-4">
+                            <label>Описание для менеджеров</label>
+                            <textarea v-model="manager_description" class="form-control" style="resize: vertical"></textarea>
+                        </div>
+                        <div class="mb-4">
+                            <label>Коммент</label>
+                            <textarea v-model="comment" class="form-control" style="resize: vertical"></textarea>
+                        </div>
+
+                        <div class="mb-4">
+                            <label>Фотки</label>
+                            <file-pond
+                                name="gallery[]"
+                                ref="gallery"
+                                label-idle="Выбрать картинки..."
+                                v-bind:allow-multiple="true"
+                                v-bind:allow-reorder="true"
+                                accepted-file-types="image/jpeg, image/png"
+                                :server="server"
+                                v-bind:files="filepond_gallery_edit"
+                            />
+                        </div>
+
+                        <button @click="save(box.id)" class="btn btn-primary">Сохранить</button>
+                        <button @click="del(box.id)" class="btn btn-outline-danger">Удалить</button>
                     </div>
                     <div class="col-12 col-lg-6">
                         <div class="d-flex justify-content-between">
                             <label>Склад</label>
                         </div>
                         <input v-model="stockSearchInput" type="text" class="form-control mb-1" placeholder="Поиск по складу...">
-                        <div class="form-control" style="height: 300px; overflow-y: auto;">
+                        <div class="form-control" style="height: 740px; overflow-y: auto;">
                             <div v-for="stockItem in stockItemsFiltered" :key="'stock_item_' + stockItem.id" class="form-check form-check-flex">
                                 <div>
                                     <input v-model="selected.stockItems" @change="selectedStockItems(stockItem.id, $event)" :id="'stock_item_' + stockItem.id" :value="stockItem.id" class="form-check-input" type="checkbox">
@@ -70,82 +143,6 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="row mb-3">
-                    <div class="col">
-                        <label>Склад</label>
-                        <input v-model="stockItemsPrice" disabled type="number" class="form-control">
-                    </div>
-                    <div class="col">
-                        <label>Сборка: кол-во дней</label>
-                        <input v-model="sborkaDays" type="number" min="0" class="form-control">
-                    </div>
-                    <div class="col">
-                        <label>Сборка: кол-во чел</label>
-                        <input v-model="sborkaPersons" type="number" min="0" class="form-control">
-                    </div>
-                    <div class="col">
-                        <label>Сборка итог</label>
-                        <input v-model="sborka" disabled type="number" class="form-control">
-                    </div>
-                    <div class="col">
-                        <label>Маржа</label>
-                        <input v-model="marzha" type="number" min="0" class="form-control">
-                    </div>
-                    <div class="col">
-                        <label>Цена (финальная)</label>
-                        <input v-model="price" disabled type="number" class="form-control">
-                    </div>
-                </div>
-
-                <div class="row mb-4">
-                    <div class="col">
-                        <label>Глубина, мм</label>
-                        <input v-model="length" type="number" min="0" class="form-control">
-                    </div>
-                    <div class="col">
-                        <label>Ширина, мм</label>
-                        <input v-model="width" type="number" min="0" class="form-control">
-                    </div>
-                    <div class="col">
-                        <label>Высота, мм</label>
-                        <input v-model="height" type="number" min="0" class="form-control">
-                    </div>
-                    <div class="col">
-                        <label>Вес, кг</label>
-                        <input v-model="weight" type="number" min="0" class="form-control">
-                    </div>
-                </div>
-
-                <div class="mb-4">
-                    <label>Описание</label>
-                    <textarea v-model="description" class="form-control" style="resize: vertical"></textarea>
-                </div>
-                <div class="mb-4">
-                    <label>Описание для менеджеров</label>
-                    <textarea v-model="manager_description" class="form-control" style="resize: vertical"></textarea>
-                </div>
-                <div class="mb-4">
-                    <label>Коммент</label>
-                    <textarea v-model="comment" class="form-control" style="resize: vertical"></textarea>
-                </div>
-
-                <div class="mb-4">
-                    <label>Фотки</label>
-                    <file-pond
-                        name="gallery[]"
-                        ref="gallery"
-                        label-idle="Выбрать картинки..."
-                        v-bind:allow-multiple="true"
-                        v-bind:allow-reorder="true"
-                        accepted-file-types="image/jpeg, image/png"
-                        :server="server"
-                        v-bind:files="filepond_gallery_edit"
-                    />
-                </div>
-
-                <button @click="save(box.id)" class="btn btn-primary">Сохранить</button>
-                <button @click="del(box.id)" class="btn btn-outline-danger">Удалить</button>
             </div>
         </div>
         <Loader v-else></Loader>

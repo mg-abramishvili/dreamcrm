@@ -330,7 +330,10 @@ table.dataTable {
 
 /* FILEPOND */
 .filepond--item {
-    width: calc(25% - 0.5em);
+    width: calc(33.33% - 0.5em);
+    height: 100px !important;
+    overflow: hidden;
+    border-radius: 7px;
 }
 .filepond--root .filepond--credits {
     display: none !important;
