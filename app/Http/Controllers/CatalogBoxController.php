@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\CatalogBox;
+use App\Models\Dollar;
 use Illuminate\Http\Request;
 
 class CatalogBoxController extends Controller
 {
     public function index()
     {
-        return CatalogBox::all();
+        return CatalogBox::orderBy('name', 'asc')->get();
     }
 
     public function indexByType($id)

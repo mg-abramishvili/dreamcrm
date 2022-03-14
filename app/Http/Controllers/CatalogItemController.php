@@ -10,7 +10,7 @@ class CatalogItemController extends Controller
 {
     public function index()
     {
-        return CatalogItem::orderBy('price', 'asc')->get();
+        return CatalogItem::orderBy('name', 'asc')->get();
     }
 
     public function indexByBox($id)
