@@ -267,6 +267,7 @@ table.dataTable {
 .catalog-page .catalog-list-item span,
 .stock-page .stock-list-item span {
     width: calc(100% - 24px);
+    line-height: 1.3;
 }
 
 .catalog-page-search-icon {
