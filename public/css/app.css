@@ -350,6 +350,16 @@ table.dataTable {
     transform: translateY(-50%);
     right: 0;
 }
+.calculation-stock-list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    font-size: 12px;
+}
+.calculation-stock-list li::before {
+    content: '-';
+    margin-right: 7px;
+}
 /* CALCULATION */
 
 

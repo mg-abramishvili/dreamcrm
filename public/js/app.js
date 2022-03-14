@@ -2725,6 +2725,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -3568,11 +3573,16 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
     stockItemsFiltered: function stockItemsFiltered() {
       var _this2 = this;
 
-      return this.stockItems.filter(function (stockItem) {
+      var filtered = this.stockItems.filter(function (stockItem) {
         if (stockItem.balances && stockItem.balances.length > 0) {
           return stockItem.name.toLowerCase().includes(_this2.stockSearchInput.toLowerCase());
         }
       });
+      return filtered.filter(function (stockItem) {
+        return _this2.selected.stockItems.includes(stockItem.id);
+      }).concat(filtered.filter(function (stockItem) {
+        return !_this2.selected.stockItems.includes(stockItem.id);
+      }));
     },
     priceRub: function priceRub() {
       var _this3 = this;
@@ -3687,7 +3697,7 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
       }
 
       if (!this.length || this.length <= 0) {
-        this.errors.push('Укажите длину');
+        this.errors.push('Укажите глубину');
       }
 
       if (!this.width || this.width <= 0) {
@@ -4027,11 +4037,16 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
     stockItemsFiltered: function stockItemsFiltered() {
       var _this2 = this;
 
-      return this.stockItems.filter(function (stockItem) {
+      var filtered = this.stockItems.filter(function (stockItem) {
         if (stockItem.balances && stockItem.balances.length > 0) {
           return stockItem.name.toLowerCase().includes(_this2.stockSearchInput.toLowerCase());
         }
       });
+      return filtered.filter(function (stockItem) {
+        return _this2.selected.stockItems.includes(stockItem.id);
+      }).concat(filtered.filter(function (stockItem) {
+        return !_this2.selected.stockItems.includes(stockItem.id);
+      }));
     },
     priceRub: function priceRub() {
       var _this3 = this;
@@ -4192,7 +4207,7 @@ var FilePond = vue_filepond__WEBPACK_IMPORTED_MODULE_1___default()((filepond_plu
       }
 
       if (!this.length || this.length <= 0) {
-        this.errors.push('Укажите длину');
+        this.errors.push('Укажите глубину');
       }
 
       if (!this.width || this.width <= 0) {
@@ -59813,6 +59828,22 @@ var render = function () {
                                     ]
                                   ),
                                 ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-12" }, [
+                                  _c(
+                                    "ul",
+                                    { staticClass: "calculation-stock-list" },
+                                    _vm._l(
+                                      item.stock_items,
+                                      function (stockItem) {
+                                        return _c("li", { key: stockItem.id }, [
+                                          _vm._v(_vm._s(stockItem.name)),
+                                        ])
+                                      }
+                                    ),
+                                    0
+                                  ),
+                                ]),
                               ]
                             )
                           }
@@ -60297,7 +60328,7 @@ var render = function () {
                     "div",
                     {
                       staticClass: "form-control",
-                      staticStyle: { height: "220px", "overflow-y": "auto" },
+                      staticStyle: { height: "300px", "overflow-y": "auto" },
                     },
                     _vm._l(_vm.typesFiltered, function (type) {
                       return _c(
@@ -60403,7 +60434,7 @@ var render = function () {
                     "div",
                     {
                       staticClass: "form-control",
-                      staticStyle: { height: "180px", "overflow-y": "auto" },
+                      staticStyle: { height: "300px", "overflow-y": "auto" },
                     },
                     _vm._l(_vm.stockItemsFiltered, function (stockItem) {
                       return _c(
@@ -60712,7 +60743,7 @@ var render = function () {
               _vm._v(" "),
               _c("div", { staticClass: "row mb-4" }, [
                 _c("div", { staticClass: "col" }, [
-                  _c("label", [_vm._v("Длина, мм")]),
+                  _c("label", [_vm._v("Глубина, мм")]),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -61121,7 +61152,7 @@ var render = function () {
                     "div",
                     {
                       staticClass: "form-control",
-                      staticStyle: { height: "220px", "overflow-y": "auto" },
+                      staticStyle: { height: "300px", "overflow-y": "auto" },
                     },
                     _vm._l(_vm.typesFiltered, function (type) {
                       return _c(
@@ -61227,7 +61258,7 @@ var render = function () {
                     "div",
                     {
                       staticClass: "form-control",
-                      staticStyle: { height: "180px", "overflow-y": "auto" },
+                      staticStyle: { height: "300px", "overflow-y": "auto" },
                     },
                     _vm._l(_vm.stockItemsFiltered, function (stockItem) {
                       return _c(
@@ -61536,7 +61567,7 @@ var render = function () {
               _vm._v(" "),
               _c("div", { staticClass: "row mb-4" }, [
                 _c("div", { staticClass: "col" }, [
-                  _c("label", [_vm._v("Длина, мм")]),
+                  _c("label", [_vm._v("Глубина, мм")]),
                   _vm._v(" "),
                   _c("input", {
                     directives: [

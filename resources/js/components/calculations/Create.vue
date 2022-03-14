@@ -168,6 +168,11 @@
                             <div class="col-4 text-end">
                                 <strong class="text-primary">{{ item.price | currency }} ₽</strong>
                             </div>
+                            <div class="col-12">
+                                <ul class="calculation-stock-list">
+                                    <li v-for="stockItem in item.stock_items" :key="stockItem.id">{{ stockItem.name }}</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>

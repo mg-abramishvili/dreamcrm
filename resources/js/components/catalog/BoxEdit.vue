@@ -41,7 +41,7 @@
                             <option v-for="type in types" :key="'type_' + type.id" :value="type.id">{{ type.name }}</option>
                         </select> -->
                         <input v-model="typeSearchInput" type="text" class="form-control mb-1" placeholder="Поиск по типу...">
-                        <div class="form-control" style="height: 220px; overflow-y: auto;">
+                        <div class="form-control" style="height: 300px; overflow-y: auto;">
                             <div v-for="type in typesFiltered" :key="'type_' + type.id" class="form-check">
                                 <input v-model="selected.types" :id="'type_' + type.id" :value="type.id" class="form-check-input" type="checkbox">
                                 <label class="form-check-label" :for="'type_' + type.id">
@@ -55,7 +55,7 @@
                             <label>Склад</label>
                         </div>
                         <input v-model="stockSearchInput" type="text" class="form-control mb-1" placeholder="Поиск по складу...">
-                        <div class="form-control" style="height: 180px; overflow-y: auto;">
+                        <div class="form-control" style="height: 300px; overflow-y: auto;">
                             <div v-for="stockItem in stockItemsFiltered" :key="'stock_item_' + stockItem.id" class="form-check form-check-flex">
                                 <div>
                                     <input v-model="selected.stockItems" @change="selectedStockItems(stockItem.id, $event)" :id="'stock_item_' + stockItem.id" :value="stockItem.id" class="form-check-input" type="checkbox">
@@ -100,7 +100,7 @@
 
                 <div class="row mb-4">
                     <div class="col">
-                        <label>Длина, мм</label>
+                        <label>Глубина, мм</label>
                         <input v-model="length" type="number" min="0" class="form-control">
                     </div>
                     <div class="col">
@@ -259,11 +259,13 @@
                 })
             },
             stockItemsFiltered() {
-                return this.stockItems.filter(stockItem => {
+                let filtered = this.stockItems.filter(stockItem => {
                     if(stockItem.balances && stockItem.balances.length > 0) {
                         return stockItem.name.toLowerCase().includes(this.stockSearchInput.toLowerCase())
                     }
                 })
+
+                return filtered.filter(stockItem => this.selected.stockItems.includes(stockItem.id)).concat(filtered.filter(stockItem => !this.selected.stockItems.includes(stockItem.id)))
             },
             priceRub() {
                 let selectedStockItems = this.stockItems.filter(stockItem => this.selected.stockItems.includes(stockItem.id))
@@ -387,7 +389,7 @@
                     this.errors.push('Укажите тип');
                 }
                 if (!this.length || this.length <= 0) {
-                    this.errors.push('Укажите длину');
+                    this.errors.push('Укажите глубину');
                 }
                 if (!this.width || this.width <= 0) {
                     this.errors.push('Укажите ширину');
