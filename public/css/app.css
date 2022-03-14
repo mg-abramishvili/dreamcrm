@@ -382,6 +382,8 @@ table.dataTable {
     justify-content: space-between;
     align-items: center;
     height: 25px;
+    overflow: hidden;
+    line-height: 1;
 }
 .form-control-mini-number {
     display: inline-block;
