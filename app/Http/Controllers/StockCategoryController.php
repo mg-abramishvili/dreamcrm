@@ -14,7 +14,12 @@ class StockCategoryController extends Controller
 
     public function category($id)
     {
-        return StockCategory::with('items.balances')->find($id);
+        return StockCategory::with(
+            [
+                'items.balances' => function ($q) { $q->orderBy('name', 'asc'); }
+            ]
+        )
+        ->find($id);
     }
 
     public function store(Request $request)
