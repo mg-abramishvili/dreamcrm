@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CatalogBox;
+use App\Models\CatalogSborka;
 use App\Models\Dollar;
 use Illuminate\Http\Request;
 
@@ -150,13 +151,17 @@ class CatalogBoxController extends Controller
         foreach ($boxes as $box) {
             $rub = $box->pre_rub;
             $usd = $box->pre_usd * $kurs;
-            $usd = $box->pre_usd * $kurs;
 
-            $box->price = ceil(($usd + $rub) / 50) * 50;
+            $stockItemsPrice = ceil(($usd + $rub) / 50) * 50;
+
+            $sborkaTarif = CatalogSborka::find(1);
+            $sborka = $box->sborka_days * ($box->sborka_persons * $sborkaTarif->person + $sborkaTarif->arenda);
             
-            $box->save();
+            $marzha = $box->marzha;
+            
+            $box->price = ceil(($stockItemsPrice + $sborka + $marzha) / 50) * 50;
 
-            return 'OK';
+            $box->save();
         }       
     }
 }
