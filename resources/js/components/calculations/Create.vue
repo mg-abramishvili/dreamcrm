@@ -156,7 +156,12 @@
                             </div>
                             <div class="col-12">
                                 <ul class="calculation-stock-list">
-                                    <li v-for="stockItem in selected.box.stock_items" :key="stockItem.id">{{ stockItem.name }}</li>
+                                    <li v-for="stockItem in selected.box.stock_items" :key="stockItem.id">
+                                        {{ stockItem.name }}
+                                        <template v-if="stockItem.pivot.quantity > 1">
+                                            &times; {{ stockItem.pivot.quantity }}
+                                        </template>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -175,7 +180,12 @@
                             </div>
                             <div class="col-12">
                                 <ul class="calculation-stock-list">
-                                    <li v-for="stockItem in item.stock_items" :key="stockItem.id">{{ stockItem.name }}</li>
+                                    <li v-for="stockItem in item.stock_items" :key="stockItem.id">
+                                        {{ stockItem.name }}
+                                        <template v-if="stockItem.pivot.quantity > 1">
+                                            &times; {{ stockItem.pivot.quantity }}
+                                        </template>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
