@@ -323,7 +323,7 @@ table.dataTable {
 }
 .calculation-stock-list li::before {
     content: '-';
-    margin-right: 7px;
+    margin-right: 0px;
 }
 /* CALCULATION */
 
