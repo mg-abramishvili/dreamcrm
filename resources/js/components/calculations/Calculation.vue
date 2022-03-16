@@ -32,13 +32,33 @@
                     <tbody>
                         <tr v-for="box in calculation.boxes">
                             <td>Корпус</td>
-                            <td>{{ box.name }}</td>
+                            <td>
+                                {{ box.name }}
+                                <ul class="calculation-stock-list">
+                                    <li v-for="stockItem in box.stock_items" :key="stockItem.id">
+                                        <template v-if="stockItem.pivot.quantity > 1">
+                                            {{ stockItem.pivot.quantity }} &times; 
+                                        </template>
+                                        {{ stockItem.name }}
+                                    </li>
+                                </ul>
+                            </td>
                             <td class="text-end">{{ box.pivot.price | currency }} ₽</td>
                         </tr>
                         <template v-for="item in calculation.catalog_items">
                         <tr v-if="item.pivot.price > 0">
                             <td>{{ item.category.name }}</td>
-                            <td>{{ item.name }}</td>
+                            <td>
+                                {{ item.name }}
+                                <ul class="calculation-stock-list">
+                                    <li v-for="stockItem in item.stock_items" :key="stockItem.id">
+                                        <template v-if="stockItem.pivot.quantity > 1">
+                                            {{ stockItem.pivot.quantity }} &times; 
+                                        </template>
+                                        {{ stockItem.name }}
+                                    </li>
+                                </ul>
+                            </td>
                             <td class="text-end">{{ item.pivot.price | currency }} ₽</td>
                         </tr>
                         </template>
