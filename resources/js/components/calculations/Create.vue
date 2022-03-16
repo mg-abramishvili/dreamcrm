@@ -6,38 +6,14 @@
             </div>
         </div>
         
-        <div v-if="types.length" class="row">
+        <div class="row">
             <div class="col-12 col-lg-5">
                 <div style="position: sticky; top: 20px;">
                     <div class="card card-bordered">
                         <div class="card-body">
-                            <div v-if="views.types" class="mb-4">
-                                <div class="calculation-left-block-main-label">
-                                    <strong>Тип</strong>
-                                </div>
-                                <select v-model="selected.type" @change="loadBoxes(); resetCatalogItems()" class="form-select form-select-lg mt-2 mb-3">
-                                    <option v-for="type in types" :key="'type_' + type.id" :value="type">{{ type.name }}</option>
-                                </select>
-                                <div class="mt-4">
-                                    <button class="btn btn-outline-primary" disabled>Назад</button>
-                                    <button @click="viewBoxes()" class="btn btn-outline-primary">Далее</button>
-                                </div>
-                            </div>
+                            <ChooseType v-show="views.types == true"></ChooseType>
 
-                            <div v-if="views.boxes" class="mb-4">
-                                <div class="calculation-left-block-main-label">
-                                    <strong>Корпус</strong>
-                                </div>
-                                <select v-model="selected.box" @change="loadCatalogItems(); resetCatalogItems()" class="form-select form-select-lg mt-2 mb-3">
-                                    <template v-for="box in boxes">
-                                        <option v-if="box.width > 0 && box.length > 0 && box.height > 0 && box.weight > 0" :key="'box_' + box.id" :value="box">{{ box.name }} &mdash; {{ box.price | currency }} ₽</option>
-                                    </template>
-                                </select>
-                                <div class="mt-4">
-                                    <button @click="viewTypes()" class="btn btn-outline-primary">Назад</button>
-                                    <button @click="viewCategories()" class="btn btn-outline-primary">Далее</button>
-                                </div>
-                            </div>
+                            <ChooseBox v-show="views.boxes == true" :type_id="selected.type.id"></ChooseBox>
 
                             <div v-if="views.categories" class="mb-4">
                                 <div v-for="category in categories" :key="'category_' + category.id">
@@ -197,16 +173,15 @@
                 </template>
             </div>
         </div>
-        <div v-else>
-            <Loader></Loader>
-        </div>
 
     </div>
 </template>
 
 <script>
     import Loader from '../Loader.vue'
-    import DeliveryPEK from './DeliveryPEK.vue'
+    import ChooseType from './comps/ChooseType.vue'
+    import ChooseBox from './comps/ChooseBox.vue'
+    import DeliveryPEK from './comps/DeliveryPEK.vue'
 
     export default {
         data() {
@@ -246,7 +221,6 @@
             }
         },
         created() {
-            this.loadTypes()
             this.loadCategories()
             this.loadDeliveries()
         },
@@ -312,20 +286,6 @@
             },
         },
         methods: {
-            loadTypes() {
-                axios
-                .get('/api/catalog/types')
-                .then((response => {
-                    this.types = response.data
-                }))
-            },
-            loadBoxes() {
-                axios
-                .get(`/api/catalog/boxes/type/${this.selected.type.id}`)
-                .then((response => {
-                    this.boxes = response.data
-                }))
-            },
             loadDeliveries() {
                 axios
                 .get('/api/calculation/deliveries')
@@ -512,6 +472,8 @@
         },
         components: {
             Loader,
+            ChooseType,
+            ChooseBox,
             DeliveryPEK
         }
     }
