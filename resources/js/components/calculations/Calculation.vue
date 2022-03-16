@@ -33,7 +33,7 @@
                         <tr v-for="box in calculation.boxes">
                             <td>Корпус</td>
                             <td>
-                                {{ box.name }}
+                                <strong>{{ box.name }}</strong>
                                 <ul class="calculation-stock-list">
                                     <li v-for="stockItem in box.stock_items" :key="stockItem.id">
                                         <template v-if="stockItem.pivot.quantity > 1">
@@ -49,7 +49,7 @@
                         <tr v-if="item.pivot.price > 0">
                             <td>{{ item.category.name }}</td>
                             <td>
-                                {{ item.name }}
+                                <strong>{{ item.name }}</strong>
                                 <ul class="calculation-stock-list">
                                     <li v-for="stockItem in item.stock_items" :key="stockItem.id">
                                         <template v-if="stockItem.pivot.quantity > 1">
