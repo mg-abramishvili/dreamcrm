@@ -122,11 +122,13 @@
                 })
             },
             stockItemsFiltered() {
-                return this.stockItems.filter(stockItem => {
+                let filtered = this.stockItems.filter(stockItem => {
                     if(stockItem.balances && stockItem.balances.length > 0) {
                         return stockItem.name.toLowerCase().includes(this.stockSearchInput.toLowerCase())
                     }
                 })
+
+                return filtered.filter(stockItem => this.selected.stockItems.includes(stockItem.id)).concat(filtered.filter(stockItem => !this.selected.stockItems.includes(stockItem.id)))
             },
             priceRub() {
                 let selectedStockItems = this.stockItems.filter(stockItem => this.selected.stockItems.includes(stockItem.id))
