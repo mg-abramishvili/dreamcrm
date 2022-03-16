@@ -157,10 +157,10 @@
                             <div class="col-12">
                                 <ul class="calculation-stock-list">
                                     <li v-for="stockItem in selected.box.stock_items" :key="stockItem.id">
-                                        {{ stockItem.name }}
                                         <template v-if="stockItem.pivot.quantity > 1">
-                                            &times; {{ stockItem.pivot.quantity }}
+                                            {{ stockItem.pivot.quantity }} &times; 
                                         </template>
+                                        {{ stockItem.name }}
                                     </li>
                                 </ul>
                             </div>
@@ -181,10 +181,10 @@
                             <div class="col-12">
                                 <ul class="calculation-stock-list">
                                     <li v-for="stockItem in item.stock_items" :key="stockItem.id">
-                                        {{ stockItem.name }}
                                         <template v-if="stockItem.pivot.quantity > 1">
-                                            &times; {{ stockItem.pivot.quantity }}
+                                            {{ stockItem.pivot.quantity }} &times; 
                                         </template>
+                                        {{ stockItem.name }}
                                     </li>
                                 </ul>
                             </div>
