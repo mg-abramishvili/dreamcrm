@@ -410,7 +410,7 @@
                 let index = this.categories.indexOf(category)
                 let nextCategory = this.categories[index + 1]
 
-                if(index >= 0 && index < this.categories.length - 1) {
+                if(index >= 0 && index < this.categories.length - 1 && this.catalogItems.filter(item => item.category_id == nextCategory.id)[0]) {
                     this.views.categoryCurrent = nextCategory.id
                     this.selected.catalogItems[nextCategory.slug][0].id = this.catalogItems.filter(item => item.category_id == nextCategory.id)[0].id
                 } else {
