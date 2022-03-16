@@ -8,7 +8,7 @@
         
         <div v-if="types.length" class="row">
             <div class="col-12 col-lg-5">
-                <div style="position: sticky; top: 20px;"></div>
+                <div style="position: sticky; top: 20px;">
                     <div class="card card-bordered">
                         <div class="card-body">
                             <div v-if="views.types" class="mb-4">
