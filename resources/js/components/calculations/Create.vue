@@ -41,7 +41,7 @@
 
                             <div v-if="views.categories" class="mb-4">
                                 <div v-for="category in categories" :key="'category_' + category.id">
-                                    <div v-show="views.categoryCurrent == category.id">
+                                    <div v-show="views.categoryCurrent == category.id && catalogItems.filter(item => item.category_id == category.id).length > 0">
                                         <div class="calculation-left-block-main-label">
                                             <strong>{{ category.name }}</strong>
                                             <button @click="addCatalogItem(category.slug)" class="btn btn-sm btn-outline-danger">+</button>
