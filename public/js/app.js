@@ -3218,7 +3218,6 @@ __webpack_require__.r(__webpack_exports__);
     selectedCatalogItems: {
       deep: true,
       handler: function handler() {
-        console.log('ok');
         this.reset();
       }
     },

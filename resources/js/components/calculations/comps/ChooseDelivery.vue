@@ -43,7 +43,6 @@
             selectedCatalogItems: {
                 deep: true,
                 handler() {
-                    console.log('ok')
                     this.reset()
                 }
             },
