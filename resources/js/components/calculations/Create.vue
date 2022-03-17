@@ -11,38 +11,13 @@
                 <div style="position: sticky; top: 20px;">
                     <div class="card card-bordered">
                         <div class="card-body">
-                            <ChooseType v-show="views.types == true"></ChooseType>
+                            <ChooseType v-show="views.step == 'type'"></ChooseType>
 
-                            <ChooseBox v-show="views.boxes == true" :type_id="selected.type.id"></ChooseBox>
+                            <ChooseBox v-show="views.step == 'box'" :type_id="selected.type.id"></ChooseBox>
 
-                            <div v-if="views.categories" class="mb-4">
-                                <div v-for="category in categories" :key="'category_' + category.id">
-                                    <div v-show="views.categoryCurrent == category.id && catalogItems.filter(item => item.category_id == category.id).length > 0">
-                                        <div class="calculation-left-block-main-label">
-                                            <strong>{{ category.name }}</strong>
-                                            <button @click="addCatalogItem(category.slug)" class="btn btn-sm btn-outline-danger">+</button>
-                                        </div>
-                                        
-                                        <div v-for="(catalogItem, index) in selected.catalogItems[category.slug]" :key="index" style="position: relative;">
-                                            <select v-model="catalogItem.id" class="form-select form-select-lg mt-2 mb-3">
-                                                <template v-for="catalogItem in catalogItems">
-                                                    <option v-if="catalogItem.category_id == category.id" :key="'catalogItem_' + catalogItem.id" :value="catalogItem.id">
-                                                        {{ catalogItem.name }} <template v-if="catalogItem.price > 0">&mdash; {{ catalogItem.price | currency }} ₽</template>
-                                                    </option>
-                                                </template>
-                                            </select>
-                                            <button v-if="index > 0 && selected.catalogItems[category.slug].length > 1" @click="deleteCatalogItem(catalogItem.id, category.slug)" class="btn btn-sm btn-outline-danger" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); padding: 0; width: 20px; margin-right: -21px;">&ndash;</button>
-                                        </div>
+                            <ChooseCatalog v-show="views.step == 'catalog'" :box_id="selected.box.id"></ChooseCatalog>
 
-                                        <div class="mt-4">
-                                            <button @click="prevCategory(category)" class="btn btn-outline-primary">Назад</button>
-                                            <button @click="nextCategory(category)" class="btn btn-outline-primary">Далее</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div v-if="views.quantity" class="mb-4">
+                            <div v-if="views.step == 'quantity'" class="mb-4">
                                 <div class="calculation-left-block-main-label">
                                     <strong>Количество</strong>
                                 </div>
@@ -181,13 +156,12 @@
     import Loader from '../Loader.vue'
     import ChooseType from './comps/ChooseType.vue'
     import ChooseBox from './comps/ChooseBox.vue'
+    import ChooseCatalog from './comps/ChooseCatalog.vue'
     import DeliveryPEK from './comps/DeliveryPEK.vue'
 
     export default {
         data() {
             return {
-                types: [],
-                boxes: [],
                 categories: [],
                 catalogItems: [],
                 deliveries: [],
@@ -210,37 +184,13 @@
                 quantity: 1,
 
                 views: {
-                    types: true,
-                    boxes: false,
-                    categories: false,
-                    categoryCurrent: '',
-                    quantity: false,
-                    delivery: false,
+                    step: 'type',
                     saveButton: false,
                 },
             }
         },
         created() {
-            this.loadCategories()
             this.loadDeliveries()
-        },
-        watch: {
-            selected: {
-                deep: true,
-                handler() {
-                    for (const category of Object.entries(this.selected.catalogItems)) {
-                        if(category[1] && category[1].length > 0) {
-                            category[1].forEach((i) => {
-                                if(i.id != null) {
-                                    i.price = parseInt(this.catalogItems.filter(item => item.id == i.id)[0].price)
-                                    i.pre_rub = parseInt(this.catalogItems.filter(item => item.id == i.id)[0].pre_rub)
-                                    i.pre_usd = parseInt(this.catalogItems.filter(item => item.id == i.id)[0].pre_usd)
-                                }
-                            })
-                        }
-                    }
-                }
-            }
         },
         computed: {
             pricePreRub() {
@@ -293,30 +243,7 @@
                     this.deliveries = response.data
                 }));
             },
-            loadCategories() {
-                axios
-                .get('/api/catalog/categories')
-                .then((response => {
-                    this.categories = response.data
-
-                    response.data.forEach(category => {
-                        this.$set(this.selected.catalogItems, category.slug, [])
-                        this.addCatalogItem(category.slug)
-                    })
-
-                    this.views.categoryCurrent = response.data[0].id
-                }))
-            },
-            loadCatalogItems() {
-                if(this.selected.box && this.selected.box.id > 0) {
-                    axios
-                    .get(`/api/catalog/items/box/${this.selected.box.id}`)
-                    .then((response => {
-                        this.catalogItems = response.data
-                    }))
-                }
-                
-            },
+            
             resetCatalogItems() {
                 for (const category of Object.entries(this.selected.catalogItems)) {
                     if(category[1] && category[1].length > 0) {
@@ -331,22 +258,7 @@
                 this.quantity = 1
                 this.resetDelivery()
             },
-            addCatalogItem(categorySlug) {
-                let checkEmpty = this.selected.catalogItems[categorySlug].filter(item => item.id === null)
-                if (checkEmpty.length >= 1 && this.selected.catalogItems[categorySlug].length > 0) {
-                    return
-                }
-                this.selected.catalogItems[categorySlug].push({
-                    id: null,
-                    price: 0,
-                    pre_rub: 0,
-                    pre_usd: 0
-                })
-            },
-            deleteCatalogItem(itemID, categorySlug) {
-                var index = this.selected.catalogItems[categorySlug].map(item => { return item.id }).indexOf(itemID)
-                this.selected.catalogItems[categorySlug].splice(index, 1)
-            },
+            
             catalogItemsByCategory(category) {
                 var categoryItems = this.catalogItems.filter(item => item.category_id == category.id)
                 var categoryItemsSelected = this.selected.catalogItems[category.slug]
@@ -360,25 +272,7 @@
 
                 return categoryItemsFiltered
             },
-            prevCategory(category) {
-                var index = this.categories.indexOf(category)
-                if(index > 0 && index < this.categories.length + 1) {
-                    this.views.categoryCurrent = this.categories[index - 1].id
-                } else {
-                    this.viewBoxes()
-                }
-            },
-            nextCategory(category) {
-                let index = this.categories.indexOf(category)
-                let nextCategory = this.categories[index + 1]
-
-                if(index >= 0 && index < this.categories.length - 1 && this.catalogItems.filter(item => item.category_id == nextCategory.id)[0]) {
-                    this.views.categoryCurrent = nextCategory.id
-                    this.selected.catalogItems[nextCategory.slug][0].id = this.catalogItems.filter(item => item.category_id == nextCategory.id)[0].id
-                } else {
-                    this.viewQuantity()
-                }
-            },
+            
             resetDelivery() {
                 this.selected.delivery.id = ''
                 this.selected.delivery.name = ''
@@ -398,51 +292,8 @@
                 this.selected.delivery.directionTo = ''
                 this.selected.delivery.days = ''
             },
-            viewTypes() {
-                this.views.types = true
-                this.views.boxes = false
-                this.views.categories = false
-                this.views.quantity = false
-                this.views.delivery = false
-                this.views.saveButton = false
-            },
-            viewBoxes() {
-                this.views.types = false
-                this.views.boxes = true
-                this.views.categories = false
-                this.views.quantity = false
-                this.views.delivery = false
-                this.views.saveButton = false
-            },
-            viewCategories() {
-                if(this.selected.box && this.selected.box.id && this.catalogItems.length) {
-                    this.views.types = false
-                    this.views.boxes = false
-                    this.views.categories = true
-                    this.views.quantity = false
-                    this.views.delivery = false
-                    this.views.saveButton = false
-
-                    this.selected.catalogItems[this.categories[0].slug][0].id = this.catalogItems.filter(catalogItem => catalogItem.category_id == this.categories[0].id)[0].id
-                } else {
-                    alert('Выберите корпус!')
-                }
-            },
-            viewQuantity() {
-                this.views.types = false
-                this.views.boxes = false
-                this.views.categories = false
-                this.views.quantity = true
-                this.views.delivery = false
-                this.views.saveButton = false
-            },
-            viewDelivery() {
-                this.views.types = false
-                this.views.boxes = false
-                this.views.categories = false
-                this.views.quantity = false
-                this.views.delivery = true
-                this.views.saveButton = true
+            goToStep(step) {
+               this.views.step = step 
             },
             saveCalculation() {
                 if(!this.selected.delivery.id) {
@@ -474,6 +325,7 @@
             Loader,
             ChooseType,
             ChooseBox,
+            ChooseCatalog,
             DeliveryPEK
         }
     }

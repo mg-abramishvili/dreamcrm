@@ -597,3 +597,13 @@ table.dataTable {
     display: block;
 }
 /* DASHBOARD */
+
+
+/* SWAL */
+.swal2-styled.swal2-confirm {
+    background-color: #fd7b38 !important;
+}
+.swal2-styled.swal2-confirm:focus {
+    box-shadow: none !important;
+}
+/* SWAL */

@@ -28,6 +28,7 @@
         "vue-dragscroll": "^3.0.1",
         "vue-filepond": "^6.0.0",
         "vue-router": "^3.5.1",
+        "vue-sweetalert2": "^5.0.2",
         "vuedraggable": "^2.24.3"
     }
 }

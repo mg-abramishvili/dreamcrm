@@ -5,12 +5,12 @@
         <div class="calculation-left-block-main-label">
             <strong>Тип</strong>
         </div>
-        <select v-model="selected.type" @change="changeType()" class="form-select form-select-lg mt-2 mb-3">
+        <select v-model="selected.type" class="form-select form-select-lg mt-2 mb-3">
             <option v-for="type in types" :key="'type_' + type.id" :value="type">{{ type.name }}</option>
         </select>
         <div class="mt-4">
             <button class="btn btn-outline-primary" disabled>Назад</button>
-            <button @click="$parent.viewBoxes()" class="btn btn-outline-primary">Далее</button>
+            <button @click="goNext()" class="btn btn-outline-primary">Далее</button>
         </div>
     </div>
 </template>
@@ -42,10 +42,18 @@
                     this.views.loading = false
                 }))
             },
-            changeType() {
+            goNext() {
+                if(!this.selected.type.id) {
+                    this.$swal({
+                        text: 'Укажите тип',
+                        icon: 'error',
+                    })
+                    return
+                }
+
                 this.$parent.selected.type = this.selected.type
-                this.$parent.selected.box = {}
-                this.$parent.resetCatalogItems()
+
+                this.$parent.goToStep('box')
             }
         },
     }
