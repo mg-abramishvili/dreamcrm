@@ -16,19 +16,8 @@
                             <ChooseBox v-show="views.step == 'box'" :type_id="selected.type.id"></ChooseBox>
 
                             <ChooseCatalog v-show="views.step == 'catalog'" :box_id="selected.box.id"></ChooseCatalog>
-
-                            <div v-if="views.step == 'quantity'" class="mb-4">
-                                <div class="calculation-left-block-main-label">
-                                    <strong>Количество</strong>
-                                </div>
-
-                                <input @change="resetDelivery()" v-model="quantity" type="number" class="form-control">
-
-                                <div class="mt-4">
-                                    <button @click="viewCategories()" class="btn btn-outline-primary">Назад</button>
-                                    <button @click="viewDelivery()" class="btn btn-outline-primary">Далее</button>
-                                </div>
-                            </div>
+                            
+                            <ChooseQuantity v-show="views.step == 'quantity'"></ChooseQuantity>
 
                             <div v-if="views.delivery" class="mb-4">
                                 <div class="calculation-left-block-main-label">
@@ -133,6 +122,7 @@
     import ChooseType from './comps/ChooseType.vue'
     import ChooseBox from './comps/ChooseBox.vue'
     import ChooseCatalog from './comps/ChooseCatalog.vue'
+    import ChooseQuantity from './comps/ChooseQuantity.vue'
     import DeliveryPEK from './comps/DeliveryPEK.vue'
     import ChosenList from './comps/ChosenList.vue'
 
@@ -291,6 +281,7 @@
             ChooseType,
             ChooseBox,
             ChooseCatalog,
+            ChooseQuantity,
             DeliveryPEK,
             ChosenList
         }
