@@ -1,11 +1,10 @@
-<template>
-    <loader v-if="views.loading"></loader>
-    
-    <div v-else class="mb-4">
+<template>    
+    <div class="mb-4">
         <div class="calculation-left-block-main-label">
             <strong>Тип</strong>
         </div>
-        <select v-model="selected.type" class="form-select form-select-lg mt-2 mb-3">
+        <loader v-if="views.loading"></loader>
+        <select v-else v-model="selected.type" class="form-select form-select-lg mt-2 mb-3">
             <option v-for="type in types" :key="'type_' + type.id" :value="type">{{ type.name }}</option>
         </select>
         <div class="mt-4">

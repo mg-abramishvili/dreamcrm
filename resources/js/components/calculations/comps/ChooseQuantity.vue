@@ -24,11 +24,6 @@
             quantity: {
                 handler() {
                     this.$parent.quantity = this.quantity
-
-                    let selectedDelivery = this.$parent.selected.delivery
-                    for (const key in selectedDelivery) {
-                        delete selectedDelivery[key];
-                    }
                 }
             }
         },

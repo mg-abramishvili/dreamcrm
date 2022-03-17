@@ -1,11 +1,10 @@
 <template>
-    <loader v-if="views.loading"></loader>
-    
-    <div v-else class="mb-4">
+    <div class="mb-4">
         <div class="calculation-left-block-main-label">
             <strong>Корпус</strong>
         </div>
-        <select v-model="selected.box" class="form-select form-select-lg mt-2 mb-3">
+        <loader v-if="views.loading"></loader>
+        <select v-else v-model="selected.box" class="form-select form-select-lg mt-2 mb-3">
             <template v-for="box in boxes">
                 <option v-if="box.width > 0 && box.length > 0 && box.height > 0 && box.weight > 0" :key="'box_' + box.id" :value="box">
                     {{ box.name }} &mdash; {{ box.price | currency }} ₽

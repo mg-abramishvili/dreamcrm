@@ -19,22 +19,7 @@
                             
                             <ChooseQuantity v-show="views.step == 'quantity'"></ChooseQuantity>
 
-                            <div v-if="views.delivery" class="mb-4">
-                                <div class="calculation-left-block-main-label">
-                                    <strong>Доставка</strong>
-                                </div>
-
-                                <select @change="changeDelivery()" v-model="selected.delivery.id" class="form-select">
-                                    <option v-for="delivery in deliveries" :key="'delivery_' + delivery.id" :value="delivery.id">{{ delivery.name }} &mdash; {{ delivery.price }}</option>
-                                </select>
-
-                                <DeliveryPEK v-if="selected.delivery.id == 3" :box="selected.box" :quantity="quantity" :delivery="selected.delivery"></DeliveryPEK>
-
-                                <div class="mt-4">
-                                    <button @click="viewQuantity()" class="btn btn-outline-primary">Назад</button>
-                                    <button class="btn btn-outline-primary" disabled>Далее</button>
-                                </div>
-                            </div>
+                            <ChooseDelivery v-show="views.step == 'delivery'" :quantity="quantity" :selectedCatalogItems="selected.catalogItems"></ChooseDelivery>
 
                             <div class="total">
                                 <div v-if="price && price > 0" class="row align-items-center mb-3">
@@ -123,7 +108,7 @@
     import ChooseBox from './comps/ChooseBox.vue'
     import ChooseCatalog from './comps/ChooseCatalog.vue'
     import ChooseQuantity from './comps/ChooseQuantity.vue'
-    import DeliveryPEK from './comps/DeliveryPEK.vue'
+    import ChooseDelivery from './comps/ChooseDelivery.vue'
     import ChosenList from './comps/ChosenList.vue'
 
     export default {
@@ -155,9 +140,6 @@
                     saveButton: false,
                 },
             }
-        },
-        created() {
-            this.loadDeliveries()
         },
         computed: {
             pricePreRub() {
@@ -203,50 +185,6 @@
             },
         },
         methods: {
-            loadDeliveries() {
-                axios
-                .get('/api/calculation/deliveries')
-                .then((response => {
-                    this.deliveries = response.data
-                }));
-            },
-            
-            resetCatalogItems() {
-                for (const category of Object.entries(this.selected.catalogItems)) {
-                    if(category[1] && category[1].length > 0) {
-                        category[1].forEach((i) => {
-                            i.id = null,
-                            i.price = 0,
-                            i.pre_rub = 0,
-                            i.pre_usd = 0
-                        })
-                    }
-                }
-                this.quantity = 1
-                this.resetDelivery()
-            },
-            
-            
-            
-            resetDelivery() {
-                this.selected.delivery.id = ''
-                this.selected.delivery.name = ''
-                this.selected.delivery.price = ''
-                this.selected.delivery.to = ''
-                this.selected.delivery.directionFrom = ''
-                this.selected.delivery.directionTo = ''
-                this.selected.delivery.days = ''
-            },
-            changeDelivery() {
-                var delivery = this.deliveries.find(delivery => delivery.id === this.selected.delivery.id)
-                
-                this.selected.delivery.name = delivery.name
-                this.selected.delivery.price = delivery.price
-                this.selected.delivery.to = ''
-                this.selected.delivery.directionFrom = ''
-                this.selected.delivery.directionTo = ''
-                this.selected.delivery.days = ''
-            },
             goToStep(step) {
                this.views.step = step 
             },
@@ -282,7 +220,7 @@
             ChooseBox,
             ChooseCatalog,
             ChooseQuantity,
-            DeliveryPEK,
+            ChooseDelivery,
             ChosenList
         }
     }

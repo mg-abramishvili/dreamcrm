@@ -1,12 +1,14 @@
 <template>
     <div class="mb-4">
-        <div v-for="category in categories" :key="'category_' + category.id">
+        <loader v-if="views.loading"></loader>
+
+        <div v-else v-for="category in categories" :key="'category_' + category.id">
             <div v-show="views.category == category.id && catalogItems.filter(item => item.category_id == category.id).length > 0">
                 <div class="calculation-left-block-main-label">
                     <strong>{{ category.name }}</strong>
                     <button @click="addCatalogItem(category.slug)" class="btn btn-sm btn-outline-danger">+</button>
                 </div>
-                
+
                 <div v-for="(catalogItem, index) in selected.catalogItems[category.slug]" :key="index" style="position: relative;">
                     <select v-model="catalogItem.id" class="form-select form-select-lg mt-2 mb-3">
                         <template v-for="catalogItem in catalogItems">
@@ -48,6 +50,8 @@
         watch: {
             box_id: {
                 handler() {
+                    this.selected.catalogItems = {}
+
                     this.loadCategories()
                     this.loadCatalogItems()
                 }
@@ -109,6 +113,8 @@
                     pre_rub: 0,
                     pre_usd: 0
                 })
+
+                this.views.loading = false
             },
             deleteCatalogItem(itemID, categorySlug) {
                 var index = this.selected.catalogItems[categorySlug].map(item => { return item.id }).indexOf(itemID)
