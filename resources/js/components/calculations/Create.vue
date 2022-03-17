@@ -121,31 +121,7 @@
                     </div>
                 </div>
 
-                <template v-for="category in categories">
-                    <div v-if="catalogItemsByCategory(category).length > 0" :key="'category_' + category.id" class="card card-bordered mb-2">
-                        <div class="card-body py-2 px-3">
-                            <small style="color: rgb(136, 136, 136);">{{ category.name }}</small>
-                            <div v-for="item in catalogItemsByCategory(category)" class="row align-items-center">
-                                <div class="col-8">
-                                    <strong class="d-block">{{ item.name }}</strong>
-                                </div>
-                                <div class="col-4 text-end">
-                                    <strong class="text-primary">{{ item.price | currency }} ₽</strong>
-                                </div>
-                                <div class="col-12">
-                                    <ul class="calculation-stock-list">
-                                        <li v-for="stockItem in item.stock_items" :key="stockItem.id">
-                                            <template v-if="stockItem.pivot.quantity > 1">
-                                                {{ stockItem.pivot.quantity }} &times; 
-                                            </template>
-                                            {{ stockItem.name }}
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </template>
+                <ChosenList :categories="categories" :catalogItems="catalogItems" :selectedCatalogItems="selected.catalogItems"></ChosenList>
             </div>
         </div>
 
@@ -158,6 +134,7 @@
     import ChooseBox from './comps/ChooseBox.vue'
     import ChooseCatalog from './comps/ChooseCatalog.vue'
     import DeliveryPEK from './comps/DeliveryPEK.vue'
+    import ChosenList from './comps/ChosenList.vue'
 
     export default {
         data() {
@@ -259,19 +236,7 @@
                 this.resetDelivery()
             },
             
-            catalogItemsByCategory(category) {
-                var categoryItems = this.catalogItems.filter(item => item.category_id == category.id)
-                var categoryItemsSelected = this.selected.catalogItems[category.slug]
-                var categoryItemsFiltered = []
-
-                categoryItemsSelected.forEach((itemSelected) => {
-                    if(categoryItems.find(item => item.id === itemSelected.id)) {
-                        categoryItemsFiltered.push(categoryItems.find(item => item.id === itemSelected.id))
-                    }
-                })
-
-                return categoryItemsFiltered
-            },
+            
             
             resetDelivery() {
                 this.selected.delivery.id = ''
@@ -326,7 +291,8 @@
             ChooseType,
             ChooseBox,
             ChooseCatalog,
-            DeliveryPEK
+            DeliveryPEK,
+            ChosenList
         }
     }
 </script>

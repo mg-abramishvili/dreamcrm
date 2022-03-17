@@ -48,6 +48,7 @@
         watch: {
             box_id: {
                 handler() {
+                    this.loadCategories()
                     this.loadCatalogItems()
                 }
             },
@@ -65,11 +66,9 @@
                             })
                         }
                     }
+                    this.$parent.selected.catalogItems = this.selected.catalogItems
                 }
             }
-        },
-        created() {
-            this.loadCategories()
         },
         methods: {
             loadCategories() {
@@ -77,6 +76,7 @@
                 .get('/api/catalog/categories')
                 .then((response => {
                     this.categories = response.data
+                    this.$parent.categories = response.data
 
                     response.data.forEach(category => {
                         this.$set(this.selected.catalogItems, category.slug, [])
@@ -95,6 +95,7 @@
                 .get(`/api/catalog/items/box/${this.box_id}`)
                 .then((response => {
                     this.catalogItems = response.data
+                    this.$parent.catalogItems = response.data
                 }))
             },
             addCatalogItem(categorySlug) {
@@ -121,7 +122,7 @@
                     this.$parent.views.step = 'box'
                 }
             },
-            nextCategory(category) {
+            nextCategory(category) {                
                 let index = this.categories.indexOf(category)
                 let nextCategory = this.categories[index + 1]
 

@@ -39,6 +39,8 @@
             type_id: {
                 handler() {
                     this.loadBoxes()
+
+                    this.$parent.selected.box = {}
                 }
             }
         },
