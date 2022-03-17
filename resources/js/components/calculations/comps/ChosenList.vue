@@ -1,10 +1,10 @@
 <template>
     <div v-if="categories && categories.length">
-        <div v-for="category in categories">
+        <div v-for="category in categories" :key="category.id">
             <div v-if="catalogItemsByCategory(category) && catalogItemsByCategory(category).length" :key="'category_' + category.id" class="card card-bordered mb-2">
                 <div class="card-body py-2 px-3">
                     <small style="color: rgb(136, 136, 136);">{{ category.name }}</small>
-                    <div v-for="item in catalogItemsByCategory(category)" class="row align-items-center">
+                    <div v-for="item in catalogItemsByCategory(category)" :key="item.id" class="row align-items-center">
                         <div class="col-8">
                             <strong class="d-block">{{ item.name }}</strong>
                         </div>

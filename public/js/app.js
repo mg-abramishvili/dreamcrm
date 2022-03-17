@@ -61051,7 +61051,7 @@ var render = function () {
     ? _c(
         "div",
         _vm._l(_vm.categories, function (category) {
-          return _c("div", [
+          return _c("div", { key: category.id }, [
             _vm.catalogItemsByCategory(category) &&
             _vm.catalogItemsByCategory(category).length
               ? _c(
@@ -61076,7 +61076,10 @@ var render = function () {
                           function (item) {
                             return _c(
                               "div",
-                              { staticClass: "row align-items-center" },
+                              {
+                                key: item.id,
+                                staticClass: "row align-items-center",
+                              },
                               [
                                 _c("div", { staticClass: "col-8" }, [
                                   _c("strong", { staticClass: "d-block" }, [
@@ -61208,7 +61211,7 @@ var render = function () {
         },
       },
       _vm._l(_vm.cities, function (city, name) {
-        return _c("option", { domProps: { value: name } }, [
+        return _c("option", { key: name, domProps: { value: name } }, [
           _vm._v(_vm._s(name)),
         ])
       }),

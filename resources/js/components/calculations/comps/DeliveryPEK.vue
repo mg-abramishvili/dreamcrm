@@ -1,7 +1,7 @@
 <template>
     <div>
         <select class="form-select" v-model="selected.name" @change="onCityChange()">
-            <option v-for="(city, name) in cities" :value="name">{{ name }}</option>
+            <option v-for="(city, name) in cities" :key="name" :value="name">{{ name }}</option>
         </select>
 
         <div v-if="loading" class="spinner-border text-primary mt-4">
