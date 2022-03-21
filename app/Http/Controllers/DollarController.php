@@ -33,7 +33,7 @@ class DollarController extends Controller
             $dollar->kurs = $kurs + ($kurs / 100 * 10);
             $dollar->date = $date;
             // $dollar->save();
-            return $kurs + ($kurs / 100 * 10);
+            return round(str_replace(',','.',$kurs + ($kurs / 100 * 10)), 2);
         }
     }
 }
