@@ -132,6 +132,8 @@
                 } else {
                     this.$parent.views.step = 'quantity'
                 }
+
+                console.log(this.selected.catalogItems)
             },
         },
     }

@@ -3153,6 +3153,8 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         this.$parent.views.step = 'quantity';
       }
+
+      console.log(this.selected.catalogItems);
     }
   }
 });
