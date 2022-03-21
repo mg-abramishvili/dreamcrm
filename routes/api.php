@@ -71,6 +71,7 @@ Route::delete('catalog/box/{id}/delete', [CatalogBoxController::class, 'delete']
 Route::get('catalog/boxes-prices-update', [CatalogBoxController::class, 'updatePrices']);
 
 Route::get('catalog/categories', [CatalogCategoryController::class, 'index']);
+Route::get('catalog/{box_id}/categories', [CatalogCategoryController::class, 'indexByBox']);
 Route::post('catalog/categories', [CatalogCategoryController::class, 'store']);
 Route::get('catalog/category/{id}', [CatalogCategoryController::class, 'category']);
 Route::put('catalog/category/{id}/update', [CatalogCategoryController::class, 'update']);

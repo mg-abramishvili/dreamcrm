@@ -2683,7 +2683,6 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       categories: [],
-      catalogItems: [],
       deliveries: [],
       selected: {
         type: {},
@@ -3033,12 +3032,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['box_id'],
   data: function data() {
     return {
       categories: [],
-      catalogItems: [],
       selected: {
         catalogItems: {}
       },
@@ -3053,7 +3052,6 @@ __webpack_require__.r(__webpack_exports__);
       handler: function handler() {
         this.selected.catalogItems = {};
         this.loadCategories();
-        this.loadCatalogItems();
       }
     },
     selected: {
@@ -3061,24 +3059,32 @@ __webpack_require__.r(__webpack_exports__);
       handler: function handler() {
         var _this = this;
 
-        for (var _i = 0, _Object$entries = Object.entries(this.selected.catalogItems); _i < _Object$entries.length; _i++) {
+        var _loop = function _loop() {
           var category = _Object$entries[_i];
 
-          if (category[1] && category[1].length > 0) {
+          if (category[1].length) {
+            var selectedItems = _this.categories.find(function (c) {
+              return c.slug == category[0];
+            }).items;
+
             category[1].forEach(function (i) {
               if (i.id != null) {
-                i.price = parseInt(_this.catalogItems.filter(function (item) {
+                i.price = parseInt(selectedItems.find(function (item) {
                   return item.id == i.id;
-                })[0].price);
-                i.pre_rub = parseInt(_this.catalogItems.filter(function (item) {
+                }).price);
+                i.pre_rub = parseInt(selectedItems.find(function (item) {
                   return item.id == i.id;
-                })[0].pre_rub);
-                i.pre_usd = parseInt(_this.catalogItems.filter(function (item) {
+                }).pre_rub);
+                i.pre_usd = parseInt(selectedItems.find(function (item) {
                   return item.id == i.id;
-                })[0].pre_usd);
+                }).pre_usd);
               }
             });
           }
+        };
+
+        for (var _i = 0, _Object$entries = Object.entries(this.selected.catalogItems); _i < _Object$entries.length; _i++) {
+          _loop();
         }
 
         this.$parent.selected.catalogItems = this.selected.catalogItems;
@@ -3089,7 +3095,11 @@ __webpack_require__.r(__webpack_exports__);
     loadCategories: function loadCategories() {
       var _this2 = this;
 
-      axios.get('/api/catalog/categories').then(function (response) {
+      if (!this.box_id) {
+        return;
+      }
+
+      axios.get("/api/catalog/".concat(this.box_id, "/categories")).then(function (response) {
         _this2.categories = response.data;
         _this2.$parent.categories = response.data;
         response.data.forEach(function (category) {
@@ -3098,18 +3108,6 @@ __webpack_require__.r(__webpack_exports__);
           _this2.addCatalogItem(category.slug);
         });
         _this2.views.category = response.data[0].id;
-      });
-    },
-    loadCatalogItems: function loadCatalogItems() {
-      var _this3 = this;
-
-      if (!this.box_id) {
-        return;
-      }
-
-      axios.get("/api/catalog/items/box/".concat(this.box_id)).then(function (response) {
-        _this3.catalogItems = response.data;
-        _this3.$parent.catalogItems = response.data;
       });
     },
     addCatalogItem: function addCatalogItem(categorySlug) {
@@ -3135,11 +3133,11 @@ __webpack_require__.r(__webpack_exports__);
       }).indexOf(itemID);
       this.selected.catalogItems[categorySlug].splice(index, 1);
     },
-    prevCategory: function prevCategory(category) {
-      var index = this.categories.indexOf(category);
+    prevCategory: function prevCategory(category, index) {
+      var prevCategory = this.categories[index - 1];
 
-      if (index > 0 && index < this.categories.length + 1) {
-        this.views.category = this.categories[index - 1].id;
+      if (prevCategory) {
+        this.views.category = prevCategory.id;
       } else {
         this.$parent.views.step = 'box';
       }
@@ -3147,9 +3145,9 @@ __webpack_require__.r(__webpack_exports__);
     nextCategory: function nextCategory(category, index) {
       var nextCategory = this.categories[index + 1];
 
-      if (nextCategory) {
+      if (nextCategory && nextCategory.items.length) {
         this.views.category = nextCategory.id;
-        this.selected.catalogItems[nextCategory.slug][0].id = this.catalogItems.filter(function (item) {
+        this.selected.catalogItems[nextCategory.slug][0].id = nextCategory.items.filter(function (item) {
           return item.category_id == nextCategory.id;
         })[0].id;
       } else {
@@ -3355,6 +3353,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -3445,7 +3446,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     catalogItemsByCategory: function catalogItemsByCategory(category) {
-      var categoryItems = this.catalogItems.filter(function (item) {
+      var categoryItems = category.items.filter(function (item) {
         return item.category_id == category.id;
       });
       var categoryItemsSelected = this.selectedCatalogItems[category.slug];
@@ -60158,7 +60159,6 @@ var render = function () {
           _c("ChosenList", {
             attrs: {
               categories: _vm.categories,
-              catalogItems: _vm.catalogItems,
               selectedCatalogItems: _vm.selected.catalogItems,
             },
           }),
@@ -60524,7 +60524,7 @@ var render = function () {
       _vm.views.loading
         ? _c("loader")
         : _vm._l(_vm.categories, function (category, index) {
-            return _c("div", { key: "category_" + category.id }, [
+            return _c("div", { key: category.id }, [
               _c(
                 "div",
                 {
@@ -60532,13 +60532,8 @@ var render = function () {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value:
-                        _vm.views.category == category.id &&
-                        _vm.catalogItems.filter(function (item) {
-                          return item.category_id == category.id
-                        }),
-                      expression:
-                        "views.category == category.id && catalogItems.filter(item => item.category_id == category.id)",
+                      value: _vm.views.category == category.id,
+                      expression: "views.category == category.id",
                     },
                   ],
                 },
@@ -60605,43 +60600,37 @@ var render = function () {
                                 },
                               },
                             },
-                            [
-                              _vm._l(_vm.catalogItems, function (catalogItem) {
-                                return [
-                                  catalogItem.category_id == category.id
-                                    ? _c(
-                                        "option",
-                                        {
-                                          key: "catalogItem_" + catalogItem.id,
-                                          domProps: { value: catalogItem.id },
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                            " +
-                                              _vm._s(catalogItem.name) +
-                                              " "
-                                          ),
-                                          catalogItem.price > 0
-                                            ? [
-                                                _vm._v(
-                                                  "— " +
-                                                    _vm._s(
-                                                      _vm._f("currency")(
-                                                        catalogItem.price
-                                                      )
-                                                    ) +
-                                                    " ₽"
-                                                ),
-                                              ]
-                                            : _vm._e(),
-                                        ],
-                                        2
-                                      )
+                            _vm._l(category.items, function (catalogItem) {
+                              return _c(
+                                "option",
+                                {
+                                  key: catalogItem.id,
+                                  domProps: { value: catalogItem.id },
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                        " +
+                                      _vm._s(catalogItem.name) +
+                                      "\n                        "
+                                  ),
+                                  catalogItem.price > 0
+                                    ? [
+                                        _vm._v(
+                                          "\n                            — " +
+                                            _vm._s(
+                                              _vm._f("currency")(
+                                                catalogItem.price
+                                              )
+                                            ) +
+                                            " ₽\n                        "
+                                        ),
+                                      ]
                                     : _vm._e(),
-                                ]
-                              }),
-                            ],
-                            2
+                                ],
+                                2
+                              )
+                            }),
+                            0
                           ),
                           _vm._v(" "),
                           index > 0 &&
@@ -61045,7 +61034,7 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.categories && _vm.categories.length
+  return _vm.categories.length
     ? _c(
         "div",
         _vm._l(_vm.categories, function (category) {

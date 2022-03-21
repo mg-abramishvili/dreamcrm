@@ -13,6 +13,13 @@ class CatalogCategoryController extends Controller
         return CatalogCategory::all();
     }
 
+    public function indexByBox($box_id)
+    {
+        return CatalogCategory::with([
+            'items' => function ($q) use($box_id) { $q->whereRelation('boxes', 'catalog_box_id', $box_id)->with('stockItems')->orderBy('price', 'asc'); }
+        ])->get();
+    }
+
     public function category($id)
     {
         return CatalogCategory::with('items')->find($id);

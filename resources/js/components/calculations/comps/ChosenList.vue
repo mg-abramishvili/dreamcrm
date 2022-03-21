@@ -1,5 +1,5 @@
 <template>
-    <div v-if="categories && categories.length">
+    <div v-if="categories.length">
         <div v-for="category in categories" :key="category.id">
             <div v-if="catalogItemsByCategory(category) && catalogItemsByCategory(category).length" :key="'category_' + category.id" class="card card-bordered mb-2">
                 <div class="card-body py-2 px-3">
@@ -38,7 +38,7 @@
         },
         methods: {
             catalogItemsByCategory(category) {
-                let categoryItems = this.catalogItems.filter(item => item.category_id == category.id)
+                let categoryItems = category.items.filter(item => item.category_id == category.id)
                 let categoryItemsSelected = this.selectedCatalogItems[category.slug]
                 let categoryItemsFiltered = []
 

@@ -94,8 +94,8 @@
                         </div>
                     </div>
                 </div>
-
-                <ChosenList :categories="categories" :catalogItems="catalogItems" :selectedCatalogItems="selected.catalogItems"></ChosenList>
+                
+                <ChosenList :categories="categories" :selectedCatalogItems="selected.catalogItems"></ChosenList>
             </div>
         </div>
 
@@ -115,7 +115,6 @@
         data() {
             return {
                 categories: [],
-                catalogItems: [],
                 deliveries: [],
 
                 selected: {
