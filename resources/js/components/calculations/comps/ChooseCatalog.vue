@@ -129,6 +129,8 @@
                 }
             },
             nextCategory(category) {                
+                console.log(this.categories)
+                
                 let index = this.categories.indexOf(category)
                 let nextCategory = this.categories[index + 1]
 

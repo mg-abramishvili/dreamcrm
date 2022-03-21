@@ -3145,6 +3145,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     nextCategory: function nextCategory(category) {
+      console.log(this.categories);
       var index = this.categories.indexOf(category);
       var nextCategory = this.categories[index + 1];
 
