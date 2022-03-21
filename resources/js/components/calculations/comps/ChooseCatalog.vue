@@ -133,7 +133,7 @@
 
                 if(nextCategory) {
                     this.views.category = nextCategory.id
-                    this.selected.catalogItems[nextCategory.slug][0].id = this.catalogItems.filter(item => item.category_id === nextCategory.id)[0].id
+                    this.selected.catalogItems[nextCategory.slug][0].id = this.catalogItems.filter(item => item.category_id == nextCategory.id)[0].id
                 } else {
                     this.$parent.views.step = 'quantity'
                 }

@@ -3150,7 +3150,7 @@ __webpack_require__.r(__webpack_exports__);
       if (nextCategory) {
         this.views.category = nextCategory.id;
         this.selected.catalogItems[nextCategory.slug][0].id = this.catalogItems.filter(function (item) {
-          return item.category_id === nextCategory.id;
+          return item.category_id == nextCategory.id;
         })[0].id;
       } else {
         this.$parent.views.step = 'quantity';
