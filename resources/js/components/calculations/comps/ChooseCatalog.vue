@@ -130,13 +130,13 @@
             },
             nextCategory(category) {                
                 console.log(this.categories)
-                
+
                 let index = this.categories.indexOf(category)
                 let nextCategory = this.categories[index + 1]
 
-                if(index >= 0 && index < this.categories.length - 1 && this.catalogItems.filter(item => item.category_id == nextCategory.id)[0]) {
+                if(index >= 0 && index < this.categories.length - 1 && this.catalogItems.filter(item => item.category_id === nextCategory.id)[0]) {
                     this.views.category = nextCategory.id
-                    this.selected.catalogItems[nextCategory.slug][0].id = this.catalogItems.filter(item => item.category_id == nextCategory.id)[0].id
+                    this.selected.catalogItems[nextCategory.slug][0].id = this.catalogItems.filter(item => item.category_id === nextCategory.id)[0].id
                 } else {
                     this.$parent.views.step = 'quantity'
                 }
