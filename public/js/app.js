@@ -3144,14 +3144,10 @@ __webpack_require__.r(__webpack_exports__);
         this.$parent.views.step = 'box';
       }
     },
-    nextCategory: function nextCategory(category) {
-      console.log(this.categories);
-      var index = this.categories.indexOf(category);
+    nextCategory: function nextCategory(category, index) {
       var nextCategory = this.categories[index + 1];
 
-      if (index >= 0 && index < this.categories.length - 1 && this.catalogItems.filter(function (item) {
-        return item.category_id === nextCategory.id;
-      })[0]) {
+      if (nextCategory) {
         this.views.category = nextCategory.id;
         this.selected.catalogItems[nextCategory.slug][0].id = this.catalogItems.filter(function (item) {
           return item.category_id === nextCategory.id;
@@ -60527,7 +60523,7 @@ var render = function () {
     [
       _vm.views.loading
         ? _c("loader")
-        : _vm._l(_vm.categories, function (category) {
+        : _vm._l(_vm.categories, function (category, index) {
             return _c("div", { key: "category_" + category.id }, [
               _c(
                 "div",
@@ -60687,7 +60683,7 @@ var render = function () {
                         staticClass: "btn btn-outline-primary",
                         on: {
                           click: function ($event) {
-                            return _vm.prevCategory(category)
+                            return _vm.prevCategory(category, index)
                           },
                         },
                       },
@@ -60700,7 +60696,7 @@ var render = function () {
                         staticClass: "btn btn-outline-primary",
                         on: {
                           click: function ($event) {
-                            return _vm.nextCategory(category)
+                            return _vm.nextCategory(category, index)
                           },
                         },
                       },

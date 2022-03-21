@@ -2,7 +2,7 @@
     <div class="mb-4">
         <loader v-if="views.loading"></loader>
 
-        <div v-else v-for="category in categories" :key="'category_' + category.id">
+        <div v-else v-for="(category, index) in categories" :key="'category_' + category.id">
             <div v-show="views.category == category.id && catalogItems.filter(item => item.category_id == category.id)">
                 <div class="calculation-left-block-main-label">
                     <strong>{{ category.name }}</strong>
@@ -21,8 +21,8 @@
                 </div>
 
                 <div class="mt-4">
-                    <button @click="prevCategory(category)" class="btn btn-outline-primary">Назад</button>
-                    <button @click="nextCategory(category)" class="btn btn-outline-primary">Далее</button>
+                    <button @click="prevCategory(category, index)" class="btn btn-outline-primary">Назад</button>
+                    <button @click="nextCategory(category, index)" class="btn btn-outline-primary">Далее</button>
                 </div>
             </div>
         </div>
@@ -128,13 +128,10 @@
                     this.$parent.views.step = 'box'
                 }
             },
-            nextCategory(category) {                
-                console.log(this.categories)
-
-                let index = this.categories.indexOf(category)
+            nextCategory(category, index) {
                 let nextCategory = this.categories[index + 1]
 
-                if(index >= 0 && index < this.categories.length - 1 && this.catalogItems.filter(item => item.category_id === nextCategory.id)[0]) {
+                if(nextCategory) {
                     this.views.category = nextCategory.id
                     this.selected.catalogItems[nextCategory.slug][0].id = this.catalogItems.filter(item => item.category_id === nextCategory.id)[0].id
                 } else {
