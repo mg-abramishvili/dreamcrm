@@ -74,6 +74,7 @@
                 this.selected.delivery.days = ''
                 
                 this.$parent.selected.delivery = this.selected.delivery
+                this.$parent.views.saveButton = true
             },
             reset() {
                 this.selected.delivery.id = ''

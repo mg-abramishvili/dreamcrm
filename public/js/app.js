@@ -3251,6 +3251,7 @@ __webpack_require__.r(__webpack_exports__);
       this.selected.delivery.directionTo = '';
       this.selected.delivery.days = '';
       this.$parent.selected.delivery = this.selected.delivery;
+      this.$parent.views.saveButton = true;
     },
     reset: function reset() {
       this.selected.delivery.id = '';
