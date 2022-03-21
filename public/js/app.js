@@ -3153,8 +3153,6 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         this.$parent.views.step = 'quantity';
       }
-
-      console.log(this.selected.catalogItems);
     }
   }
 });
@@ -60529,16 +60527,6 @@ var render = function () {
             return _c("div", { key: category.id }, [
               _c(
                 "div",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.views.category == category.id,
-                      expression: "views.category == category.id",
-                    },
-                  ],
-                },
                 [
                   _c(
                     "div",

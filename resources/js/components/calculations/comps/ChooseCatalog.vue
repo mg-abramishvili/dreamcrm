@@ -3,7 +3,7 @@
         <loader v-if="views.loading"></loader>
 
         <div v-else v-for="(category, index) in categories" :key="category.id">
-            <div v-show="views.category == category.id">
+            <div>
                 <div class="calculation-left-block-main-label">
                     <strong>{{ category.name }}</strong>
                     <button @click="addCatalogItem(category.slug)" class="btn btn-sm btn-outline-danger">+</button>
@@ -132,8 +132,6 @@
                 } else {
                     this.$parent.views.step = 'quantity'
                 }
-
-                console.log(this.selected.catalogItems)
             },
         },
     }
