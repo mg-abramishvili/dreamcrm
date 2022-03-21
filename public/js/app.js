@@ -3107,7 +3107,8 @@ __webpack_require__.r(__webpack_exports__);
 
           _this2.addCatalogItem(category.slug);
         });
-        _this2.views.category = response.data[0].id;
+
+        _this2.firstCategory();
       });
     },
     addCatalogItem: function addCatalogItem(categorySlug) {
@@ -3153,6 +3154,13 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         this.$parent.views.step = 'quantity';
       }
+    },
+    firstCategory: function firstCategory() {
+      var firstCategory = this.categories[0];
+      this.views.category = firstCategory.id;
+      this.selected.catalogItems[firstCategory.slug][0].id = firstCategory.items.filter(function (item) {
+        return item.category_id == firstCategory.id;
+      })[0].id;
     }
   }
 });

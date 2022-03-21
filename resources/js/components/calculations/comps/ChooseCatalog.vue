@@ -93,7 +93,7 @@
                         this.addCatalogItem(category.slug)
                     })
 
-                    this.views.category = response.data[0].id
+                    this.firstCategory()
                 }))
             },
             addCatalogItem(categorySlug) {
@@ -132,6 +132,12 @@
                 } else {
                     this.$parent.views.step = 'quantity'
                 }
+            },
+            firstCategory() {
+                let firstCategory = this.categories[0]
+
+                this.views.category = firstCategory.id
+                this.selected.catalogItems[firstCategory.slug][0].id = firstCategory.items.filter(item => item.category_id == firstCategory.id)[0].id
             },
         },
     }
