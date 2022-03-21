@@ -60539,9 +60539,9 @@ var render = function () {
                         _vm.views.category == category.id &&
                         _vm.catalogItems.filter(function (item) {
                           return item.category_id == category.id
-                        }).length > 0,
+                        }),
                       expression:
-                        "views.category == category.id && catalogItems.filter(item => item.category_id == category.id).length > 0",
+                        "views.category == category.id && catalogItems.filter(item => item.category_id == category.id)",
                     },
                   ],
                 },

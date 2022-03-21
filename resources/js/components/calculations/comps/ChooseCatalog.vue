@@ -3,7 +3,7 @@
         <loader v-if="views.loading"></loader>
 
         <div v-else v-for="category in categories" :key="'category_' + category.id">
-            <div v-show="views.category == category.id && catalogItems.filter(item => item.category_id == category.id).length > 0">
+            <div v-show="views.category == category.id && catalogItems.filter(item => item.category_id == category.id)">
                 <div class="calculation-left-block-main-label">
                     <strong>{{ category.name }}</strong>
                     <button @click="addCatalogItem(category.slug)" class="btn btn-sm btn-outline-danger">+</button>
