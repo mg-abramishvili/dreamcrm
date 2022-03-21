@@ -8,7 +8,7 @@
             <option v-for="delivery in deliveries" :key="'delivery_' + delivery.id" :value="delivery.id">{{ delivery.name }} &mdash; {{ delivery.price }}</option>
         </select>
 
-        <DeliveryPEK v-if="selected.delivery.id == 3" :box="selected.box" :quantity="quantity" :delivery="selected.delivery"></DeliveryPEK>
+        <DeliveryPEK v-if="selected.delivery.id == 3" :box="box" :quantity="quantity" :delivery="selected.delivery"></DeliveryPEK>
 
         <div class="mt-4">
             <button @click="goBack()" class="btn btn-outline-primary">Назад</button>
@@ -21,7 +21,7 @@
     import DeliveryPEK from './DeliveryPEK.vue'
 
     export default {
-        props: ['selectedCatalogItems', 'quantity'],
+        props: ['box', 'selectedCatalogItems', 'quantity'],
         data() {
             return {
                 deliveries: [],

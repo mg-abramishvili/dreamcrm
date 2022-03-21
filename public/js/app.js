@@ -3203,7 +3203,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['selectedCatalogItems', 'quantity'],
+  props: ['box', 'selectedCatalogItems', 'quantity'],
   data: function data() {
     return {
       deliveries: [],
@@ -59879,6 +59879,7 @@ var render = function () {
                     },
                   ],
                   attrs: {
+                    box: _vm.selected.box,
                     quantity: _vm.quantity,
                     selectedCatalogItems: _vm.selected.catalogItems,
                   },
@@ -60792,7 +60793,7 @@ var render = function () {
       _vm.selected.delivery.id == 3
         ? _c("DeliveryPEK", {
             attrs: {
-              box: _vm.selected.box,
+              box: _vm.box,
               quantity: _vm.quantity,
               delivery: _vm.selected.delivery,
             },

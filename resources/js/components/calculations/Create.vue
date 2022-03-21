@@ -19,7 +19,7 @@
                             
                             <ChooseQuantity v-show="views.step == 'quantity'"></ChooseQuantity>
 
-                            <ChooseDelivery v-show="views.step == 'delivery'" :quantity="quantity" :selectedCatalogItems="selected.catalogItems"></ChooseDelivery>
+                            <ChooseDelivery v-show="views.step == 'delivery'" :box="selected.box" :quantity="quantity" :selectedCatalogItems="selected.catalogItems"></ChooseDelivery>
 
                             <div class="total">
                                 <div v-if="price && price > 0" class="row align-items-center mb-3">
