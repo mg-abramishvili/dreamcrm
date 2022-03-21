@@ -3148,9 +3148,12 @@ __webpack_require__.r(__webpack_exports__);
 
       if (nextCategory && nextCategory.items.length) {
         this.views.category = nextCategory.id;
-        this.selected.catalogItems[nextCategory.slug][0].id = nextCategory.items.filter(function (item) {
-          return item.category_id == nextCategory.id;
-        })[0].id;
+
+        if (!this.selected.catalogItems[nextCategory.slug][0]) {
+          this.selected.catalogItems[nextCategory.slug][0].id = nextCategory.items.filter(function (item) {
+            return item.category_id == nextCategory.id;
+          })[0].id;
+        }
       } else {
         this.$parent.views.step = 'quantity';
       }

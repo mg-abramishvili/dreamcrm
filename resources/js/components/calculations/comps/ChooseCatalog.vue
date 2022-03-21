@@ -128,7 +128,10 @@
 
                 if(nextCategory && nextCategory.items.length) {
                     this.views.category = nextCategory.id
-                    this.selected.catalogItems[nextCategory.slug][0].id = nextCategory.items.filter(item => item.category_id == nextCategory.id)[0].id
+
+                    if(!this.selected.catalogItems[nextCategory.slug][0]) {
+                        this.selected.catalogItems[nextCategory.slug][0].id = nextCategory.items.filter(item => item.category_id == nextCategory.id)[0].id
+                    }
                 } else {
                     this.$parent.views.step = 'quantity'
                 }
