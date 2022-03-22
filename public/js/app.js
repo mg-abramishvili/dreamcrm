@@ -2717,7 +2717,7 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
 
-        return parseInt(this.selected.box.pre_rub) + parseInt(this.selected.box.sborka) + parseInt(this.selected.box.marzha) + price.reduce(function (a, b) {
+        return this.selected.box.pre_rub + this.selected.box.sborka + this.selected.box.marzha + price.reduce(function (a, b) {
           return a + b;
         }, 0);
       }
@@ -2733,7 +2733,7 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
 
-        return parseInt(this.selected.box.pre_usd) + price.reduce(function (a, b) {
+        return this.selected.box.pre_usd + price.reduce(function (a, b) {
           return a + b;
         }, 0);
       }
@@ -2749,7 +2749,7 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
 
-        return parseInt(this.selected.box.price) + price.reduce(function (a, b) {
+        return this.selected.box.price + price.reduce(function (a, b) {
           return a + b;
         }, 0);
       }
@@ -2759,7 +2759,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     priceWithDelivery: function priceWithDelivery() {
       if (this.selected.delivery.price) {
-        return this.priceWithQuantity + parseInt(this.selected.delivery.price);
+        return this.priceWithQuantity + this.selected.delivery.price;
       }
     }
   },
@@ -3069,15 +3069,15 @@ __webpack_require__.r(__webpack_exports__);
 
             category[1].forEach(function (i) {
               if (i.id != null) {
-                i.price = parseInt(selectedItems.find(function (item) {
+                i.price = selectedItems.find(function (item) {
                   return item.id == i.id;
-                }).price);
-                i.pre_rub = parseInt(selectedItems.find(function (item) {
+                }).price;
+                i.pre_rub = selectedItems.find(function (item) {
                   return item.id == i.id;
-                }).pre_rub);
-                i.pre_usd = parseInt(selectedItems.find(function (item) {
+                }).pre_rub;
+                i.pre_usd = selectedItems.find(function (item) {
                   return item.id == i.id;
-                }).pre_usd);
+                }).pre_usd;
               }
             });
           }
@@ -3574,12 +3574,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     calcDelivery: function calcDelivery() {
       var _this3 = this;
 
-      var width = parseInt(this.box.width) * 0.001;
-      var height = parseInt(this.box.height) * 0.001;
-      var length = parseInt(this.box.length) * 0.001;
-      var weight = parseInt(this.box.weight);
+      var width = this.box.width * 0.001;
+      var height = this.box.height * 0.001;
+      var length = this.box.length * 0.001;
+      var weight = this.box.weight;
       this.loading = true;
-      var qty_array = Array.from(Array(parseInt(this.quantity)).keys());
+      var qty_array = Array.from(Array(this.quantity).keys());
       var ax_params = {
         places: [],
         take: [],

@@ -54,14 +54,14 @@
                 this.calcDelivery()
             },
             calcDelivery() {
-                var width = parseInt(this.box.width) * 0.001
-                var height = parseInt(this.box.height) * 0.001
-                var length = parseInt(this.box.length) * 0.001
-                var weight = parseInt(this.box.weight)
+                var width = this.box.width * 0.001
+                var height = this.box.height * 0.001
+                var length = this.box.length * 0.001
+                var weight = this.box.weight
 
                 this.loading = true
 
-                var qty_array = Array.from(Array(parseInt(this.quantity)).keys())
+                var qty_array = Array.from(Array(this.quantity).keys())
 
                 var ax_params = { places: [], take: [], deliver: [] }
 

@@ -64,9 +64,9 @@
                             
                             category[1].forEach((i) => {
                                 if(i.id != null) {
-                                    i.price = parseInt(selectedItems.find(item => item.id == i.id).price)
-                                    i.pre_rub = parseInt(selectedItems.find(item => item.id == i.id).pre_rub)
-                                    i.pre_usd = parseInt(selectedItems.find(item => item.id == i.id).pre_usd)
+                                    i.price = selectedItems.find(item => item.id == i.id).price
+                                    i.pre_rub = selectedItems.find(item => item.id == i.id).pre_rub
+                                    i.pre_usd = selectedItems.find(item => item.id == i.id).pre_usd
                                 }
                             })
                         }

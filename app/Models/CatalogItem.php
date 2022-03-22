@@ -9,6 +9,12 @@ class CatalogItem extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'pre_rub' => 'float',
+        'pre_usd' => 'float',
+        'price' => 'float',
+    ];
+
     public function category()
     {
         return $this->belongsTo(CatalogCategory::class);

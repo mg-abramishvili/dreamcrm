@@ -9,7 +9,20 @@ class CatalogBox extends Model
 {
     use HasFactory;
 
-    protected $casts = ['gallery' => 'json'];
+    protected $casts = [
+        'sborka_days' => 'integer',
+        'sborka_persons' => 'integer',
+        'sborka' => 'float',
+        'marzha' => 'float',
+        'pre_rub' => 'float',
+        'pre_usd' => 'float',
+        'price' => 'float',
+        'length' => 'integer',
+        'width' => 'integer',
+        'height' => 'integer',
+        'weight' => 'integer',
+        'gallery' => 'json'
+    ];
 
     public function types()
     {

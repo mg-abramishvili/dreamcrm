@@ -9,6 +9,10 @@ class CalculationDelivery extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'price' => 'float',
+    ];
+
     public function calculations()
     {
         return $this->belongsToMany(Calculation::class)->withPivot(['direction_from', 'direction_to', 'days', 'price']);

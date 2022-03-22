@@ -149,7 +149,7 @@
                             price.push(el.pre_rub)
                         })
                     }
-                    return parseInt(this.selected.box.pre_rub) + parseInt(this.selected.box.sborka) + parseInt(this.selected.box.marzha) + price.reduce((a, b) => a + b, 0)
+                    return this.selected.box.pre_rub + this.selected.box.sborka + this.selected.box.marzha + price.reduce((a, b) => a + b, 0)
                 }
             },
             pricePreUsd() {
@@ -160,7 +160,7 @@
                             price.push(el.pre_usd)
                         })
                     }
-                    return parseInt(this.selected.box.pre_usd) + price.reduce((a, b) => a + b, 0)
+                    return this.selected.box.pre_usd + price.reduce((a, b) => a + b, 0)
                 }
             },
             price() {
@@ -171,7 +171,7 @@
                             price.push(el.price)
                         })
                     }
-                    return parseInt(this.selected.box.price) + price.reduce((a, b) => a + b, 0)
+                    return this.selected.box.price + price.reduce((a, b) => a + b, 0)
                 }
             },
             priceWithQuantity() {
@@ -179,7 +179,7 @@
             },
             priceWithDelivery() {
                 if(this.selected.delivery.price) {
-                    return this.priceWithQuantity + parseInt(this.selected.delivery.price)
+                    return this.priceWithQuantity + this.selected.delivery.price
                 }
             },
         },
