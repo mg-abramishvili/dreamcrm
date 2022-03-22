@@ -607,3 +607,12 @@ table.dataTable {
     box-shadow: none !important;
 }
 /* SWAL */
+
+
+/* BTN ORDER ARROW */
+.btn-order-arrow {
+    font-size: 16px;
+    line-height: 1;
+    padding: 2px 5px;
+}
+/* BTN ORDER ARROW */

@@ -4744,11 +4744,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      category: {}
+      category: {},
+      order: {
+        field: 'name',
+        direction: 'asc'
+      }
     };
   },
   created: function created() {
@@ -4759,7 +4773,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get("/api/catalog/category/".concat(this.$route.params.id)).then(function (response) {
-        return _this.category = response.data;
+        return _this.category = response.data, _this.orderByNameAsc();
       });
     },
     goTo: function goTo(id) {
@@ -4768,6 +4782,77 @@ __webpack_require__.r(__webpack_exports__);
         params: {
           id: id
         }
+      });
+    },
+    orderBy: function orderBy(field, direction) {
+      if (field == 'name') {
+        if (direction == 'asc') {
+          return this.orderByNameAsc();
+        }
+
+        if (direction == 'desc') {
+          return this.orderByNameDesc();
+        }
+      }
+
+      if (field == 'price') {
+        if (direction == 'asc') {
+          return this.orderByPriceAsc();
+        }
+
+        if (direction == 'desc') {
+          return this.orderByPriceDesc();
+        }
+      }
+    },
+    orderByNameAsc: function orderByNameAsc() {
+      this.order.field = 'name';
+      this.order.direction = 'asc';
+      this.category.items.sort(function (a, b) {
+        var fa = a.name.toLowerCase(),
+            fb = b.name.toLowerCase();
+
+        if (fa < fb) {
+          return -1;
+        }
+
+        if (fa > fb) {
+          return 1;
+        }
+
+        return 0;
+      });
+    },
+    orderByNameDesc: function orderByNameDesc() {
+      this.order.field = 'name';
+      this.order.direction = 'desc';
+      this.category.items.sort(function (a, b) {
+        var fa = a.name.toLowerCase(),
+            fb = b.name.toLowerCase();
+
+        if (fa > fb) {
+          return -1;
+        }
+
+        if (fa < fb) {
+          return 1;
+        }
+
+        return 0;
+      });
+    },
+    orderByPriceAsc: function orderByPriceAsc() {
+      this.order.field = 'price';
+      this.order.direction = 'asc';
+      this.category.items.sort(function (a, b) {
+        return a.price - b.price;
+      });
+    },
+    orderByPriceDesc: function orderByPriceDesc() {
+      this.order.field = 'price';
+      this.order.direction = 'desc';
+      this.category.items.sort(function (a, b) {
+        return b.price - a.price;
       });
     }
   },
@@ -63195,8 +63280,74 @@ var render = function () {
       _vm._v(" "),
       _vm.category.items && _vm.category.items.length
         ? _c("div", { staticClass: "card" }, [
-            _c("table", { staticClass: "table" }, [
-              _vm._m(0),
+            _c("table", { staticClass: "table table-hover dataTable" }, [
+              _c("thead", [
+                _c("tr", [
+                  _c("th", [
+                    _c("span", { staticClass: "d-inline-block align-middle" }, [
+                      _vm._v("Наименование"),
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-order-arrow",
+                        on: {
+                          click: function ($event) {
+                            return _vm.orderBy("name", "asc")
+                          },
+                        },
+                      },
+                      [_vm._v("↑")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-order-arrow",
+                        on: {
+                          click: function ($event) {
+                            return _vm.orderBy("name", "desc")
+                          },
+                        },
+                      },
+                      [_vm._v("↓")]
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("th", [
+                    _c("span", { staticClass: "d-inline-block align-middle" }, [
+                      _vm._v("Цена"),
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-order-arrow",
+                        on: {
+                          click: function ($event) {
+                            return _vm.orderBy("price", "asc")
+                          },
+                        },
+                      },
+                      [_vm._v("↑")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-order-arrow",
+                        on: {
+                          click: function ($event) {
+                            return _vm.orderBy("price", "desc")
+                          },
+                        },
+                      },
+                      [_vm._v("↓")]
+                    ),
+                  ]),
+                ]),
+              ]),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -63244,20 +63395,7 @@ var render = function () {
     1
   )
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("Наименование")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Цена")]),
-      ]),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

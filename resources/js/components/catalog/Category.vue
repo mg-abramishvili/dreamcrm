@@ -24,11 +24,21 @@
         </div>
 
         <div v-if="category.items && category.items.length" class="card">
-            <table class="table">
+            <table class="table table-hover dataTable">
                 <thead>
                     <tr>
-                        <th>Наименование</th>
-                        <th>Цена</th>
+                        <th>
+                            <span class="d-inline-block align-middle">Наименование</span>
+                            
+                            <button @click="orderBy('name', 'asc')" class="btn btn-order-arrow">&uarr;</button>
+                            <button @click="orderBy('name', 'desc')" class="btn btn-order-arrow">&darr;</button>
+                        </th>
+                        <th>
+                            <span class="d-inline-block align-middle">Цена</span>
+
+                            <button @click="orderBy('price', 'asc')" class="btn btn-order-arrow">&uarr;</button>
+                            <button @click="orderBy('price', 'desc')" class="btn btn-order-arrow">&darr;</button>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,6 +67,11 @@
         data() {
             return {
                 category: {},
+
+                order: {
+                    field: 'name',
+                    direction: 'asc'
+                }
             }
         },
         created() {
@@ -67,11 +82,77 @@
                 axios
                 .get(`/api/catalog/category/${this.$route.params.id}`)
                 .then(response => (
-                    this.category = response.data
+                    this.category = response.data,
+                    this.orderByNameAsc()
                 ));
             },
             goTo(id) {
                 this.$router.push({name: 'CatalogItemEdit', params: {id: id}})
+            },
+            orderBy(field, direction) {
+                if(field == 'name') {
+                    if(direction == 'asc') {
+                        return this.orderByNameAsc()
+                    }
+                    if(direction == 'desc') {
+                        return this.orderByNameDesc()
+                    }
+                }
+
+                if(field == 'price') {
+                    if(direction == 'asc') {
+                        return this.orderByPriceAsc()
+                    }
+                    if(direction == 'desc') {
+                        return this.orderByPriceDesc()
+                    }
+                }
+            },
+            orderByNameAsc() {
+                this.order.field = 'name'
+                this.order.direction = 'asc'
+
+                this.category.items.sort((a, b) => {
+                    let fa = a.name.toLowerCase(),
+                        fb = b.name.toLowerCase()
+
+                    if (fa < fb) {
+                        return -1
+                    }
+                    if (fa > fb) {
+                        return 1
+                    }
+                    return 0
+                })
+            },
+            orderByNameDesc() {
+                this.order.field = 'name'
+                this.order.direction = 'desc'
+
+                this.category.items.sort((a, b) => {
+                    let fa = a.name.toLowerCase(),
+                        fb = b.name.toLowerCase()
+
+                    if (fa > fb) {
+                        return -1
+                    }
+                    if (fa < fb) {
+                        return 1
+                    }
+                    return 0
+                })
+            },
+            orderByPriceAsc() {
+                this.order.field = 'price'
+                this.order.direction = 'asc'
+
+                this.category.items.sort((a, b) => a.price - b.price)
+            },
+            orderByPriceDesc() {
+                this.order.field = 'price'
+                this.order.direction = 'desc'
+
+                this.category.items.sort((a, b) => b.price - a.price)
             },
         },
         components: {
