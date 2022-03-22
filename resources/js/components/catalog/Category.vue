@@ -37,7 +37,9 @@
                             <a>{{ item.name }}</a>
                         </td>
                         <td class="align-middle">
-                            {{ item.price | currency }} ₽
+                            <template v-if="item.price > 0">
+                                {{ item.price | currency }} ₽
+                            </template>
                         </td>
                     </tr>
                 </tbody>
