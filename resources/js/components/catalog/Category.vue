@@ -112,34 +112,22 @@
                 this.order.field = 'name'
                 this.order.direction = 'asc'
 
-                this.category.items.sort((a, b) => {
-                    let fa = a.name.toLowerCase(),
-                        fb = b.name.toLowerCase()
-
-                    if (fa < fb) {
-                        return -1
-                    }
-                    if (fa > fb) {
-                        return 1
-                    }
-                    return 0
+                this.category.items.sort(function(a, b) {
+                    return a.name.localeCompare(b.name, undefined, {
+                        numeric: true,
+                        sensitivity: 'base'
+                    })
                 })
             },
             orderByNameDesc() {
                 this.order.field = 'name'
                 this.order.direction = 'desc'
 
-                this.category.items.sort((a, b) => {
-                    let fa = a.name.toLowerCase(),
-                        fb = b.name.toLowerCase()
-
-                    if (fa > fb) {
-                        return -1
-                    }
-                    if (fa < fb) {
-                        return 1
-                    }
-                    return 0
+                this.category.items.sort(function(a, b) {
+                    return b.name.localeCompare(a.name, undefined, {
+                        numeric: true,
+                        sensitivity: 'base'
+                    })
                 })
             },
             orderByPriceAsc() {
