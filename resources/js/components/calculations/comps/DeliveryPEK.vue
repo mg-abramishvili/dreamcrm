@@ -54,10 +54,10 @@
                 this.calcDelivery()
             },
             calcDelivery() {
-                var width = this.box.width * 0.001
-                var height = this.box.height * 0.001
-                var length = this.box.length * 0.001
-                var weight = this.box.weight
+                var width = parseInt(this.box.width) * 0.001
+                var height = parseInt(this.box.height) * 0.001
+                var length = parseInt(this.box.length) * 0.001
+                var weight = parseInt(this.box.weight)
 
                 this.loading = true
 
