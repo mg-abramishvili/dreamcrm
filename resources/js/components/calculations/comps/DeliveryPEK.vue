@@ -72,8 +72,6 @@
                 ax_params['take[town]'] = '-463'
                 ax_params['deliver[town]'] = `${this.selected.code}`
 
-                console.log(ax_params)
-
                 axios
                     .get('https://calc.pecom.ru/bitrix/components/pecom/calc/ajax.php', {
                         params: ax_params
