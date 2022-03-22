@@ -67,11 +67,6 @@
         data() {
             return {
                 category: {},
-
-                order: {
-                    field: 'name',
-                    direction: 'asc'
-                }
             }
         },
         created() {
@@ -109,9 +104,6 @@
                 }
             },
             orderByNameAsc() {
-                this.order.field = 'name'
-                this.order.direction = 'asc'
-
                 this.category.items.sort(function(a, b) {
                     return a.name.localeCompare(b.name, undefined, {
                         numeric: true,
@@ -120,9 +112,6 @@
                 })
             },
             orderByNameDesc() {
-                this.order.field = 'name'
-                this.order.direction = 'desc'
-
                 this.category.items.sort(function(a, b) {
                     return b.name.localeCompare(a.name, undefined, {
                         numeric: true,
@@ -131,15 +120,9 @@
                 })
             },
             orderByPriceAsc() {
-                this.order.field = 'price'
-                this.order.direction = 'asc'
-
                 this.category.items.sort((a, b) => a.price - b.price)
             },
             orderByPriceDesc() {
-                this.order.field = 'price'
-                this.order.direction = 'desc'
-
                 this.category.items.sort((a, b) => b.price - a.price)
             },
         },

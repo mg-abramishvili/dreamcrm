@@ -4758,11 +4758,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      category: {},
-      order: {
-        field: 'name',
-        direction: 'asc'
-      }
+      category: {}
     };
   },
   created: function created() {
@@ -4806,8 +4802,6 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     orderByNameAsc: function orderByNameAsc() {
-      this.order.field = 'name';
-      this.order.direction = 'asc';
       this.category.items.sort(function (a, b) {
         return a.name.localeCompare(b.name, undefined, {
           numeric: true,
@@ -4816,8 +4810,6 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     orderByNameDesc: function orderByNameDesc() {
-      this.order.field = 'name';
-      this.order.direction = 'desc';
       this.category.items.sort(function (a, b) {
         return b.name.localeCompare(a.name, undefined, {
           numeric: true,
@@ -4826,15 +4818,11 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     orderByPriceAsc: function orderByPriceAsc() {
-      this.order.field = 'price';
-      this.order.direction = 'asc';
       this.category.items.sort(function (a, b) {
         return a.price - b.price;
       });
     },
     orderByPriceDesc: function orderByPriceDesc() {
-      this.order.field = 'price';
-      this.order.direction = 'desc';
       this.category.items.sort(function (a, b) {
         return b.price - a.price;
       });
