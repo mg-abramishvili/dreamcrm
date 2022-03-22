@@ -61,7 +61,7 @@
 
                 this.loading = true
 
-                var qty_array = Array.from(Array(this.quantity).keys())
+                var qty_array = Array.from(Array(parseInt(this.quantity)).keys())
 
                 var ax_params = { places: [], take: [], deliver: [] }
 
@@ -77,7 +77,6 @@
                         params: ax_params
                     })
                     .then(response => (
-                        console.log(response.data.auto[2]),
                         this.selected.price = response.data.auto[2],
 
                         this.$parent.selected.delivery.price = response.data.auto[2].toFixed(0),

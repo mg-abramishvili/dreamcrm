@@ -3579,7 +3579,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var length = this.box.length * 0.001;
       var weight = this.box.weight;
       this.loading = true;
-      var qty_array = Array.from(Array(this.quantity).keys());
+      var qty_array = Array.from(Array(parseInt(this.quantity)).keys());
       var ax_params = {
         places: [],
         take: [],
@@ -3593,7 +3593,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       axios.get('https://calc.pecom.ru/bitrix/components/pecom/calc/ajax.php', {
         params: ax_params
       }).then(function (response) {
-        return console.log(response.data.auto[2]), _this3.selected.price = response.data.auto[2], _this3.$parent.selected.delivery.price = response.data.auto[2].toFixed(0), _this3.$parent.selected.delivery.directionFrom = response.data.region_from.BranchName, _this3.$parent.selected.delivery.directionTo = response.data.region_to.BranchName, _this3.$parent.selected.delivery.days = response.data.periods_days, _this3.loading = false;
+        return _this3.selected.price = response.data.auto[2], _this3.$parent.selected.delivery.price = response.data.auto[2].toFixed(0), _this3.$parent.selected.delivery.directionFrom = response.data.region_from.BranchName, _this3.$parent.selected.delivery.directionTo = response.data.region_to.BranchName, _this3.$parent.selected.delivery.days = response.data.periods_days, _this3.loading = false;
       });
     }
   }
