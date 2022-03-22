@@ -179,7 +179,7 @@
             },
             priceWithDelivery() {
                 if(this.selected.delivery.price) {
-                    return this.priceWithQuantity + this.selected.delivery.price
+                    return this.priceWithQuantity + parseInt(this.selected.delivery.price)
                 }
             },
         },

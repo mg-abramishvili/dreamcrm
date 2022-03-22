@@ -77,6 +77,7 @@
                         params: ax_params
                     })
                     .then(response => (
+                        console.log(response.data.auto[2]),
                         this.selected.price = response.data.auto[2],
 
                         this.$parent.selected.delivery.price = response.data.auto[2].toFixed(0),
