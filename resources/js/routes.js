@@ -18,9 +18,6 @@ import Calculations from './components/calculations/Index.vue';
 import Calculation from './components/calculations/Calculation.vue';
 import CalculationCreate from './components/calculations/Create.vue';
 
-import Offers from './components/offers/Offers.vue';
-import Offer from './components/offers/Offer.vue';
-
 import Projects from './components/projects/Index.vue';
 import Project from './components/projects/Project.vue';
 import ProjectCreate from './components/projects/Create.vue';
@@ -42,6 +39,9 @@ import StockItem from './components/stock/Item.vue';
 import StockItemCreate from './components/stock/ItemCreate.vue';
 
 import Notifications from './components/notifications/Index.vue';
+
+import Productions from './components/productions/Index.vue';
+import Production from './components/productions/Production.vue';
 
 export const routes = [
     {
@@ -131,16 +131,6 @@ export const routes = [
         component: Calculation
     },
     {
-        path: '/offers',
-        name: 'Offers',
-        component: Offers
-    },
-    {
-        path: '/offer/:id',
-        name: 'Offer',
-        component: Offer
-    },
-    {
         path: '/projects',
         name: 'Projects',
         component: Projects
@@ -219,5 +209,15 @@ export const routes = [
         path: '/notifications',
         name: 'Notifications',
         component: Notifications
+    },
+    {
+        path: '/productions',
+        name: 'Productions',
+        component: Productions
+    },
+    {
+        path: '/production/:id',
+        name: 'Production',
+        component: Production
     },
 ];

@@ -16,6 +16,8 @@ use App\Http\Controllers\CalculationDeliveryController;
 
 use App\Http\Controllers\ProjectController;
 
+use App\Http\Controllers\ProductionController;
+
 use App\Http\Controllers\OfferController;
 
 use App\Http\Controllers\TaskController;
@@ -104,6 +106,11 @@ Route::get('projects', [ProjectController::class, 'index']);
 Route::get('projects/inn_check/{inn}', [ProjectController::class, 'innCheck']);
 Route::post('projects', [ProjectController::class, 'store']);
 Route::get('project/{id}', [ProjectController::class, 'project']);
+
+
+
+Route::get('productions', [ProductionController::class, 'index']);
+Route::get('production/{id}', [ProductionController::class, 'production']);
 
 
 
