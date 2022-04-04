@@ -14,6 +14,6 @@ class ProductionController extends Controller
 
     public function production($id)
     {
-        return Production::with('project')->find($id);
+        return Production::with('project', 'user')->find($id);
     }
 }
