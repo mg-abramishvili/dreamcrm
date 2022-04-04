@@ -75,22 +75,35 @@ class ProductionController extends Controller
     public function createReserve($quantityNeeds, $stockBalances, $stockBalance, $productionItem)
     {
         if($stockBalance->quantity > 0) {
-            if($stockBalance->quantity >= $quantityNeeds) {
-                $this->updateStockBalance($stockBalance, $quantityNeeds);
-            } else {
-                $quantityNeeds = $stockBalance->quantity;
-                $this->updateStockBalance($stockBalance, $quantityNeeds);
-            }
-    
             $reserve = new Reserve();
-    
             $reserve->production_item_id = $productionItem->id;
             $reserve->stock_balance_id = $stockBalance->id;
-            $reserve->quantity = $quantityNeeds;
             $reserve->price = $stockBalance->price;
             $reserve->price_total = $stockBalance->price;
+            
+            if($stockBalance->quantity >= $quantityNeeds) {
+                $reserve->quantity = $quantityNeeds;
+                
+                $quantityNeedsLeft = 0;
+                
+                $this->updateStockBalance($stockBalance, $quantityNeeds);
+            } else {
+                $reserve->quantity = $stockBalance->quantity;
+                
+                $quantityNeedsLeft = $quantityNeeds - $stockBalance->quantity;
+                
+                $this->updateStockBalance($stockBalance, $stockBalance->quantity);
+            }
     
             $reserve->save();
+
+            if($quantityNeedsLeft > 0) {
+                $stockBalance = $stockBalances->where('id', '>', $stockBalance->id)->first();
+                
+                if($stockBalance) {
+                    $this->createReserve($quantityNeedsLeft, $stockBalances, $stockBalance, $productionItem);
+                }
+            }
         } else {
             $stockBalance = $stockBalances->where('id', '>', $stockBalance->id)->first();
             
