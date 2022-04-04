@@ -7188,6 +7188,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -7658,6 +7675,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Loader_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Loader.vue */ "./resources/js/components/Loader.vue");
+//
 //
 //
 //
@@ -10405,7 +10423,7 @@ window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")
 
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_5__["default"]);
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('currency', function (value) {
-  if (!value) return '';
+  if (!value) return '0';
   return parseInt(value).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 });
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('truncate', function (value) {
@@ -67763,7 +67781,80 @@ var render = function () {
                     ]),
                   ]),
                   _vm._v(" "),
-                  _vm._m(0),
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("hr"),
+                      _vm._v(" "),
+                      _vm.production.description
+                        ? _c("div", {
+                            domProps: {
+                              innerHTML: _vm._s(_vm.production.description),
+                            },
+                          })
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("table", { staticClass: "table dataTable" }, [
+                        _c(
+                          "tbody",
+                          _vm._l(_vm.production.items, function (item) {
+                            return _c("tr", [
+                              _c("td", { staticStyle: { width: "50%" } }, [
+                                _vm._v(
+                                  "\n                                        " +
+                                    _vm._s(item.stock_item.name) +
+                                    "\n                                    "
+                                ),
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticStyle: { width: "50%" } }, [
+                                _c(
+                                  "ul",
+                                  _vm._l(item.reserves, function (reserve) {
+                                    return _c("li", [
+                                      _vm._v(
+                                        "\n                                                " +
+                                          _vm._s(reserve.quantity) +
+                                          " шт из склада"
+                                      ),
+                                      _c("br"),
+                                      _vm._v(" "),
+                                      _c("small", [
+                                        _vm._v(
+                                          "Поступление от " +
+                                            _vm._s(reserve.stock_balance.date) +
+                                            " / " +
+                                            _vm._s(
+                                              _vm._f("currency")(
+                                                reserve.price_total
+                                              )
+                                            ) +
+                                            "₽ (" +
+                                            _vm._s(
+                                              _vm._f("currency")(
+                                                reserve.pre_rub
+                                              )
+                                            ) +
+                                            "₽ + $" +
+                                            _vm._s(
+                                              _vm._f("currency")(
+                                                reserve.pre_usd
+                                              )
+                                            ) +
+                                            ")"
+                                        ),
+                                      ]),
+                                    ])
+                                  }),
+                                  0
+                                ),
+                              ]),
+                            ])
+                          }),
+                          0
+                        ),
+                      ]),
+                    ]),
+                  ]),
                 ]
               ),
             ]),
@@ -67773,21 +67864,7 @@ var render = function () {
     1
   )
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-12" }, [
-        _c("hr"),
-        _vm._v(
-          "\n                        -- description --\n                        "
-        ),
-      ]),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -68695,6 +68772,8 @@ var render = function () {
                                         _vm._s(
                                           _vm._f("date")(balance.created_at)
                                         ) +
+                                        "\n                                " +
+                                        _vm._s(balance.reserves) +
                                         "\n                            "
                                     ),
                                   ]

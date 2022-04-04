@@ -13,4 +13,9 @@ class StockBalance extends Model
     {
         return $this->belongsTo(StockItem::class);
     }
+
+    public function reserves()
+    {
+        return $this->hasMany(Reserve::class);
+    }
 }

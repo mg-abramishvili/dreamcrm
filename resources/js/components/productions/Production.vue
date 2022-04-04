@@ -132,8 +132,25 @@
                     <div class="row">
                         <div class="col-12">
                             <hr>
-                            -- description --
-                            <!-- {{ production.description }} -->
+                            <div v-if="production.description" v-html="production.description"></div>
+
+                            <table class="table dataTable">
+                                <tbody>
+                                    <tr v-for="item in production.items">
+                                        <td style="width: 50%;">
+                                            {{ item.stock_item.name }}
+                                        </td>
+                                        <td style="width: 50%;">
+                                            <ul>
+                                                <li v-for="reserve in item.reserves">
+                                                    {{ reserve.quantity }} шт из склада<br>
+                                                    <small>Поступление от {{ reserve.stock_balance.date }} / {{ reserve.price_total | currency }}₽ ({{ reserve.pre_rub | currency }}₽ + ${{ reserve.pre_usd | currency }})</small>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

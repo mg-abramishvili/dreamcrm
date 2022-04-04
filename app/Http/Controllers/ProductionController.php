@@ -9,11 +9,11 @@ class ProductionController extends Controller
 {
     public function index()
     {
-        return Production::with('project')->get();
+        return Production::with('project')->orderBy('id', 'desc')->get();
     }
 
     public function production($id)
     {
-        return Production::with('project', 'user')->find($id);
+        return Production::with('project', 'user', 'items.stockItem', 'items.reserves.stockBalance')->find($id);
     }
 }

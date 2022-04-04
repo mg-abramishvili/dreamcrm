@@ -16,7 +16,7 @@ class StockCategoryController extends Controller
     {
         return StockCategory::with(
             [
-                'items' => function ($q) { $q->with('balances')->orderByRaw('CAST(name as UNSIGNED) ASC')->orderBy('name', 'asc'); }
+                'items' => function ($q) { $q->with('balances.reserves')->orderByRaw('CAST(name as UNSIGNED) ASC')->orderBy('name', 'asc'); }
             ]
         )
         ->find($id);

@@ -24,7 +24,7 @@ import {routes} from './routes';
 Vue.use(VueRouter);
 
 Vue.filter('currency', function (value) {
-    if (!value) return ''
+    if (!value) return '0'
     return parseInt(value).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") 
 })
 Vue.filter('truncate', function (value) {
