@@ -652,3 +652,13 @@ table.dataTable {
     padding: 2px 5px;
 }
 /* BTN ORDER ARROW */
+
+
+.badge:empty {
+    display: inline-block !important;
+    width: 10px;
+    height: 10px;
+    line-height: 1;
+    border-radius: 100% !important;
+    padding: 0;
+}

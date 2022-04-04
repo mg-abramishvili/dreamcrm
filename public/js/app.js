@@ -6973,6 +6973,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -66952,7 +66977,7 @@ var render = function () {
                         },
                       },
                       [
-                        _c("td", { staticClass: "align-middle" }, [
+                        _c("td", { staticClass: "align-middle text-center" }, [
                           _vm._v(
                             "\n                            " +
                               _vm._s(production.id) +
@@ -66968,21 +66993,92 @@ var render = function () {
                           ),
                         ]),
                         _vm._v(" "),
-                        _c("td", { staticClass: "align-middle" }, [
-                          _vm._v(
-                            "\n                            " +
-                              _vm._s(production.priority) +
-                              "\n                        "
-                          ),
-                        ]),
+                        _c(
+                          "td",
+                          { staticClass: "align-middle text-center" },
+                          [
+                            production.priority == "normal"
+                              ? [
+                                  _c("span", {
+                                    staticClass: "badge rounded-pill bg-info",
+                                  }),
+                                ]
+                              : _vm._e(),
+                            _vm._v(" "),
+                            production.priority == "high"
+                              ? [
+                                  _c("span", {
+                                    staticClass:
+                                      "badge rounded-pill bg-warning",
+                                  }),
+                                ]
+                              : _vm._e(),
+                            _vm._v(" "),
+                            production.priority == "urgent"
+                              ? [
+                                  _c("span", {
+                                    staticClass: "badge rounded-pill bg-danger",
+                                  }),
+                                ]
+                              : _vm._e(),
+                          ],
+                          2
+                        ),
                         _vm._v(" "),
-                        _c("td", { staticClass: "align-middle" }, [
-                          _vm._v(
-                            "\n                            " +
-                              _vm._s(production.status) +
-                              "\n                        "
-                          ),
-                        ]),
+                        _c(
+                          "td",
+                          { staticClass: "align-middle" },
+                          [
+                            production.status == "new"
+                              ? [
+                                  _vm._v(
+                                    "\n                                Новый\n                            "
+                                  ),
+                                ]
+                              : _vm._e(),
+                            _vm._v(" "),
+                            production.status == "svarka"
+                              ? [
+                                  _vm._v(
+                                    "\n                                Сварка\n                            "
+                                  ),
+                                ]
+                              : _vm._e(),
+                            _vm._v(" "),
+                            production.status == "building"
+                              ? [
+                                  _vm._v(
+                                    "\n                                Сборка\n                            "
+                                  ),
+                                ]
+                              : _vm._e(),
+                            _vm._v(" "),
+                            production.status == "warehouse"
+                              ? [
+                                  _vm._v(
+                                    "\n                                Склад\n                            "
+                                  ),
+                                ]
+                              : _vm._e(),
+                            _vm._v(" "),
+                            production.status == "ready_for_supply"
+                              ? [
+                                  _vm._v(
+                                    "\n                                Готово к отгрузке\n                            "
+                                  ),
+                                ]
+                              : _vm._e(),
+                            _vm._v(" "),
+                            production.status == "waiting_for_feedback"
+                              ? [
+                                  _vm._v(
+                                    "\n                                Ждем отзыв клиента\n                            "
+                                  ),
+                                ]
+                              : _vm._e(),
+                          ],
+                          2
+                        ),
                         _vm._v(" "),
                         _c("td", { staticClass: "align-middle" }, [
                           _vm._v(
@@ -67010,22 +67106,6 @@ var render = function () {
                           _vm._v(
                             "\n                            " +
                               _vm._s(production.serial_number) +
-                              "\n                        "
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "align-middle" }, [
-                          _vm._v(
-                            "\n                            " +
-                              _vm._s(production.start_date) +
-                              "\n                        "
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "align-middle" }, [
-                          _vm._v(
-                            "\n                            " +
-                              _vm._s(production.end_date) +
                               "\n                        "
                           ),
                         ]),
@@ -67063,25 +67143,25 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [_vm._v("ID")]),
+        _c("th", { staticClass: "text-center", staticStyle: { width: "5%" } }, [
+          _vm._v("ID"),
+        ]),
         _vm._v(" "),
-        _c("th", [_vm._v("Название")]),
+        _c("th", { staticStyle: { width: "20%" } }, [_vm._v("Название")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Приоритет")]),
+        _c("th", { staticClass: "text-center", staticStyle: { width: "5%" } }, [
+          _vm._v("Приоритет"),
+        ]),
         _vm._v(" "),
-        _c("th", [_vm._v("Статус")]),
+        _c("th", { staticStyle: { width: "10%" } }, [_vm._v("Статус")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Номер счета")]),
+        _c("th", { staticStyle: { width: "10%" } }, [_vm._v("Номер счета")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Оплата")]),
+        _c("th", { staticStyle: { width: "10%" } }, [_vm._v("Оплата")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Корпус")]),
+        _c("th", { staticStyle: { width: "10%" } }, [_vm._v("Корпус")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Серийный номер")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Дата начала")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Дата завершения")]),
+        _c("th", { staticStyle: { width: "10%" } }, [_vm._v("Серийный номер")]),
       ]),
     ])
   },
