@@ -662,3 +662,10 @@ table.dataTable {
     border-radius: 100% !important;
     padding: 0;
 }
+
+.badge.bg-info {
+    background-color: #c2c2c2 !important;
+}
+.badge.bg-warning {
+    background-color: #faaf06 !important;
+}

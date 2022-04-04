@@ -67001,6 +67001,7 @@ var render = function () {
                               ? [
                                   _c("span", {
                                     staticClass: "badge rounded-pill bg-info",
+                                    attrs: { title: "нормальный" },
                                   }),
                                 ]
                               : _vm._e(),
@@ -67010,6 +67011,7 @@ var render = function () {
                                   _c("span", {
                                     staticClass:
                                       "badge rounded-pill bg-warning",
+                                    attrs: { title: "высокий" },
                                   }),
                                 ]
                               : _vm._e(),
@@ -67018,6 +67020,7 @@ var render = function () {
                               ? [
                                   _c("span", {
                                     staticClass: "badge rounded-pill bg-danger",
+                                    attrs: { title: "срочный" },
                                   }),
                                 ]
                               : _vm._e(),

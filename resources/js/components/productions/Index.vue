@@ -39,13 +39,13 @@
                             </td>
                             <td class="align-middle text-center">
                                 <template v-if="production.priority == 'normal'">
-                                    <span class="badge rounded-pill bg-info"></span>
+                                    <span class="badge rounded-pill bg-info" title="нормальный"></span>
                                 </template>
                                 <template v-if="production.priority == 'high'">
-                                    <span class="badge rounded-pill bg-warning"></span>
+                                    <span class="badge rounded-pill bg-warning" title="высокий"></span>
                                 </template>
                                 <template v-if="production.priority == 'urgent'">
-                                    <span class="badge rounded-pill bg-danger"></span>
+                                    <span class="badge rounded-pill bg-danger" title="срочный"></span>
                                 </template>
                             </td>
                             <td class="align-middle">
