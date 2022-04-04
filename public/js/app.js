@@ -7468,6 +7468,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -7490,6 +7493,13 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     selectTab: function selectTab(tab) {
       this.selected.tab = tab;
+    },
+    toProduction: function toProduction() {
+      axios.post("/api/productions", {
+        project: this.$route.params.id
+      }).then(function (response) {
+        console.log(response);
+      });
     }
   },
   components: {
@@ -7675,7 +7685,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Loader_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Loader.vue */ "./resources/js/components/Loader.vue");
-//
 //
 //
 //
@@ -68156,6 +68165,21 @@ var render = function () {
                 1
               ),
             ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-12 col-lg-6 text-end" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  on: {
+                    click: function ($event) {
+                      return _vm.toProduction()
+                    },
+                  },
+                },
+                [_vm._v("В производство")]
+              ),
+            ]),
           ]),
         ]),
       ]),
@@ -68772,8 +68796,6 @@ var render = function () {
                                         _vm._s(
                                           _vm._f("date")(balance.created_at)
                                         ) +
-                                        "\n                                " +
-                                        _vm._s(balance.reserves) +
                                         "\n                            "
                                     ),
                                   ]

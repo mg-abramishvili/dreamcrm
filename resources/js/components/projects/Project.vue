@@ -13,6 +13,9 @@
                             </strong>
                         </h1>    
                     </div>
+                    <div class="col-12 col-lg-6 text-end">
+                        <button @click="toProduction()" class="btn btn-primary">В производство</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -62,15 +65,22 @@
             }
         },
         created() {
-            axios
-                .get(`/api/project/${this.$route.params.id}`)
-                .then(response => (
-                    this.project = response.data
-                ));
+            axios.get(`/api/project/${this.$route.params.id}`)
+            .then(response => (
+                this.project = response.data
+            ))
         },
         methods: {
             selectTab(tab) {
                 this.selected.tab = tab
+            },
+            toProduction() {
+                axios.post(`/api/productions`, {
+                    project: this.$route.params.id
+                })
+                .then(response => {
+                    console.log(response)
+                })
             },
         },
         components: {

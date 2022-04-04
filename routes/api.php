@@ -111,6 +111,7 @@ Route::get('project/{id}', [ProjectController::class, 'project']);
 
 Route::get('productions', [ProductionController::class, 'index']);
 Route::get('production/{id}', [ProductionController::class, 'production']);
+Route::post('productions', [ProductionController::class, 'store']);
 
 
 
