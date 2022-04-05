@@ -146,6 +146,9 @@
                                                     {{ reserve.quantity }} шт из склада <span class="text-muted">{{ reserve.price_total | currency }}₽</span><br>
                                                     <small class="text-muted">Поступление от {{ reserve.stock_balance.date | date }} / {{ reserve.price | currency }}₽ ({{ reserve.pre_rub | currency }}₽ + ${{ reserve.pre_usd | currency }})</small>
                                                 </li>
+                                                <li v-for="need in item.stock_needs" class="text-danger my-2" style="line-height: 1;">
+                                                    не хватает {{ need.quantity }} шт
+                                                </li>
                                             </ul>
                                         </td>
                                     </tr>

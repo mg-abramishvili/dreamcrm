@@ -9,9 +9,9 @@ class StockNeed extends Model
 {
     use HasFactory;
 
-    public function production()
+    public function productionItem()
     {
-        return $this->belongsTo(Production::class);
+        return $this->belongsTo(ProductionItem::class);
     }
 
     public function stockItem()

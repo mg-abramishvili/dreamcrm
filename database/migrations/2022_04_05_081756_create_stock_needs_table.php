@@ -10,7 +10,7 @@ class CreateStockNeedsTable extends Migration
     {
         Schema::create('stock_needs', function (Blueprint $table) {
             $table->id();
-            $table->integer('production_id')->nullable();
+            $table->integer('production_item_id')->nullable();
             $table->integer('stock_item_id');
             $table->integer('quantity');
             $table->timestamps();

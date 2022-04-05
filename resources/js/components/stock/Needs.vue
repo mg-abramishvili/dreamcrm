@@ -34,7 +34,7 @@
                             <a>{{ need.stock_item.name }}</a>
                         </td>
                         <td>
-                            {{ need.production.name }}
+                            {{ need.production_item.production.name }} ({{ 'ID #' + need.production_item.production.id }})
                         </td>
                         <td class="align-middle fw-bold text-danger text-center">
                             {{ need.quantity }} шт

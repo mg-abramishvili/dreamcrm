@@ -9,6 +9,6 @@ class StockNeedController extends Controller
 {
     public function index()
     {
-        return StockNeed::with('production', 'stockItem')->get();
+        return StockNeed::with('productionItem.production', 'stockItem')->get();
     }
 }

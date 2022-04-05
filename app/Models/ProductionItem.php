@@ -23,4 +23,9 @@ class ProductionItem extends Model
     {
         return $this->belongsTo(Production::class);
     }
+
+    public function stockNeeds()
+    {
+        return $this->hasMany(StockNeed::class);
+    }
 }

@@ -7205,6 +7205,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -68236,71 +68239,90 @@ var render = function () {
                                 _c(
                                   "ul",
                                   { staticClass: "m-0" },
-                                  _vm._l(item.reserves, function (reserve) {
-                                    return _c(
-                                      "li",
-                                      {
-                                        staticClass: "my-2",
-                                        staticStyle: { "line-height": "1" },
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                                " +
-                                            _vm._s(reserve.quantity) +
-                                            " шт из склада "
-                                        ),
-                                        _c(
-                                          "span",
-                                          { staticClass: "text-muted" },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm._f("currency")(
-                                                  reserve.price_total
-                                                )
-                                              ) + "₽"
-                                            ),
-                                          ]
-                                        ),
-                                        _c("br"),
-                                        _vm._v(" "),
-                                        _c(
-                                          "small",
-                                          { staticClass: "text-muted" },
-                                          [
-                                            _vm._v(
-                                              "Поступление от " +
-                                                _vm._s(
-                                                  _vm._f("date")(
-                                                    reserve.stock_balance.date
-                                                  )
-                                                ) +
-                                                " / " +
+                                  [
+                                    _vm._l(item.reserves, function (reserve) {
+                                      return _c(
+                                        "li",
+                                        {
+                                          staticClass: "my-2",
+                                          staticStyle: { "line-height": "1" },
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                                " +
+                                              _vm._s(reserve.quantity) +
+                                              " шт из склада "
+                                          ),
+                                          _c(
+                                            "span",
+                                            { staticClass: "text-muted" },
+                                            [
+                                              _vm._v(
                                                 _vm._s(
                                                   _vm._f("currency")(
-                                                    reserve.price
+                                                    reserve.price_total
                                                   )
-                                                ) +
-                                                "₽ (" +
-                                                _vm._s(
-                                                  _vm._f("currency")(
-                                                    reserve.pre_rub
-                                                  )
-                                                ) +
-                                                "₽ + $" +
-                                                _vm._s(
-                                                  _vm._f("currency")(
-                                                    reserve.pre_usd
-                                                  )
-                                                ) +
-                                                ")"
-                                            ),
-                                          ]
-                                        ),
-                                      ]
-                                    )
-                                  }),
-                                  0
+                                                ) + "₽"
+                                              ),
+                                            ]
+                                          ),
+                                          _c("br"),
+                                          _vm._v(" "),
+                                          _c(
+                                            "small",
+                                            { staticClass: "text-muted" },
+                                            [
+                                              _vm._v(
+                                                "Поступление от " +
+                                                  _vm._s(
+                                                    _vm._f("date")(
+                                                      reserve.stock_balance.date
+                                                    )
+                                                  ) +
+                                                  " / " +
+                                                  _vm._s(
+                                                    _vm._f("currency")(
+                                                      reserve.price
+                                                    )
+                                                  ) +
+                                                  "₽ (" +
+                                                  _vm._s(
+                                                    _vm._f("currency")(
+                                                      reserve.pre_rub
+                                                    )
+                                                  ) +
+                                                  "₽ + $" +
+                                                  _vm._s(
+                                                    _vm._f("currency")(
+                                                      reserve.pre_usd
+                                                    )
+                                                  ) +
+                                                  ")"
+                                              ),
+                                            ]
+                                          ),
+                                        ]
+                                      )
+                                    }),
+                                    _vm._v(" "),
+                                    _vm._l(item.stock_needs, function (need) {
+                                      return _c(
+                                        "li",
+                                        {
+                                          staticClass: "text-danger my-2",
+                                          staticStyle: { "line-height": "1" },
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                                не хватает " +
+                                              _vm._s(need.quantity) +
+                                              " шт\n                                            "
+                                          ),
+                                        ]
+                                      )
+                                    }),
+                                  ],
+                                  2
                                 ),
                               ]),
                             ])
@@ -71248,8 +71270,12 @@ var render = function () {
                       _c("td", [
                         _vm._v(
                           "\n                        " +
-                            _vm._s(need.production.name) +
-                            "\n                    "
+                            _vm._s(need.production_item.production.name) +
+                            " (" +
+                            _vm._s(
+                              "ID #" + need.production_item.production.id
+                            ) +
+                            ")\n                    "
                         ),
                       ]),
                       _vm._v(" "),

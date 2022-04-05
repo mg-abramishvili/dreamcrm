@@ -21,7 +21,7 @@ class ProductionController extends Controller
 
     public function production($id)
     {
-        return Production::with('project', 'user', 'items.stockItem', 'items.reserves.stockBalance')->find($id);
+        return Production::with('project', 'user', 'items.stockItem', 'items.reserves.stockBalance', 'items.stockNeeds')->find($id);
     }
 
     public function store(Request $request)
@@ -56,7 +56,7 @@ class ProductionController extends Controller
 
                     $this->createReserve($quantityNeeds, $stockItem, $stockBalance, $stockBalances, $production, $productionItem);
                 } else {
-                    $this->createStockNeed($quantityNeeds, $stockItem, $production);
+                    $this->createStockNeed($quantityNeeds, $stockItem, $productionItem);
                 }
             }
         }
@@ -107,7 +107,7 @@ class ProductionController extends Controller
                 if($stockBalance) {
                     $this->createReserve($quantityNeedsLeft, $stockItem, $stockBalance, $stockBalances, $production, $productionItem);
                 } else {
-                    $this->createStockNeed($quantityNeedsLeft, $stockItem, $production);
+                    $this->createStockNeed($quantityNeedsLeft, $stockItem, $productionItem);
                 }
             }
         } else {
@@ -116,7 +116,7 @@ class ProductionController extends Controller
             if($stockBalance) {
                 $this->createReserve($quantityNeeds, $stockItem, $stockBalance, $stockBalances, $production, $productionItem);
             } else {
-                $this->createStockNeed($quantityNeeds, $stockItem, $production);
+                $this->createStockNeed($quantityNeeds, $stockItem, $productionItem);
             }
         }
     }
@@ -128,12 +128,12 @@ class ProductionController extends Controller
         $stockBalance->save();
     }
 
-    public function createStockNeed($quantity, $stockItem, $production)
+    public function createStockNeed($quantity, $stockItem, $productionItem)
     {
         $stockNeed = new StockNeed();
         $stockNeed->quantity = $quantity;
         $stockNeed->stock_item_id = $stockItem->id;
-        $stockNeed->production_id = $production->id;
+        $stockNeed->production_item_id = $productionItem->id;
         $stockNeed->save();
     }
 }
