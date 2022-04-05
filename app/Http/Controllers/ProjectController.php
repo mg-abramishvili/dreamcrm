@@ -15,7 +15,7 @@ class ProjectController extends Controller
 
     public function project($id)
     {
-        return Project::with('user', 'client', 'calculations.boxes', 'offers.calculations.boxes')->find($id);
+        return Project::with('user', 'client', 'calculations.boxes', 'offers.calculations.boxes', 'production')->find($id);
     }
 
     public function innCheck($inn)

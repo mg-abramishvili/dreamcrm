@@ -7474,6 +7474,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -7483,6 +7484,9 @@ __webpack_require__.r(__webpack_exports__);
       project: {},
       selected: {
         tab: 'general'
+      },
+      views: {
+        loading: true
       }
     };
   },
@@ -7490,7 +7494,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get("/api/project/".concat(this.$route.params.id)).then(function (response) {
-      return _this.project = response.data;
+      return _this.project = response.data, _this.views.loading = false;
     });
   },
   methods: {
@@ -68634,25 +68638,31 @@ var render = function () {
               ),
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-12 col-lg-6 text-end" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary",
-                  on: {
-                    click: function ($event) {
-                      return _vm.toProduction()
-                    },
-                  },
-                },
-                [_vm._v("В производство")]
-              ),
-            ]),
+            !_vm.views.loading
+              ? _c("div", { staticClass: "col-12 col-lg-6 text-end" }, [
+                  !_vm.project.production
+                    ? _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          on: {
+                            click: function ($event) {
+                              return _vm.toProduction()
+                            },
+                          },
+                        },
+                        [_vm._v("Пуск в производство")]
+                      )
+                    : _vm._e(),
+                ])
+              : _vm._e(),
           ]),
         ]),
       ]),
       _vm._v(" "),
-      _vm.project && _vm.project.id > 0
+      _vm.views.loading ? _c("Loader") : _vm._e(),
+      _vm._v(" "),
+      !_vm.views.loading
         ? _c("div", { staticClass: "tab" }, [
             _c(
               "ul",
@@ -68766,7 +68776,7 @@ var render = function () {
               ),
             ]),
           ])
-        : _c("Loader"),
+        : _vm._e(),
     ],
     1
   )

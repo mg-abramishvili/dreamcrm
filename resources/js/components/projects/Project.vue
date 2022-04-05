@@ -13,14 +13,16 @@
                             </strong>
                         </h1>    
                     </div>
-                    <div class="col-12 col-lg-6 text-end">
-                        <button @click="toProduction()" class="btn btn-primary">В производство</button>
+                    <div v-if="!views.loading" class="col-12 col-lg-6 text-end">
+                        <button v-if="!project.production" @click="toProduction()" class="btn btn-primary">Пуск в производство</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div v-if="project && project.id > 0" class="tab">
+        <Loader v-if="views.loading"></Loader>
+
+        <div v-if="!views.loading" class="tab">
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
                     <a @click="selectTab('general')" class="nav-link" :class="{'active': selected.tab == 'general'}" role="tab">Общая информация</a>
@@ -45,7 +47,6 @@
                 </div>
             </div>
         </div>
-        <Loader v-else></Loader>
     </div>
 </template>
 
@@ -62,12 +63,17 @@
                 selected: {
                     tab: 'general',
                 },
+
+                views: {
+                    loading: true,
+                }
             }
         },
         created() {
             axios.get(`/api/project/${this.$route.params.id}`)
             .then(response => (
-                this.project = response.data
+                this.project = response.data,
+                this.views.loading = false
             ))
         },
         methods: {
