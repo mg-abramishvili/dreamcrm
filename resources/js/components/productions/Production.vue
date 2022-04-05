@@ -143,8 +143,8 @@
                                         <td style="width: 50%;">
                                             <ul class="m-0">
                                                 <li v-for="reserve in item.reserves" class="my-2" style="line-height: 1;">
-                                                    {{ reserve.quantity }} шт из склада<br>
-                                                    <small class="text-muted">Поступление от {{ reserve.stock_balance.date }} / {{ reserve.price_total | currency }}₽ ({{ reserve.pre_rub | currency }}₽ + ${{ reserve.pre_usd | currency }})</small>
+                                                    {{ reserve.quantity }} шт из склада <span class="text-muted">{{ reserve.price_total | currency }}₽</span><br>
+                                                    <small class="text-muted">Поступление от {{ reserve.stock_balance.date | date }} / {{ reserve.price | currency }}₽ ({{ reserve.pre_rub | currency }}₽ + ${{ reserve.pre_usd | currency }})</small>
                                                 </li>
                                             </ul>
                                         </td>

@@ -37,6 +37,9 @@ import StockCategoryCreate from './components/stock/CategoryCreate.vue';
 import StockCategoryEdit from './components/stock/CategoryEdit.vue';
 import StockItem from './components/stock/Item.vue';
 import StockItemCreate from './components/stock/ItemCreate.vue';
+import StockNeeds from './components/stock/Needs.vue';
+
+import Reserves from './components/reserves/Index.vue';
 
 import Notifications from './components/notifications/Index.vue';
 
@@ -204,6 +207,16 @@ export const routes = [
         path: '/stock/items/create',
         name: 'StockItemCreate',
         component: StockItemCreate
+    },
+    {
+        path: '/stock/needs',
+        name: 'StockNeeds',
+        component: StockNeeds
+    },
+    {
+        path: '/reserves',
+        name: 'Reserves',
+        component: Reserves
     },
     {
         path: '/notifications',

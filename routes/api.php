@@ -35,6 +35,10 @@ use App\Http\Controllers\StockCategoryController;
 use App\Http\Controllers\StockItemController;
 use App\Http\Controllers\StockBalanceController;
 
+use App\Http\Controllers\StockNeedController;
+
+use App\Http\Controllers\ReserveController;
+
 use App\Http\Controllers\NotificationController;
 
 use Illuminate\Http\Request;
@@ -146,7 +150,16 @@ Route::delete('stock/item/{id}/delete', [StockItemController::class, 'delete'])-
 Route::post('stock/item/{id}/balance', [StockBalanceController::class, 'store'])->middleware('auth:sanctum');
 Route::put('stock/balance/{id}/update', [StockBalanceController::class, 'update'])->middleware('auth:sanctum');
 Route::delete('stock/balance/{id}/delete', [StockBalanceController::class, 'delete'])->middleware('auth:sanctum');
-Route::get('stock/items-to-buy', [StockItemController::class, 'itemsToBuy'])->middleware('auth:sanctum');
+
+
+
+// STOCK NEEDS
+Route::get('stock/needs', [StockNeedController::class, 'index'])->middleware('auth:sanctum');
+
+
+
+// RESERVES
+Route::get('reserves', [ReserveController::class, 'index'])->middleware('auth:sanctum');
 
 
 

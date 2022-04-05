@@ -3,10 +3,14 @@
         <div class="card card-bordered">
             <div class="card-body">
                 <div class="row align-items-center">
-                    <div class="col-12 col-lg-6">
+                    <div class="col-12 col-lg-3">
                         <h1 class="h3 m-0" style="position:relative;">Склад</h1>
                     </div>
-                    <div class="col-12 col-lg-6 text-end">
+                    <div class="col-12 col-lg-6 text-center">
+                        <router-link :to="{name: 'Reserves'}" class="btn btn-outline-primary mx-1">Зарезервировано</router-link>
+                        <router-link :to="{name: 'StockNeeds'}" class="btn btn-outline-primary mx-1">Закупки</router-link>
+                    </div>
+                    <div class="col-12 col-lg-3 text-end">
                         <!-- <router-link :to="{name: 'StockSearch'}" class="catalog-page-search-icon stock-page-search-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search align-middle"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                         </router-link> -->

@@ -11,6 +11,10 @@ class StockItemController extends Controller
         return StockItem::with('balances')->orderBy('name', 'asc')->get();
     }
 
+    public function stockNeeds() {
+        return StockItem::where('needs_quantity', '>', 0)->get();
+    }
+
     public function item($id)
     {
         return StockItem::with('balances.reserves')->find($id);
