@@ -61,16 +61,29 @@ class ProductionController extends Controller
             }
         }
 
-        // foreach($calculation->catalogItems as $catalogItem) {
-        //     if($catalogItem->price > 0) {
-        //         foreach($catalogItem->stockItems as $stockItem) {
-        //             $productionItem = new ProductionItem();
-        //             $productionItem->production_id = $production->id;
-        //             $productionItem->stock_item_id = $stockItem->id;
-        //             $productionItem->save();
-        //         }
-        //     }
-        // }
+        foreach($calculation->catalogItems as $catalogItem) {
+            if($catalogItem->price > 0) {
+                foreach($catalogItem->stockItems as $stockItem) {
+                    $productionItem = new ProductionItem();
+                    $productionItem->production_id = $production->id;
+                    $productionItem->stock_item_id = $stockItem->id;
+                    $productionItem->save();
+
+                    $quantityNeeds = $stockItem->pivot->quantity;
+
+                    $stockBalances = StockBalance::where('stock_item_id', $stockItem->id)->where('quantity', '>', 0)->orderBy('id', 'asc')->get();
+                    $stockBalancesCount = $stockBalances->count();
+
+                    if($stockBalancesCount > 0) {
+                        $stockBalance = $stockBalances->first();
+
+                        $this->createReserve($quantityNeeds, $stockItem, $stockBalance, $stockBalances, $production, $productionItem);
+                    } else {
+                        $this->createStockNeed($quantityNeeds, $stockItem, $productionItem);
+                    }
+                }
+            }
+        }
     }
 
     public function createReserve($quantityNeeds, $stockItem, $stockBalance, $stockBalances, $production, $productionItem)
