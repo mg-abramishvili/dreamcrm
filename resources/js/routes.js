@@ -44,6 +44,7 @@ import Reserves from './components/reserves/Index.vue';
 import Notifications from './components/notifications/Index.vue';
 
 import Productions from './components/productions/Index.vue';
+import ProductionCreate from './components/productions/Create.vue';
 import Production from './components/productions/Production.vue';
 
 export const routes = [
@@ -227,6 +228,11 @@ export const routes = [
         path: '/productions',
         name: 'Productions',
         component: Productions
+    },
+    {
+        path: '/productions/create/:project_id',
+        name: 'ProductionCreate',
+        component: ProductionCreate
     },
     {
         path: '/production/:id',

@@ -81,12 +81,7 @@
                 this.selected.tab = tab
             },
             toProduction() {
-                axios.post(`/api/productions`, {
-                    project: this.$route.params.id
-                })
-                .then(response => {
-                    console.log(response)
-                })
+                this.$router.push({name: 'ProductionCreate', params: {project_id: this.$route.params.id}})
             },
         },
         components: {

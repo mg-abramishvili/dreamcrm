@@ -26,6 +26,11 @@ class ProductionController extends Controller
 
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'project' => 'required',
+            'name' => 'required',
+        ]);
+
         $project = Project::with('user')->find($request->project);
         
         $calculation = Calculation::where('project_id', $project->id)->with('boxes.stockItems', 'catalogItems.stockItems')->first();
@@ -33,9 +38,20 @@ class ProductionController extends Controller
         $production = new Production();
         $production->project_id = $project->id;
         $production->user_id = $project->user->id;
-        $production->name = 'Новый проект';
-        $production->priority = 'normal';
+        $production->name = $request->name;
         $production->status = 'new';
+        $production->priority = $request->priority;
+        $production->ral = $request->ral;
+        $production->payment_type = $request->payment_type;
+        $production->supply_info = $request->supply_info;
+        $production->invoice_number = $request->invoice_number;
+        $production->serial_number = $request->serial_number;
+        $production->activation_key = $request->activation_key;
+        $production->contacts = $request->contacts;
+        $production->email = $request->email;
+        $production->description = $request->description;
+        $production->start_date = $request->start_date;
+        $production->end_date = $request->end_date;
         
         $production->save();
         
@@ -84,6 +100,8 @@ class ProductionController extends Controller
                 }
             }
         }
+
+        return $production->id;
     }
 
     public function createReserve($quantityNeeds, $stockItem, $stockBalance, $stockBalances, $production, $productionItem)
