@@ -4,7 +4,7 @@
             <div class="card-body">
                 <div class="row align-items-center">
                     <div class="col-12 col-lg-6">
-                        <h1 class="h3 m-0">Новый проект {{$route.params.calculation_id}}</h1>
+                        <h1 class="h3 m-0">Новый проект</h1>
                     </div>
                 </div>
             </div>
@@ -16,10 +16,15 @@
                     <label class="form-label">ИНН клиента</label>
                     <input v-model="clientInn" type="text" class="form-control">
                 </div>
-                
-                <button @click="checkClientInn()" class="btn btn-primary">Проверить</button>
 
-                <ul v-if="projects && projects.length > 0" class="list-group mt-3">
+                <div class="mb-3">
+                    <label class="form-label">Название компании</label>
+                    <input v-model="clientInn" type="text" class="form-control">
+                </div>
+                
+                <button @click="checkClient()" class="btn btn-primary">Проверить</button>
+
+                <ul v-if="projects.length" class="list-group mt-3">
                     <li v-for="project in projects" :key="project.id" class="list-group-item">
                         <strong>{{ project.name }}</strong>
                         <br>
@@ -35,7 +40,10 @@
     export default {
         data() {
             return {
-                clientInn: '',
+                client: {
+                    inn: '',
+                    name: '',
+                },
 
                 projects: [],
             }

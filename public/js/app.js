@@ -7479,10 +7479,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      clientInn: '',
+      client: {
+        inn: '',
+        name: ''
+      },
       projects: []
     };
   },
@@ -69116,24 +69124,40 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "projects-page" }, [
-    _c("div", { staticClass: "card card-bordered" }, [
-      _c("div", { staticClass: "card-body" }, [
-        _c("div", { staticClass: "row align-items-center" }, [
-          _c("div", { staticClass: "col-12 col-lg-6" }, [
-            _c("h1", { staticClass: "h3 m-0" }, [
-              _vm._v(
-                "Новый проект " + _vm._s(_vm.$route.params.calculation_id)
-              ),
-            ]),
-          ]),
-        ]),
-      ]),
-    ]),
+    _vm._m(0),
     _vm._v(" "),
     _c("div", { staticClass: "card card-bordered" }, [
       _c("div", { staticClass: "card-body" }, [
         _c("div", { staticClass: "mb-3" }, [
           _c("label", { staticClass: "form-label" }, [_vm._v("ИНН клиента")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.clientInn,
+                expression: "clientInn",
+              },
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text" },
+            domProps: { value: _vm.clientInn },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.clientInn = $event.target.value
+              },
+            },
+          }),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "mb-3" }, [
+          _c("label", { staticClass: "form-label" }, [
+            _vm._v("Название компании"),
+          ]),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -69164,14 +69188,14 @@ var render = function () {
             staticClass: "btn btn-primary",
             on: {
               click: function ($event) {
-                return _vm.checkClientInn()
+                return _vm.checkClient()
               },
             },
           },
           [_vm._v("Проверить")]
         ),
         _vm._v(" "),
-        _vm.projects && _vm.projects.length > 0
+        _vm.projects.length
           ? _c(
               "ul",
               { staticClass: "list-group mt-3" },
@@ -69200,7 +69224,22 @@ var render = function () {
     ]),
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card card-bordered" }, [
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "row align-items-center" }, [
+          _c("div", { staticClass: "col-12 col-lg-6" }, [
+            _c("h1", { staticClass: "h3 m-0" }, [_vm._v("Новый проект")]),
+          ]),
+        ]),
+      ]),
+    ])
+  },
+]
 render._withStripped = true
 
 
