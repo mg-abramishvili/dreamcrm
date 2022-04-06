@@ -108,14 +108,16 @@
             }
         },
         created() {
-            axios
-                .get('/api/productions')
+            this.loadProductions()
+        },
+        methods: {
+            loadProductions() {
+                axios.get('/api/productions')
                 .then(response => (
                     this.productions = response.data,
                     this.views.loading = false
                 ))
-        },
-        methods: {
+            },
             goTo(id) {
                 this.$router.push({ name: 'Production', params: { id: id } });
             }

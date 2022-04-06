@@ -7203,13 +7203,16 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    var _this = this;
-
-    axios.get('/api/productions').then(function (response) {
-      return _this.productions = response.data, _this.views.loading = false;
-    });
+    this.loadProductions();
   },
   methods: {
+    loadProductions: function loadProductions() {
+      var _this = this;
+
+      axios.get('/api/productions').then(function (response) {
+        return _this.productions = response.data, _this.views.loading = false;
+      });
+    },
     goTo: function goTo(id) {
       this.$router.push({
         name: 'Production',
@@ -68906,7 +68909,9 @@ var render = function () {
                             _c("strong", [_vm._v("Дата начала:")]),
                             _vm._v(
                               "\n                            " +
-                                _vm._s(_vm.production.start_date) +
+                                _vm._s(
+                                  _vm._f("date")(_vm.production.start_date)
+                                ) +
                                 "\n                        "
                             ),
                           ])
@@ -68917,7 +68922,9 @@ var render = function () {
                             _c("strong", [_vm._v("Срок завершения:")]),
                             _vm._v(
                               "\n                            " +
-                                _vm._s(_vm.production.end_date) +
+                                _vm._s(
+                                  _vm._f("date")(_vm.production.end_date)
+                                ) +
                                 "\n                        "
                             ),
                           ])

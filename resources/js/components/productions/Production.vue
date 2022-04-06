@@ -105,11 +105,11 @@
                         <div class="col-12 col-lg-6">
                             <p v-if="production.start_date">
                                 <strong>Дата начала:</strong>
-                                {{ production.start_date }}
+                                {{ production.start_date | date }}
                             </p>
                             <p v-if="production.end_date">
                                 <strong>Срок завершения:</strong>
-                                {{ production.end_date }}
+                                {{ production.end_date | date }}
                             </p>
                             <p v-if="production.contacts">
                                 <strong>Контакты:</strong>

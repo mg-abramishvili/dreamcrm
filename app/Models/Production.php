@@ -9,6 +9,28 @@ class Production extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'id',
+        'project_id',
+        'user_id',
+        'name',
+        'priority',
+        'status',
+        'invoice_number',
+        'payment_type',
+        'serial_number',
+        'activation_key',
+        'supply_info',
+        'start_date',
+        'end_date',
+        'description',
+        'additional_hardware',
+        'additional_for_tribune',
+        'contacts',
+        'email',
+        'ral',
+    ];
+
     public function project()
     {
         return $this->belongsTo(Project::class);
