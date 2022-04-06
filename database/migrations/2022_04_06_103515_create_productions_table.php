@@ -25,7 +25,7 @@ class CreateProductionsTable extends Migration
             $table->text('description')->nullable();
             $table->string('additional_hardware')->nullable();
             $table->string('additional_for_tribune')->nullable();
-            $table->string('contacts')->nullable();
+            $table->text('contacts')->nullable();
             $table->string('email')->nullable();
             $table->text('ral')->nullable();
             $table->timestamps();
