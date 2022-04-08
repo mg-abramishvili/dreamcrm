@@ -24,21 +24,27 @@ class OfferController extends Controller
     public function store(Request $request)
     {
         $offer = new Offer();
-
         $offer->project_id = $request->project_id;
 
-        $project = Project::find($request->project_id);
+        $pdf = PDF::setOptions([
+            'tempDir' => storage_path('tmp'),
+            'fontDir' => storage_path('fonts'),
+            'fontCache' => storage_path('fonts'),
+            'chroot' => realpath(base_path()),
+            'logOutputFile' => public_path('uploads') . '/' . 'log.htm',
+        ])
+        ->loadView('offers.pdf', compact('offer'));
+        
+        $filename = public_path('uploads/offers/') . '/' . 'kp_' . $offer->id . '.pdf';
+        
+        if(isset($filename)) {
+            File::delete($filename);
+        }
+        
+        $pdf->save(public_path('uploads/offers/') . '/' . 'kp_' . $offer->id . '.pdf');
 
+        $offer->pdf = public_path('uploads/offers/') . '/' . 'kp_' . $offer->id . '.pdf';
         $offer->save();
-
-        $offer->calculations()->sync($project->calculations);
-
-        $pdf = PDF::loadView('offers.pdf', compact('offer'));
-        $pdf->save(public_path() . '/uploads/offers/' . 'kp_' . $offer->id . '.pdf');
-
-        $o = Offer::find($offer->id);
-        $o->pdf = '/uploads/offers/' . 'kp_' . $offer->id . '.pdf';
-        $o->save();
     }
 
     public function pdf($id)
