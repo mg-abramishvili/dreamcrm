@@ -60,7 +60,7 @@
                     project_id: this.project_id
                 })
                 .then((response => {
-                    this.views.createOfferButton = true
+                    this.$parent.loadProject()
                 }))
             },
             recreatePDF(id) {
@@ -69,7 +69,6 @@
                 axios.get(`/api/offer/${id}/pdf`)
                 .then((response => {
                     this.views.recreatePdfButton = true
-                    console.log(response)
                 }))
                 .catch((error) => {
                     if(error.response) {

@@ -36,7 +36,7 @@
             </ul>
             <div class="tab-content">
                 <div class="tab-pane" :class="{'active': selected.tab == 'general'}" role="tabpanel">
-                    <p><strong>Клиент:</strong> {{ project.client.name }}</p>
+                    <p v-if="project.client"><strong>Клиент:</strong> {{ project.client.name }}</p>
                     <p><strong>Ответственный:</strong> {{ project.user.name }}</p>
                 </div>
                 <div class="tab-pane" :class="{'active': selected.tab == 'calculations'}" role="tabpanel">
@@ -70,13 +70,16 @@
             }
         },
         created() {
-            axios.get(`/api/project/${this.$route.params.id}`)
-            .then(response => (
-                this.project = response.data,
-                this.views.loading = false
-            ))
+            this.loadProject()
         },
         methods: {
+            loadProject() {
+                axios.get(`/api/project/${this.$route.params.id}`)
+                .then(response => (
+                    this.project = response.data,
+                    this.views.loading = false
+                ))
+            },
             selectTab(tab) {
                 this.selected.tab = tab
             },
