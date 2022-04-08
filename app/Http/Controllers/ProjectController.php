@@ -18,8 +18,14 @@ class ProjectController extends Controller
         return Project::with('user', 'client', 'calculations.boxes', 'offers.calculations.boxes', 'production')->find($id);
     }
 
-    public function innCheck($inn)
+    public function check(Request $request)
     {
-        return Project::with('client')->whereRelation('client', 'inn', $inn)->get();
+        $inn = Project::with('client')->whereRelation('client', 'inn', $request->inn)->get();
+        $name = Project::with('client')->whereRelation('client', 'name', 'LIKE', "%{$request->name}%")->get();
+
+        return response()->json([
+            'inn' => $inn,
+            'name' => $name,
+        ]);
     }
 }

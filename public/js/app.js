@@ -7487,6 +7487,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -7500,22 +7505,34 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {//
   },
   methods: {
-    checkClientInn: function checkClientInn() {
+    checkClient: function checkClient() {
       var _this = this;
 
-      if (this.clientInn) {
-        axios.get("/api/projects/inn_check/".concat(this.clientInn)).then(function (response) {
-          return _this.projects = response.data;
+      if (!this.client.inn && !this.client.name) {
+        return this.$swal({
+          text: 'Укажите хоть что-нибудь',
+          icon: 'error'
         });
       }
-    },
-    save: function save() {
-      axios.post("/api/projects", {
-        calculation_id: this.$route.params.calculation_id,
-        name: this.name,
-        user: this.$parent.user.id,
-        client_id: this.client_id
+
+      axios.get("/api/projects/check", {
+        params: {
+          inn: this.client.inn,
+          name: this.client.name
+        }
+      }).then(function (response) {
+        var projectsWithInn = response.data.inn;
+        var projectsWithName = response.data.name;
+        var projects = projectsWithInn.concat(projectsWithName);
+        projects = projects.filter(function (v, i, a) {
+          return a.findIndex(function (v2) {
+            return v2.id === v.id;
+          }) === i;
+        });
+        _this.projects = projects;
       });
+    },
+    save: function save() {//
     }
   }
 });
@@ -69135,58 +69152,92 @@ var render = function () {
     _vm._v(" "),
     _c("div", { staticClass: "card card-bordered" }, [
       _c("div", { staticClass: "card-body" }, [
-        _c("div", { staticClass: "mb-3" }, [
-          _c("label", { staticClass: "form-label" }, [_vm._v("ИНН клиента")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.clientInn,
-                expression: "clientInn",
-              },
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text" },
-            domProps: { value: _vm.clientInn },
-            on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.clientInn = $event.target.value
-              },
-            },
-          }),
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "mb-3" }, [
-          _c("label", { staticClass: "form-label" }, [
-            _vm._v("Название компании"),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-12 col-lg-6" }, [
+            _c("div", { staticClass: "mb-3" }, [
+              _c("label", { staticClass: "form-label" }, [
+                _vm._v("ИНН клиента"),
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.client.inn,
+                    expression: "client.inn",
+                  },
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.client.inn },
+                on: {
+                  input: function ($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.client, "inn", $event.target.value)
+                  },
+                },
+              }),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "mb-3" }, [
+              _c("label", { staticClass: "form-label" }, [
+                _vm._v("Название компании"),
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.client.name,
+                    expression: "client.name",
+                  },
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.client.name },
+                on: {
+                  input: function ($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.client, "name", $event.target.value)
+                  },
+                },
+              }),
+            ]),
           ]),
           _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.clientInn,
-                expression: "clientInn",
-              },
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text" },
-            domProps: { value: _vm.clientInn },
-            on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.clientInn = $event.target.value
-              },
-            },
-          }),
+          _c("div", { staticClass: "col-12 col-lg-6" }, [
+            _vm.projects.length
+              ? _c(
+                  "ul",
+                  { staticClass: "list-group mt-3" },
+                  _vm._l(_vm.projects, function (project) {
+                    return _c(
+                      "li",
+                      { key: project.id, staticClass: "list-group-item" },
+                      [
+                        _c("strong", [_vm._v(_vm._s(project.name))]),
+                        _vm._v(" "),
+                        _c("br"),
+                        _vm._v(
+                          "\n                            Клиент: " +
+                            _vm._s(project.client.name) +
+                            " (ИНН: " +
+                            _vm._s(project.client.inn) +
+                            ")\n                        "
+                        ),
+                      ]
+                    )
+                  }),
+                  0
+                )
+              : _vm._e(),
+          ]),
         ]),
         _vm._v(" "),
         _c(
@@ -69201,32 +69252,6 @@ var render = function () {
           },
           [_vm._v("Проверить")]
         ),
-        _vm._v(" "),
-        _vm.projects.length
-          ? _c(
-              "ul",
-              { staticClass: "list-group mt-3" },
-              _vm._l(_vm.projects, function (project) {
-                return _c(
-                  "li",
-                  { key: project.id, staticClass: "list-group-item" },
-                  [
-                    _c("strong", [_vm._v(_vm._s(project.name))]),
-                    _vm._v(" "),
-                    _c("br"),
-                    _vm._v(
-                      "\n                    Клиент: " +
-                        _vm._s(project.client.name) +
-                        " (ИНН: " +
-                        _vm._s(project.client.inn) +
-                        ")\n                "
-                    ),
-                  ]
-                )
-              }),
-              0
-            )
-          : _vm._e(),
       ]),
     ]),
   ])

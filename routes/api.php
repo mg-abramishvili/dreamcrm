@@ -107,7 +107,7 @@ Route::get('offer/{id}/pdf', [OfferController::class, 'pdf']);
 
 
 Route::get('projects', [ProjectController::class, 'index']);
-Route::get('projects/inn_check/{inn}', [ProjectController::class, 'innCheck']);
+Route::get('projects/check', [ProjectController::class, 'check']);
 Route::post('projects', [ProjectController::class, 'store']);
 Route::get('project/{id}', [ProjectController::class, 'project']);
 

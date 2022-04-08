@@ -12,25 +12,30 @@
 
         <div class="card card-bordered">
             <div class="card-body">
-                <div class="mb-3">
-                    <label class="form-label">ИНН клиента</label>
-                    <input v-model="clientInn" type="text" class="form-control">
-                </div>
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <div class="mb-3">
+                            <label class="form-label">ИНН клиента</label>
+                            <input v-model="client.inn" type="text" class="form-control">
+                        </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Название компании</label>
-                    <input v-model="clientInn" type="text" class="form-control">
+                        <div class="mb-3">
+                            <label class="form-label">Название компании</label>
+                            <input v-model="client.name" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <ul v-if="projects.length" class="list-group mt-3">
+                            <li v-for="project in projects" :key="project.id" class="list-group-item">
+                                <strong>{{ project.name }}</strong>
+                                <br>
+                                Клиент: {{ project.client.name }} (ИНН: {{ project.client.inn }})
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 
                 <button @click="checkClient()" class="btn btn-primary">Проверить</button>
-
-                <ul v-if="projects.length" class="list-group mt-3">
-                    <li v-for="project in projects" :key="project.id" class="list-group-item">
-                        <strong>{{ project.name }}</strong>
-                        <br>
-                        Клиент: {{ project.client.name }} (ИНН: {{ project.client.inn }})
-                    </li>
-                </ul>
             </div>
         </div>
     </div>
@@ -52,21 +57,30 @@
             //
         },
         methods: {
-            checkClientInn() {
-                if(this.clientInn) {
-                    axios.get(`/api/projects/inn_check/${this.clientInn}`)
-                    .then(response => (
-                        this.projects = response.data
-                    ))
+            checkClient() {
+                if(!this.client.inn && !this.client.name) {
+                    return this.$swal({
+                        text: 'Укажите хоть что-нибудь',
+                        icon: 'error',
+                    })
                 }
+
+                axios.get(`/api/projects/check`, { params: {
+                    inn: this.client.inn,
+                    name: this.client.name,
+                }})
+                .then(response => {
+                    let projectsWithInn = response.data.inn
+                    let projectsWithName = response.data.name
+                    let projects = projectsWithInn.concat(projectsWithName)
+                    
+                    projects = projects.filter((v,i,a)=>a.findIndex(v2=>(v2.id===v.id))===i)
+
+                    this.projects = projects
+                })
             },
             save() {
-                axios.post(`/api/projects`, {
-                    calculation_id: this.$route.params.calculation_id,
-                    name: this.name,
-                    user: this.$parent.user.id,
-                    client_id: this.client_id
-                })
+                //
             }
         },
     }
