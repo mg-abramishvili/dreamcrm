@@ -101,6 +101,7 @@
                     user: '',
                 },
 
+                name: '',
                 status: '',
 
                 views: {

@@ -7548,6 +7548,7 @@ __webpack_require__.r(__webpack_exports__);
       selected: {
         user: ''
       },
+      name: '',
       status: '',
       views: {
         checkPage: true,

@@ -121,7 +121,7 @@
                     <td style="width: 50%; padding-left: 40px; border: 0; vertical-align:top;">
                         <span class="rank">Менеджер отдела продаж</span>
                         <br>
-                        @foreach($offer->calculations as $calculation)
+                        @foreach($offer->project->calculations as $calculation)
                             @if($loop->first)
                                 <span class="name">
                                     {{ $calculation->user->name }}
@@ -165,7 +165,7 @@
         </span>
 
         <div class="box-images">
-            @foreach($offer->calculations as $calculation)
+            @foreach($offer->project->calculations as $calculation)
                 @foreach($calculation->boxes as $box)
                     @foreach(array_slice($box->gallery, 0, 3) as $galleryItem)
                         <img src="{{ public_path($galleryItem) }}" />
@@ -184,7 +184,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($offer->calculations as $calculation)
+                @foreach($offer->project->calculations as $calculation)
                     <td>
                         @foreach($calculation->boxes as $box)
                             <span style="font-weight: bold">Корпус:</span>

@@ -9,11 +9,6 @@ class Offer extends Model
 {
     use HasFactory;
 
-    public function calculations()
-    {
-        return $this->belongsToMany(Calculation::class, 'calculation__offer');
-    }
-
     public function project()
     {
         return $this->belongsTo(Project::class);

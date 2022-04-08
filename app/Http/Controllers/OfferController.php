@@ -18,7 +18,7 @@ class OfferController extends Controller
 
     public function offer($id)
     {
-        return Offer::with('calculations.boxes')->find($id);
+        return Offer::with('project.calculations.boxes')->find($id);
     }
 
     public function store(Request $request)
@@ -28,14 +28,12 @@ class OfferController extends Controller
 
         $offer->save();
 
-        $offer->calculations()->sync($request->calculation_id);
-
         $this->pdf($offer->id);
     }
 
     public function pdf($id)
     {
-        $offer = Offer::with('calculations.boxes', 'calculations.catalogItems')->find($id);
+        $offer = Offer::with('project.calculations.boxes', 'project.calculations.catalogItems')->find($id);
 
         $pdf = PDF::setOptions([
             'tempDir' => storage_path('tmp'),
@@ -53,6 +51,9 @@ class OfferController extends Controller
         }
         
         $pdf->save(public_path('uploads/offers/') . '/' . 'kp_' . $offer->id . '.pdf');
+
+        $offer->pdf = '/uploads/offers/kp_' . $offer->id . '.pdf';
+        $offer->save();
     }
 
     // public function offerPDF($id)
