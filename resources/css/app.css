@@ -216,7 +216,8 @@ table.dataTable {
 .clients-page,
 .catalog-page,
 .stock-page,
-.tasks-page {
+.tasks-page,
+.user-page {
     margin-top: 20px;
 }
 
@@ -340,8 +341,41 @@ table.dataTable {
     display: none !important;
 }
 
-.user-page-avatar .filepond--item {
+.user-page .user-title {
+    font-size: 40px;
+    line-height: 1;
+    color: #fd7b38;
+}
+
+.user-page-avatar img {
+    width: 200px;
+    height: 200px;
+    border: 2px solid #fd7b38;
+    padding: 2px;
+    border-radius: 100%;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 25px;
+}
+
+.user-page-avatar .filepond--wrapper {
     width: 100%;
+}
+.user-page-avatar .filepond--panel-root {
+    background-color: transparent;
+}
+.user-page-avatar .filepond--root {
+    margin-bottom: 0;
+}
+.user-page-avatar .filepond--root .filepond--list-scroller {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.user-page-avatar .filepond--root .filepond--drop-label {
+    min-height: 0;
+}
+.user-page-avatar .filepond--item {
+    display: none;
 }
 /* FILEPOND */
 
@@ -632,4 +666,8 @@ table.dataTable {
 }
 .badge.bg-warning {
     background-color: #faaf06 !important;
+}
+
+.btn .feather {
+    display: block;
 }

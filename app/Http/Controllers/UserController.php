@@ -24,14 +24,13 @@ class UserController extends Controller
         return User::with('permissions')->where('uid', $uid)->first();
     }
 
-    public function update($id, Request $request)
+    public function update($uid, Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email:rfc|unique:users,email,' . $id
-        ]);
+        $user = User::where('uid', $uid)->first();
 
-        $user = User::find($id);
+        if(!$user) {
+            return;
+        }
 
         if(isset($request->name)) {
             $user->name = $request->name;
@@ -45,9 +44,8 @@ class UserController extends Controller
             $user->password = Hash::make($request->password);
         }
 
-        if (!isset($request->avatar)) {
+        if (isset($request->avatar)) {
             $user->avatar = null;
-        } else {
             $user->avatar = $request->avatar;
         }
 
