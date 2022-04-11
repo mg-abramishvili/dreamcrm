@@ -73785,10 +73785,10 @@ var render = function () {
                       { staticClass: "col-12 col-lg-3" },
                       [
                         _c("h6", { staticClass: "text-muted mb-0" }, [
-                          _vm._v("Статус"),
+                          _vm._v("Дата создания"),
                         ]),
                         _vm._v(" "),
-                        _c("span", [
+                        _c("span", { staticClass: "text-sm" }, [
                           _vm._v(_vm._s(_vm._f("date")(_vm.task.created_at))),
                         ]),
                         _vm._v(" "),
