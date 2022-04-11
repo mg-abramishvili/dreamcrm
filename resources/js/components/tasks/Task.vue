@@ -72,6 +72,9 @@
                         </div>
                         <div class="col-12 col-lg-3">
                             <h6 class="text-muted mb-0">Статус</h6>
+                            <span>{{ task.created_at | date }}</span>
+
+                            <h6 class="text-muted mt-4">Статус</h6>
                             <span v-if="task.status == 'active'" class="badge rounded-pill bg-primary text-sm">В работе</span>
                             <span v-if="task.status == 'completed'" class="badge rounded-pill bg-success text-sm">Выполнено</span>
                             
