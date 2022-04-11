@@ -92,7 +92,7 @@
 
                             <button v-if="task.status !== 'completed'" @click="completeTask()" class="w-100 btn btn-success">Отметить как выполненную</button>
                             <button v-if="task.status == 'completed'" @click="returnTask()" class="w-100 btn btn-warning">Вернуть в работу</button>
-                            <button v-if="task.column.board.admin == $parent.$parent.user.id" @click="deleteTask()" class="w-100 btn btn-outline-danger mt-2">Удалить задачу</button>
+                            <button v-if="task.column.board.admin == $parent.$parent.user.id || $parent.$parent.user.permissions.can_see_all_boards" @click="deleteTask()" class="w-100 btn btn-outline-danger mt-2">Удалить задачу</button>
                         </div>
                     </div>
                 </div>

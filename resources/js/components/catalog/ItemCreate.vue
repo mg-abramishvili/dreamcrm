@@ -201,11 +201,6 @@
                     this.selected.stockItemsQty = this.selected.stockItemsQty.filter(qty => qty.id !== id)
                 }
             },
-            middleBalancePrice(stockItem) {
-                if(stockItem.balances.length) {
-                    return stockItem.balances.map(a => a.price).reduce((a, b) => (parseInt(a) + parseInt(b))) / stockItem.balances.map(a => a.price).length
-                }
-            },
             save() {
                 this.errors = []
 

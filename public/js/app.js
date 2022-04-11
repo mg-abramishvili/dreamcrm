@@ -5501,17 +5501,6 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
-    middleBalancePrice: function middleBalancePrice(stockItem) {
-      if (stockItem.balances.length) {
-        return stockItem.balances.map(function (a) {
-          return a.price;
-        }).reduce(function (a, b) {
-          return parseInt(a) + parseInt(b);
-        }) / stockItem.balances.map(function (a) {
-          return a.price;
-        }).length;
-      }
-    },
     save: function save() {
       var _this9 = this;
 
@@ -73930,7 +73919,8 @@ var render = function () {
                           : _vm._e(),
                         _vm._v(" "),
                         _vm.task.column.board.admin ==
-                        _vm.$parent.$parent.user.id
+                          _vm.$parent.$parent.user.id ||
+                        _vm.$parent.$parent.user.permissions.can_see_all_boards
                           ? _c(
                               "button",
                               {
