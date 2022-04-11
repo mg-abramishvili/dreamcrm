@@ -86,13 +86,13 @@
                             
                             <h6 class="text-muted mt-4">Действия</h6>
                             <div style="position: relative;">
-                                <button v-if="task.column.board.admin == $parent.$parent.user.id || $parent.$parent.user.permissions.can_see_all_boards" @click="addUser()" class="w-100 btn btn-outline-primary mb-2">Добавить участника</button>
+                                <button v-if="task.column.board.admin == $parent.$parent.user.id || $parent.$parent.user.permissions.can_see_all_boards == true" @click="addUser()" class="w-100 btn btn-outline-primary mb-2">Добавить участника</button>
                                 <AddUser v-if="views.addUser" :task="task" :board_id="board_id"></AddUser>
                             </div>
 
                             <button v-if="task.status !== 'completed'" @click="completeTask()" class="w-100 btn btn-success">Отметить как выполненную</button>
                             <button v-if="task.status == 'completed'" @click="returnTask()" class="w-100 btn btn-warning">Вернуть в работу</button>
-                            <button v-if="task.column.board.admin == $parent.$parent.user.id || $parent.$parent.user.permissions.can_see_all_boards" @click="deleteTask()" class="w-100 btn btn-outline-danger mt-2">Удалить задачу</button>
+                            <button v-if="task.column.board.admin == $parent.$parent.user.id || $parent.$parent.user.permissions.can_see_all_boards == true" @click="deleteTask()" class="w-100 btn btn-outline-danger mt-2">Удалить задачу</button>
                         </div>
                     </div>
                 </div>

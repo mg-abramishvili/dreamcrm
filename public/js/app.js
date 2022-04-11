@@ -73862,7 +73862,7 @@ var render = function () {
                             _vm.task.column.board.admin ==
                               _vm.$parent.$parent.user.id ||
                             _vm.$parent.$parent.user.permissions
-                              .can_see_all_boards
+                              .can_see_all_boards == true
                               ? _c(
                                   "button",
                                   {
@@ -73922,7 +73922,8 @@ var render = function () {
                         _vm._v(" "),
                         _vm.task.column.board.admin ==
                           _vm.$parent.$parent.user.id ||
-                        _vm.$parent.$parent.user.permissions.can_see_all_boards
+                        _vm.$parent.$parent.user.permissions
+                          .can_see_all_boards == true
                           ? _c(
                               "button",
                               {
