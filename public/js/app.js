@@ -73860,7 +73860,9 @@ var render = function () {
                           { staticStyle: { position: "relative" } },
                           [
                             _vm.task.column.board.admin ==
-                            _vm.$parent.$parent.user.id
+                              _vm.$parent.$parent.user.id ||
+                            _vm.$parent.$parent.user.permissions
+                              .can_see_all_boards
                               ? _c(
                                   "button",
                                   {

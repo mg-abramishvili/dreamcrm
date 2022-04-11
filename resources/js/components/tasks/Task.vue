@@ -86,7 +86,7 @@
                             
                             <h6 class="text-muted mt-4">Действия</h6>
                             <div style="position: relative;">
-                                <button v-if="task.column.board.admin == $parent.$parent.user.id" @click="addUser()" class="w-100 btn btn-outline-primary mb-2">Добавить участника</button>
+                                <button v-if="task.column.board.admin == $parent.$parent.user.id || $parent.$parent.user.permissions.can_see_all_boards" @click="addUser()" class="w-100 btn btn-outline-primary mb-2">Добавить участника</button>
                                 <AddUser v-if="views.addUser" :task="task" :board_id="board_id"></AddUser>
                             </div>
 
