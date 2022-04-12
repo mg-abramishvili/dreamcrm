@@ -10,18 +10,13 @@
             </div>
         </div>
 
-        <div v-if="views.checkPage" class="row">
+        <div v-if="views.step == 'check'" class="row">
             <div class="col-12 col-lg-6">
                 <div class="card card-bordered">
                     <div class="card-body">
                         <div class="mb-3">
                             <label class="form-label">ИНН клиента</label>
                             <input v-model="client.inn" type="text" class="form-control">
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Название компании</label>
-                            <input v-model="client.name" type="text" class="form-control">
                         </div>
                         
                         <button @click="checkClient()" class="btn btn-primary">Проверить</button>
@@ -31,52 +26,40 @@
             <div class="col-12 col-lg-6">
                 <div class="card card-bordered">
                     <div class="card-body">
-                        <ul v-if="projects.length" class="list-group my-2">
-                            <li v-for="project in projects" :key="project.id" class="list-group-item">
-                                <strong>{{ project.name }}</strong>
-                                <br>
-                                Клиент: {{ project.client.name }} (ИНН: {{ project.client.inn }})
-                            </li>
-                        </ul>
-                        <button v-if="views.nextButton" @click="goToRegistration()" class="btn btn-primary">Продолжить регистрацию</button>
-                        <button v-if="views.nextButtonDraft" @click="goToRegistrationDraft()" class="btn btn-primary">Продолжить регистрацию (черновик)</button>
+                        <div v-if="projects.length && !views.loading">
+                            <ul class="list-group my-2">
+                                <li v-for="project in projects" :key="project.id" class="list-group-item">
+                                    <strong>{{ project.name }}</strong>
+                                    <br>
+                                    Клиент: {{ project.client.name }} (ИНН: {{ project.client.inn }})
+                                </li>
+                            </ul>
+                            <button @click="goToRegistration('draft')" class="btn btn-primary">Продолжить регистрацию (черновик)</button>
+                        </div>
+                        <div v-if="!projects.length && !views.loading">
+                            <p>ОК! Проектов с таким ИНН нет.</p>
+                            <button @click="goToClientCreate()" class="btn btn-primary">Продолжить регистрацию</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div v-if="views.registrationPage" class="card card-bordered">
+        <CreateClient v-if="views.step == 'clientCreate'" :innData="client.inn" />
+
+        <div v-if="views.step == 'registration'" class="card card-bordered">
             <div class="card-body">
-                <template v-if="status == 'draft'">
+                <template v-if="project.status == 'draft'">
                     <p class="text-danger mb-4">Проект будет зарегистрирован как черновик, т.к. проверка обнаружила схожие данные по заказчику в других проектах.</p>
                 </template>
 
                 <div class="row">
                     <div class="col-12 col-lg-4">
                         <div class="mb-3">
-                            <label class="form-label">ИНН клиента</label>
-                            <input v-model="client.inn" type="text" class="form-control" disabled>
+                            <label class="form-label">Название проекта</label>
+                            <input v-model="project.name" type="text" class="form-control">
                         </div>
                     </div>
-                    <div class="col-12 col-lg-4">
-                        <div class="mb-3">
-                            <label class="form-label">Название компании</label>
-                            <input v-model="client.name" type="text" class="form-control" disabled>
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-4">
-                        <div class="mb-3">
-                            <label class="form-label">Ответственный</label>
-                            <select v-model="selected.user" class="form-select" disabled>
-                                <option v-for="user in users" :value="user.id">{{ user.name }}</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Название проекта</label>
-                    <input v-model="name" type="text" class="form-control">
                 </div>
                 
                 <button @click="save()" class="btn btn-primary">Сохранить проект</button>
@@ -86,6 +69,8 @@
 </template>
 
 <script>
+    import CreateClient from '../clients/ClientCreate'
+
     export default {
         data() {
             return {
@@ -93,23 +78,24 @@
                 projects: [],
 
                 client: {
-                    inn: '',
+                    id: '',
                     name: '',
+                    inn: '',
+                },
+
+                project: {
+                    name: '',
+                    status: '',
                 },
 
                 selected: {
                     user: '',
                 },
 
-                name: '',
-                status: '',
-
                 views: {
-                    checkPage: true,
-                    registrationPage: false,
+                    loading: true,
 
-                    nextButton: false,
-                    nextButtonDraft: false,
+                    step: 'check',
                 }
             }
         },
@@ -132,60 +118,46 @@
                         icon: 'error',
                     })
                 }
-                if(!this.client.name) {
-                    return this.$swal({
-                        text: 'Укажите название компании',
-                        icon: 'error',
-                    })
-                }
+
+                this.views.loading = true
 
                 axios.get(`/api/projects/check`, { params: {
-                    inn: this.client.inn,
-                    name: this.client.name,
+                    inn: this.client.inn
                 }})
                 .then(response => {
-                    let projectsWithInn = response.data.inn
-                    let projectsWithName = response.data.name
-                    let projects = projectsWithInn.concat(projectsWithName)
-                    
-                    projects = projects.filter((v,i,a)=>a.findIndex(v2=>(v2.id===v.id))===i)
-
-                    this.projects = projects
+                    this.projects = response.data
 
                     if(this.projects.length) {
-                        this.views.nextButton = false
-                        this.views.nextButtonDraft = true
+                        this.views.loading = false
                     } else {
-                        this.views.nextButton = true
-                        this.views.nextButtonDraft = false
+                        this.views.loading = false
                     }
                 })
             },
-            goToRegistration() {
-                this.views.checkPage = false
-                this.views.registrationPage = true
-
-                this.status = 'active'
+            goToClientCreate() {
+                this.views.step = 'clientCreate'
             },
-            goToRegistrationDraft() {
-                this.views.checkPage = false
-                this.views.registrationPage = true
-
-                this.status = 'draft'
+            goToRegistration(status) {
+                this.project.status = status
+                
+                this.views.step = 'registration'
             },
             save() {
                 axios.post(`/api/projects`, {
                     calculation_id: this.$route.params.calculation_id,
-                    name: this.name,
                     user_id: this.selected.user,
+                    name: this.project.name,
+                    status: this.project.status,
                     client_name: this.client.name,
                     client_inn: this.client.inn,
-                    status: this.status
                 })
                 .then(response => {
                     this.$router.push({name: 'Project', params: {id: response.data}})
                 })
             }
         },
+        components: {
+            CreateClient
+        }
     }
 </script>

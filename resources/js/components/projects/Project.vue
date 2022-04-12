@@ -14,7 +14,7 @@
                         </h1>    
                     </div>
                     <div v-if="!views.loading" class="col-12 col-lg-6 text-end">
-                        <button v-if="!project.production" @click="toProduction()" class="btn btn-primary">Пуск в производство</button>
+                        <button v-if="!project.production && project.status != 'draft'" @click="toProduction()" class="btn btn-primary">Пуск в производство</button>
                     </div>
                 </div>
             </div>

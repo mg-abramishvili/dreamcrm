@@ -68,6 +68,8 @@ class ClientController extends Controller
         }
 
         $client->save();
+
+        return $client;
     }
 
     public function update($id, Request $request)

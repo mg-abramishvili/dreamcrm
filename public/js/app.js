@@ -6668,7 +6668,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['innData'],
   data: function data() {
     return {
       name: '',
@@ -6687,6 +6690,11 @@ __webpack_require__.r(__webpack_exports__);
       bik: '',
       errors: []
     };
+  },
+  created: function created() {
+    if (this.innData) {
+      this.inn = this.innData;
+    }
   },
   methods: {
     saveClient: function saveClient() {
@@ -6718,7 +6726,16 @@ __webpack_require__.r(__webpack_exports__);
         bank: this.bank,
         bik: this.bik
       }).then(function (response) {
-        return _this.$router.push({
+        if (_this.innData && response) {
+          _this.$parent.client.id = response.data.id;
+          _this.$parent.client.name = response.data.name;
+
+          _this.$parent.goToRegistration('normal');
+
+          return;
+        }
+
+        _this.$router.push({
           name: 'Clients'
         });
       })["catch"](function (error) {
@@ -6748,6 +6765,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Loader_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Loader.vue */ "./resources/js/components/Loader.vue");
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -7438,6 +7461,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _clients_ClientCreate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../clients/ClientCreate */ "./resources/js/components/clients/ClientCreate.vue");
 //
 //
 //
@@ -7508,42 +7532,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       users: [],
       projects: [],
       client: {
-        inn: '',
-        name: ''
+        id: '',
+        name: '',
+        inn: ''
+      },
+      project: {
+        name: '',
+        status: ''
       },
       selected: {
         user: ''
       },
-      name: '',
-      status: '',
       views: {
-        checkPage: true,
-        registrationPage: false,
-        nextButton: false,
-        nextButtonDraft: false
+        loading: true,
+        step: 'check'
       }
     };
   },
@@ -7569,58 +7578,38 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
 
-      if (!this.client.name) {
-        return this.$swal({
-          text: 'Укажите название компании',
-          icon: 'error'
-        });
-      }
-
+      this.views.loading = true;
       axios.get("/api/projects/check", {
         params: {
-          inn: this.client.inn,
-          name: this.client.name
+          inn: this.client.inn
         }
       }).then(function (response) {
-        var projectsWithInn = response.data.inn;
-        var projectsWithName = response.data.name;
-        var projects = projectsWithInn.concat(projectsWithName);
-        projects = projects.filter(function (v, i, a) {
-          return a.findIndex(function (v2) {
-            return v2.id === v.id;
-          }) === i;
-        });
-        _this2.projects = projects;
+        _this2.projects = response.data;
 
         if (_this2.projects.length) {
-          _this2.views.nextButton = false;
-          _this2.views.nextButtonDraft = true;
+          _this2.views.loading = false;
         } else {
-          _this2.views.nextButton = true;
-          _this2.views.nextButtonDraft = false;
+          _this2.views.loading = false;
         }
       });
     },
-    goToRegistration: function goToRegistration() {
-      this.views.checkPage = false;
-      this.views.registrationPage = true;
-      this.status = 'active';
+    goToClientCreate: function goToClientCreate() {
+      this.views.step = 'clientCreate';
     },
-    goToRegistrationDraft: function goToRegistrationDraft() {
-      this.views.checkPage = false;
-      this.views.registrationPage = true;
-      this.status = 'draft';
+    goToRegistration: function goToRegistration(status) {
+      this.project.status = status;
+      this.views.step = 'registration';
     },
     save: function save() {
       var _this3 = this;
 
       axios.post("/api/projects", {
         calculation_id: this.$route.params.calculation_id,
-        name: this.name,
         user_id: this.selected.user,
+        name: this.project.name,
+        status: this.project.status,
         client_name: this.client.name,
-        client_inn: this.client.inn,
-        status: this.status
+        client_inn: this.client.inn
       }).then(function (response) {
         _this3.$router.push({
           name: 'Project',
@@ -7630,6 +7619,9 @@ __webpack_require__.r(__webpack_exports__);
         });
       });
     }
+  },
+  components: {
+    CreateClient: _clients_ClientCreate__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
 });
 
@@ -67833,10 +67825,18 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "client-page" }, [
-    _vm._m(0),
+    !_vm.innData
+      ? _c("div", { staticClass: "row align-items-center mb-4" }, [_vm._m(0)])
+      : _vm._e(),
     _vm._v(" "),
     _c("div", { staticClass: "card" }, [
       _c("div", { staticClass: "card-body" }, [
+        _vm.innData
+          ? _c("h4", { staticClass: "text-primary" }, [
+              _vm._v("Добавление клиента"),
+            ])
+          : _vm._e(),
+        _vm._v(" "),
         _vm.errors && _vm.errors.length > 0
           ? _c("div", { staticClass: "alert alert-danger" }, [
               _c(
@@ -67987,7 +67987,7 @@ var render = function () {
                   },
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text" },
+                attrs: { type: "text", disabled: _vm.innData },
                 domProps: { value: _vm.inn },
                 on: {
                   input: function ($event) {
@@ -68279,12 +68279,10 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row align-items-center mb-4" }, [
-      _c("div", { staticClass: "col-12 col-lg-6" }, [
-        _c("h1", { staticClass: "h3 m-0" }, [
-          _c("strong", [
-            _vm._v("\n                    Новый клиент\n                "),
-          ]),
+    return _c("div", { staticClass: "col-12 col-lg-6" }, [
+      _c("h1", { staticClass: "h3 m-0" }, [
+        _c("strong", [
+          _vm._v("\n                    Новый клиент\n                "),
         ]),
       ]),
     ])
@@ -68367,6 +68365,23 @@ var render = function () {
                               "\n                        "
                           ),
                         ]),
+                        _vm._v(" "),
+                        _c(
+                          "td",
+                          { staticClass: "align-middle" },
+                          [
+                            client.inn
+                              ? [
+                                  _vm._v(
+                                    "\n                                " +
+                                      _vm._s(client.inn) +
+                                      "\n                            "
+                                  ),
+                                ]
+                              : _vm._e(),
+                          ],
+                          2
+                        ),
                       ]
                     )
                   }),
@@ -68393,7 +68408,13 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", [_c("tr", [_c("th", [_vm._v("Имя")])])])
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Название")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("ИНН")]),
+      ]),
+    ])
   },
 ]
 render._withStripped = true
@@ -69716,168 +69737,17 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "projects-page" }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _vm.views.checkPage
-      ? _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-12 col-lg-6" }, [
-            _c("div", { staticClass: "card card-bordered" }, [
-              _c("div", { staticClass: "card-body" }, [
-                _c("div", { staticClass: "mb-3" }, [
-                  _c("label", { staticClass: "form-label" }, [
-                    _vm._v("ИНН клиента"),
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.client.inn,
-                        expression: "client.inn",
-                      },
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.client.inn },
-                    on: {
-                      input: function ($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.client, "inn", $event.target.value)
-                      },
-                    },
-                  }),
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "mb-3" }, [
-                  _c("label", { staticClass: "form-label" }, [
-                    _vm._v("Название компании"),
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.client.name,
-                        expression: "client.name",
-                      },
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.client.name },
-                    on: {
-                      input: function ($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.client, "name", $event.target.value)
-                      },
-                    },
-                  }),
-                ]),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-primary",
-                    on: {
-                      click: function ($event) {
-                        return _vm.checkClient()
-                      },
-                    },
-                  },
-                  [_vm._v("Проверить")]
-                ),
-              ]),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-12 col-lg-6" }, [
-            _c("div", { staticClass: "card card-bordered" }, [
-              _c("div", { staticClass: "card-body" }, [
-                _vm.projects.length
-                  ? _c(
-                      "ul",
-                      { staticClass: "list-group my-2" },
-                      _vm._l(_vm.projects, function (project) {
-                        return _c(
-                          "li",
-                          { key: project.id, staticClass: "list-group-item" },
-                          [
-                            _c("strong", [_vm._v(_vm._s(project.name))]),
-                            _vm._v(" "),
-                            _c("br"),
-                            _vm._v(
-                              "\n                            Клиент: " +
-                                _vm._s(project.client.name) +
-                                " (ИНН: " +
-                                _vm._s(project.client.inn) +
-                                ")\n                        "
-                            ),
-                          ]
-                        )
-                      }),
-                      0
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.views.nextButton
-                  ? _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary",
-                        on: {
-                          click: function ($event) {
-                            return _vm.goToRegistration()
-                          },
-                        },
-                      },
-                      [_vm._v("Продолжить регистрацию")]
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.views.nextButtonDraft
-                  ? _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary",
-                        on: {
-                          click: function ($event) {
-                            return _vm.goToRegistrationDraft()
-                          },
-                        },
-                      },
-                      [_vm._v("Продолжить регистрацию (черновик)")]
-                    )
-                  : _vm._e(),
-              ]),
-            ]),
-          ]),
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.views.registrationPage
-      ? _c("div", { staticClass: "card card-bordered" }, [
-          _c(
-            "div",
-            { staticClass: "card-body" },
-            [
-              _vm.status == "draft"
-                ? [
-                    _c("p", { staticClass: "text-danger mb-4" }, [
-                      _vm._v(
-                        "Проект будет зарегистрирован как черновик, т.к. проверка обнаружила схожие данные по заказчику в других проектах."
-                      ),
-                    ]),
-                  ]
-                : _vm._e(),
-              _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-12 col-lg-4" }, [
+  return _c(
+    "div",
+    { staticClass: "projects-page" },
+    [
+      _vm._m(0),
+      _vm._v(" "),
+      _vm.views.step == "check"
+        ? _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-12 col-lg-6" }, [
+              _c("div", { staticClass: "card card-bordered" }, [
+                _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "mb-3" }, [
                     _c("label", { staticClass: "form-label" }, [
                       _vm._v("ИНН клиента"),
@@ -69893,7 +69763,7 @@ var render = function () {
                         },
                       ],
                       staticClass: "form-control",
-                      attrs: { type: "text", disabled: "" },
+                      attrs: { type: "text" },
                       domProps: { value: _vm.client.inn },
                       on: {
                         input: function ($event) {
@@ -69905,134 +69775,166 @@ var render = function () {
                       },
                     }),
                   ]),
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-12 col-lg-4" }, [
-                  _c("div", { staticClass: "mb-3" }, [
-                    _c("label", { staticClass: "form-label" }, [
-                      _vm._v("Название компании"),
-                    ]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.client.name,
-                          expression: "client.name",
-                        },
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "text", disabled: "" },
-                      domProps: { value: _vm.client.name },
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
                       on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.client, "name", $event.target.value)
+                        click: function ($event) {
+                          return _vm.checkClient()
                         },
                       },
-                    }),
-                  ]),
+                    },
+                    [_vm._v("Проверить")]
+                  ),
                 ]),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-12 col-lg-6" }, [
+              _c("div", { staticClass: "card card-bordered" }, [
+                _c("div", { staticClass: "card-body" }, [
+                  _vm.projects.length && !_vm.views.loading
+                    ? _c("div", [
+                        _c(
+                          "ul",
+                          { staticClass: "list-group my-2" },
+                          _vm._l(_vm.projects, function (project) {
+                            return _c(
+                              "li",
+                              {
+                                key: project.id,
+                                staticClass: "list-group-item",
+                              },
+                              [
+                                _c("strong", [_vm._v(_vm._s(project.name))]),
+                                _vm._v(" "),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                Клиент: " +
+                                    _vm._s(project.client.name) +
+                                    " (ИНН: " +
+                                    _vm._s(project.client.inn) +
+                                    ")\n                            "
+                                ),
+                              ]
+                            )
+                          }),
+                          0
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            on: {
+                              click: function ($event) {
+                                return _vm.goToRegistration("draft")
+                              },
+                            },
+                          },
+                          [_vm._v("Продолжить регистрацию (черновик)")]
+                        ),
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  !_vm.projects.length && !_vm.views.loading
+                    ? _c("div", [
+                        _c("p", [_vm._v("ОК! Проектов с таким ИНН нет.")]),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            on: {
+                              click: function ($event) {
+                                return _vm.goToClientCreate()
+                              },
+                            },
+                          },
+                          [_vm._v("Продолжить регистрацию")]
+                        ),
+                      ])
+                    : _vm._e(),
+                ]),
+              ]),
+            ]),
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.views.step == "clientCreate"
+        ? _c("CreateClient", { attrs: { innData: _vm.client.inn } })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.views.step == "registration"
+        ? _c("div", { staticClass: "card card-bordered" }, [
+            _c(
+              "div",
+              { staticClass: "card-body" },
+              [
+                _vm.project.status == "draft"
+                  ? [
+                      _c("p", { staticClass: "text-danger mb-4" }, [
+                        _vm._v(
+                          "Проект будет зарегистрирован как черновик, т.к. проверка обнаружила схожие данные по заказчику в других проектах."
+                        ),
+                      ]),
+                    ]
+                  : _vm._e(),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-12 col-lg-4" }, [
-                  _c("div", { staticClass: "mb-3" }, [
-                    _c("label", { staticClass: "form-label" }, [
-                      _vm._v("Ответственный"),
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "select",
-                      {
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-12 col-lg-4" }, [
+                    _c("div", { staticClass: "mb-3" }, [
+                      _c("label", { staticClass: "form-label" }, [
+                        _vm._v("Название проекта"),
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
                         directives: [
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.selected.user,
-                            expression: "selected.user",
+                            value: _vm.project.name,
+                            expression: "project.name",
                           },
                         ],
-                        staticClass: "form-select",
-                        attrs: { disabled: "" },
+                        staticClass: "form-control",
+                        attrs: { type: "text" },
+                        domProps: { value: _vm.project.name },
                         on: {
-                          change: function ($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function (o) {
-                                return o.selected
-                              })
-                              .map(function (o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.$set(
-                              _vm.selected,
-                              "user",
-                              $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            )
+                          input: function ($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.project, "name", $event.target.value)
                           },
                         },
-                      },
-                      _vm._l(_vm.users, function (user) {
-                        return _c("option", { domProps: { value: user.id } }, [
-                          _vm._v(_vm._s(user.name)),
-                        ])
                       }),
-                      0
-                    ),
+                    ]),
                   ]),
                 ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "mb-3" }, [
-                _c("label", { staticClass: "form-label" }, [
-                  _vm._v("Название проекта"),
-                ]),
                 _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.name,
-                      expression: "name",
-                    },
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text" },
-                  domProps: { value: _vm.name },
-                  on: {
-                    input: function ($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.name = $event.target.value
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    on: {
+                      click: function ($event) {
+                        return _vm.save()
+                      },
                     },
                   },
-                }),
-              ]),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary",
-                  on: {
-                    click: function ($event) {
-                      return _vm.save()
-                    },
-                  },
-                },
-                [_vm._v("Сохранить проект")]
-              ),
-            ],
-            2
-          ),
-        ])
-      : _vm._e(),
-  ])
+                  [_vm._v("Сохранить проект")]
+                ),
+              ],
+              2
+            ),
+          ])
+        : _vm._e(),
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function () {
@@ -70102,8 +70004,17 @@ var render = function () {
                           _vm._v(
                             "\n                            " +
                               _vm._s(project.name) +
-                              "\n                        "
+                              " "
                           ),
+                          project.status == "draft"
+                            ? _c(
+                                "span",
+                                {
+                                  staticClass: "badge rounded-pill bg-warning",
+                                },
+                                [_vm._v("черновик")]
+                              )
+                            : _vm._e(),
                         ]),
                         _vm._v(" "),
                         _c("td", { staticClass: "align-middle" }),
@@ -70236,7 +70147,7 @@ var render = function () {
             _vm._v(" "),
             !_vm.views.loading
               ? _c("div", { staticClass: "col-12 col-lg-6 text-end" }, [
-                  !_vm.project.production
+                  !_vm.project.production && _vm.project.status != "draft"
                     ? _c(
                         "button",
                         {

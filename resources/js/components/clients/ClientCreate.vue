@@ -1,6 +1,6 @@
 <template>
     <div class="client-page">
-        <div class="row align-items-center mb-4">
+        <div v-if="!innData" class="row align-items-center mb-4">
             <div class="col-12 col-lg-6">
                 <h1 class="h3 m-0">
                     <strong>
@@ -12,6 +12,8 @@
 
         <div class="card">
             <div class="card-body">
+                <h4 v-if="innData" class="text-primary">Добавление клиента</h4>
+
                 <div v-if="errors && errors.length > 0" class="alert alert-danger">
                     <div class="alert-message">
                         <strong v-for="(error, index) in errors" :key="'error_' + index" class="d-block">
@@ -50,7 +52,7 @@
                     <div class="col-12 col-lg-4">
                         <div class="mb-3">
                             <label>ИНН</label>
-                            <input v-model="inn" type="text" class="form-control">
+                            <input v-model="inn" type="text" class="form-control" :disabled="innData">
                         </div>
                     </div>
                     <div class="col-12 col-lg-4">
@@ -123,6 +125,7 @@
 
 <script>
     export default {
+        props: ['innData'],
         data() {
             return {
                 name: '',
@@ -141,6 +144,11 @@
                 bik: '',
 
                 errors: [],
+            }
+        },
+        created() {
+            if(this.innData) {
+                this.inn = this.innData
             }
         },
         methods: {
@@ -172,9 +180,16 @@
                     bank: this.bank,
                     bik: this.bik,
                 })
-                .then(response => (
+                .then(response => {
+                    if(this.innData && response) {
+                        this.$parent.client.id = response.data.id
+                        this.$parent.client.name = response.data.name
+                        this.$parent.goToRegistration('normal')
+                        return
+                    }
+
                     this.$router.push({name: 'Clients'})
-                ))
+                })
                 .catch((error) => {
                     if(error.response) {
                         this.errors = []

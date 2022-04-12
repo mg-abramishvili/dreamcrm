@@ -18,13 +18,19 @@
                 <table class="table table-hover dataTable">
                     <thead>
                         <tr>
-                            <th>Имя</th>
+                            <th>Название</th>
+                            <th>ИНН</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="client in clients" :key="client.id" @click="goTo(client.id)">
                             <td class="align-middle">
                                 {{ client.name }}
+                            </td>
+                            <td class="align-middle">
+                                <template v-if="client.inn">
+                                    {{ client.inn }}
+                                </template>
                             </td>
                         </tr>
                     </tbody>

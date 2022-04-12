@@ -21,13 +21,7 @@ class ProjectController extends Controller
 
     public function check(Request $request)
     {
-        $inn = Project::with('client')->whereRelation('client', 'inn', $request->inn)->get();
-        $name = Project::with('client')->whereRelation('client', 'name', 'LIKE', "%{$request->name}%")->get();
-
-        return response()->json([
-            'inn' => $inn,
-            'name' => $name,
-        ]);
+        return Project::with('client')->whereRelation('client', 'inn', $request->inn)->get();
     }
 
     public function store(Request $request)

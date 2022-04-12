@@ -27,7 +27,7 @@
                         <tr v-for="project in projects" :key="project.id" @click="goTo(project.id)">
 
                             <td class="align-middle">
-                                {{ project.name }}
+                                {{ project.name }} <span v-if="project.status == 'draft'" class="badge rounded-pill bg-warning">черновик</span>
                             </td>
                             <td class="align-middle">
                                 
