@@ -11,7 +11,7 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        return Project::all();
+        return Project::with('user', 'calculations.boxes')->orderBy('created_at', 'desc')->get();
     }
 
     public function project($id)
@@ -28,6 +28,7 @@ class ProjectController extends Controller
     {
         $project = new Project();
         $project->user_id = $request->user_id;
+        $project->client_id = $request->client_id;
         $project->name = $request->name;
         $project->status = $request->status;
         $project->save();

@@ -7598,6 +7598,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     goToRegistration: function goToRegistration(status) {
       this.project.status = status;
+
+      if (status == 'draft') {
+        this.client.id = this.projects[0].client_id;
+      }
+
       this.views.step = 'registration';
     },
     save: function save() {
@@ -7608,8 +7613,7 @@ __webpack_require__.r(__webpack_exports__);
         user_id: this.selected.user,
         name: this.project.name,
         status: this.project.status,
-        client_name: this.client.name,
-        client_inn: this.client.inn
+        client_id: this.client.id
       }).then(function (response) {
         _this3.$router.push({
           name: 'Project',
@@ -7639,6 +7643,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Loader_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Loader.vue */ "./resources/js/components/Loader.vue");
+//
+//
 //
 //
 //
@@ -70017,9 +70023,34 @@ var render = function () {
                             : _vm._e(),
                         ]),
                         _vm._v(" "),
-                        _c("td", { staticClass: "align-middle" }),
+                        _c(
+                          "td",
+                          { staticClass: "align-middle" },
+                          [
+                            project.calculations.length &&
+                            project.calculations[0].boxes &&
+                            project.calculations[0].boxes[0]
+                              ? [
+                                  _vm._v(
+                                    "\n                                " +
+                                      _vm._s(
+                                        project.calculations[0].boxes[0].name
+                                      ) +
+                                      "\n                            "
+                                  ),
+                                ]
+                              : _vm._e(),
+                          ],
+                          2
+                        ),
                         _vm._v(" "),
-                        _c("td", { staticClass: "align-middle" }),
+                        _c("td", { staticClass: "align-middle" }, [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(project.user.name) +
+                              "\n                        "
+                          ),
+                        ]),
                       ]
                     )
                   }),

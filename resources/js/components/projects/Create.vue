@@ -139,6 +139,10 @@
             },
             goToRegistration(status) {
                 this.project.status = status
+
+                if(status == 'draft') {
+                    this.client.id = this.projects[0].client_id
+                }
                 
                 this.views.step = 'registration'
             },
@@ -148,8 +152,7 @@
                     user_id: this.selected.user,
                     name: this.project.name,
                     status: this.project.status,
-                    client_name: this.client.name,
-                    client_inn: this.client.inn,
+                    client_id: this.client.id,
                 })
                 .then(response => {
                     this.$router.push({name: 'Project', params: {id: response.data}})

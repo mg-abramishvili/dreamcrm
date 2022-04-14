@@ -30,10 +30,12 @@
                                 {{ project.name }} <span v-if="project.status == 'draft'" class="badge rounded-pill bg-warning">черновик</span>
                             </td>
                             <td class="align-middle">
-                                
+                                <template v-if="project.calculations.length && project.calculations[0].boxes && project.calculations[0].boxes[0]">
+                                    {{ project.calculations[0].boxes[0].name }}
+                                </template>
                             </td>
                             <td class="align-middle">
-                                
+                                {{ project.user.name }}
                             </td>
                         </tr>
                     </tbody>
