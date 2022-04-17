@@ -6,40 +6,21 @@
                     <div class="col-12 col-lg-6">
                         <h1 class="h3 m-0">Проекты</h1>
                     </div>
-                    <!-- <div class="col-12 col-lg-6 text-end">
-                        <router-link :to="{name: 'ProjectCreate'}" class="btn btn-primary">Создать</router-link>
-                    </div> -->
                 </div>
             </div>
         </div>
 
-        <div v-if="!views.loading" class="card card-bordered">
-            <div class="card-body p-0">
-                <table class="table table-hover dataTable">
-                    <thead>
-                        <tr>
-                            <th>Название</th>
-                            <th>Корпус</th>
-                            <th>Автор</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="project in projects" :key="project.id" @click="goTo(project.id)">
-
-                            <td class="align-middle">
-                                {{ project.name }} <span v-if="project.status == 'draft'" class="badge rounded-pill bg-warning">черновик</span>
-                            </td>
-                            <td class="align-middle">
-                                <template v-if="project.calculations.length && project.calculations[0].boxes && project.calculations[0].boxes[0]">
-                                    {{ project.calculations[0].boxes[0].name }}
-                                </template>
-                            </td>
-                            <td class="align-middle">
-                                {{ project.user.name }}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div v-if="!views.loading" class="card card-bordered h-100">
+            <div class="card-body p-0 h-100">
+                <ag-grid-vue v-if="projects.length"
+                    class="ag-theme-alpine projects-table"
+                    :defaultColDef="table.defaultColDef"
+                    :columnDefs="table.columns"
+                    @grid-ready="onGridReady"
+                    :rowData="projects"
+                    @row-clicked="goTo"
+                >
+                </ag-grid-vue>
             </div>
         </div>
         <Loader v-else></Loader>
@@ -49,10 +30,76 @@
 <script>
     import Loader from '../Loader.vue'
 
+    import { AgGridVue } from "ag-grid-vue";
+    import "ag-grid-community/dist/styles/ag-grid.css";
+    import "ag-grid-community/dist/styles/ag-theme-alpine.css";
+
     export default {
         data() {
             return {
                 projects: [],
+
+                table: {
+                    columns: [
+                        {
+                            field: "date",
+                            valueGetter: (params) => {
+                                return params.data.created_at
+                            },
+                            valueFormatter: this.dateFormatter,
+                            headerName: 'Дата создания',
+                            sortable: true,
+                            filter: false,
+                            suppressMenu: true,
+                            width: 100,
+                        },
+                        {
+                            field: "name",
+                            headerName: 'Название',
+                            sortable: true,
+                            filter: true,
+                            suppressMenu: true,
+                        },
+                        {
+                            field: "box",
+                            valueGetter: (params) => {
+                                if(params.data.calculations.length && params.data.calculations[0].boxes && params.data.calculations[0].boxes[0]) {
+                                    return params.data.calculations[0].boxes[0].name
+                                }
+                            },
+                            headerName: 'Корпус',
+                            sortable: true,
+                            filter: true,
+                            suppressMenu: true,
+                        },
+                        {
+                            field: "client",
+                            valueGetter: (params) => {
+                                if(params.data.client) {
+                                    return params.data.client.name
+                                }
+                            },
+                            headerName: 'Клиент',
+                            sortable: true,
+                            filter: true,
+                            suppressMenu: true,
+                        },
+                        {
+                            field: "author",
+                            valueGetter: (params) => {
+                                return params.data.user.name
+                            },
+                            headerName: 'Автор',
+                            sortable: true,
+                            filter: true,
+                            suppressMenu: true,
+                        },
+                    ],
+                    defaultColDef: {
+                        floatingFilter: true,
+                        suppressMovable: true,
+                    },
+            },
 
                 views: {
                     loading: true
@@ -62,18 +109,28 @@
         created() {
             axios
                 .get('/api/projects')
-                .then(response => (
-                    this.projects = response.data,
+                .then(response => {
+                    this.projects = response.data
                     this.views.loading = false
-                ));
+                })
         },
         methods: {
-            goTo(id) {
-                this.$router.push({ name: 'Project', params: { id: id } });
-            }
+            onGridReady(params) {
+                this.gridApi = params.api
+                this.gridColumnApi = params.gridColumnApi
+                
+                this.gridApi.sizeColumnsToFit()
+            },
+            goTo(event) {
+                this.$router.push({ name: 'Project', params: { id: event.data.id } })
+            },
+            dateFormatter(params) {
+                return this.$options.filters.date(params.value);
+            },
         },
         components: {
-            Loader
+            Loader,
+            AgGridVue
         }
     }
 </script>
