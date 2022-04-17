@@ -23,7 +23,7 @@
             </div>
         </div>
 
-        <div v-if="views.step == 'client' && client.id">
+        <div v-if="views.step == 'client' && client.id && !views.loading">
             <div class="card card-bordered">
                 <div class="card-body">
                     <p class="fw-bold text-danger">Найден клиент с указанным ИНН</p>
@@ -34,9 +34,9 @@
                         </li>
                     </ul>
 
-                    <p class="fw-bold text-danger">Проекты с этим клиентом:</p>
-
                     <div v-if="projects && projects.length">
+                        <p class="fw-bold text-danger mt-2">Проекты с этим клиентом:</p>
+                        
                         <ul class="list-group my-2">
                             <li v-for="project in projects" :key="project.id" class="list-group-item">
                                 <strong>{{ project.name }}</strong>
@@ -49,9 +49,9 @@
             </div>
         </div>
 
-        <CreateClient v-if="views.step == 'client' && !client.id" :innData="client.inn" />
+        <CreateClient v-if="views.step == 'client' && !client.id && !views.loading" :innData="client.inn" />
 
-        <div v-if="views.step == 'registration'" class="card card-bordered">
+        <div v-if="views.step == 'registration' && !views.loading" class="card card-bordered">
             <div class="card-body">
                 <template v-if="project.status == 'draft'">
                     <p class="text-danger mb-4">Проект будет зарегистрирован как черновик, т.к. проверка обнаружила схожие данные по заказчику в других проектах.</p>
@@ -146,6 +146,8 @@
                     } else {
                         this.project.status = 'normal'
                     }
+
+                    this.views.loading = false
                 })
             },
             save() {
