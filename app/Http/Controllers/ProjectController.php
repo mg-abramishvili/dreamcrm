@@ -19,11 +19,6 @@ class ProjectController extends Controller
         return Project::with('user', 'client', 'calculations.boxes', 'offers', 'production')->find($id);
     }
 
-    public function check(Request $request)
-    {
-        return Project::with('client')->whereRelation('client', 'inn', $request->inn)->get();
-    }
-
     public function store(Request $request)
     {
         $project = new Project();

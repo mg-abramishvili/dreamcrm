@@ -47,7 +47,7 @@
                                 return params.data.created_at
                             },
                             valueFormatter: this.dateFormatter,
-                            headerName: 'Дата создания',
+                            headerName: 'Дата',
                             sortable: true,
                             filter: false,
                             suppressMenu: true,
@@ -96,6 +96,7 @@
                         },
                     ],
                     defaultColDef: {
+                        sortingOrder: ['asc', 'desc'],
                         floatingFilter: true,
                         suppressMovable: true,
                     },

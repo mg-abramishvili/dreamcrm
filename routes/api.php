@@ -107,7 +107,6 @@ Route::get('offer/{id}/pdf', [OfferController::class, 'pdf']);
 
 
 Route::get('projects', [ProjectController::class, 'index']);
-Route::get('projects/check', [ProjectController::class, 'check']);
 Route::post('projects', [ProjectController::class, 'store']);
 Route::get('project/{id}', [ProjectController::class, 'project']);
 
@@ -131,7 +130,7 @@ Route::put('user/{uid}/update', [UserController::class, 'update'])->middleware('
 
 
 
-Route::get('clients', [ClientController::class, 'index'])->middleware('auth:sanctum');
+Route::get('clients/{inn?}', [ClientController::class, 'index'])->middleware('auth:sanctum');
 Route::get('client/{id}', [ClientController::class, 'client'])->middleware('auth:sanctum');
 Route::post('clients', [ClientController::class, 'store'])->middleware('auth:sanctum');
 Route::put('client/{id}/update', [ClientController::class, 'update'])->middleware('auth:sanctum');

@@ -184,7 +184,7 @@
                     if(this.innData && response) {
                         this.$parent.client.id = response.data.id
                         this.$parent.client.name = response.data.name
-                        this.$parent.goToRegistration('normal')
+                        this.$parent.goToStep('registration')
                         return
                     }
 

@@ -10,42 +10,38 @@
             </div>
         </div>
 
-        <div v-if="views.step == 'check'" class="row">
-            <div class="col-12 col-lg-6">
-                <div class="card card-bordered">
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <label class="form-label">ИНН клиента</label>
-                            <input v-model="client.inn" type="text" class="form-control">
-                        </div>
-                        
-                        <button @click="checkClient()" class="btn btn-primary">Проверить</button>
+        <div v-if="views.step == 'inn'">
+            <div class="card card-bordered">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">ИНН клиента</label>
+                        <input v-model="client.inn" type="text" class="form-control">
                     </div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-6">
-                <div class="card card-bordered">
-                    <div class="card-body">
-                        <div v-if="projects.length && !views.loading">
-                            <ul class="list-group my-2">
-                                <li v-for="project in projects" :key="project.id" class="list-group-item">
-                                    <strong>{{ project.name }}</strong>
-                                    <br>
-                                    Клиент: {{ project.client.name }} (ИНН: {{ project.client.inn }})
-                                </li>
-                            </ul>
-                            <button @click="goToRegistration('draft')" class="btn btn-primary">Продолжить регистрацию (черновик)</button>
-                        </div>
-                        <div v-if="!projects.length && !views.loading">
-                            <p>ОК! Проектов с таким ИНН нет.</p>
-                            <button @click="goToClientCreate()" class="btn btn-primary">Продолжить регистрацию</button>
-                        </div>
-                    </div>
+                    
+                    <button @click="goToStep('client')" class="btn btn-primary">Проверить</button>
                 </div>
             </div>
         </div>
 
-        <CreateClient v-if="views.step == 'clientCreate'" :innData="client.inn" />
+        <div v-if="views.step == 'client' && client.id">
+            <div class="card card-bordered">
+                <div class="card-body">
+                    <p>Найден клиент с указанным ИНН</p>
+
+                    <div v-if="projects && projects.length">
+                        <ul class="list-group my-2">
+                            <li v-for="project in projects" :key="project.id" class="list-group-item">
+                                <strong>{{ project.name }}</strong>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <button @click="goToStep('registration')" class="btn btn-primary">Продолжить регистрацию (черновик)</button>
+                </div>
+            </div>
+        </div>
+
+        <CreateClient v-if="views.step == 'client' && !client.id" :innData="client.inn" />
 
         <div v-if="views.step == 'registration'" class="card card-bordered">
             <div class="card-body">
@@ -95,7 +91,7 @@
                 views: {
                     loading: true,
 
-                    step: 'check',
+                    step: 'inn',
                 }
             }
         },
@@ -111,40 +107,38 @@
                     this.selected.user = this.$parent.user.id
                 })
             },
-            checkClient() {
-                if(!this.client.inn) {
-                    return this.$swal({
-                        text: 'Укажите ИНН',
-                        icon: 'error',
-                    })
+            goToStep(step) {
+                if(step == 'client') {
+                    if(!this.client.inn) {
+                        return this.$swal({
+                            text: 'Укажите ИНН',
+                            icon: 'error',
+                        })
+                    }
+
+                    this.checkClientInn()
                 }
 
-                this.views.loading = true
-
-                axios.get(`/api/projects/check`, { params: {
-                    inn: this.client.inn
-                }})
+                this.views.step = step
+            },
+            checkClientInn() {
+                axios.get(`/api/clients/${this.client.inn}`)
                 .then(response => {
-                    this.projects = response.data
+                    if(response.data) {
+                        this.client.id = response.data.id
+                        this.client.name = response.data.name
+                    }
 
-                    if(this.projects.length) {
-                        this.views.loading = false
+                    if(response.data.projects) {
+                        this.projects = response.data.projects
+                    }
+
+                    if(response.data.id) {
+                        this.project.status = 'draft'
                     } else {
-                        this.views.loading = false
+                        this.project.status = 'normal'
                     }
                 })
-            },
-            goToClientCreate() {
-                this.views.step = 'clientCreate'
-            },
-            goToRegistration(status) {
-                this.project.status = status
-
-                if(status == 'draft') {
-                    this.client.id = this.projects[0].client_id
-                }
-                
-                this.views.step = 'registration'
             },
             save() {
                 axios.post(`/api/projects`, {

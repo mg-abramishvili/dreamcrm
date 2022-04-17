@@ -7,9 +7,13 @@ use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
-    public function index()
+    public function index($inn = null)
     {
-        return Client::all();
+        if(!$inn) {
+            return Client::all();
+        }
+
+        return Client::where('inn', $inn)->with('projects')->first();
     }
 
     public function client($id)
