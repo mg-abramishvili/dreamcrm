@@ -27,6 +27,16 @@
             <div class="card card-bordered">
                 <div class="card-body">
                     <p>Найден клиент с указанным ИНН</p>
+                    
+                    <ul class="list-group my-2">
+                        <li class="list-group-item">
+                            <strong>{{ client.name }} ({{ client.inn }})</strong>
+                        </li>
+                    </ul>
+
+                    <hr>
+
+                    <p>Проекты с этим клиентом:</p>
 
                     <div v-if="projects && projects.length">
                         <ul class="list-group my-2">
