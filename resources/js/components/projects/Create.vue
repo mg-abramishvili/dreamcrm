@@ -26,7 +26,7 @@
         <div v-if="views.step == 'client' && client.id">
             <div class="card card-bordered">
                 <div class="card-body">
-                    <p>Найден клиент с указанным ИНН</p>
+                    <p class="fw-bold text-danger">Найден клиент с указанным ИНН</p>
                     
                     <ul class="list-group my-2">
                         <li class="list-group-item">
@@ -34,9 +34,7 @@
                         </li>
                     </ul>
 
-                    <hr>
-
-                    <p>Проекты с этим клиентом:</p>
+                    <p class="fw-bold text-danger">Проекты с этим клиентом:</p>
 
                     <div v-if="projects && projects.length">
                         <ul class="list-group my-2">
