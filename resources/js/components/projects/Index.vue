@@ -76,7 +76,7 @@
                             field: "client",
                             valueGetter: (params) => {
                                 if(params.data.client) {
-                                    return params.data.client.name
+                                    return params.data.client.name + ' (' + params.data.client.inn + ')'
                                 }
                             },
                             headerName: 'Клиент',
