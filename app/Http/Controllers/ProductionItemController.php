@@ -3,83 +3,34 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductionItem;
+use App\Models\Reserve;
+use App\Models\StockBalance;
+use App\Models\StockNeed;
 use Illuminate\Http\Request;
 
 class ProductionItemController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function delete($id)
     {
-        //
-    }
+        $productionItem = ProductionItem::find($id);
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+        $reserve = Reserve::where('production_item_id', $productionItem->id)->first();
+        $stockNeed = StockNeed::where('production_item_id', $productionItem->id)->first();
+        
+        $stockBalance = StockBalance::find($reserve->stock_balance_id);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $quantity = $stockBalance->quantity;
+        if($reserve) { $quantity = $quantity + $reserve->quantity; }
+        if($stockNeed) { $quantity = $quantity + $stockNeed->quantity; }
+        $stockBalance->quantity = $quantity;
+        $stockBalance->save();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\ProductionItem  $productionItem
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ProductionItem $productionItem)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\ProductionItem  $productionItem
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ProductionItem $productionItem)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ProductionItem  $productionItem
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, ProductionItem $productionItem)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\ProductionItem  $productionItem
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(ProductionItem $productionItem)
-    {
-        //
+        if($reserve) {
+            $reserve->delete();
+        }
+        if($stockNeed) {
+            $stockNeed->delete();
+        }
+        $productionItem->delete();
     }
 }

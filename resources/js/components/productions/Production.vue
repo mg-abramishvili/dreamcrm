@@ -150,6 +150,7 @@
                                                     не хватает {{ need.quantity }} шт
                                                 </li>
                                             </ul>
+                                            <button @click="delItem(item.id)">удалить</button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -180,17 +181,26 @@
             }
         },
         created() {
-            axios
+            this.loadProduction()
+        },
+        methods: {
+            loadProduction() {
+                axios
                 .get(`/api/production/${this.$route.params.id}`)
                 .then(response => {
                     this.production = response.data
 
                     this.views.loading = false
                 })
-        },
-        methods: {
+            },
             selectTab(tab) {
                 this.selected.tab = tab
+            },
+            delItem(id) {
+                axios.delete(`/api/production-item/${id}`)
+                .then(response => {
+                    this.loadProduction()
+                })
             },
         },
         components: {
