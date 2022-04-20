@@ -100,7 +100,7 @@
                         floatingFilter: true,
                         suppressMovable: true,
                     },
-            },
+                },
 
                 views: {
                     loading: true

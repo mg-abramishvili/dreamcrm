@@ -9,6 +9,7 @@
                     <div class="col-12 col-lg-6 text-center">
                         <router-link :to="{name: 'Reserves'}" class="btn btn-outline-primary mx-1">Зарезервировано</router-link>
                         <router-link :to="{name: 'StockNeeds'}" class="btn btn-outline-primary mx-1">Закупки</router-link>
+                        <router-link :to="{name: 'StockLatest'}" class="btn btn-outline-primary mx-1">Последние поступления</router-link>
                     </div>
                     <div class="col-12 col-lg-3 text-end">
                         <!-- <router-link :to="{name: 'StockSearch'}" class="catalog-page-search-icon stock-page-search-icon">

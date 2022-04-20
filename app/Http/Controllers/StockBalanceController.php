@@ -11,6 +11,10 @@ use Illuminate\Http\Request;
 
 class StockBalanceController extends Controller
 {
+    public function index() {
+        return StockBalance::with('stockItem')->orderBy('date', 'desc')->get();
+    }
+
     public function store($id, Request $request)
     {
         $balance = new StockBalance();

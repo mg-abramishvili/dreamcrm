@@ -38,6 +38,7 @@ import StockCategoryEdit from './components/stock/CategoryEdit.vue';
 import StockItem from './components/stock/Item.vue';
 import StockItemCreate from './components/stock/ItemCreate.vue';
 import StockNeeds from './components/stock/Needs.vue';
+import StockLatest from './components/stock/Latest.vue';
 
 import Reserves from './components/reserves/Index.vue';
 
@@ -213,6 +214,11 @@ export const routes = [
         path: '/stock/needs',
         name: 'StockNeeds',
         component: StockNeeds
+    },
+    {
+        path: '/stock/latest',
+        name: 'StockLatest',
+        component: StockLatest
     },
     {
         path: '/reserves',
