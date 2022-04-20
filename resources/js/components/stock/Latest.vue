@@ -55,7 +55,7 @@
                             },
                             valueFormatter: this.dateFormatter,
                             headerName: 'Дата',
-                            width: 100,
+                            width: 70,
                         },
                         {
                             field: "stock_item_name",
