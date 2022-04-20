@@ -67,25 +67,30 @@
                         {
                             field: "quantity",
                             headerName: 'Количество',
+                            width: 100,
                         },
                         {
                             field: "pre_rub",
                             headerName: 'Рубли',
                             valueFormatter: this.currencyFormatter,
+                            width: 100,
                         },
                         {
                             field: "pre_usd",
                             headerName: 'Доллары',
                             valueFormatter: this.currencyFormatter,
+                            width: 100,
                         },
                         {
                             field: "usd_kurs",
                             headerName: 'Курс',
+                            width: 100,
                         },
                         {
                             field: "price",
                             headerName: 'Итог',
                             valueFormatter: this.currencyFormatter,
+                            width: 100,
                         },
                     ],
                     defaultColDef: {
