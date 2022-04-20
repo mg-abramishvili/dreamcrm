@@ -16,21 +16,20 @@ class ProductionItemController extends Controller
 
         $reserve = Reserve::where('production_item_id', $productionItem->id)->first();
         $stockNeed = StockNeed::where('production_item_id', $productionItem->id)->first();
-        
+
         $stockBalance = StockBalance::find($reserve->stock_balance_id);
 
-        $quantity = $stockBalance->quantity;
-        if($reserve) { $quantity = $quantity + $reserve->quantity; }
-        if($stockNeed) { $quantity = $quantity + $stockNeed->quantity; }
-        $stockBalance->quantity = $quantity;
-        $stockBalance->save();
-
         if($reserve) {
+            $stockBalance->quantity = $stockBalance->quantity + $reserve->quantity;
+            $stockBalance->save();
+
             $reserve->delete();
         }
+        
         if($stockNeed) {
             $stockNeed->delete();
         }
+
         $productionItem->delete();
     }
 }
