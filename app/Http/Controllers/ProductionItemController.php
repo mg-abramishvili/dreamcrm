@@ -13,6 +13,7 @@ class ProductionItemController extends Controller
     public function delete($id)
     {
         $reserve = Reserve::where('production_item_id', $id)->first();
+        return $reserve;
         $stockNeed = StockNeed::where('production_item_id', $id)->first();
 
         $stockBalance = StockBalance::find($reserve->stock_balance_id);
