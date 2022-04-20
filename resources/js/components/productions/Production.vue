@@ -150,7 +150,7 @@
                                                     не хватает {{ need.quantity }} шт
                                                 </li>
                                             </ul>
-                                            <button @click="delItem(item.id)">удалить</button>
+                                            <!-- <button @click="delItem(item.id)">удалить</button> -->
                                         </td>
                                     </tr>
                                 </tbody>
