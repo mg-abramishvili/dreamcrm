@@ -58,6 +58,13 @@
                             width: 100,
                         },
                         {
+                            field: "stock_item_name",
+                            valueGetter: (params) => {
+                                return params.data.stock_item.name
+                            },
+                            headerName: 'Позиция',
+                        },
+                        {
                             field: "quantity",
                             headerName: 'Количество',
                         },
