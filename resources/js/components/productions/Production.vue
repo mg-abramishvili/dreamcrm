@@ -199,8 +199,7 @@
             delItem(id) {
                 axios.delete(`/api/production-item/${id}`)
                 .then(response => {
-                    // this.loadProduction()
-                    console.log(response.data)
+                    this.loadProduction()
                 })
             },
         },
