@@ -9,12 +9,23 @@ class CalculationController extends Controller
 {
     public function index()
     {
-        return Calculation::with('user', 'boxes', 'project')->orderBy('created_at', 'desc')->get();
+        return Calculation::with('user', 'boxes', 'project')
+            ->orderBy('created_at', 'desc')
+            ->get();
     }
 
     public function calculation($id)
     {
-        return Calculation::with('type', 'boxes.stockItems', 'catalogItems.category', 'catalogItems.stockItems', 'delivery', 'user', 'project')->find($id);
+        return Calculation::with([
+                'type',
+                'boxes.stockItems',
+                'catalogItems.category',
+                'catalogItems.stockItems',
+                'delivery',
+                'user',
+                'project'
+            ])
+            ->find($id);
     }
 
     public function store(Request $request)

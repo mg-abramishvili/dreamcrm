@@ -29,7 +29,6 @@ class DollarController extends Controller
 
         if($kurs && $kurs > 0) {
             $dollar = Dollar::find(1);
-            // $dollar->kurs = $kurs;
             $dollar->kurs = round(str_replace(',','.',$kurs + ($kurs / 100 * 10)), 2);
             $dollar->date = $date;
             $dollar->save();

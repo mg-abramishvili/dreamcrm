@@ -7,11 +7,13 @@ use Illuminate\Http\Request;
 
 class StockItemController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         return StockItem::with('balances')->orderBy('name', 'asc')->get();
     }
 
-    public function stockNeeds() {
+    public function stockNeeds()
+    {
         return StockItem::where('needs_quantity', '>', 0)->get();
     }
 

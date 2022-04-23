@@ -55,12 +55,4 @@ class OfferController extends Controller
         $offer->pdf = '/uploads/offers/kp_' . $offer->id . '.pdf';
         $offer->save();
     }
-
-    // public function offerPDF($id)
-    // {
-    //     $offer = Offer::with('calculations.catalogItems')->find($id);
-
-    //     $pdf = PDF::loadView('offers.pdf', compact('offer'));
-    //     return $pdf->download('offer.pdf');
-    // }
 }

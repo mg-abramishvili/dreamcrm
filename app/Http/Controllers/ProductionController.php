@@ -17,12 +17,21 @@ class ProductionController extends Controller
 {
     public function index()
     {
-        return Production::with('project')->orderBy('id', 'desc')->get();
+        return Production::with('project')
+            ->orderBy('id', 'desc')
+            ->get();
     }
 
     public function production($id)
     {
-        return Production::with('project', 'user', 'items.stockItem', 'items.reserves.stockBalance', 'items.stockNeeds')->find($id);
+        return Production::with([
+                'project',
+                'user',
+                'items.stockItem',
+                'items.reserves.stockBalance',
+                'items.stockNeeds'
+            ])
+            ->find($id);
     }
 
     public function store(Request $request)
