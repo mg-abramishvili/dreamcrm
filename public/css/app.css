@@ -502,6 +502,18 @@ table.dataTable {
 }
 /* PRODUCTION */
 
+/* CATALOG */
+.catalog-page {
+    height: calc(100% - 40px);
+}
+.catalog-page .card.h-100 {
+    height: calc(100% - 80px) !important;
+}
+.catalog-table {
+    height: 100%;
+}
+/* CATALOG */
+
 /* AG */
 .ag-theme-alpine .ag-header {
     background-color: #fff !important;

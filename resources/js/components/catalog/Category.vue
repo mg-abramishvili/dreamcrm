@@ -23,50 +23,64 @@
             </div>
         </div>
 
-        <div v-if="category.items && category.items.length" class="card">
-            <table class="table table-hover dataTable">
-                <thead>
-                    <tr>
-                        <th>
-                            <span class="d-inline-block align-middle">Наименование</span>
-                            
-                            <button @click="orderBy('name', 'asc')" class="btn btn-order-arrow">&uarr;</button>
-                            <button @click="orderBy('name', 'desc')" class="btn btn-order-arrow">&darr;</button>
-                        </th>
-                        <th>
-                            <span class="d-inline-block align-middle">Цена</span>
+        <Loader v-if="views.loading"></Loader>
 
-                            <button @click="orderBy('price', 'asc')" class="btn btn-order-arrow">&uarr;</button>
-                            <button @click="orderBy('price', 'desc')" class="btn btn-order-arrow">&darr;</button>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr @click="goTo(item.id)" v-for="item in category.items" :key="'item_' + item.id">
-                        <td class="align-middle">
-                            <a>{{ item.name }}</a>
-                        </td>
-                        <td class="align-middle">
-                            <template v-if="item.price > 0">
-                                {{ item.price | currency }} ₽
-                            </template>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div v-if="!views.loading" class="card card-bordered h-100">
+            <div class="card-body p-0 h-100">
+                <ag-grid-vue v-if="category.items.length"
+                    class="ag-theme-alpine catalog-table"
+                    :defaultColDef="table.defaultColDef"
+                    :columnDefs="table.columns"
+                    @grid-ready="onGridReady"
+                    :rowData="category.items"
+                    @row-clicked="goTo"
+                >
+                </ag-grid-vue>
+            </div>
         </div>
-
-        <Loader v-else></Loader>
     </div>
 </template>
 
 <script>
     import Loader from '../Loader.vue'
 
+    import { AgGridVue } from "ag-grid-vue";
+    import "ag-grid-community/dist/styles/ag-grid.css";
+    import "ag-grid-community/dist/styles/ag-theme-alpine.css";
+
     export default {
         data() {
             return {
                 category: {},
+
+                table: {
+                    columns: [
+                        {
+                            field: "name",
+                            headerName: 'Название',
+                            sortable: true,
+                            filter: true,
+                        },
+                        {
+                            field: "price",
+                            valueFormatter: this.currencyFormatter,
+                            headerName: 'Цена',
+                            sortable: true,
+                            filter: false,
+                            width: 50,
+                        },
+                    ],
+                    defaultColDef: {
+                        sortingOrder: ['asc', 'desc'],
+                        floatingFilter: true,
+                        suppressMovable: true,
+                        suppressMenu: false,
+                    },
+                },
+
+                views: {
+                    loading: true
+                }
             }
         },
         created() {
@@ -78,56 +92,25 @@
                 .get(`/api/catalog/category/${this.$route.params.id}`)
                 .then(response => (
                     this.category = response.data,
-                    this.orderByNameAsc()
+                    this.views.loading = false
                 ));
             },
-            goTo(id) {
-                this.$router.push({name: 'CatalogItemEdit', params: {id: id}})
+            onGridReady(params) {
+                this.gridApi = params.api
+                this.gridColumnApi = params.gridColumnApi
+                
+                this.gridApi.sizeColumnsToFit()
             },
-            orderBy(field, direction) {
-                if(field == 'name') {
-                    if(direction == 'asc') {
-                        return this.orderByNameAsc()
-                    }
-                    if(direction == 'desc') {
-                        return this.orderByNameDesc()
-                    }
-                }
-
-                if(field == 'price') {
-                    if(direction == 'asc') {
-                        return this.orderByPriceAsc()
-                    }
-                    if(direction == 'desc') {
-                        return this.orderByPriceDesc()
-                    }
-                }
+            goTo(event) {
+                this.$router.push({name: 'CatalogItemEdit', params: {id: event.data.id}})
             },
-            orderByNameAsc() {
-                this.category.items.sort(function(a, b) {
-                    return a.name.localeCompare(b.name, undefined, {
-                        numeric: true,
-                        sensitivity: 'base'
-                    })
-                })
-            },
-            orderByNameDesc() {
-                this.category.items.sort(function(a, b) {
-                    return b.name.localeCompare(a.name, undefined, {
-                        numeric: true,
-                        sensitivity: 'base'
-                    })
-                })
-            },
-            orderByPriceAsc() {
-                this.category.items.sort((a, b) => a.price - b.price)
-            },
-            orderByPriceDesc() {
-                this.category.items.sort((a, b) => b.price - a.price)
+            currencyFormatter(params) {
+                return this.$options.filters.currency(params.value) + ' ₽';
             },
         },
         components: {
-            Loader
+            Loader,
+            AgGridVue
         },
     }
 </script>
