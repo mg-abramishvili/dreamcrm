@@ -13,41 +13,80 @@
             </div>
         </div>
 
-        <div v-if="clients && clients.length" class="card card-bordered">
-            <div class="card-body p-0">
-                <table class="table table-hover dataTable">
-                    <thead>
-                        <tr>
-                            <th>Название</th>
-                            <th>ИНН</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="client in clients" :key="client.id" @click="goTo(client.id)">
-                            <td class="align-middle">
-                                {{ client.name }}
-                            </td>
-                            <td class="align-middle">
-                                <template v-if="client.inn">
-                                    {{ client.inn }}
-                                </template>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+        <Loader v-if="views.loading"></Loader>
+
+        <div v-if="!views.loading" class="card card-bordered h-100">
+            <div class="card-body p-0 h-100">
+                <ag-grid-vue v-if="clients.length"
+                    class="ag-theme-alpine clients-table"
+                    :defaultColDef="table.defaultColDef"
+                    :columnDefs="table.columns"
+                    @grid-ready="onGridReady"
+                    :rowData="clients"
+                    @row-clicked="goTo"
+                >
+                </ag-grid-vue>
             </div>
         </div>
-        <Loader v-else></Loader>
     </div>
 </template>
 
 <script>
     import Loader from '../Loader.vue'
 
+    import { AgGridVue } from "ag-grid-vue";
+    import "ag-grid-community/dist/styles/ag-grid.css";
+    import "ag-grid-community/dist/styles/ag-theme-alpine.css";
+
     export default {
         data() {
             return {
                 clients: [],
+
+                table: {
+                    columns: [
+                        {
+                            field: "name",
+                            headerName: 'Название',
+                            sortable: true,
+                            filter: true,
+                        },
+                        {
+                            field: "inn",
+                            headerName: 'ИНН',
+                            sortable: true,
+                            filter: true,
+                        },
+                        {
+                            field: "kont_litso",
+                            headerName: 'Контактное лицо',
+                            sortable: true,
+                            filter: true,
+                        },
+                        {
+                            field: "tel",
+                            headerName: 'Телефон',
+                            sortable: true,
+                            filter: true,
+                        },
+                        {
+                            field: "email",
+                            headerName: 'E-mail',
+                            sortable: true,
+                            filter: true,
+                        },
+                    ],
+                    defaultColDef: {
+                        sortingOrder: ['asc', 'desc'],
+                        floatingFilter: true,
+                        suppressMovable: true,
+                        suppressMenu: false,
+                    },
+                },
+
+                views: {
+                    loading: true
+                }
             }
         },
         created() {
@@ -58,20 +97,23 @@
                 axios
                 .get('/api/clients')
                 .then(response => (
-                    this.clients = response.data
+                    this.clients = response.data,
+                    this.views.loading = false
                 ))
             },
-            goTo(id) {
-                this.$router.push({ name: 'Client', params: { id: id } });
-            }
+            onGridReady(params) {
+                this.gridApi = params.api
+                this.gridColumnApi = params.gridColumnApi
+                
+                this.gridApi.sizeColumnsToFit()
+            },
+            goTo(event) {
+                this.$router.push({name: 'Client', params: {id: event.data.id}})
+            },
         },
         components: {
-            Loader
+            Loader,
+            AgGridVue
         },
     }
 </script>
-<style scoped>
-    .table tr:hover {
-        cursor: pointer;
-    }
-</style>

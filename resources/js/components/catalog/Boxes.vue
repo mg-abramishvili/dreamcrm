@@ -20,38 +20,64 @@
             </div>
         </div>
 
-        <div v-if="boxes.length" class="card">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Наименование</th>
-                        <th>Цена</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr @click="goTo(box.id)" v-for="box in boxes" :key="'box_' + box.id">
-                        <td class="align-middle">
-                            <a>{{ box.name }}</a>
-                        </td>
-                        <td class="align-middle">
-                            {{ box.price | currency }} ₽
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <Loader v-if="views.loading"></Loader>
 
-        <Loader v-else></Loader>
+        <div v-if="!views.loading" class="card card-bordered h-100">
+            <div class="card-body p-0 h-100">
+                <ag-grid-vue v-if="boxes.length"
+                    class="ag-theme-alpine catalog-table"
+                    :defaultColDef="table.defaultColDef"
+                    :columnDefs="table.columns"
+                    @grid-ready="onGridReady"
+                    :rowData="boxes"
+                    @row-clicked="goTo"
+                >
+                </ag-grid-vue>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
     import Loader from '../Loader.vue'
 
+    import { AgGridVue } from "ag-grid-vue";
+    import "ag-grid-community/dist/styles/ag-grid.css";
+    import "ag-grid-community/dist/styles/ag-theme-alpine.css";
+
     export default {
         data() {
             return {
                 boxes: [],
+
+                table: {
+                    columns: [
+                        {
+                            field: "name",
+                            headerName: 'Название',
+                            sortable: true,
+                            filter: true,
+                        },
+                        {
+                            field: "price",
+                            valueFormatter: this.currencyFormatter,
+                            headerName: 'Цена',
+                            sortable: true,
+                            filter: false,
+                            width: 50,
+                        },
+                    ],
+                    defaultColDef: {
+                        sortingOrder: ['asc', 'desc'],
+                        floatingFilter: true,
+                        suppressMovable: true,
+                        suppressMenu: false,
+                    },
+                },
+
+                views: {
+                    loading: true
+                }
             }
         },
         created() {
@@ -62,15 +88,26 @@
                 axios
                 .get(`/api/catalog/boxes`)
                 .then(response => (
-                    this.boxes = response.data
+                    this.boxes = response.data,
+                    this.views.loading = false
                 ));
             },
-            goTo(id) {
-                this.$router.push({name: 'CatalogBoxEdit', params: {id: id}})
+            onGridReady(params) {
+                this.gridApi = params.api
+                this.gridColumnApi = params.gridColumnApi
+                
+                this.gridApi.sizeColumnsToFit()
+            },
+            goTo(event) {
+                this.$router.push({name: 'CatalogBoxEdit', params: {id: event.data.id}})
+            },
+            currencyFormatter(params) {
+                return this.$options.filters.currency(params.value) + ' ₽';
             },
         },
         components: {
-            Loader
+            Loader,
+            AgGridVue
         },
     }
 </script>
