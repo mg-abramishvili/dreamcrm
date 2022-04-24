@@ -122,7 +122,7 @@
                             headerName: 'Название',
                             sortable: true,
                             filter: true,
-                            width: 300,
+                            width: 400,
                         },
                         {
                             field: "priority",
@@ -225,7 +225,7 @@
                 this.gridApi = params.api
                 this.gridColumnApi = params.gridColumnApi
                 
-                this.gridApi.sizeColumnsToFit()
+                // this.gridApi.sizeColumnsToFit()
             },
             goTo(event) {
                 this.$router.push({ name: 'Production', params: { id: event.data.id } });
