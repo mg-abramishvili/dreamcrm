@@ -115,12 +115,14 @@
                             headerName: 'ID',
                             sortable: true,
                             filter: true,
+                            width: 50,
                         },
                         {
                             field: "name",
                             headerName: 'Название',
                             sortable: true,
                             filter: true,
+                            width: 200,
                         },
                         {
                             field: "priority",
