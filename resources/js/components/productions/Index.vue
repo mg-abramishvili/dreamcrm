@@ -113,13 +113,13 @@
                         {
                             field: "id",
                             headerName: 'ID',
-                            sortable: false,
+                            sortable: true,
                             filter: true,
                         },
                         {
                             field: "name",
                             headerName: 'Название',
-                            sortable: false,
+                            sortable: true,
                             filter: true,
                         },
                         {
@@ -168,7 +168,7 @@
                         {
                             field: "invoice_number",
                             headerName: 'Номер счета',
-                            sortable: false,
+                            sortable: true,
                             filter: true,
                         },
                         {
@@ -191,7 +191,7 @@
                         {
                             field: "serial_number",
                             headerName: 'Серийный номер',
-                            sortable: false,
+                            sortable: true,
                             filter: true,
                         },
                     ],
