@@ -74,7 +74,7 @@
                         sortingOrder: ['asc', 'desc'],
                         floatingFilter: true,
                         suppressMovable: true,
-                        suppressMenu: false,
+                        suppressMenu: true,
                     },
                 },
 
