@@ -17,7 +17,7 @@ class ProductionController extends Controller
 {
     public function index()
     {
-        return Production::with('project')
+        return Production::with('project.calculations.boxes')
             ->orderBy('id', 'desc')
             ->get();
     }

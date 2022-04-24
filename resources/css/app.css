@@ -213,6 +213,7 @@ table.dataTable {
 .calculations-page,
 .home-page,
 .projects-page,
+.productions-page,
 .clients-page,
 .catalog-page,
 .stock-page,
@@ -452,6 +453,18 @@ table.dataTable {
     overflow-y: auto;
 }
 /* PROJECTS */
+
+/* PRODUCTION */
+.productions-page {
+    height: calc(100% - 40px);
+}
+.productions-page .card.h-100 {
+    height: calc(100% - 80px) !important;
+}
+.productions-table {
+    height: 100%;
+}
+/* PRODUCTION */
 
 /* AG */
 .ag-theme-alpine .ag-header {

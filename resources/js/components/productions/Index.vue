@@ -1,5 +1,5 @@
 <template>
-    <div class="calculations-page">
+    <div class="productions-page">
         <div class="card card-bordered">
             <div class="card-body">
                 <div class="row align-items-center">
@@ -12,9 +12,19 @@
 
         <Loader v-if="views.loading"></Loader>
 
-        <div v-if="!views.loading" class="card card-bordered">
-            <div class="card-body p-0">
-                <table class="table table-hover dataTable">
+        <div v-if="!views.loading" class="card card-bordered h-100">
+            <div class="card-body p-0 h-100">
+                <ag-grid-vue v-if="productions.length"
+                    class="ag-theme-alpine productions-table"
+                    :defaultColDef="table.defaultColDef"
+                    :columnDefs="table.columns"
+                    @grid-ready="onGridReady"
+                    :rowData="productions"
+                    @row-clicked="goTo"
+                >
+                </ag-grid-vue>
+
+                <!-- <table class="table table-hover dataTable">
                     <thead>
                         <tr>
                             <th class="text-center" style="width: 5%">ID</th>
@@ -25,8 +35,6 @@
                             <th style="width: 10%">Оплата</th>
                             <th style="width: 10%">Корпус</th>
                             <th style="width: 10%">Серийный номер</th>
-                            <!-- <th>Дата начала</th>
-                            <th>Дата завершения</th> -->
                         </tr>
                     </thead>
                     <tbody>
@@ -80,15 +88,9 @@
                             <td class="align-middle">
                                 {{ production.serial_number }}
                             </td>
-                            <!-- <td class="align-middle">
-                                {{ production.start_date }}
-                            </td>
-                            <td class="align-middle">
-                                {{ production.end_date }}
-                            </td> -->
                         </tr>
                     </tbody>
-                </table>
+                </table> -->
             </div>
         </div>
     </div>
@@ -97,13 +99,112 @@
 <script>
     import Loader from '../Loader.vue'
 
+    import { AgGridVue } from "ag-grid-vue";
+    import "ag-grid-community/dist/styles/ag-grid.css";
+    import "ag-grid-community/dist/styles/ag-theme-alpine.css";
+
     export default {
         data() {
             return {
                 productions: [],
 
+                table: {
+                    columns: [
+                        {
+                            field: "id",
+                            headerName: 'ID',
+                            sortable: false,
+                            filter: true,
+                        },
+                        {
+                            field: "name",
+                            headerName: 'Название',
+                            sortable: false,
+                            filter: true,
+                        },
+                        {
+                            field: "priority",
+                            valueGetter: (params) => {
+                                if(params.data.priority == 'normal') {
+                                    return 'нормальный' 
+                                }
+                                if(params.data.priority == 'high') {
+                                    return 'высокий' 
+                                }
+                                if(params.data.priority == 'urgent') {
+                                    return 'срочный' 
+                                }
+                            },
+                            headerName: 'Приоритет',
+                            sortable: true,
+                            filter: true,
+                        },
+                        {
+                            field: "status",
+                            valueGetter: (params) => {
+                                if(params.data.status == 'new') {
+                                    return 'новый'
+                                }
+                                if(params.data.status == 'svarka') {
+                                    return 'сварка'
+                                }
+                                if(params.data.status == 'building') {
+                                    return 'сборка'
+                                }
+                                if(params.data.status == 'warehouse') {
+                                    return 'склад'
+                                }
+                                if(params.data.status == 'ready_for_supply') {
+                                    return 'готово к отгрузке'
+                                }
+                                if(params.data.status == 'waiting_for_feedback') {
+                                    return 'ждем отзыв клиента'
+                                }
+                            },
+                            headerName: 'Статус',
+                            sortable: true,
+                            filter: true,
+                        },
+                        {
+                            field: "invoice_number",
+                            headerName: 'Номер счета',
+                            sortable: false,
+                            filter: true,
+                        },
+                        {
+                            field: "payment_type",
+                            headerName: 'Оплата',
+                            sortable: true,
+                            filter: true,
+                        },
+                        {
+                            field: "box",
+                            valueGetter: (params) => {
+                                if(params.data.project && params.data.project.calculations && params.data.project.calculations.length) {
+                                    return params.data.project.calculations[0].boxes[0].name
+                                }
+                            },
+                            headerName: 'Корпус',
+                            sortable: true,
+                            filter: true,
+                        },
+                        {
+                            field: "serial_number",
+                            headerName: 'Серийный номер',
+                            sortable: false,
+                            filter: true,
+                        },
+                    ],
+                    defaultColDef: {
+                        sortingOrder: ['asc', 'desc'],
+                        floatingFilter: true,
+                        suppressMovable: true,
+                        suppressMenu: true,
+                    },
+                },
+
                 views: {
-                    loading: true,
+                    loading: true
                 }
             }
         },
@@ -118,11 +219,18 @@
                     this.views.loading = false
                 ))
             },
-            goTo(id) {
-                this.$router.push({ name: 'Production', params: { id: id } });
+            onGridReady(params) {
+                this.gridApi = params.api
+                this.gridColumnApi = params.gridColumnApi
+                
+                this.gridApi.sizeColumnsToFit()
+            },
+            goTo(event) {
+                this.$router.push({ name: 'Production', params: { id: event.data.id } });
             }
         },
         components: {
+            AgGridVue,
             Loader
         }
     }
