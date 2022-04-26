@@ -3,7 +3,7 @@
         <div class="card card-bordered">
             <div class="card-body">
                 <div class="row align-items-center">
-                    <div class="col-12">
+                    <div class="col-8">
                         <h1 class="h3 m-0">
                             <router-link :to="{name: 'Productions'}" class="back-arrow">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left align-middle me-2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
@@ -12,6 +12,9 @@
                                 {{ production.name }}
                             </strong>
                         </h1>    
+                    </div>
+                    <div class="col-4 text-end">
+                        <button @click="delConfirm()" class="btn btn-outline-danger">Удалить</button>
                     </div>
                 </div>
             </div>
@@ -200,6 +203,32 @@
                 axios.delete(`/api/production-item/${id}`)
                 .then(response => {
                     this.loadProduction()
+                })
+            },
+            delConfirm() {
+                this.$swal({
+                    html: '<strong class="d-block mb-3">Точно удалить производство?</strong> Будут также удалены все резервы на складе и запросы в Закупки.',
+                    showCancelButton: true,
+                    confirmButtonText: 'Да',
+                    cancelButtonText: 'Отмена',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.del()
+                    } else if (result.isDenied) {
+                        return
+                    }
+                })
+            },
+            del() {
+                axios.delete(`/api/production/${this.$route.params.id}/delete`)
+                .then(response => {
+                    this.$router.push({name: 'Productions'})
+                })
+                .catch(error => {
+                    this.$swal({
+                        text: 'Ошибка',
+                        icon: 'error',
+                    })
                 })
             },
         },

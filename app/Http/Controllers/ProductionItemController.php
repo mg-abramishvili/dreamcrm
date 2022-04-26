@@ -7,29 +7,16 @@ use App\Models\Reserve;
 use App\Models\StockBalance;
 use App\Models\StockNeed;
 use Illuminate\Http\Request;
+use App\Traits\deleteProductionItem;
 
 class ProductionItemController extends Controller
 {
+    use deleteProductionItem;
+
     public function delete($id)
     {
-        $productionItem = ProductionItem::find($id);
+        $item = ProductionItem::find($id);
 
-        $reserve = Reserve::where('production_item_id', $productionItem->id)->first();
-        $stockNeed = StockNeed::where('production_item_id', $productionItem->id)->first();
-
-        if($reserve) {
-            $stockBalance = StockBalance::find($reserve->stock_balance_id);
-
-            $stockBalance->quantity = $stockBalance->quantity + $reserve->quantity;
-            $stockBalance->save();
-
-            $reserve->delete();
-        }
-        
-        if($stockNeed) {
-            $stockNeed->delete();
-        }
-
-        $productionItem->delete();
+        $this->deleteProductionItem($item);
     }
 }

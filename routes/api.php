@@ -18,6 +18,7 @@ use App\Http\Controllers\ProjectController;
 
 use App\Http\Controllers\ProductionController;
 use App\Http\Controllers\ProductionItemController;
+use App\Http\Controllers\RedmineController;
 
 use App\Http\Controllers\OfferController;
 
@@ -116,8 +117,9 @@ Route::get('project/{id}', [ProjectController::class, 'project']);
 Route::get('productions', [ProductionController::class, 'index']);
 Route::get('production/{id}', [ProductionController::class, 'production']);
 Route::post('productions', [ProductionController::class, 'store']);
-Route::get('productions/redmine-import/{offset}/{limit}', [ProductionController::class, 'importRedmineIssues']);
-Route::delete('production-item/{id}', [ProductionItemController::class, 'delete']);
+Route::get('productions/redmine-import/{offset}/{limit}', [RedmineController::class, 'import']);
+Route::delete('production/{id}/delete', [ProductionController::class, 'delete']);
+Route::delete('production-item/{id}/delete', [ProductionItemController::class, 'delete']);
 
 
 
