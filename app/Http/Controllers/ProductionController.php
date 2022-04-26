@@ -3,19 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Production;
-use App\Models\ProductionItem;
 use App\Models\Project;
 use App\Models\Calculation;
-use App\Models\Reserve;
-use App\Models\StockItem;
 use App\Models\StockBalance;
-use App\Models\StockNeed;
+
 use Illuminate\Http\Request;
+
 use App\Traits\deleteProductionItem;
 use App\Traits\updateStockBalance;
 use App\Traits\createStockNeed;
 use App\Traits\createReserve;
 use App\Traits\createProductionItem;
+
 use Carbon\Carbon;
 
 class ProductionController extends Controller
