@@ -13,6 +13,8 @@ trait createProductionItem
         $productionItem->production_id = $productionID;
         $productionItem->stock_item_id = $stockItemID;
         $productionItem->save();
+
+        return $productionItem;
     }
 
 }

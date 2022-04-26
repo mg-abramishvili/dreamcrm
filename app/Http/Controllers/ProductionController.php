@@ -74,9 +74,9 @@ class ProductionController extends Controller
         
         foreach($calculation->boxes as $box) {
             foreach($box->stockItems as $stockItem) {
-                $this->createProductionItem($production->id, $stockItem->id);
+                $productionItem = $this->createProductionItem($production->id, $stockItem->id);
 
-                $quantityNeeds = $stockItem->pivot->quantity;
+                $quantityNeeds = $stockItem->pivot->quantity * $calculation->quantity;
 
                 $stockBalances = StockBalance::where('stock_item_id', $stockItem->id)->where('quantity', '>', 0)->orderBy('id', 'asc')->get();
                 $stockBalancesCount = $stockBalances->count();
@@ -94,9 +94,9 @@ class ProductionController extends Controller
         foreach($calculation->catalogItems as $catalogItem) {
             if($catalogItem->price > 0) {
                 foreach($catalogItem->stockItems as $stockItem) {
-                    $this->createProductionItem($production->id, $stockItem->id);
+                    $productionItem = $this->createProductionItem($production->id, $stockItem->id);
 
-                    $quantityNeeds = $stockItem->pivot->quantity;
+                    $quantityNeeds = $stockItem->pivot->quantity * $calculation->quantity;
 
                     $stockBalances = StockBalance::where('stock_item_id', $stockItem->id)->where('quantity', '>', 0)->orderBy('id', 'asc')->get();
                     $stockBalancesCount = $stockBalances->count();
