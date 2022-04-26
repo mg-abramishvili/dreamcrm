@@ -15,11 +15,12 @@ use App\Traits\deleteProductionItem;
 use App\Traits\updateStockBalance;
 use App\Traits\createStockNeed;
 use App\Traits\createReserve;
+use App\Traits\createProductionItem;
 use Carbon\Carbon;
 
 class ProductionController extends Controller
 {
-    use deleteProductionItem, updateStockBalance, createStockNeed, createReserve;
+    use deleteProductionItem, updateStockBalance, createStockNeed, createReserve, createProductionItem;
 
     public function index()
     {
@@ -73,10 +74,7 @@ class ProductionController extends Controller
         
         foreach($calculation->boxes as $box) {
             foreach($box->stockItems as $stockItem) {
-                $productionItem = new ProductionItem();
-                $productionItem->production_id = $production->id;
-                $productionItem->stock_item_id = $stockItem->id;
-                $productionItem->save();
+                $this->createProductionItem($production->id, $stockItem->id);
 
                 $quantityNeeds = $stockItem->pivot->quantity;
 
@@ -96,10 +94,7 @@ class ProductionController extends Controller
         foreach($calculation->catalogItems as $catalogItem) {
             if($catalogItem->price > 0) {
                 foreach($catalogItem->stockItems as $stockItem) {
-                    $productionItem = new ProductionItem();
-                    $productionItem->production_id = $production->id;
-                    $productionItem->stock_item_id = $stockItem->id;
-                    $productionItem->save();
+                    $this->createProductionItem($production->id, $stockItem->id);
 
                     $quantityNeeds = $stockItem->pivot->quantity;
 
