@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\AuthController;
 
-use App\Http\Controllers\DateController;
 use App\Http\Controllers\DollarController;
 
 use App\Http\Controllers\CatalogItemController;
@@ -49,7 +48,9 @@ use Illuminate\Support\Facades\Route;
 
 
 // SERVER DATE AND TIME
-Route::get('/date', [DateController::class, 'date']);
+Route::get('/date', function () {
+    return \Carbon\Carbon::now();
+});
 
 
 
