@@ -94,12 +94,12 @@
         },
         methods: {
             loadClients() {
-                axios
-                .get('/api/clients')
-                .then(response => (
-                    this.clients = response.data,
+                axios.get('/api/clients')
+                .then(response => {
+                    this.clients = response.data
+
                     this.views.loading = false
-                ))
+                })
             },
             onGridReady(params) {
                 this.gridApi = params.api

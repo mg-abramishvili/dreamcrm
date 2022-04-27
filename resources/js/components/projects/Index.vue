@@ -108,14 +108,17 @@
             }
         },
         created() {
-            axios
-                .get('/api/projects')
-                .then(response => {
-                    this.projects = response.data
-                    this.views.loading = false
-                })
+            this.loadProjects()
         },
         methods: {
+            loadProjects() {
+                axios.get('/api/projects')
+                .then(response => {
+                    this.projects = response.data
+                    
+                    this.views.loading = false
+                })
+            },
             onGridReady(params) {
                 this.gridApi = params.api
                 this.gridColumnApi = params.gridColumnApi
