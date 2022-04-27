@@ -1,14 +1,14 @@
 <template>
-	<div v-if="views.loading == false" class="wrapper">
-		<template v-if="authenticated == true">
-			<Sidebar :class="{ collapsed: views.sidebar === false }" />
+	<div v-if="!views.loading" class="wrapper">
+		<template v-if="authenticated">
+			<Sidebar />
 
 			<div class="main">
 				<router-view :key="$route.path" />
 			</div>
 		</template>
 
-		<div v-if="authenticated == false" id="auth_form" class="main d-flex justify-content-center w-100" style="margin-left: 0;">
+		<div v-if="!authenticated" class="main d-flex justify-content-center w-100" style="margin-left: 0;">
 			<main class="content d-flex p-0">
 				<div class="container d-flex flex-column">
 					<div class="row h-100">
@@ -22,7 +22,7 @@
 								<div class="card">
 									<div class="card-body">
 										<div class="m-sm-4">
-											<form @submit.prevent="handleLogin">
+											<form @submit.prevent="login">
 												<div v-if="errors.length" class="alert alert-danger alert-dismissible" role="alert">
 													<div v-for="error in errors" class="alert-message">
 														{{ error }}
@@ -60,6 +60,7 @@
 
 <script>
     import Sidebar from './components/Sidebar'
+
     export default {
         data() {
             return {
@@ -75,7 +76,6 @@
 				errors: [],
 
                 views: {
-                    sidebar: true,
                     loading: true,
 					submitButton: true,
                 }				
@@ -85,20 +85,21 @@
 			this.checkMe()
         },
 		methods: {
-			handleLogin() {
+			login() {
 				this.views.submitButton = false
+
                 axios.get('/sanctum/csrf-cookie').then(response => {
                     axios.post('/api/login', this.formData).then(response => {
 						if(response.data === 'bad_login') {
                             this.errors = []
 							this.errors.push('Неверный E-mail или пароль')
+							
 							this.views.submitButton = true
 						} else {
 							this.checkMe()
-							// this.views.submitButton = true
 						}
                     })
-                });
+                })
             },
 			checkMe() {
 				axios.post('/api/me').then(response => {
@@ -109,25 +110,18 @@
 					} else {
 						this.authenticated = false
                         this.views.loading = false
+
 						setTimeout(() => {
 							if(this.$refs.email) {
 								this.$refs.email.focus()
 							}
-						}, 100);
-						
+						}, 100)
 					}
 				})
 			},
-			sidebar_toggle() {
-				if (this.sidebar === false) {
-					this.sidebar = true
-				} else {
-					this.sidebar = false
-				}
-			},
 		},
-        components: {
-            Sidebar
-        }
+		components: {
+			Sidebar
+		}
     }
 </script>
