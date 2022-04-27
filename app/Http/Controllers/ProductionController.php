@@ -33,9 +33,9 @@ class ProductionController extends Controller
         return Production::with([
                 'project',
                 'user',
-                'items.stockItem',
-                'items.reserves.stockBalance',
-                'items.stockNeeds'
+                'items' => function ($q) {
+                    $q->with('stockItem', 'reserves.stockBalance', 'stockNeeds')->orderBy('id', 'asc');
+                }
             ])
             ->find($id);
     }
