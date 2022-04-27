@@ -12,20 +12,28 @@ trait deleteProductionItem
 
     public function deleteProductionItem($item)
     {
-        $reserve = Reserve::where('production_item_id', $item->id)->first();
-        $stockNeed = StockNeed::where('production_item_id', $item->id)->first();
+        $reserves = Reserve::where('production_item_id', $item->id)->get();
+        $stockNeeds = StockNeed::where('production_item_id', $item->id)->get();
 
-        if($reserve) {
-            $stockBalance = StockBalance::find($reserve->stock_balance_id);
-
-            $stockBalance->quantity = $stockBalance->quantity + $reserve->quantity;
-            $stockBalance->save();
-
-            $reserve->delete();
+        if($reserves)
+        {
+            foreach($reserves as $reserve)
+            {
+                $stockBalance = StockBalance::find($reserve->stock_balance_id);
+    
+                $stockBalance->quantity = $stockBalance->quantity + $reserve->quantity;
+                $stockBalance->save();
+    
+                $reserve->delete();
+            }
         }
         
-        if($stockNeed) {
-            $stockNeed->delete();
+        if($stockNeeds)
+        {
+            foreach($stockNeeds as $stockNeed)
+            {
+                $stockNeed->delete();
+            }
         }
 
         $item->delete();

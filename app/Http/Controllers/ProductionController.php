@@ -114,6 +114,64 @@ class ProductionController extends Controller
         return $production->id;
     }
 
+    public function restart($id)
+    {
+        $production = Production::find($id);
+
+        foreach($production->items as $item)
+        {
+            $this->deleteProductionItem($item);
+        }
+
+        foreach($production->project->calculations as $calculation)
+        {
+            foreach($calculation->boxes as $box)
+            {
+                foreach($box->stockItems as $stockItem)
+                {
+                    $productionItem = $this->createProductionItem($production->id, $stockItem->id);
+
+                    $quantityNeeds = $stockItem->pivot->quantity * $calculation->quantity;
+
+                    $stockBalances = StockBalance::where('stock_item_id', $stockItem->id)->where('quantity', '>', 0)->orderBy('id', 'asc')->get();
+                    $stockBalancesCount = $stockBalances->count();
+
+                    if($stockBalancesCount > 0) {
+                        $stockBalance = $stockBalances->first();
+
+                        $this->createReserve($quantityNeeds, $stockItem, $stockBalance, $stockBalances, $production, $productionItem);
+                    } else {
+                        $this->createStockNeed($quantityNeeds, $stockItem, $productionItem);
+                    }
+                }
+            }
+
+            foreach($calculation->catalogItems as $catalogItem)
+            {
+                if($catalogItem->price > 0)
+                {
+                    foreach($catalogItem->stockItems as $stockItem)
+                    {
+                        $productionItem = $this->createProductionItem($production->id, $stockItem->id);
+
+                        $quantityNeeds = $stockItem->pivot->quantity * $calculation->quantity;
+
+                        $stockBalances = StockBalance::where('stock_item_id', $stockItem->id)->where('quantity', '>', 0)->orderBy('id', 'asc')->get();
+                        $stockBalancesCount = $stockBalances->count();
+
+                        if($stockBalancesCount > 0) {
+                            $stockBalance = $stockBalances->first();
+
+                            $this->createReserve($quantityNeeds, $stockItem, $stockBalance, $stockBalances, $production, $productionItem);
+                        } else {
+                            $this->createStockNeed($quantityNeeds, $stockItem, $productionItem);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     public function delete($id)
     {
         $production = Production::find($id);

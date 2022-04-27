@@ -14,6 +14,7 @@
                         </h1>    
                     </div>
                     <div class="col-4 text-end">
+                        <button @click="restart()" class="btn btn-outline-danger">restart</button>
                         <button @click="delConfirm()" class="btn btn-outline-danger">Удалить</button>
                     </div>
                 </div>
@@ -223,6 +224,18 @@
                 axios.delete(`/api/production/${this.$route.params.id}/delete`)
                 .then(response => {
                     this.$router.push({name: 'Productions'})
+                })
+                .catch(error => {
+                    this.$swal({
+                        text: 'Ошибка',
+                        icon: 'error',
+                    })
+                })
+            },
+            restart() {
+                axios.get(`/api/production/${this.$route.params.id}/restart`)
+                .then(response => {
+                    this.loadProduction()
                 })
                 .catch(error => {
                     this.$swal({
