@@ -13,10 +13,10 @@
                             </strong>
                         </h1>    
                     </div>
-                    <div class="col-4 text-end">
+                    <!-- <div class="col-4 text-end">
                         <button @click="restart()" class="btn btn-outline-danger">restart</button>
                         <button @click="delConfirm()" class="btn btn-outline-danger">Удалить</button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

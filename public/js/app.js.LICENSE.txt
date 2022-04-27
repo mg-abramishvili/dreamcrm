@@ -32,12 +32,27 @@
  * Licensed under the MIT license.
  */
 
+/**
+  * vue-class-component v7.2.6
+  * (c) 2015-present Evan You
+  * @license MIT
+  */
+
+/**
+ * @ag-grid-community/core - Advanced Data Grid / Data Table supporting Javascript / Typescript / React / Angular / Vue
+ * @version v27.1.0
+ * @link http://www.ag-grid.com/
+ * @license MIT
+ */
+
 /**!
  * Sortable 1.10.2
  * @author	RubaXa   <trash@rubaxa.org>
  * @author	owenm    <owen23355@gmail.com>
  * @license MIT
  */
+
+/*@cc_on!@*/
 
 //! moment.js
 
