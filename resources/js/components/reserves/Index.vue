@@ -52,7 +52,7 @@
                             field: "name",
                             headerName: 'Наименование',
                             valueGetter: (params) => {
-                                return params.data.reserve.stock_balance.stock_item.name
+                                return params.data.stock_balance.stock_item.name
                             },
                             sortable: false,
                             filter: true,
@@ -61,7 +61,7 @@
                             field: "production",
                             headerName: 'Производство',
                             valueGetter: (params) => {
-                                return params.data.reserve.production_item.production.name
+                                return params.data.production_item.production.name
                             },
                             sortable: false,
                             filter: true,
