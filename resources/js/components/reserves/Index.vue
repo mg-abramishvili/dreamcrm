@@ -56,6 +56,7 @@
                             },
                             sortable: false,
                             filter: true,
+                            keyCreator: params => params.data.stock_balance.stock_item.name,
                             rowGroup: true,
                             hide: true,
                         },
