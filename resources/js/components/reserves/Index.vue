@@ -56,6 +56,7 @@
                             },
                             sortable: false,
                             filter: true,
+                            rowGroup: true,
                         },
                         {
                             field: "production",
