@@ -132,6 +132,12 @@ class StockBalanceController extends Controller
     public function delete($id)
     {
         $balance = StockBalance::find($id);
+
+        if(count($balance->reserves))
+        {
+            return response('Постепление нельзя удалить - оно используется в производстве', 500);
+        }
+
         $balance->delete();
     }
 }

@@ -206,13 +206,11 @@
                     .then(response => (
                         this.loadItem()
                     ))
-                    .catch((error) => {
-                        if(error.response) {
-                            this.errors = []
-                            for(var key in error.response.data.errors){
-                                this.errors.push(key)
-                            }
-                        }
+                    .catch(error => {
+                        return this.$swal({
+                            text: error.response.data,
+                            icon: 'error',
+                        })
                     })
                 }
             }
