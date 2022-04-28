@@ -27,7 +27,6 @@
                     :columnDefs="table.columns"
                     @grid-ready="onGridReady"
                     :rowData="reserves"
-                    @row-clicked="goTo"
                 >
                 </ag-grid-vue>
             </div>
