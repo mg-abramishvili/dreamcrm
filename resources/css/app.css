@@ -227,6 +227,7 @@ table.dataTable {
 .catalog-page h1,
 .calculations-page h1,
 .stock-page h1,
+.reserves-page h1,
 .projects-page h1,
 .clients-page h1 {
     display: flex;

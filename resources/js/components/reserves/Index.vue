@@ -70,7 +70,7 @@
                             field: "quantity",
                             headerName: 'Кол-во',
                             sortable: false,
-                            filter: true,
+                            filter: false,
                         },
                     ],
                     defaultColDef: {
