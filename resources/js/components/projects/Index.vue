@@ -42,10 +42,7 @@
                 table: {
                     columns: [
                         {
-                            field: "date",
-                            valueGetter: (params) => {
-                                return params.data.created_at
-                            },
+                            field: "created_at",
                             valueFormatter: this.dateFormatter,
                             headerName: 'Дата',
                             sortable: true,
@@ -62,11 +59,6 @@
                         },
                         {
                             field: "box",
-                            valueGetter: (params) => {
-                                if(params.data.calculations.length && params.data.calculations[0].boxes && params.data.calculations[0].boxes[0]) {
-                                    return params.data.calculations[0].boxes[0].name
-                                }
-                            },
                             headerName: 'Корпус',
                             sortable: true,
                             filter: true,
@@ -74,11 +66,6 @@
                         },
                         {
                             field: "client",
-                            valueGetter: (params) => {
-                                if(params.data.client) {
-                                    return params.data.client.name + ' (' + params.data.client.inn + ')'
-                                }
-                            },
                             headerName: 'Клиент',
                             sortable: true,
                             filter: true,
@@ -86,9 +73,6 @@
                         },
                         {
                             field: "author",
-                            valueGetter: (params) => {
-                                return params.data.user.name
-                            },
                             headerName: 'Автор',
                             sortable: true,
                             filter: true,
@@ -114,7 +98,7 @@
             loadProjects() {
                 axios.get('/api/projects')
                 .then(response => {
-                    this.projects = response.data
+                    this.projects = response.data.data
                     
                     this.views.loading = false
                 })

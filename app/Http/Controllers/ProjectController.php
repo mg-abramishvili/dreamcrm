@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use App\Models\Client;
 use App\Models\Calculation;
+use App\Http\Resources\ProjectResource;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
     public function index()
     {
-        return Project::with('client', 'user', 'calculations.boxes')->orderBy('created_at', 'desc')->get();
+        return ProjectResource::collection(Project::all());
     }
 
     public function project($id)
