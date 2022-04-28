@@ -31,31 +31,6 @@
                 </ag-grid-vue>
             </div>
         </div>
-
-        <!-- <div v-if="!views.loading" class="card">
-            <table class="table dataTable">
-                <thead>
-                    <tr>
-                        <th>Наименование</th>
-                        <th>Производство</th>
-                        <th>Кол-во</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="reserve in reserves" :key="reserve.id">
-                        <td class="align-middle">
-                            <a>{{ reserve.stock_balance.stock_item.name }}</a>
-                        </td>
-                        <td class="align-middle">
-                            {{ reserve.production_item.production.name }}
-                        </td>
-                        <td class="align-middle text-center">
-                            {{ reserve.quantity }}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div> -->
     </div>
 </template>
 
@@ -86,7 +61,7 @@
                             field: "production",
                             headerName: 'Производство',
                             valueGetter: (params) => {
-                                return reserve.production_item.production.name
+                                return params.data.reserve.production_item.production.name
                             },
                             sortable: false,
                             filter: true,
