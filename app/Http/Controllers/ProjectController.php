@@ -12,7 +12,7 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        return ProjectResource::collection(Project::all());
+        return ProjectResource::collection(Project::orderBy('created_at', 'desc')->get());
     }
 
     public function project($id)
