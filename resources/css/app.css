@@ -218,7 +218,8 @@ table.dataTable {
 .catalog-page,
 .stock-page,
 .tasks-page,
-.user-page {
+.user-page,
+.reserves-page {
     margin-top: 20px;
 }
 
@@ -489,6 +490,18 @@ table.dataTable {
     height: 100%;
 }
 /* CLIENTS */
+
+/* RESERVES */
+.reserves-page {
+    height: calc(100% - 40px);
+}
+.reserves-page .card.h-100 {
+    height: calc(100% - 80px) !important;
+}
+.reserves-table {
+    height: 100%;
+}
+/* RESERVES */
 
 /* AG */
 .ag-theme-alpine .ag-header {

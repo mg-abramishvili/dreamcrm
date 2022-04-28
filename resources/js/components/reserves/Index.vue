@@ -1,5 +1,5 @@
 <template>
-    <div class="stock-page">
+    <div class="reserves-page">
         <div class="card card-bordered">
             <div class="card-body">
                 <div class="row align-items-center">
@@ -19,7 +19,21 @@
 
         <Loader v-if="views.loading"></Loader>
 
-        <div v-if="!views.loading" class="card">
+        <div v-if="!views.loading" class="card card-bordered h-100">
+            <div class="card-body p-0 h-100">
+                <ag-grid-vue v-if="reserves.length"
+                    class="ag-theme-alpine reserves-table"
+                    :defaultColDef="table.defaultColDef"
+                    :columnDefs="table.columns"
+                    @grid-ready="onGridReady"
+                    :rowData="reserves"
+                    @row-clicked="goTo"
+                >
+                </ag-grid-vue>
+            </div>
+        </div>
+
+        <!-- <div v-if="!views.loading" class="card">
             <table class="table dataTable">
                 <thead>
                     <tr>
@@ -42,17 +56,56 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
+        </div> -->
     </div>
 </template>
 
 <script>
     import Loader from '../Loader.vue'
 
+    import { AgGridVue } from "ag-grid-vue";
+    import "ag-grid-community/dist/styles/ag-grid.css";
+    import "ag-grid-community/dist/styles/ag-theme-alpine.css";
+
     export default {
         data() {
             return {
                 reserves: [],
+
+                table: {
+                    columns: [
+                        {
+                            field: "name",
+                            headerName: 'Наименование',
+                            valueGetter: (params) => {
+                                return params.data.reserve.stock_balance.stock_item.name
+                            },
+                            sortable: false,
+                            filter: true,
+                        },
+                        {
+                            field: "production",
+                            headerName: 'Производство',
+                            valueGetter: (params) => {
+                                return reserve.production_item.production.name
+                            },
+                            sortable: false,
+                            filter: true,
+                        },
+                        {
+                            field: "quantity",
+                            headerName: 'Кол-во',
+                            sortable: false,
+                            filter: true,
+                        },
+                    ],
+                    defaultColDef: {
+                        sortingOrder: ['asc', 'desc'],
+                        floatingFilter: true,
+                        suppressMovable: true,
+                        suppressMenu: true,
+                    },
+                },
 
                 views: {
                     loading: true,
@@ -72,9 +125,16 @@
                     this.views.loading = false
                 })
             },
+            onGridReady(params) {
+                this.gridApi = params.api
+                this.gridColumnApi = params.gridColumnApi
+                
+                this.gridApi.sizeColumnsToFit()
+            },
         },
         components: {
-            Loader
+            Loader,
+            AgGridVue
         },
     }
 </script>
