@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use App\Models\TaskComment;
-use App\Models\Notification;
 use Illuminate\Http\Request;
-use App\Mail\NotificationMail;
-use Illuminate\Support\Facades\Mail;
+use App\Traits\createNotification;
 
 class TaskCommentController extends Controller
 {
+    use createNotification;
+
     public function index($id)
     {
         return TaskComment::where('task_id', $id)->with('user')->get();
@@ -33,13 +33,7 @@ class TaskCommentController extends Controller
                 return;
             }
 
-            $notification = new Notification();
-            $notification->task_id = $task->id;
-            $notification->user_id = $user->id;
-            $notification->is_read = false;
-            $notification->name = 'Новый комментарий';
-            $notification->save();
-            Mail::to($user->email)->send(new NotificationMail($notification));
+            $this->createNotification($user, 'task', $task, 'Новый комментарий');
         }
     }
 }
