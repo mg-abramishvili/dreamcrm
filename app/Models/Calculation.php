@@ -16,7 +16,7 @@ class Calculation extends Model
 
     public function boxes()
     {
-        return $this->belongsToMany(CatalogBox::class, 'calculation__catalog_box')->withPivot(['pre_rub', 'pre_usd', 'price']);
+        return $this->belongsToMany(CatalogBox::class, 'calculation__catalog_box')->withPivot(['pre_rub', 'pre_usd', 'price', 'marzha', 'sborka']);
     }
 
     public function catalogItems()
