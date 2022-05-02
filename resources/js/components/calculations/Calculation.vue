@@ -128,13 +128,13 @@
                 return boxUsdPrice + catalogItemsUsdPrice
             },
             preRub() {
-                let boxRubPrice = this.calculation.box.pre_rub + this.calculation.box.marzha + this.calculation.box.sborka
+                let boxRubPrice = parseInt(this.calculation.box.pre_rub) + parseInt(this.calculation.box.marzha) + parseInt(this.calculation.box.sborka)
                 let catalogItemsRubPrice = this.calculation.catalog_items.reduce((a, b) => a + parseInt(b.pre_rub), 0)
 
                 return boxRubPrice + catalogItemsRubPrice
             },
             price() {
-                let boxPrice = this.calculation.box.pre_rub + this.calculation.box.marzha + this.calculation.box.sborka
+                let boxPrice = parseInt(this.calculation.box.pre_rub) + parseInt(this.calculation.box.marzha) + parseInt(this.calculation.box.sborka)
                 let catalogItemsPrice = this.calculation.catalog_items.reduce((a, b) => a + parseInt(b.price), 0)
 
                 return boxPrice + catalogItemsPrice
