@@ -25,7 +25,7 @@
                                 <div v-if="price && price > 0" class="row align-items-center mb-3">
                                     <div class="col-6"><strong>Цена за 1 ед:</strong></div>
                                     <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">
-                                        {{ price | currency }} ₽
+                                        {{ price | currency }} ₽ <small class="d-block fw-normal text-muted" style="font-size: 12px;">({{ pricePreRub | currency }}₽ + ${{ pricePreUsd | currency }})</small>
                                     </div>
                                 </div>
                                 <div v-if="quantity > 1 && priceWithQuantity && priceWithQuantity > 0" class="row align-items-center mb-3">
