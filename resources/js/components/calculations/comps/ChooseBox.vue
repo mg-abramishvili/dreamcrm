@@ -4,7 +4,7 @@
             <strong>Корпус</strong>
         </div>
 
-        <Loader v-if="views.loading"></Loader>
+        <loader v-if="views.loading"></loader>
         
         <select v-else v-model="selected.box" class="form-select form-select-lg mt-2 mb-3">
             <template v-for="box in boxes">
