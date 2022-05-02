@@ -134,7 +134,7 @@
                 return boxRubPrice + catalogItemsRubPrice
             },
             price() {
-                let boxPrice = this.calculation.box.pre_rub
+                let boxPrice = this.calculation.box.price
                 let catalogItemsPrice = this.calculation.catalog_items.reduce((a, b) => a + parseInt(b.price), 0)
 
                 return boxPrice + catalogItemsPrice
