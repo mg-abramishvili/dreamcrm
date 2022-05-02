@@ -28,12 +28,14 @@
                                         {{ price | currency }} ₽ <small class="d-block fw-normal text-muted" style="font-size: 12px;">({{ pricePreRub | currency }}₽ + ${{ pricePreUsd | currency }})</small>
                                     </div>
                                 </div>
+
                                 <div v-if="quantity > 1 && priceWithQuantity && priceWithQuantity > 0" class="row align-items-center mb-3">
                                     <div class="col-6">
                                         <strong>Цена за {{ quantity }} ед:</strong>
                                     </div>
                                     <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ priceWithQuantity | currency }} ₽</div>
                                 </div>
+
                                 <div v-if="selected.delivery.name" class="row align-items-center mb-3">
                                     <div class="col-6">
                                         <strong>Доставка</strong> <br>
@@ -44,14 +46,17 @@
                                     </div>
                                     <div v-if="selected.delivery.price" class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ selected.delivery.price | currency }} ₽</div>
                                 </div>
+
                                 <div v-if="selected.delivery.name && selected.delivery.name.length > 0 && priceWithDelivery && priceWithDelivery > 0" class="row align-items-center">
                                     <div class="col-6"><strong>Итого</strong></div>
                                     <div class="col-6 text-end text-primary" style="font-size: 26px; font-weight: bold;">{{ priceWithDelivery | currency }} ₽</div>
                                 </div>
                             </div>
+
                             <button v-if="views.saveButton" @click="saveCalculation()" class="btn btn-lg btn-primary w-100">Сохранить расчет</button>
                         </div>
                     </div>
+                    
                     <div v-if="selected.box && selected.box.id" class="card card-bordered mt-3">
                         <div class="card-body">
                             <p class="text-primary fw-bold">Примечание:</p>

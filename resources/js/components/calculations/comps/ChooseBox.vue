@@ -3,7 +3,9 @@
         <div class="calculation-left-block-main-label">
             <strong>Корпус</strong>
         </div>
-        <loader v-if="views.loading"></loader>
+
+        <Loader v-if="views.loading"></Loader>
+        
         <select v-else v-model="selected.box" class="form-select form-select-lg mt-2 mb-3">
             <template v-for="box in boxes">
                 <option v-if="box.width > 0 && box.length > 0 && box.height > 0 && box.weight > 0" :key="'box_' + box.id" :value="box">
@@ -11,6 +13,7 @@
                 </option>
             </template>
         </select>
+        
         <div class="mt-4">
             <button @click="goBack()" class="btn btn-outline-primary">Назад</button>
             <button @click="goNext()" class="btn btn-outline-primary">Далее</button>
