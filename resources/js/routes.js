@@ -17,6 +17,7 @@ import CatalogSearch from './components/catalog/Search.vue';
 import Calculations from './components/calculations/Index.vue';
 import Calculation from './components/calculations/Calculation.vue';
 import CalculationCreate from './components/calculations/Create.vue';
+import CalculationEdit from './components/calculations/Edit.vue';
 
 import Projects from './components/projects/Index.vue';
 import Project from './components/projects/Project.vue';
@@ -134,6 +135,11 @@ export const routes = [
         path: '/calculation/:id',
         name: 'Calculation',
         component: Calculation
+    },
+    {
+        path: '/calculation/:id/edit',
+        name: 'CalculationEdit',
+        component: CalculationEdit
     },
     {
         path: '/projects',
