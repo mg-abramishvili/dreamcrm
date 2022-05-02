@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Calculation;
+use App\Http\Resources\calculations\CalculationResource;
 use Illuminate\Http\Request;
 
 class CalculationController extends Controller
@@ -16,16 +17,7 @@ class CalculationController extends Controller
 
     public function calculation($id)
     {
-        return Calculation::with([
-                'type',
-                'boxes.stockItems',
-                'catalogItems.category',
-                'catalogItems.stockItems',
-                'delivery',
-                'user',
-                'project'
-            ])
-            ->find($id);
+        return new CalculationResource(Calculation::findOrFail($id));
     }
 
     public function store(Request $request)
