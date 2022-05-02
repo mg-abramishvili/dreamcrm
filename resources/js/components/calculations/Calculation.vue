@@ -122,7 +122,7 @@
         },
         computed: {
             preUsd() {
-                let boxUsdPrice = this.calculation.box.pre_usd
+                let boxUsdPrice = parseInt(this.calculation.box.pre_usd)
                 let catalogItemsUsdPrice = this.calculation.catalog_items.reduce((a, b) => a + parseInt(b.pre_usd), 0)
 
                 return boxUsdPrice + catalogItemsUsdPrice
