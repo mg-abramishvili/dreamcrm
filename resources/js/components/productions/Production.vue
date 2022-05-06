@@ -13,10 +13,10 @@
                             </strong>
                         </h1>    
                     </div>
-                    <!-- <div class="col-4 text-end">
+                    <div class="col-4 text-end">
                         <button @click="restart()" class="btn btn-outline-danger">restart</button>
                         <button @click="delConfirm()" class="btn btn-outline-danger">Удалить</button>
-                    </div> -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -53,6 +53,11 @@
                                 <template v-if="production.status == 'waiting_for_feedback'">
                                     Ждем отзыв клиента
                                 </template>
+                                
+                                <small v-if="!views.changeStatus" @click="views.changeStatus = true" class="cursor-pointer text-muted fw-normal border-bottom">изменить</small>
+                                <small v-if="views.changeStatus" @click="views.changeStatus = false" class="cursor-pointer text-muted fw-normal border-bottom">изменить</small>
+
+                                <ChangeStatus v-if="views.changeStatus" :production="production" />
                             </p>
 
                             <p>
@@ -154,11 +159,14 @@
                                                     не хватает {{ need.quantity }} шт
                                                 </li>
                                             </ul>
+                                            <button @click="changeProductionItem(item)" class="btn btn-sm btn-outline-secondary">заменить</button>
                                             <!-- <button @click="delItem(item.id)">удалить</button> -->
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
+
+                            <ChangeProductionItem v-if="views.changeProductionItem" :productionItem="selected.productionItem" />
                         </div>
                     </div>
                 </div>
@@ -169,6 +177,8 @@
 
 <script>
     import Loader from '../Loader.vue'
+    import ChangeStatus from './comps/ChangeStatus'
+    import ChangeProductionItem from './comps/ChangeProductionItem'
 
     export default {
         data() {
@@ -177,10 +187,13 @@
 
                 selected: {
                     tab: 'general',
+                    productionItem: '',
                 },
 
                 views: {
                     loading: true,
+                    changeStatus: false,
+                    changeProductionItem: false,
                 }
             }
         },
@@ -205,6 +218,10 @@
                 .then(response => {
                     this.loadProduction()
                 })
+            },
+            changeProductionItem(item) {
+                this.selected.productionItem = item
+                this.views.changeProductionItem = true
             },
             delConfirm() {
                 this.$swal({
@@ -247,6 +264,8 @@
         },
         components: {
             Loader,
+            ChangeStatus,
+            ChangeProductionItem
         }
     }
 </script>

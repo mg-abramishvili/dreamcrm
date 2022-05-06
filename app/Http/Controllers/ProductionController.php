@@ -71,47 +71,80 @@ class ProductionController extends Controller
         
         $production->save();
         
-        foreach($calculation->boxes as $box) {
-            foreach($box->stockItems as $stockItem) {
-                $productionItem = $this->createProductionItem($production->id, $stockItem->id);
+        foreach($calculation->boxes as $box)
+        {
+            foreach($box->stockItems as $stockItem)
+            {
+                $quantity = $stockItem->pivot->quantity * $calculation->quantity;
 
-                $quantityNeeds = $stockItem->pivot->quantity * $calculation->quantity;
-
-                $stockBalances = StockBalance::where('stock_item_id', $stockItem->id)->where('quantity', '>', 0)->orderBy('id', 'asc')->get();
-                $stockBalancesCount = $stockBalances->count();
-
-                if($stockBalancesCount > 0) {
-                    $stockBalance = $stockBalances->first();
-
-                    $this->createReserve($quantityNeeds, $stockItem, $stockBalance, $stockBalances, $production, $productionItem);
-                } else {
-                    $this->createStockNeed($quantityNeeds, $stockItem, $productionItem);
-                }
+                $this->createProductionItem($production->id, $stockItem->id, $quantity);
             }
         }
 
-        foreach($calculation->catalogItems as $catalogItem) {
-            if($catalogItem->price > 0) {
-                foreach($catalogItem->stockItems as $stockItem) {
-                    $productionItem = $this->createProductionItem($production->id, $stockItem->id);
+        foreach($calculation->catalogItems as $catalogItem)
+        {
+            if($catalogItem->price > 0)
+            {
+                foreach($catalogItem->stockItems as $stockItem)
+                {
+                    $quantity = $stockItem->pivot->quantity * $calculation->quantity;
 
-                    $quantityNeeds = $stockItem->pivot->quantity * $calculation->quantity;
-
-                    $stockBalances = StockBalance::where('stock_item_id', $stockItem->id)->where('quantity', '>', 0)->orderBy('id', 'asc')->get();
-                    $stockBalancesCount = $stockBalances->count();
-
-                    if($stockBalancesCount > 0) {
-                        $stockBalance = $stockBalances->first();
-
-                        $this->createReserve($quantityNeeds, $stockItem, $stockBalance, $stockBalances, $production, $productionItem);
-                    } else {
-                        $this->createStockNeed($quantityNeeds, $stockItem, $productionItem);
-                    }
+                    $this->createProductionItem($production->id, $stockItem->id, $quantity);
                 }
             }
         }
 
         return $production->id;
+    }
+
+    public function update($id, Request $request)
+    {
+        $production = Production::find($id);
+        
+        if(isset($request->name)) {
+            $production->name = $request->name;
+        }
+        if(isset($request->status)) {
+            $production->status = $request->status;
+        }
+        if(isset($request->priority)) {
+            $production->priority = $request->priority;
+        }
+        if(isset($request->ral)) {
+            $production->ral = $request->ral;
+        }
+        if(isset($request->payment_type)) {
+            $production->payment_type = $request->payment_type;
+        }
+        if(isset($request->supply_info)) {
+            $production->supply_info = $request->supply_info;
+        }
+        if(isset($request->invoice_number)) {
+            $production->invoice_number = $request->invoice_number;
+        }
+        if(isset($request->serial_number)) {
+            $production->serial_number = $request->serial_number;
+        }
+        if(isset($request->activation_key)) {
+            $production->activation_key = $request->activation_key;
+        }
+        if(isset($request->contacts)) {
+            $production->contacts = $request->contacts;
+        }
+        if(isset($request->email)) {
+            $production->email = $request->email;
+        }
+        if(isset($request->description)) {
+            $production->description = $request->description;
+        }
+        if(isset($request->start_date)) {
+            $production->start_date = $request->start_date;
+        }
+        if(isset($request->end_date)) {
+            $production->end_date = $request->end_date;
+        }
+
+        $production->save();
     }
 
     public function restart($id)
@@ -129,20 +162,9 @@ class ProductionController extends Controller
             {
                 foreach($box->stockItems as $stockItem)
                 {
-                    $productionItem = $this->createProductionItem($production->id, $stockItem->id);
+                    $quantity = $stockItem->pivot->quantity * $calculation->quantity;
 
-                    $quantityNeeds = $stockItem->pivot->quantity * $calculation->quantity;
-
-                    $stockBalances = StockBalance::where('stock_item_id', $stockItem->id)->where('quantity', '>', 0)->orderBy('id', 'asc')->get();
-                    $stockBalancesCount = $stockBalances->count();
-
-                    if($stockBalancesCount > 0) {
-                        $stockBalance = $stockBalances->first();
-
-                        $this->createReserve($quantityNeeds, $stockItem, $stockBalance, $stockBalances, $production, $productionItem);
-                    } else {
-                        $this->createStockNeed($quantityNeeds, $stockItem, $productionItem);
-                    }
+                    $this->createProductionItem($production->id, $stockItem->id, $quantity);
                 }
             }
 
@@ -152,20 +174,9 @@ class ProductionController extends Controller
                 {
                     foreach($catalogItem->stockItems as $stockItem)
                     {
-                        $productionItem = $this->createProductionItem($production->id, $stockItem->id);
+                        $quantity = $stockItem->pivot->quantity * $calculation->quantity;
 
-                        $quantityNeeds = $stockItem->pivot->quantity * $calculation->quantity;
-
-                        $stockBalances = StockBalance::where('stock_item_id', $stockItem->id)->where('quantity', '>', 0)->orderBy('id', 'asc')->get();
-                        $stockBalancesCount = $stockBalances->count();
-
-                        if($stockBalancesCount > 0) {
-                            $stockBalance = $stockBalances->first();
-
-                            $this->createReserve($quantityNeeds, $stockItem, $stockBalance, $stockBalances, $production, $productionItem);
-                        } else {
-                            $this->createStockNeed($quantityNeeds, $stockItem, $productionItem);
-                        }
+                        $this->createProductionItem($production->id, $stockItem->id, $quantity);
                     }
                 }
             }

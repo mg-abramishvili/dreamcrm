@@ -119,8 +119,10 @@ Route::get('productions', [ProductionController::class, 'index']);
 Route::get('production/{id}', [ProductionController::class, 'production']);
 Route::post('productions', [ProductionController::class, 'store']);
 Route::get('productions/redmine-import/{offset}/{limit}', [RedmineController::class, 'import']);
+Route::put('production/{id}/update', [ProductionController::class, 'update']);
 Route::delete('production/{id}/delete', [ProductionController::class, 'delete']);
 Route::get('production/{id}/restart', [ProductionController::class, 'restart']);
+Route::post('production-item/{id}/replace', [ProductionItemController::class, 'replace']);
 Route::delete('production-item/{id}/delete', [ProductionItemController::class, 'delete']);
 
 

@@ -10,7 +10,7 @@ trait createReserve
 {
     use updateStockBalance, createStockNeed;
 
-    public function createReserve($quantityNeeds, $stockItem, $stockBalance, $stockBalances, $production, $productionItem)
+    public function createReserve($quantityNeeds, $stockItemID, $stockBalance, $stockBalances, $productionItem)
     {
         if($stockBalance->quantity > 0) {
             $reserve = new Reserve();
@@ -42,18 +42,18 @@ trait createReserve
                 $stockBalance = $stockBalances->where('id', '>', $stockBalance->id)->first();
                 
                 if($stockBalance) {
-                    $this->createReserve($quantityNeedsLeft, $stockItem, $stockBalance, $stockBalances, $production, $productionItem);
+                    $this->createReserve($quantityNeedsLeft, $stockItemID, $stockBalance, $stockBalances, $productionItem);
                 } else {
-                    $this->createStockNeed($quantityNeedsLeft, $stockItem, $productionItem);
+                    $this->createStockNeed($quantityNeedsLeft, $stockItemID, $productionItem);
                 }
             }
         } else {
             $stockBalance = $stockBalances->where('id', '>', $stockBalance->id)->first();
             
             if($stockBalance) {
-                $this->createReserve($quantityNeeds, $stockItem, $stockBalance, $stockBalances, $production, $productionItem);
+                $this->createReserve($quantityNeeds, $stockItemID, $stockBalance, $stockBalances, $productionItem);
             } else {
-                $this->createStockNeed($quantityNeeds, $stockItem, $productionItem);
+                $this->createStockNeed($quantityNeeds, $stockItemID, $productionItem);
             }
         }
     }
