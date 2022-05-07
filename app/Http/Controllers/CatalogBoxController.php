@@ -132,6 +132,11 @@ class CatalogBoxController extends Controller
     {
         $box = CatalogBox::find($id);
 
+        if(count($box->calculations))
+        {
+            return response('Корпус нельзя удалить - он участвует в расчетах', 500);
+        }
+
         $box->types()->detach();
         $box->stockItems()->detach();
         
