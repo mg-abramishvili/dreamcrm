@@ -83,6 +83,11 @@ class CatalogItemController extends Controller
     {
         $item = CatalogItem::find($id);
 
+        if(count($item->calculations))
+        {
+            return response('Позицию нельзя удалить - она участвует в расчетах', 500);
+        }
+
         $item->boxes()->detach();
         $item->stockItems()->detach();
         

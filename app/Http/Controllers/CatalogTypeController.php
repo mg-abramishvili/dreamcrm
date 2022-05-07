@@ -51,10 +51,9 @@ class CatalogTypeController extends Controller
     {
         $type = CatalogType::find($id);
 
-        foreach($type->boxes as $box) {
-            $box->types()->detach();
-            $box->stockItems()->detach();
-            $box->delete();
+        if(count($type->boxes))
+        {
+            return response('Тип нельзя удалить - есть корпуса, которые используют данный тип', 500);
         }
         
         $type->delete();

@@ -50,6 +50,11 @@ class StockItemController extends Controller
     {
         $item = StockItem::find($id);
         
+        if(count($item->productionItems))
+        {
+            return response('Позицию нельзя удалить - она используется в производстве', 500);
+        }
+        
         foreach($item->balances as $balance) {
             $balance->delete();
         }

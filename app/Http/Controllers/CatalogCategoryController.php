@@ -61,10 +61,9 @@ class CatalogCategoryController extends Controller
     {
         $category = CatalogCategory::find($id);
         
-        foreach($category->items as $item) {
-            $item->boxes()->detach();
-            $item->stockItems()->detach();
-            $item->delete();
+        if(count($category->items))
+        {
+            return response('Категория не пуста', 500);
         }
         
         $category->delete();

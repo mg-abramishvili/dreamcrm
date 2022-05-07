@@ -32,6 +32,6 @@ class CatalogItem extends Model
 
     public function calculations()
     {
-        return $this->belongsToMany(Calculation::class);
+        return $this->belongsToMany(Calculation::class, 'calculation__catalog_item');
     }
 }
