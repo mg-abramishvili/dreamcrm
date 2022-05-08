@@ -11,7 +11,8 @@ class StockBalanceController extends Controller
 {
     use updateCatalogItemPrice, updateCatalogBoxPrice;
 
-    public function index() {
+    public function index()
+    {
         return StockBalance::with('stockItem')->orderBy('date', 'desc')->get();
     }
 
