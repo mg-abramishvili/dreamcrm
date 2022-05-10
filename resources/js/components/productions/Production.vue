@@ -84,9 +84,18 @@
                                 {{ production.user.name }}
                             </p>
 
-                            <p v-if="production.ral">
+                            <p>
                                 <strong>Цвет (RAL):</strong>
-                                {{ production.ral }}
+                                <template v-if="production.ral">
+                                    {{ production.ral }}
+                                </template>
+                                <template v-if="!production.ral">
+                                    &mdash;
+                                </template>
+
+                                <small @click="changeRal()" class="cursor-pointer text-muted fw-normal border-bottom">изменить</small>
+
+                                <ChangeRal v-if="views.changeRal" :production="production" />
                             </p>
 
                             <p v-if="production.payment_type">
@@ -184,6 +193,7 @@
     import Loader from '../Loader.vue'
     import ChangeStatus from './comps/ChangeStatus'
     import ChangePriority from './comps/ChangePriority'
+    import ChangeRal from './comps/ChangeRal'
     import ChangeProductionItem from './comps/ChangeProductionItem'
 
     export default {
@@ -201,6 +211,7 @@
                     backdrop: false,
                     changeStatus: false,
                     changePriority: false,
+                    changeRal: false,
                     changeProductionItem: false,
                 }
             }
@@ -234,6 +245,10 @@
             changePriority() {
                 this.views.backdrop = true
                 this.views.changePriority = true
+            },
+            changeRal() {
+                this.views.backdrop = true
+                this.views.changeRal = true
             },
             changeProductionItem(item) {
                 this.selected.productionItem = item
@@ -288,6 +303,7 @@
             Loader,
             ChangeStatus,
             ChangePriority,
+            ChangeRal,
             ChangeProductionItem
         }
     }
