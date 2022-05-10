@@ -10,7 +10,7 @@
                     <option v-for="item in stockItems" :value="item.id">{{ item.name }}</option>
                 </select>
 
-                <button @click="save()" class="btn btn-outline-primary">OK</button>
+                <button @click="save()" class="btn btn-primary">Сохранить</button>
             </div>
         </div>
     </div>

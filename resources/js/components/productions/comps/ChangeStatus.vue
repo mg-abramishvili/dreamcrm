@@ -13,7 +13,7 @@
                     <option value="warehouse">Склад</option>
                     <option value="building">Сборка</option>
                 </select>
-                <button @click="save()" class="btn btn-outline-primary">OK</button>
+                <button @click="save()" class="btn btn-primary">Сохранить</button>
             </div>
         </div>
     </div>

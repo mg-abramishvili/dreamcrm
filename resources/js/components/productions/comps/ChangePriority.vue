@@ -11,7 +11,7 @@
                     <option value="high">Высокий</option>
                     <option value="urgent">Срочный</option>
                 </select>
-                <button @click="save()" class="btn btn-outline-primary">OK</button>
+                <button @click="save()" class="btn btn-primary">Сохранить</button>
             </div>
         </div>
     </div>
