@@ -775,3 +775,33 @@ table.dataTable {
 .btn .feather {
     display: block;
 }
+
+.offcanvas-backdrop {
+    background-color: #000;
+    height: 100vh;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    z-index: 1040;
+}
+
+.offcanvas-backdrop.show {
+    opacity: .5;
+    animation: offcanvas-backdrop 0.3s;
+}
+
+@keyframes offcanvas-backdrop {
+    from {opacity: 0;}
+    to {opacity: 0.5;}
+}
+
+.offcanvas-end.show {
+    visibility: visible;
+    animation: offcanvas-end 0.3s;
+}
+
+@keyframes offcanvas-end {
+    from {transform: translateX(100%);}
+    to {transform: none;}
+}

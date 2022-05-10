@@ -1,13 +1,21 @@
 <template>
-    <div class="d-flex align-items-center">
-        <select v-model="status" class="form-select">
-            <option value="new">Новое</option>
-            <option value="waiting_for_feedback">Ждет отзыва клиента</option>
-            <option value="svarka">Сварка</option>
-            <option value="warehouse">Склад</option>
-            <option value="building">Сборка</option>
-        </select>
-        <button @click="save()" class="btn btn-sm btn-outline-primary">OK</button>
+    <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasRight" role="dialog">
+        <div class="offcanvas-header">
+            <h4 id="offcanvasRightLabel" class="m-0">Статус</h4>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div>
+                <select v-model="status" class="form-select mb-2">
+                    <option value="new">Новое</option>
+                    <option value="waiting_for_feedback">Ждет отзыва клиента</option>
+                    <option value="svarka">Сварка</option>
+                    <option value="warehouse">Склад</option>
+                    <option value="building">Сборка</option>
+                </select>
+                <button @click="save()" class="btn btn-outline-primary">OK</button>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -30,6 +38,7 @@
                 .then(response => {
                     this.$parent.loadProduction()
                     this.$parent.views.changeStatus = false
+                    this.$parent.views.backdrop = false
                 })
             }
         }

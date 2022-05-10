@@ -13,10 +13,10 @@
                             </strong>
                         </h1>    
                     </div>
-                    <div class="col-4 text-end">
+                    <!-- <div class="col-4 text-end">
                         <button @click="restart()" class="btn btn-outline-danger">restart</button>
                         <button @click="delConfirm()" class="btn btn-outline-danger">Удалить</button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -54,8 +54,7 @@
                                     Ждем отзыв клиента
                                 </template>
                                 
-                                <small v-if="!views.changeStatus" @click="views.changeStatus = true" class="cursor-pointer text-muted fw-normal border-bottom">изменить</small>
-                                <small v-if="views.changeStatus" @click="views.changeStatus = false" class="cursor-pointer text-muted fw-normal border-bottom">изменить</small>
+                                <small @click="changeStatus()" class="cursor-pointer text-muted fw-normal border-bottom">изменить</small>
 
                                 <ChangeStatus v-if="views.changeStatus" :production="production" />
                             </p>
@@ -74,6 +73,10 @@
                                     <span class="badge rounded-pill bg-danger"></span>
                                     Срочный
                                 </template>
+
+                                <small @click="changePriority()" class="cursor-pointer text-muted fw-normal border-bottom">изменить</small>
+
+                                <ChangePriority v-if="views.changePriority" :production="production" />
                             </p>
 
                             <p v-if="production.user">
@@ -161,6 +164,8 @@
                                             </ul>
                                             <button @click="changeProductionItem(item)" class="btn btn-sm btn-outline-secondary">заменить</button>
                                             <!-- <button @click="delItem(item.id)">удалить</button> -->
+                                            
+                                            <div v-if="views.backdrop" @click="closeOffcanvas()" class="offcanvas-backdrop fade show"></div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -178,6 +183,7 @@
 <script>
     import Loader from '../Loader.vue'
     import ChangeStatus from './comps/ChangeStatus'
+    import ChangePriority from './comps/ChangePriority'
     import ChangeProductionItem from './comps/ChangeProductionItem'
 
     export default {
@@ -192,7 +198,9 @@
 
                 views: {
                     loading: true,
+                    backdrop: false,
                     changeStatus: false,
+                    changePriority: false,
                     changeProductionItem: false,
                 }
             }
@@ -219,9 +227,23 @@
                     this.loadProduction()
                 })
             },
+            changeStatus() {
+                this.views.backdrop = true
+                this.views.changeStatus = true
+            },
+            changePriority() {
+                this.views.backdrop = true
+                this.views.changePriority = true
+            },
             changeProductionItem(item) {
                 this.selected.productionItem = item
+                this.views.backdrop = true
                 this.views.changeProductionItem = true
+            },
+            closeOffcanvas() {
+                this.views.backdrop = false
+                this.views.changeStatus = false
+                this.views.changeProductionItem = false
             },
             delConfirm() {
                 this.$swal({
@@ -265,6 +287,7 @@
         components: {
             Loader,
             ChangeStatus,
+            ChangePriority,
             ChangeProductionItem
         }
     }

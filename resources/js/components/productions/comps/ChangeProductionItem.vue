@@ -1,12 +1,18 @@
 <template>
-    <div>
-        <p>{{ productionItem }}</p>
+    <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasRight" role="dialog">
+        <div class="offcanvas-header">
+            <h4 id="offcanvasRightLabel" class="m-0">Замена</h4>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div>
+                <select v-model="selected.stock_item" class="form-select mb-2">
+                    <option v-for="item in stockItems" :value="item.id">{{ item.name }}</option>
+                </select>
 
-        <select v-model="selected.stock_item">
-            <option v-for="item in stockItems" :value="item.id">{{ item.name }}</option>
-        </select>
-
-        <button @click="save()" class="btn btn-sm btn-outline-primary">OK</button>
+                <button @click="save()" class="btn btn-outline-primary">OK</button>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -44,6 +50,7 @@ export default {
                 console.log(response.data)
                 this.$parent.loadProduction()
                 this.$parent.views.changeProductionItem = false
+                this.$parent.views.backdrop = false
             })
         },
     }
