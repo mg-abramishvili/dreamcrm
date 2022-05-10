@@ -292,7 +292,6 @@
                                 <td style="width: 15%; text-align: right;">
                                     <button @click="changeProductionItem(item)" class="btn btn-sm btn-outline-secondary">заменить</button>
                                     <!-- <button @click="delItem(item.id)">удалить</button> -->
-                                    <div v-if="views.backdrop" @click="closeOffcanvas()" class="offcanvas-backdrop fade show"></div>
                                 </td>
                             </tr>
                         </tbody>
@@ -302,6 +301,8 @@
                 </div>
             </div>
         </div>
+
+        <div v-if="views.backdrop" @click="closeOffcanvas()" class="offcanvas-backdrop fade show"></div>
     </div>
 </template>
 
