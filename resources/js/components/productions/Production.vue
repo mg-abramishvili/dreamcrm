@@ -158,10 +158,10 @@
                             <table class="table dataTable">
                                 <tbody>
                                     <tr v-for="item in production.items">
-                                        <td style="width: 50%;">
+                                        <td style="width: 42.5%;">
                                             {{ item.stock_item.name }}
                                         </td>
-                                        <td style="width: 50%;">
+                                        <td style="width: 42.5%;">
                                             <ul class="m-0">
                                                 <li v-for="reserve in item.reserves" class="my-2" style="line-height: 1;">
                                                     {{ reserve.quantity }} шт из склада <span class="text-muted">{{ reserve.price_total | currency }}₽</span><br>
@@ -171,9 +171,10 @@
                                                     не хватает {{ need.quantity }} шт
                                                 </li>
                                             </ul>
+                                        </td>
+                                        <td style="width: 15%; text-align: right;">
                                             <button @click="changeProductionItem(item)" class="btn btn-sm btn-outline-secondary">заменить</button>
                                             <!-- <button @click="delItem(item.id)">удалить</button> -->
-                                            
                                             <div v-if="views.backdrop" @click="closeOffcanvas()" class="offcanvas-backdrop fade show"></div>
                                         </td>
                                     </tr>
@@ -258,6 +259,8 @@
             closeOffcanvas() {
                 this.views.backdrop = false
                 this.views.changeStatus = false
+                this.views.changeRal = false
+                this.views.changePriority = false
                 this.views.changeProductionItem = false
             },
             delConfirm() {

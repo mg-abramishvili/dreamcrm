@@ -2,7 +2,7 @@
     <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasRight" role="dialog">
         <div class="offcanvas-header">
             <h4 id="offcanvasRightLabel" class="m-0">Цвет (RAL)</h4>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <button @click="$parent.closeOffcanvas()" type="button" class="btn-close text-reset"></button>
         </div>
         <div class="offcanvas-body">
             <div>
