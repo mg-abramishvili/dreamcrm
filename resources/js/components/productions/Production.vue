@@ -133,6 +133,12 @@
                                         &mdash;
                                     </template>
                                 </span>
+
+                                <small @click="changePaymentType()" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </small>
+
+                                <ChangePaymentType v-if="views.changePaymentType" :production="production" />
                             </p>
 
                             <p class="d-flex align-items-center">
@@ -146,6 +152,12 @@
                                         &mdash;
                                     </template>
                                 </span>
+
+                                <small @click="changeSupplyInfo()" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </small>
+
+                                <ChangeSupplyInfo v-if="views.changeSupplyInfo" :production="production" />
                             </p>
 
                             <p class="d-flex align-items-center">
@@ -159,32 +171,24 @@
                                         &mdash;
                                     </template>
                                 </span>
+
+                                <small @click="changeInvoiceNumber()" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </small>
+
+                                <ChangeInvoiceNumber v-if="views.changeInvoiceNumber" :production="production" />
                             </p>
 
-                            <p class="d-flex align-items-center">
+                            <p v-if="production.additional_hardware" class="d-flex align-items-center">
                                 <strong class="me-2">Доп. оборудование:</strong>
 
-                                <span>
-                                    <template v-if="production.additional_hardware">
-                                        {{ production.additional_hardware }}
-                                    </template>
-                                    <template v-if="!production.additional_hardware">
-                                        &mdash;
-                                    </template>
-                                </span>
+                                <span>{{ production.additional_hardware }}</span>
                             </p>
 
-                            <p class="d-flex align-items-center">
+                            <p v-if="production.additional_for_tribune" class="d-flex align-items-center">
                                 <strong class="me-2">Доп. для трибун:</strong>
 
-                                <span>
-                                    <template v-if="production.additional_for_tribune">
-                                        {{ production.additional_for_tribune }}
-                                    </template>
-                                    <template v-if="!production.additional_for_tribune">
-                                        &mdash;
-                                    </template>
-                                </span>
+                                <span>{{ production.additional_for_tribune }}</span>
                             </p>
                         </div>
                         <div class="col-12 col-lg-6">
@@ -199,7 +203,14 @@
                                         &mdash;
                                     </template>
                                 </span>
+
+                                <small @click="changeStartDate()" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </small>
+
+                                <ChangeStartDate v-if="views.changeStartDate" :production="production" />
                             </p>
+
                             <p class="d-flex align-items-center">
                                 <strong class="me-2">Срок завершения:</strong>
 
@@ -211,7 +222,14 @@
                                         &mdash;
                                     </template>
                                 </span>
+
+                                <small @click="changeEndDate()" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </small>
+
+                                <ChangeEndDate v-if="views.changeEndDate" :production="production" />
                             </p>
+
                             <p class="d-flex align-items-center">
                                 <strong class="me-2">Контакты:</strong>
 
@@ -290,7 +308,7 @@
                                     </ul>
                                 </td>
                                 <td style="width: 15%; text-align: right;">
-                                    <button @click="changeProductionItem(item)" class="btn btn-sm btn-outline-secondary">заменить</button>
+                                    <!-- <button @click="changeProductionItem(item)" class="btn btn-sm btn-outline-secondary">заменить</button> -->
                                     <!-- <button @click="delItem(item.id)">удалить</button> -->
                                 </td>
                             </tr>
@@ -312,6 +330,11 @@
     import ChangePriority from './comps/ChangePriority'
     import ChangeRal from './comps/ChangeRal'
     import ChangeProductionItem from './comps/ChangeProductionItem'
+    import ChangePaymentType from './comps/ChangePaymentType'
+    import ChangeSupplyInfo from './comps/ChangeSupplyInfo'
+    import ChangeInvoiceNumber from './comps/ChangeInvoiceNumber'
+    import ChangeStartDate from './comps/ChangeStartDate'
+    import ChangeEndDate from './comps/ChangeEndDate'
 
     export default {
         data() {
@@ -330,6 +353,11 @@
                     changePriority: false,
                     changeRal: false,
                     changeProductionItem: false,
+                    changePaymentType: false,
+                    changeSupplyInfo: false,
+                    changeInvoiceNumber: false,
+                    changeStartDate: false,
+                    changeEndDate: false,
                 }
             }
         },
@@ -367,6 +395,26 @@
                 this.views.backdrop = true
                 this.views.changeRal = true
             },
+            changePaymentType() {
+                this.views.backdrop = true
+                this.views.changePaymentType = true
+            },
+            changeSupplyInfo() {
+                this.views.backdrop = true
+                this.views.changeSupplyInfo = true
+            },
+            changeInvoiceNumber() {
+                this.views.backdrop = true
+                this.views.changeInvoiceNumber = true
+            },
+            changeStartDate() {
+                this.views.backdrop = true
+                this.views.changeStartDate = true
+            },
+            changeEndDate() {
+                this.views.backdrop = true
+                this.views.changeEndDate = true
+            },
             changeProductionItem(item) {
                 this.selected.productionItem = item
                 this.views.backdrop = true
@@ -378,6 +426,11 @@
                 this.views.changeRal = false
                 this.views.changePriority = false
                 this.views.changeProductionItem = false
+                this.views.changePaymentType = false
+                this.views.changeSupplyInfo = false
+                this.views.ChangeInvoiceNumber = false
+                this.views.changeStartDate = false
+                this.views.changeEndDate = false
             },
             delConfirm() {
                 this.$swal({
@@ -423,7 +476,12 @@
             ChangeStatus,
             ChangePriority,
             ChangeRal,
-            ChangeProductionItem
+            ChangeProductionItem,
+            ChangePaymentType,
+            ChangeSupplyInfo,
+            ChangeInvoiceNumber,
+            ChangeStartDate,
+            ChangeEndDate,
         }
     }
 </script>

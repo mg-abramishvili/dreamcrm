@@ -6,7 +6,8 @@
         </div>
         <div class="offcanvas-body">
             <div>
-                <input v-model="ral" class="form-control mb-2" />
+                <input v-model="ral" type="text" class="form-control mb-2" />
+                
                 <button @click="save()" class="btn btn-primary">Сохранить</button>
             </div>
         </div>
