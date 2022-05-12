@@ -241,7 +241,14 @@
                                         &mdash;
                                     </template>
                                 </span>
+
+                                <small @click="changeContacts()" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </small>
+
+                                <ChangeContacts v-if="views.changeContacts" :production="production" />
                             </p>
+
                             <p class="d-flex align-items-center">
                                 <strong class="me-2">E-mail:</strong>
 
@@ -253,7 +260,14 @@
                                         &mdash;
                                     </template>
                                 </span>
+
+                                <small @click="changeEmail()" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </small>
+
+                                <ChangeEmail v-if="views.changeEmail" :production="production" />
                             </p>
+
                             <p class="d-flex align-items-center">
                                 <strong class="me-2">Серийный номер:</strong>
 
@@ -265,7 +279,14 @@
                                         &mdash;
                                     </template>
                                 </span>
+
+                                <small @click="changeSerialNumber()" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </small>
+
+                                <ChangeSerialNumber v-if="views.changeSerialNumber" :production="production" />
                             </p>
+
                             <p class="d-flex align-items-center">
                                 <strong class="me-2">Ключ активации:</strong>
 
@@ -277,6 +298,12 @@
                                         &mdash;
                                     </template>
                                 </span>
+
+                                <small @click="changeActivationKey()" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </small>
+
+                                <ChangeActivationKey v-if="views.changeActivationKey" :production="production" />
                             </p>
                         </div>
                     </div>
@@ -286,6 +313,12 @@
                             <strong class="me-2">Описание:</strong>
                             <div v-if="production.description" v-html="production.description"></div>
                             <template v-if="!production.description">&mdash;</template>
+
+                            <small @click="changeDescription()" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            </small>
+
+                            <ChangeDescription v-if="views.changeDescription" :production="production" />
                         </div>
                     </div>
                 </div>
@@ -335,6 +368,11 @@
     import ChangeInvoiceNumber from './comps/ChangeInvoiceNumber'
     import ChangeStartDate from './comps/ChangeStartDate'
     import ChangeEndDate from './comps/ChangeEndDate'
+    import ChangeContacts from './comps/ChangeContacts'
+    import ChangeEmail from './comps/ChangeEmail'
+    import ChangeSerialNumber from './comps/ChangeSerialNumber'
+    import ChangeActivationKey from './comps/ChangeActivationKey'
+    import ChangeDescription from './comps/ChangeDescription'
 
     export default {
         data() {
@@ -358,6 +396,10 @@
                     changeInvoiceNumber: false,
                     changeStartDate: false,
                     changeEndDate: false,
+                    changeContacts: false,
+                    changeEmail: false,
+                    changeSerialNumber: false,
+                    changeActivationKey: false,
                 }
             }
         },
@@ -415,6 +457,26 @@
                 this.views.backdrop = true
                 this.views.changeEndDate = true
             },
+            changeContacts() {
+                this.views.backdrop = true
+                this.views.changeContacts = true
+            },
+            changeEmail() {
+                this.views.backdrop = true
+                this.views.changeEmail = true
+            },
+            changeSerialNumber() {
+                this.views.backdrop = true
+                this.views.changeSerialNumber = true
+            },
+            changeActivationKey() {
+                this.views.backdrop = true
+                this.views.changeActivationKey = true
+            },
+            changeDescription() {
+                this.views.backdrop = true
+                this.views.changeDescription = true
+            },
             changeProductionItem(item) {
                 this.selected.productionItem = item
                 this.views.backdrop = true
@@ -431,6 +493,11 @@
                 this.views.ChangeInvoiceNumber = false
                 this.views.changeStartDate = false
                 this.views.changeEndDate = false
+                this.views.changeContacts = false
+                this.views.changeEmail = false
+                this.views.changeSerialNumber = false
+                this.views.changeActivationKey = false
+                this.views.changeDescription = false
             },
             delConfirm() {
                 this.$swal({
@@ -482,6 +549,11 @@
             ChangeInvoiceNumber,
             ChangeStartDate,
             ChangeEndDate,
+            ChangeContacts,
+            ChangeEmail,
+            ChangeSerialNumber,
+            ChangeActivationKey,
+            ChangeDescription,
         }
     }
 </script>
