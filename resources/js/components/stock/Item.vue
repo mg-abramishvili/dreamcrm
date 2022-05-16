@@ -50,7 +50,7 @@
             
             <h2 class="h3 mt-0 mb-2 text-center">
                 Остатки
-                <button @click="openAddBalance()" class="btn btn-outline-primary ms-1">Добавить</button>
+                <!-- <button @click="openAddBalance()" class="btn btn-outline-primary ms-1">Добавить</button> -->
             </h2>
 
             <AddBalance v-if="views.addBalance" :item="item"></AddBalance>
