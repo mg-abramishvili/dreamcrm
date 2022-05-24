@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\StockBalance;
+use App\Models\StockNeed;
 use App\Traits\updateCatalogItemPrice;
 use App\Traits\updateCatalogBoxPrice;
+use App\Traits\createReserveOnly;
 use Illuminate\Http\Request;
 
 class StockBalanceController extends Controller
 {
-    use updateCatalogItemPrice, updateCatalogBoxPrice;
+    use updateCatalogItemPrice, updateCatalogBoxPrice, createReserveOnly;
 
     public function index()
     {
@@ -33,6 +35,17 @@ class StockBalanceController extends Controller
         $this->updateCatalogItemPrice($balance);
 
         $this->updateCatalogBoxPrice($balance);
+
+        // check if stockNeeds exists
+        $stockNeeds = StockNeed::where('stock_item_id', $balance->stock_item_id)->get();
+
+        if(count($stockNeeds) > 0)
+        {
+            foreach($stockNeeds as $stockNeed)
+            {
+                $this->createReserveOnly($stockNeed, $balance);
+            }
+        }
     }
 
     public function update($id, Request $request)
