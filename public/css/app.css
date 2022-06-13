@@ -344,6 +344,15 @@ table.dataTable {
 }
 
 /* CALCULATION */
+.calculations-page {
+    height: calc(100% - 40px);
+}
+.calculations-page .card.h-100 {
+    height: calc(100% - 80px) !important;
+}
+.calculations-table {
+    height: 100%;
+}
 .calculation-left-block-main-label {
     height: 60px;
     overflow: hidden;

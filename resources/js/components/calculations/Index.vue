@@ -13,42 +13,17 @@
             </div>
         </div>
 
-        <div v-if="calculations && calculations.length" class="card card-bordered">
-            <div class="card-body p-0">
-                <table class="table table-hover dataTable">
-                    <thead>
-                        <tr>
-                            <th>Дата расчета</th>
-                            <th>№</th>
-                            <th>Корпус</th>
-                            <th>Автор расчета</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="calculation in calculations" :key="calculation.id" @click="goTo(calculation.id)">
-                            <td class="align-middle">
-                                {{ calculation.created_at | date }}
-                            </td>
-                            <td class="align-middle">
-                                Расчет №{{ calculation.id }}
-                            </td>
-                            <td class="align-middle">
-                                <template v-for="box in calculation.boxes">
-                                    {{ box.name }}
-                                </template>
-                            </td>
-                            <td class="align-middle">
-                                {{ calculation.user.name }}
-                            </td>
-                            <td class="align-middle">
-                                <template v-if="calculation.project && calculation.project.id">
-                                    <span class="btn btn-sm btn-outline-primary">{{ calculation.project.name }}</span>
-                                </template>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div v-if="!views.loading" class="card card-bordered h-100">
+            <div class="card-body p-0 h-100">
+                <ag-grid-vue v-if="calculations.length"
+                    class="ag-theme-alpine calculations-table"
+                    :defaultColDef="table.defaultColDef"
+                    :columnDefs="table.columns"
+                    @grid-ready="onGridReady"
+                    :rowData="calculations"
+                    @row-clicked="goTo"
+                >
+                </ag-grid-vue>
             </div>
         </div>
 
@@ -58,33 +33,86 @@
 
 <script>
     import Loader from '../Loader.vue'
+    import { AgGridVue } from "ag-grid-vue";
+    import "ag-grid-community/dist/styles/ag-grid.css";
+    import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 
     export default {
         data() {
             return {
                 calculations: [],
+
+                table: {
+                    columns: [
+                        {
+                            field: "created_at",
+                            valueFormatter: this.dateFormatter,
+                            headerName: 'Дата',
+                            sortable: true,
+                            filter: false,
+                            suppressMenu: true,
+                            width: 100,
+                        },
+                        {
+                            field: "id",
+                            headerName: '№',
+                            sortable: true,
+                            filter: true,
+                            suppressMenu: true,
+                        },
+                        {
+                            field: "box",
+                            headerName: 'Корпус',
+                            sortable: true,
+                            filter: true,
+                            suppressMenu: true,
+                        },
+                        {
+                            field: "author",
+                            headerName: 'Автор расчета',
+                            sortable: true,
+                            filter: true,
+                            suppressMenu: true,
+                        },
+                    ],
+                    defaultColDef: {
+                        sortingOrder: ['asc', 'desc'],
+                        floatingFilter: true,
+                        suppressMovable: true,
+                    },
+                },
+
+                views: {
+                    loading: true
+                }
             }
         },
         created() {
             axios
                 .get('/api/calculations')
-                .then(response => (
-                    this.calculations = response.data
-                ));
+                .then(response => {
+                    this.calculations = response.data.data
+
+                    this.views.loading = false
+                })
         },
         methods: {
-            goTo(id) {
-                this.$router.push({ name: 'Calculation', params: { id: id } });
-            }
+            onGridReady(params) {
+                this.gridApi = params.api
+                this.gridColumnApi = params.gridColumnApi
+                
+                this.gridApi.sizeColumnsToFit()
+            },
+            goTo(event) {
+                this.$router.push({ name: 'Calculation', params: { id: event.data.id } });
+            },
+            dateFormatter(params) {
+                return this.$options.filters.date(params.value);
+            },
         },
         components: {
-            Loader
+            Loader,
+            AgGridVue
         }
     }
 </script>
-
-<style scoped>
-    .table tr:hover {
-        cursor: pointer;
-    }
-</style>

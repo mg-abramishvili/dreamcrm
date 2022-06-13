@@ -4,15 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Calculation;
 use App\Http\Resources\calculations\CalculationResource;
+use App\Http\Resources\calculations\CalculationsResource;
 use Illuminate\Http\Request;
 
 class CalculationController extends Controller
 {
     public function index()
     {
-        return Calculation::with('user', 'boxes', 'project')
-            ->orderBy('created_at', 'desc')
-            ->get();
+        return CalculationsResource::collection(Calculation::orderBy('created_at', 'desc')->get());
     }
 
     public function calculation($id)
