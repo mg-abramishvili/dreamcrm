@@ -31,10 +31,10 @@
                 <tbody>
                     <tr @click="goTo(need.stock_item.id)" v-for="need in needs" :key="'need_' + need.id">
                         <td class="align-middle">
-                            <a>{{ need.stock_item.name }}</a>
+                            <a>{{ need.name }}</a>
                         </td>
                         <td>
-                            {{ need.production_item.production.name }} ({{ 'ID #' + need.production_item.production.id }})
+                            {{ need.production }}
                         </td>
                         <td class="align-middle fw-bold text-danger text-center">
                             {{ need.quantity }} шт
@@ -67,7 +67,7 @@
                 axios
                 .get(`/api/stock/needs`)
                 .then(response => {
-                    this.needs = response.data
+                    this.needs = response.data.data
 
                     this.views.loading = false
                 })
