@@ -105,6 +105,9 @@
                             sortable: false,
                             filter: false,
                             suppressMenu: true,
+                            valueGetter: (params) => {
+                                return params.quantity + ' шт. | ' + this.$options.filters.currency(params.price) + ' ₽ | ' + this.$options.filters.date(params.created_at)
+                            },
                         },
                     ],
                     defaultColDef: {
