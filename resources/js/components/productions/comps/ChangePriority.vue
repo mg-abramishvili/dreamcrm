@@ -35,8 +35,7 @@
                 })
                 .then(response => {
                     this.$parent.loadProduction()
-                    this.$parent.views.changePriority = false
-                    this.$parent.views.backdrop = false
+                    this.$parent.closeOffcanvas()
                 })
             }
         }

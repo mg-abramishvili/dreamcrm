@@ -60,11 +60,11 @@
                                     </template>
                                 </span>
                                 
-                                <small @click="changeStatus()" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                <small @click="changePanel('status')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                 </small>
 
-                                <ChangeStatus v-if="views.changeStatus" :production="production" />
+                                <ChangeStatus v-if="views.changePanel == 'status'" :production="production" />
                             </p>
 
                             <p class="d-flex align-items-center">
@@ -85,11 +85,11 @@
                                     </template>
                                 </span>
 
-                                <small @click="changePriority()" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                <small @click="changePanel('priority')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                 </small>
 
-                                <ChangePriority v-if="views.changePriority" :production="production" />
+                                <ChangePriority v-if="views.changePanel == 'priority'" :production="production" />
                             </p>
 
                             <p class="d-flex align-items-center">
@@ -115,11 +115,11 @@
                                     </template>
                                 </span>
 
-                                <small @click="changeRal()" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                <small @click="changePanel('ral')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                 </small>
 
-                                <ChangeRal v-if="views.changeRal" :production="production" />
+                                <ChangeRal v-if="views.changePanel == 'ral'" :production="production" />
                             </p>
 
                             <p class="d-flex align-items-center">
@@ -134,11 +134,11 @@
                                     </template>
                                 </span>
 
-                                <small @click="changePaymentType()" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                <small @click="changePanel('paymentType')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                 </small>
 
-                                <ChangePaymentType v-if="views.changePaymentType" :production="production" />
+                                <ChangePaymentType v-if="views.changePanel == 'paymentType'" :production="production" />
                             </p>
 
                             <p class="d-flex align-items-center">
@@ -153,11 +153,11 @@
                                     </template>
                                 </span>
 
-                                <small @click="changeSupplyInfo()" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                <small @click="changePanel('supplyInfo')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                 </small>
 
-                                <ChangeSupplyInfo v-if="views.changeSupplyInfo" :production="production" />
+                                <ChangeSupplyInfo v-if="views.changePanel == 'supplyInfo'" :production="production" />
                             </p>
 
                             <p class="d-flex align-items-center">
@@ -172,11 +172,11 @@
                                     </template>
                                 </span>
 
-                                <small @click="changeInvoiceNumber()" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                <small @click="changePanel('invoiceNumber')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                 </small>
 
-                                <ChangeInvoiceNumber v-if="views.changeInvoiceNumber" :production="production" />
+                                <ChangeInvoiceNumber v-if="views.changePanel == 'invoiceNumber'" :production="production" />
                             </p>
 
                             <p v-if="production.additional_hardware" class="d-flex align-items-center">
@@ -204,11 +204,11 @@
                                     </template>
                                 </span>
 
-                                <small @click="changeStartDate()" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                <small @click="changePanel('startDate')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                 </small>
 
-                                <ChangeStartDate v-if="views.changeStartDate" :production="production" />
+                                <ChangeStartDate v-if="views.changePanel == 'startDate'" :production="production" />
                             </p>
 
                             <p class="d-flex align-items-center">
@@ -223,11 +223,11 @@
                                     </template>
                                 </span>
 
-                                <small @click="changeEndDate()" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                <small @click="changePanel('endDate')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                 </small>
 
-                                <ChangeEndDate v-if="views.changeEndDate" :production="production" />
+                                <ChangeEndDate v-if="views.changePanel == 'endDate'" :production="production" />
                             </p>
 
                             <p class="d-flex align-items-center">
@@ -242,11 +242,11 @@
                                     </template>
                                 </span>
 
-                                <small @click="changeContacts()" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                <small @click="changePanel('contacts')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                 </small>
 
-                                <ChangeContacts v-if="views.changeContacts" :production="production" />
+                                <ChangeContacts v-if="views.changePanel == 'contacts'" :production="production" />
                             </p>
 
                             <p class="d-flex align-items-center">
@@ -261,11 +261,11 @@
                                     </template>
                                 </span>
 
-                                <small @click="changeEmail()" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                <small @click="changePanel('email')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                 </small>
 
-                                <ChangeEmail v-if="views.changeEmail" :production="production" />
+                                <ChangeEmail v-if="views.changePanel == 'email'" :production="production" />
                             </p>
 
                             <p class="d-flex align-items-center">
@@ -280,11 +280,11 @@
                                     </template>
                                 </span>
 
-                                <small @click="changeSerialNumber()" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                <small @click="changePanel('serialNumber')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                 </small>
 
-                                <ChangeSerialNumber v-if="views.changeSerialNumber" :production="production" />
+                                <ChangeSerialNumber v-if="views.changePanel == 'serialNumber'" :production="production" />
                             </p>
 
                             <p class="d-flex align-items-center">
@@ -299,11 +299,11 @@
                                     </template>
                                 </span>
 
-                                <small @click="changeActivationKey()" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                <small @click="changePanel('activationKey')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                 </small>
 
-                                <ChangeActivationKey v-if="views.changeActivationKey" :production="production" />
+                                <ChangeActivationKey v-if="views.changePanel == 'activationKey'" :production="production" />
                             </p>
                         </div>
                     </div>
@@ -314,11 +314,11 @@
                             <div v-if="production.description" v-html="production.description"></div>
                             <template v-if="!production.description">&mdash;</template>
 
-                            <small @click="changeDescription()" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                            <small @click="changePanel('description')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                             </small>
 
-                            <ChangeDescription v-if="views.changeDescription" :production="production" />
+                            <ChangeDescription v-if="views.changePanel == 'description'" :production="production" />
                         </div>
                     </div>
                 </div>
@@ -387,19 +387,8 @@
                 views: {
                     loading: true,
                     backdrop: false,
-                    changeStatus: false,
-                    changePriority: false,
-                    changeRal: false,
+                    changePanel: '',
                     changeProductionItem: false,
-                    changePaymentType: false,
-                    changeSupplyInfo: false,
-                    changeInvoiceNumber: false,
-                    changeStartDate: false,
-                    changeEndDate: false,
-                    changeContacts: false,
-                    changeEmail: false,
-                    changeSerialNumber: false,
-                    changeActivationKey: false,
                 }
             }
         },
@@ -425,57 +414,9 @@
                     this.loadProduction()
                 })
             },
-            changeStatus() {
+            changePanel(panel) {
                 this.views.backdrop = true
-                this.views.changeStatus = true
-            },
-            changePriority() {
-                this.views.backdrop = true
-                this.views.changePriority = true
-            },
-            changeRal() {
-                this.views.backdrop = true
-                this.views.changeRal = true
-            },
-            changePaymentType() {
-                this.views.backdrop = true
-                this.views.changePaymentType = true
-            },
-            changeSupplyInfo() {
-                this.views.backdrop = true
-                this.views.changeSupplyInfo = true
-            },
-            changeInvoiceNumber() {
-                this.views.backdrop = true
-                this.views.changeInvoiceNumber = true
-            },
-            changeStartDate() {
-                this.views.backdrop = true
-                this.views.changeStartDate = true
-            },
-            changeEndDate() {
-                this.views.backdrop = true
-                this.views.changeEndDate = true
-            },
-            changeContacts() {
-                this.views.backdrop = true
-                this.views.changeContacts = true
-            },
-            changeEmail() {
-                this.views.backdrop = true
-                this.views.changeEmail = true
-            },
-            changeSerialNumber() {
-                this.views.backdrop = true
-                this.views.changeSerialNumber = true
-            },
-            changeActivationKey() {
-                this.views.backdrop = true
-                this.views.changeActivationKey = true
-            },
-            changeDescription() {
-                this.views.backdrop = true
-                this.views.changeDescription = true
+                this.views.changePanel = panel
             },
             changeProductionItem(item) {
                 this.selected.productionItem = item
@@ -484,20 +425,8 @@
             },
             closeOffcanvas() {
                 this.views.backdrop = false
-                this.views.changeStatus = false
-                this.views.changeRal = false
-                this.views.changePriority = false
+                this.views.changePanel = ''
                 this.views.changeProductionItem = false
-                this.views.changePaymentType = false
-                this.views.changeSupplyInfo = false
-                this.views.ChangeInvoiceNumber = false
-                this.views.changeStartDate = false
-                this.views.changeEndDate = false
-                this.views.changeContacts = false
-                this.views.changeEmail = false
-                this.views.changeSerialNumber = false
-                this.views.changeActivationKey = false
-                this.views.changeDescription = false
             },
             delConfirm() {
                 this.$swal({

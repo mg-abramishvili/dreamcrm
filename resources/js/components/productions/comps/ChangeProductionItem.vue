@@ -49,8 +49,7 @@ export default {
             .then(response => {
                 console.log(response.data)
                 this.$parent.loadProduction()
-                this.$parent.views.changeProductionItem = false
-                this.$parent.views.backdrop = false
+                this.$parent.closeOffcanvas()
             })
         },
     }
