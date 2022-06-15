@@ -43,6 +43,177 @@
 
                                 <ChangeName v-if="views.changePanel == 'name'" :client="client" />
                             </p>
+
+                            <p class="d-flex align-items-center">
+                                <strong class="me-2">Телефон:</strong>
+
+                                <span>
+                                    <template v-if="client.tel">
+                                        {{ client.tel }}
+                                    </template>
+                                    <template v-if="!client.tel">
+                                        &mdash;
+                                    </template>
+                                </span>
+
+                                <small @click="changePanel('tel')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </small>
+
+                                <ChangeTel v-if="views.changePanel == 'tel'" :client="client" />
+                            </p>
+
+                            <p class="d-flex align-items-center">
+                                <strong class="me-2">E-mail:</strong>
+
+                                <span>
+                                    <template v-if="client.email">
+                                        {{ client.email }}
+                                    </template>
+                                    <template v-if="!client.email">
+                                        &mdash;
+                                    </template>
+                                </span>
+
+                                <small @click="changePanel('email')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </small>
+
+                                <ChangeEmail v-if="views.changePanel == 'email'" :client="client" />
+                            </p>
+
+                            <p class="d-flex align-items-center">
+                                <strong class="me-2">Контактное лицо:</strong>
+
+                                <span>
+                                    <template v-if="client.kont_litso">
+                                        {{ client.kont_litso }}
+                                    </template>
+                                    <template v-if="!client.kont_litso">
+                                        &mdash;
+                                    </template>
+                                </span>
+
+                                <small @click="changePanel('kontLitso')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </small>
+
+                                <ChangeKontLitso v-if="views.changePanel == 'kontLitso'" :client="client" />
+                            </p>
+
+                            <p class="d-flex align-items-center">
+                                <strong class="me-2">ИНН:</strong>
+
+                                <span>
+                                    <template v-if="client.inn">
+                                        {{ client.inn }}
+                                    </template>
+                                    <template v-if="!client.inn">
+                                        &mdash;
+                                    </template>
+                                </span>
+
+                                <small @click="changePanel('inn')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </small>
+
+                                <ChangeInn v-if="views.changePanel == 'inn'" :client="client" />
+                            </p>
+
+                            <p class="d-flex align-items-center">
+                                <strong class="me-2">КПП:</strong>
+
+                                <span>
+                                    <template v-if="client.kpp">
+                                        {{ client.kpp }}
+                                    </template>
+                                    <template v-if="!client.kpp">
+                                        &mdash;
+                                    </template>
+                                </span>
+
+                                <small @click="changePanel('kpp')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </small>
+
+                                <ChangeKpp v-if="views.changePanel == 'kpp'" :client="client" />
+                            </p>
+
+                            <p class="d-flex align-items-center">
+                                <strong class="me-2">ОГРН:</strong>
+
+                                <span>
+                                    <template v-if="client.ogrn">
+                                        {{ client.ogrn }}
+                                    </template>
+                                    <template v-if="!client.ogrn">
+                                        &mdash;
+                                    </template>
+                                </span>
+
+                                <small @click="changePanel('ogrn')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </small>
+
+                                <ChangeOgrn v-if="views.changePanel == 'ogrn'" :client="client" />
+                            </p>
+
+                            <p class="d-flex align-items-center">
+                                <strong class="me-2">Юр. адрес:</strong>
+
+                                <span>
+                                    <template v-if="client.yur_address">
+                                        {{ client.yur_address }}
+                                    </template>
+                                    <template v-if="!client.yur_address">
+                                        &mdash;
+                                    </template>
+                                </span>
+
+                                <small @click="changePanel('yurAddress')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </small>
+
+                                <ChangeYurAddress v-if="views.changePanel == 'yurAddress'" :client="client" />
+                            </p>
+
+                            <p class="d-flex align-items-center">
+                                <strong class="me-2">Почт. адрес:</strong>
+
+                                <span>
+                                    <template v-if="client.pocht_address">
+                                        {{ client.pocht_address }}
+                                    </template>
+                                    <template v-if="!client.pocht_address">
+                                        &mdash;
+                                    </template>
+                                </span>
+
+                                <small @click="changePanel('pochtAddress')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </small>
+
+                                <ChangePochtAddress v-if="views.changePanel == 'pochtAddress'" :client="client" />
+                            </p>
+
+                            <p class="d-flex align-items-center">
+                                <strong class="me-2">Факт. адрес:</strong>
+
+                                <span>
+                                    <template v-if="client.fakt_address">
+                                        {{ client.fakt_address }}
+                                    </template>
+                                    <template v-if="!client.fakt_address">
+                                        &mdash;
+                                    </template>
+                                </span>
+
+                                <small @click="changePanel('faktAddress')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </small>
+
+                                <ChangeFaktAddress v-if="views.changePanel == 'faktAddress'" :client="client" />
+                            </p>
                         </div>
                         <div class="col-12 col-lg-6">
                             <p class="d-flex align-items-center">
@@ -63,6 +234,63 @@
 
                                 <ChangeRasSchet v-if="views.changePanel == 'rasSchet'" :client="client" />
                             </p>
+
+                            <p class="d-flex align-items-center">
+                                <strong class="me-2">Корр. счет:</strong>
+
+                                <span>
+                                    <template v-if="client.korr_schet">
+                                        {{ client.korr_schet }}
+                                    </template>
+                                    <template v-if="!client.korr_schet">
+                                        &mdash;
+                                    </template>
+                                </span>
+
+                                <small @click="changePanel('korrSchet')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </small>
+
+                                <ChangeKorrSchet v-if="views.changePanel == 'korrSchet'" :client="client" />
+                            </p>
+
+                            <p class="d-flex align-items-center">
+                                <strong class="me-2">БИК:</strong>
+
+                                <span>
+                                    <template v-if="client.bik">
+                                        {{ client.bik }}
+                                    </template>
+                                    <template v-if="!client.bik">
+                                        &mdash;
+                                    </template>
+                                </span>
+
+                                <small @click="changePanel('bik')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </small>
+
+                                <ChangeBik v-if="views.changePanel == 'bik'" :client="client" />
+                            </p>
+
+                            <p class="d-flex align-items-center">
+                                <strong class="me-2">Банк:</strong>
+
+                                <span>
+                                    <template v-if="client.bank">
+                                        {{ client.bank }}
+                                    </template>
+                                    <template v-if="!client.bank">
+                                        &mdash;
+                                    </template>
+                                </span>
+
+                                <small @click="changePanel('bank')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </small>
+
+                                <ChangeBank v-if="views.changePanel == 'bank'" :client="client" />
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -79,7 +307,19 @@
 <script>
     import Loader from '../Loader.vue'
     import ChangeName from './comps/ChangeName'
+    import ChangeTel from './comps/ChangeTel'
+    import ChangeEmail from './comps/ChangeEmail'
+    import ChangeKontLitso from './comps/ChangeKontLitso'
+    import ChangeInn from './comps/ChangeInn'
+    import ChangeKpp from './comps/ChangeKpp'
+    import ChangeOgrn from './comps/ChangeOgrn'
+    import ChangeYurAddress from './comps/ChangeYurAddress'
+    import ChangePochtAddress from './comps/ChangePochtAddress'
+    import ChangeFaktAddress from './comps/ChangeFaktAddress'
     import ChangeRasSchet from './comps/ChangeRasSchet'
+    import ChangeKorrSchet from './comps/ChangeKorrSchet'
+    import ChangeBik from './comps/ChangeBik'
+    import ChangeBank from './comps/ChangeBank'
 
     export default {
         data() {
@@ -88,7 +328,6 @@
 
                 selected: {
                     tab: 'general',
-                    productionItem: '',
                 },
 
                 name: '',
@@ -150,7 +389,6 @@
             closeOffcanvas() {
                 this.views.backdrop = false
                 this.views.changePanel = ''
-                this.views.changeProductionItem = false
             },
             updateClient(id) {
                 if (!this.name) {
@@ -193,7 +431,19 @@
         components: {
             Loader,
             ChangeName,
-            ChangeRasSchet
+            ChangeTel,
+            ChangeEmail,
+            ChangeKontLitso,
+            ChangeInn,
+            ChangeKpp,
+            ChangeOgrn,
+            ChangeYurAddress,
+            ChangePochtAddress,
+            ChangeFaktAddress,
+            ChangeRasSchet,
+            ChangeKorrSchet,
+            ChangeBik,
+            ChangeBank,
         },
     }
 </script>
