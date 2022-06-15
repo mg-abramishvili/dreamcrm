@@ -105,14 +105,14 @@
                             sortable: false,
                             filter: false,
                             suppressMenu: true,
-                            valueGetter: (params) => {
+                            cellRenderer: params => {
                                 let balances = []
-
-                                params.forEach(b => {
-                                    balances.push(b.quantity + ' | ' + b.price + ' | ' + b.date)
+                                
+                                params.data.balances.forEach(b => {
+                                    balances.push('<div class="d-block lh-sm">' + b.quantity + ' | ' + this.$options.filters.currency(b.price) + ' ₽' + ' | ' + this.$options.filters.date(b.date) + '</div>')
                                 })
 
-                                return balances
+                                return '' + balances.toString().replaceAll(',', '') + ''
                             },
                         },
                     ],
@@ -120,6 +120,9 @@
                         sortingOrder: ['asc', 'desc'],
                         floatingFilter: true,
                         suppressMovable: true,
+                        resizable: true,
+                        wrapText: true,
+                        autoHeight: true,
                     },
                 },
 

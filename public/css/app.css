@@ -584,6 +584,10 @@ table.dataTable {
 .ag-theme-alpine textarea[class^=ag-] {
     border-color: #dbd6cb !important;
 }
+.ag-row .ag-cell {
+    display: flex;
+    align-items: center;
+}
 /* AG */
 
 /* TASK MODAL */
