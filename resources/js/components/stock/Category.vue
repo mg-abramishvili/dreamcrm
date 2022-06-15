@@ -23,7 +23,7 @@
             </div>
         </div>
 
-        <div v-if="items && items.length" class="card">
+        <div v-if="!views.loading" class="card">
             <table class="table dataTable">
                 <thead>
                     <tr>
@@ -65,6 +65,10 @@
         data() {
             return {
                 category: {},
+
+                views: {
+                    loading: true,
+                }
             }
         },
         created() {
@@ -76,6 +80,8 @@
                 .get(`/api/stock/category/${this.$route.params.category_id}`)
                 .then(response => {
                     this.category = response.data.data
+
+                    this.views.loading = false
                 })
             },
             goTo(id) {
