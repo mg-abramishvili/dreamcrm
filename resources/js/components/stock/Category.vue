@@ -108,7 +108,7 @@
                             valueGetter: (params) => {
                                 let balances = []
 
-                                params.balances.forEach(b => {
+                                params.forEach(b => {
                                     balances.push(b.quantity + ' | ' + b.price + ' | ' + b.date)
                                 })
 
