@@ -23,7 +23,21 @@
             </div>
         </div>
 
-        <div v-if="!views.loading" class="card">
+        <div v-if="!views.loading" class="card card-bordered h-100">
+            <div class="card-body p-0 h-100">
+                <ag-grid-vue v-if="category.items.length"
+                    class="ag-theme-alpine stock-table"
+                    :defaultColDef="table.defaultColDef"
+                    :columnDefs="table.columns"
+                    @grid-ready="onGridReady"
+                    :rowData="category.items"
+                    @row-clicked="goTo"
+                >
+                </ag-grid-vue>
+            </div>
+        </div>
+
+        <!-- <div v-if="!views.loading" class="card">
             <table class="table dataTable">
                 <thead>
                     <tr>
@@ -52,7 +66,7 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
+        </div> -->
         
         <Loader v-else></Loader>
     </div>
@@ -60,11 +74,48 @@
 
 <script>
     import Loader from '../Loader.vue'
+    import { AgGridVue } from "ag-grid-vue";
+    import "ag-grid-community/dist/styles/ag-grid.css";
+    import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 
     export default {
         data() {
             return {
                 category: {},
+
+                table: {
+                    columns: [
+                        {
+                            field: "name",
+                            headerName: 'Наименование',
+                            sortable: true,
+                            filter: false,
+                            suppressMenu: true,
+                        },
+                        {
+                            field: "balance",
+                            headerName: 'Общий остаток',
+                            sortable: true,
+                            filter: false,
+                            suppressMenu: true,
+                        },
+                        {
+                            field: "balances",
+                            headerName: 'Остатки',
+                            sortable: false,
+                            filter: false,
+                            suppressMenu: true,
+                            valueGetter: (params) => {
+                                return params.quantity + ' шт. | ' + balance.price | currency + ' ₽ | ' + balance.created_at | date
+                            },
+                        },
+                    ],
+                    defaultColDef: {
+                        sortingOrder: ['asc', 'desc'],
+                        floatingFilter: true,
+                        suppressMovable: true,
+                    },
+                },
 
                 views: {
                     loading: true,
@@ -84,12 +135,19 @@
                     this.views.loading = false
                 })
             },
-            goTo(id) {
-                this.$router.push({name: 'StockItem', params: {id: id}})
+            onGridReady(params) {
+                this.gridApi = params.api
+                this.gridColumnApi = params.gridColumnApi
+                
+                this.gridApi.sizeColumnsToFit()
+            },
+            goTo(event) {
+                this.$router.push({ name: 'StockItem', params: { id: event.data.id } });
             },
         },
         components: {
-            Loader
-        },
+            Loader,
+            AgGridVue
+        }
     }
 </script>
