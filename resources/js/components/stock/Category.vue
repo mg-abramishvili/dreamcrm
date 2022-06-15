@@ -106,7 +106,13 @@
                             filter: false,
                             suppressMenu: true,
                             valueGetter: (params) => {
-                                return params.quantity + ' шт. | ' + this.$options.filters.currency(params.price) + ' ₽ | ' + this.$options.filters.date(params.created_at)
+                                let balances = []
+
+                                params.balances.forEach(b => {
+                                    balances.push(b.quantity + ' | ' + b.price + ' | ' + b.date)
+                                })
+
+                                return balances
                             },
                         },
                     ],
