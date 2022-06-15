@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\stock;
 
+use App\Http\Resources\stock\StockCategoryItemBalancesResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class StockCategoryItemsResource extends JsonResource
@@ -12,7 +13,7 @@ class StockCategoryItemsResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'balance' => $this->balances->sum('quantity'),
-            'balances' => $this->balances,
+            'balances' => StockCategoryItemsResource::collection($this->balances),
         ];
     }
 }

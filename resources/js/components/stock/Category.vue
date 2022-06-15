@@ -105,9 +105,6 @@
                             sortable: false,
                             filter: false,
                             suppressMenu: true,
-                            valueGetter: (params) => {
-                                return params.quantity + ' шт. | ' + params.price | currency + ' ₽ | ' + params.created_at | date
-                            },
                         },
                     ],
                     defaultColDef: {
