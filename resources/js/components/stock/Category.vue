@@ -30,17 +30,16 @@
                         <th>Наименование</th>
                         <th class="text-center">Общий остаток</th>
                         <th>Остатки</th>
-                        <th>Средняя цена</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr @click="goTo(item.id)" v-for="item in items" :key="'item_' + item.id">
+                    <tr @click="goTo(item.id)" v-for="item in category.items" :key="'item_' + item.id">
                         <td class="align-middle">
                             <a>{{ item.name }}</a>
                         </td>
                         <td class="align-middle text-center">
-                            <span v-if="item.balances.length" class="badge rounded-pill" :class="{'bg-danger': item.balances.reduce((acc, balance) => acc + parseInt(balance.quantity), 0) < 0, 'bg-secondary': item.balances.reduce((acc, balance) => acc + parseInt(balance.quantity), 0) == 0, 'bg-success': item.balances.reduce((acc, balance) => acc + parseInt(balance.quantity), 0) > 0}">
-                                {{ item.balances.reduce((acc, balance) => acc + parseInt(balance.quantity), 0) }}
+                            <span v-if="item.balance > 0" class="badge rounded-pill" :class="{'bg-danger': item.balance <= 0 }">
+                                {{ item.balance }}
                             </span>
                         </td>
                         <td class="align-middle">
@@ -49,11 +48,6 @@
                                     {{ balance.quantity }} шт. | {{ balance.price | currency }} ₽ | {{ balance.created_at | date }}
                                 </li>
                             </ul>
-                        </td>
-                        <td class="align-middle">
-                            <template v-if="item.balances.length">
-                                {{ item.balances.map(a => a.price).reduce((a, b) => (parseInt(a) + parseInt(b))) / item.balances.map(a => a.price).length | currency }} ₽
-                            </template>
                         </td>
                     </tr>
                 </tbody>
@@ -71,7 +65,6 @@
         data() {
             return {
                 category: {},
-                items: [],
             }
         },
         created() {
@@ -81,27 +74,12 @@
             loadCategory() {
                 axios
                 .get(`/api/stock/category/${this.$route.params.category_id}`)
-                .then(response => (
-                    this.category = response.data,
-                    this.items = response.data.items
-                ));
+                .then(response => {
+                    this.category = response.data.data
+                })
             },
             goTo(id) {
                 this.$router.push({name: 'StockItem', params: {id: id}})
-            },
-            orderBy(field) {
-                if(field == 'name') {
-                    this.items = this.items.sort((a, b) => a.name.localeCompare(b.name))
-                    return
-                }
-                if(field == 'amount') {
-                    this.items = this.items.sort((a, b) => a.amount - b.amount)
-                    return
-                }
-                if(field == 'price') {
-                    this.items = this.items.sort((a, b) => a.price - b.price)
-                    return
-                }
             },
         },
         components: {
@@ -109,8 +87,3 @@
         },
     }
 </script>
-<style scoped>
-    .table tr:hover {
-        cursor: pointer;
-    }
-</style>

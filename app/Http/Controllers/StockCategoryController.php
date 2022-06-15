@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\StockCategory;
+use App\Http\Resources\stock\StockCategoryResource;
 use Illuminate\Http\Request;
 
 class StockCategoryController extends Controller
@@ -14,12 +15,7 @@ class StockCategoryController extends Controller
 
     public function category($id)
     {
-        return StockCategory::with(
-            [
-                'items' => function ($q) { $q->with('balances.reserves')->orderByRaw('CAST(name as UNSIGNED) ASC')->orderBy('name', 'asc'); }
-            ]
-        )
-        ->find($id);
+        return StockCategoryResource::collection(StockCategory::find($id));
     }
 
     public function store(Request $request)

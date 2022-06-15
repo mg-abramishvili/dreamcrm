@@ -4,7 +4,7 @@ namespace App\Http\Resources\stock;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class StockNeedsresource extends JsonResource
+class StockNeedsResource extends JsonResource
 {
     public function toArray($request)
     {
