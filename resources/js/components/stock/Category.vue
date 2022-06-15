@@ -99,16 +99,16 @@
                             filter: false,
                             suppressMenu: true,
                         },
-                        {
-                            field: "balances",
-                            headerName: 'Остатки',
-                            sortable: false,
-                            filter: false,
-                            suppressMenu: true,
-                            valueGetter: (params) => {
-                                return params.quantity + ' шт. | ' + balance.price | currency + ' ₽ | ' + balance.created_at | date
-                            },
-                        },
+                        // {
+                        //     field: "balances",
+                        //     headerName: 'Остатки',
+                        //     sortable: false,
+                        //     filter: false,
+                        //     suppressMenu: true,
+                        //     valueGetter: (params) => {
+                        //         return params.quantity + ' шт. | ' + balance.price | currency + ' ₽ | ' + balance.created_at | date
+                        //     },
+                        // },
                     ],
                     defaultColDef: {
                         sortingOrder: ['asc', 'desc'],
