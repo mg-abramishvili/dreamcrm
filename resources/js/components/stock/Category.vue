@@ -123,7 +123,7 @@
                             suppressMenu: true,
                             cellRenderer: params => {
                                 if(params.data.needs > 0) {
-                                    return '<span class="text-danger"><strong>' + params.data.needs + '</strong></span>'
+                                    return '<strong class="text-danger">' + params.data.needs + '</strong>'
                                 }
                             },
                         },
