@@ -38,7 +38,7 @@
                             <a>{{ item.name }}</a>
                         </td>
                         <td class="align-middle text-center">
-                            <span v-if="item.balance > 0" class="badge rounded-pill" :class="{'bg-danger': item.balance <= 0 }">
+                            <span class="badge rounded-pill" :class="{ 'bg-danger': item.balance < 0, 'bg-secondary': item.balance == 0, 'bg-success': item.balance > 0 }">
                                 {{ item.balance }}
                             </span>
                         </td>
