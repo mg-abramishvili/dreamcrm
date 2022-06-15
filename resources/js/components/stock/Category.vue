@@ -122,6 +122,7 @@
                             filter: false,
                             suppressMenu: true,
                             cellRenderer: params => {
+                                console.log(params)
                                 if(params.data > 0) {
                                     return '<span class="text-danger"><strong>' + params.data + '</strong></span>'
                                 }
