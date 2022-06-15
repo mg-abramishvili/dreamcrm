@@ -13,7 +13,7 @@ class StockCategoryItemsResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'balance' => $this->balances->sum('quantity'),
-            'balances' => StockCategoryItemsResource::collection($this->balances),
+            'balances' => StockCategoryItemBalancesResource::collection($this->balances),
         ];
     }
 }
