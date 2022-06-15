@@ -115,6 +115,13 @@
                                 return '' + balances.toString().replaceAll(',', '') + ''
                             },
                         },
+                        {
+                            field: "needs",
+                            headerName: 'Нехватка',
+                            sortable: true,
+                            filter: false,
+                            suppressMenu: true,
+                        },
                     ],
                     defaultColDef: {
                         sortingOrder: ['asc', 'desc'],
