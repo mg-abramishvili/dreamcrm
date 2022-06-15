@@ -14,7 +14,7 @@ class StockCategoryItemsResource extends JsonResource
             'name' => $this->name,
             'balance' => $this->balances->sum('quantity'),
             'balances' => StockCategoryItemBalancesResource::collection($this->balances),
-            'needs' => count($this->needs),
+            'needs' => $this->needs->sum('quantity'),
         ];
     }
 }
