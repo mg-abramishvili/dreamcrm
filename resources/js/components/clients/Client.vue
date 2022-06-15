@@ -17,125 +17,79 @@
             </div>
         </div>
 
-        <div v-if="client && client.id && client.id > 0" class="card">
-            <div class="card-body">
-                <div v-if="errors && errors.length > 0" class="alert alert-danger">
-                    <div class="alert-message">
-                        <strong v-for="(error, index) in errors" :key="'error_' + index" class="d-block">
-                            {{ error }}
-                        </strong>
-                    </div>
-                </div>
+        <Loader v-if="views.loading"></Loader>
 
-                <div class="mb-3">
-                    <label>Имя</label>
-                    <input v-model="name" type="text" class="form-control">
-                </div>
+        <div v-if="!views.loading" class="tab">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a @click="selectTab('general')" class="nav-link" :class="{'active': selected.tab == 'general'}" role="tab">Общая информация</a>
+                </li>
+                <li class="nav-item">
+                    <a @click="selectTab('projects')" class="nav-link" :class="{'active': selected.tab == 'projects'}" role="tab">Проекты <template v-if="client.projects && client.projects.length"><span class="text-muted">({{ client.projects.length }})</span></template></a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane" :class="{'active': selected.tab == 'general'}" role="tabpanel">
+                    <div class="row">
+                        <div class="col-12 col-lg-6">
+                            <p class="d-flex align-items-center">
+                                <strong class="me-2">Имя:</strong>
 
-                <div class="row">
-                    <div class="col-12 col-lg-4">
-                        <div class="mb-3">
-                            <label>Телефон</label>
-                            <input v-model="tel" type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-4">
-                        <div class="mb-3">
-                            <label>E-mail</label>
-                            <input v-model="email" type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-4">
-                        <div class="mb-3">
-                            <label>Контактное лицо</label>
-                            <input v-model="kont_litso" type="text" class="form-control">
-                        </div>
-                    </div>
-                </div>
+                                <span>{{ client.name }}</span>
 
-                <div class="row">
-                    <div class="col-12 col-lg-4">
-                        <div class="mb-3">
-                            <label>ИНН</label>
-                            <input v-model="inn" type="text" class="form-control">
+                                <small @click="changePanel('name')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </small>
+
+                                <ChangeName v-if="views.changePanel == 'name'" :client="client" />
+                            </p>
                         </div>
-                    </div>
-                    <div class="col-12 col-lg-4">
-                        <div class="mb-3">
-                            <label>КПП</label>
-                            <input v-model="kpp" type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-4">
-                        <div class="mb-3">
-                            <label>ОГРН</label>
-                            <input v-model="ogrn" type="text" class="form-control">
+                        <div class="col-12 col-lg-6">
+                            <p class="d-flex align-items-center">
+                                <strong class="me-2">Расчетный счет:</strong>
+
+                                <span>
+                                    <template v-if="client.ras_schet">
+                                        {{ client.ras_schet }}
+                                    </template>
+                                    <template v-if="!client.ras_schet">
+                                        &mdash;
+                                    </template>
+                                </span>
+
+                                <small @click="changePanel('rasSchet')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </small>
+
+                                <ChangeRasSchet v-if="views.changePanel == 'rasSchet'" :client="client" />
+                            </p>
                         </div>
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-12 col-lg-4">
-                        <div class="mb-3">
-                            <label>Юридический адрес</label>
-                            <input v-model="yur_address" type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-4">
-                        <div class="mb-3">
-                            <label>Почтовый адрес</label>
-                            <input v-model="pocht_address" type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-4">
-                        <div class="mb-3">
-                            <label>Фактический адрес</label>
-                            <input v-model="fakt_address" type="text" class="form-control">
-                        </div>
-                    </div>
+                <div class="tab-pane" :class="{'active': selected.tab == 'projects'}" role="tabpanel">
+                    <p v-if="!client.projects.length">Нет проектов с этим клиентом.</p>
                 </div>
-
-                <div class="row">
-                    <div class="col-12 col-lg-3">
-                        <div class="mb-3">
-                            <label>Расчетный счет</label>
-                            <input v-model="ras_schet" type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-3">
-                        <div class="mb-3">
-                            <label>Корр.счет</label>
-                            <input v-model="korr_schet" type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-3">
-                        <div class="mb-3">
-                            <label>БИК</label>
-                            <input v-model="bik" type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-3">
-                        <div class="mb-3">
-                            <label>Банк</label>
-                            <input v-model="bank" type="text" class="form-control">
-                        </div>
-                    </div>
-                </div>
-
-                <button @click="updateClient(client.id)" class="btn btn-primary">Сохранить</button>
             </div>
         </div>
-        <Loader v-else></Loader>
+
+        <div v-if="views.backdrop" @click="closeOffcanvas()" class="offcanvas-backdrop fade show"></div>
     </div>
 </template>
 
 <script>
     import Loader from '../Loader.vue'
+    import ChangeName from './comps/ChangeName'
+    import ChangeRasSchet from './comps/ChangeRasSchet'
 
     export default {
         data() {
             return {
                 client: {},
+
+                selected: {
+                    tab: 'general',
+                    productionItem: '',
+                },
 
                 name: '',
                 tel: '',
@@ -152,7 +106,11 @@
                 bank: '',
                 bik: '',
 
-                errors: [],
+                views: {
+                    loading: true,
+                    backdrop: false,
+                    changePanel: '',
+                }
             }
         },
         created() {
@@ -161,34 +119,45 @@
         methods: {
             loadClient() {
                 axios.get(`/api/client/${this.$route.params.id}`)
-                    .then((response => {
-                        this.client = response.data
+                .then((response => {
+                    this.client = response.data
 
-                        this.name = response.data.name
-                        this.tel = response.data.tel
-                        this.email = response.data.email
-                        this.kont_litso = response.data.kont_litso
-                        this.yur_address = response.data.yur_address
-                        this.pocht_address = response.data.pocht_address
-                        this.fakt_address = response.data.fakt_address
-                        this.inn = response.data.inn
-                        this.kpp = response.data.kpp
-                        this.ogrn = response.data.ogrn
-                        this.ras_schet = response.data.ras_schet
-                        this.korr_schet = response.data.korr_schet
-                        this.bank = response.data.bank
-                        this.bik = response.data.bik
-                    }))
+                    this.name = response.data.name
+                    this.tel = response.data.tel
+                    this.email = response.data.email
+                    this.kont_litso = response.data.kont_litso
+                    this.yur_address = response.data.yur_address
+                    this.pocht_address = response.data.pocht_address
+                    this.fakt_address = response.data.fakt_address
+                    this.inn = response.data.inn
+                    this.kpp = response.data.kpp
+                    this.ogrn = response.data.ogrn
+                    this.ras_schet = response.data.ras_schet
+                    this.korr_schet = response.data.korr_schet
+                    this.bank = response.data.bank
+                    this.bik = response.data.bik
+
+                    this.views.loading = false
+                }))
+            },
+            selectTab(tab) {
+                this.selected.tab = tab
+            },
+            changePanel(panel) {
+                this.views.backdrop = true
+                this.views.changePanel = panel
+            },
+            closeOffcanvas() {
+                this.views.backdrop = false
+                this.views.changePanel = ''
+                this.views.changeProductionItem = false
             },
             updateClient(id) {
-                this.errors = []
-
                 if (!this.name) {
-                    this.errors.push('Укажите имя');
-                }
-
-                if(this.errors && this.errors.length > 0) {
-                    return
+                    return this.$swal({
+                        text: 'Укажите имя',
+                        icon: 'error',
+                    })
                 }
 
                 axios.put(`/api/client/${id}/update`,
@@ -222,7 +191,9 @@
             },
         },
         components: {
-            Loader
+            Loader,
+            ChangeName,
+            ChangeRasSchet
         },
     }
 </script>
