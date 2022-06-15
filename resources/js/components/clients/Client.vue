@@ -296,6 +296,14 @@
                 </div>
                 <div class="tab-pane" :class="{'active': selected.tab == 'projects'}" role="tabpanel">
                     <p v-if="!client.projects.length">Нет проектов с этим клиентом.</p>
+                    <table v-else class="table">
+                        <tbody>
+                            <tr v-for="project in client.projects">
+                                <td>{{ project.created_at |date }}</td>
+                                <td>{{ project.name }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
