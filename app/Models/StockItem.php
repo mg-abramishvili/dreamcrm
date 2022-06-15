@@ -28,4 +28,9 @@ class StockItem extends Model
     {
         return $this->hasMany(ProductionItem::class);
     }
+
+    public function needs()
+    {
+        return $this->hasMany(StockNeed::class);
+    }
 }
