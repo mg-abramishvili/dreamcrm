@@ -15,7 +15,7 @@ class StockCategoryController extends Controller
 
     public function category($id)
     {
-        return StockCategoryResource::collection(StockCategory::find($id));
+        return new StockCategoryResource(StockCategory::find($id));
     }
 
     public function store(Request $request)
