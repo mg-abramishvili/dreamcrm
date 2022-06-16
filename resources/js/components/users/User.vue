@@ -60,6 +60,12 @@
                 </div>
             </div>
         </div>
+
+        <!-- <div v-if="!views.loading" class="card">
+            <div class="card-body">
+                <ChangeSettings :user="user" />
+            </div>
+        </div> -->
     </div>
 </template>
 
@@ -70,6 +76,7 @@
     import ChangeEmail from './comps/ChangeEmail'
     import ChangePassword from './comps/ChangePassword'
     import ChangeAvatar from './comps/ChangeAvatar'
+    import ChangeSettings from './comps/ChangeSettings'
 
     export default {
         data() {
@@ -102,7 +109,8 @@
             ChangeName,
             ChangeEmail,
             ChangePassword,
-            ChangeAvatar
+            ChangeAvatar,
+            ChangeSettings
         }
     }
 </script>

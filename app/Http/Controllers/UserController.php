@@ -49,6 +49,10 @@ class UserController extends Controller
             $user->avatar = $request->avatar;
         }
 
+        if (isset($request->dark_mode)) {
+            $user->dark_mode = $request->dark_mode;
+        }
+
         $user->save();
     }
 }

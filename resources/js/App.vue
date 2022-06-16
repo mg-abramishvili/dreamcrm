@@ -107,6 +107,10 @@
 					if(this.user.name && this.user.name.length) {
 						this.authenticated = true
                         this.views.loading = false
+
+						if(response.data.dark_mode == true) {
+							document.body.classList.add('dark_mode')
+						}
 					} else {
 						this.authenticated = false
                         this.views.loading = false
