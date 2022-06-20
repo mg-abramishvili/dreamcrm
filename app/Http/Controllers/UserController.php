@@ -53,6 +53,10 @@ class UserController extends Controller
             $user->dark_mode = $request->dark_mode;
         }
 
+        if (isset($request->max_discount)) {
+            $user->max_discount = $request->max_discount;
+        }
+
         $user->save();
     }
 }

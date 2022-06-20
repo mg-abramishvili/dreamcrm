@@ -6,7 +6,7 @@
         </div>
         <div class="offcanvas-body">
             <div>
-                <input v-model="discount" type="number" min="0" class="form-control mb-2" />
+                <input v-model="discount" type="number" min="0" :max="$parent.$parent.$parent.user.max_discount" class="form-control mb-2" />
                 
                 <button @click="save()" :disabled="!views.saveButton" class="btn btn-primary mb-4">Сохранить</button>
 
