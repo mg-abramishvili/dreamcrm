@@ -41,6 +41,7 @@ class TaskBoardController extends Controller
                                         ]
                                     )
                                     ->orderBy('status', 'asc')
+                                    ->orderBy('created_at', 'desc')
                                     ->orderBy('order', 'asc');
                                 }
                             ]
@@ -66,6 +67,7 @@ class TaskBoardController extends Controller
                                     )
                                     ->whereRelation('users', 'user_id', $user->id)
                                     ->orderBy('status', 'asc')
+                                    ->orderBy('created_at', 'desc')
                                     ->orderBy('order', 'asc');
                                 }
                             ]
