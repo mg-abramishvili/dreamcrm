@@ -44,7 +44,7 @@ class TaskController extends Controller
         }
 
         $task->status = 'active';
-        $task->order = 99;
+        $task->order = 0;
 
         $task->save();
 
