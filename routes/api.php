@@ -106,6 +106,7 @@ Route::get('offers', [OfferController::class, 'index']);
 Route::post('offers', [OfferController::class, 'store']);
 Route::get('offer/{id}', [OfferController::class, 'offer']);
 Route::get('offer/{id}/pdf', [OfferController::class, 'pdf']);
+Route::put('offer/{id}/update', [OfferController::class, 'update']);
 
 
 

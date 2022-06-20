@@ -226,6 +226,21 @@
             </tbody>
         </table>
 
+        <p style="width: 90%; margin: 0 auto; text-align:right;">
+            Скидка: 
+            @php
+                echo number_format($offer->discount,0,","," ");
+            @endphp
+            %
+        </p>
+        <p style="width: 90%; margin: 0 auto; text-align:right;">
+            Итого: 
+            @php
+                echo number_format(($calculation->price * $calculation->quantity) - ((($calculation->price * $calculation->quantity) / 100) * $offer->discount),0,","," ");
+            @endphp
+            ₽
+        </p>
+
         <span style="position: absolute; bottom: 20px; left: 25px; font-size: 14px; font-weight: bold;">
             &copy; ООО "Тач Лаб" <br>
             Юр. адрес: Россия, 191144, г. Санкт-Петербург, ул. Новгородская, д. 13, лит. 3 <br>

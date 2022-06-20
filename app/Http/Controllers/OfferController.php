@@ -55,4 +55,15 @@ class OfferController extends Controller
         $offer->pdf = '/uploads/offers/kp_' . $offer->id . '.pdf';
         $offer->save();
     }
+
+    public function update($id, Request $request)
+    {
+        $offer = Offer::find($id);
+
+        $offer->discount = $request->discount;
+
+        $offer->save();
+
+        $this->pdf($offer->id);
+    }
 }
