@@ -18,6 +18,7 @@
                     <tbody>
                         <tr v-for="user in users" :key="user.id">
                             <td class="align-middle">
+                                <router-link :to="{ name: 'User', params: {uid: user.uid} }"></router-link>
                                 {{ user.name }}
                             </td>
                             <td class="align-middle">
