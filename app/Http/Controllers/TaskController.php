@@ -44,7 +44,7 @@ class TaskController extends Controller
         }
 
         $task->status = 'active';
-        $task->order = 10;
+        $task->order = 99;
 
         $task->save();
 
@@ -102,7 +102,7 @@ class TaskController extends Controller
 
         foreach($tasks as $tsk) {
             $task = Task::find($tsk["id"]);
-            $task->order = $tsk["index"] + 100;
+            $task->order = $tsk["index"];
             $task->save();
         }
 
