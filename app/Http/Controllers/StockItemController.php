@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\StockItem;
+use App\Http\Resources\stock\StockItemResource;
 use Illuminate\Http\Request;
 
 class StockItemController extends Controller
@@ -19,7 +20,7 @@ class StockItemController extends Controller
 
     public function item($id)
     {
-        return StockItem::with('balances.reserves')->find($id);
+        return new StockItemResource(StockItem::with('productionItems.production')->find($id));
     }
 
     public function store(Request $request)

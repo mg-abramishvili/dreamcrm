@@ -33,13 +33,13 @@ import Users from './components/users/Users.vue';
 import User from './components/users/User.vue';
 
 import Stock from './components/stock/Index.vue';
-import StockCategory from './components/stock/Category.vue';
-import StockCategoryCreate from './components/stock/CategoryCreate.vue';
-import StockCategoryEdit from './components/stock/CategoryEdit.vue';
-import StockItem from './components/stock/Item.vue';
-import StockItemCreate from './components/stock/ItemCreate.vue';
-import StockNeeds from './components/stock/Needs.vue';
-import StockLatest from './components/stock/Latest.vue';
+import StockCategory from './components/stock/category/Category.vue';
+import StockCategoryCreate from './components/stock/category/Create.vue';
+import StockCategoryEdit from './components/stock/category/Edit.vue';
+import StockItem from './components/stock/item/Item.vue';
+import StockItemCreate from './components/stock/item/Create.vue';
+import StockNeeds from './components/stock/needs/Index.vue';
+import StockLatest from './components/stock/latest/Index.vue';
 
 import Reserves from './components/reserves/Index.vue';
 

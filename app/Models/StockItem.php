@@ -9,6 +9,11 @@ class StockItem extends Model
 {
     use HasFactory;
 
+    public function category()
+    {
+        return $this->belongsTo(StockCategory::class);
+    }
+
     public function balances()
     {
         return $this->hasMany(StockBalance::class, 'stock_item_id');
