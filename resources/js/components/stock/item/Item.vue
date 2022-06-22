@@ -66,7 +66,18 @@
                             </p>
                         </div>
                         <div class="col-12 col-lg-6">
-                            
+                            <p class="d-flex align-items-center">
+                                <strong class="me-2">Нехватка:</strong>
+
+                                <span>
+                                    <template v-if="stockItem.needs_sum && stockItem.needs_sum > 0">
+                                        <strong class="text-danger">{{ stockItem.needs_sum }}</strong>
+                                    </template>
+                                    <template v-else>
+                                        &mdash;
+                                    </template>
+                                </span>
+                            </p>
                         </div>
                     </div>
                 </div>

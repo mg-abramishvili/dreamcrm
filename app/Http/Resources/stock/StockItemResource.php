@@ -16,6 +16,7 @@ class StockItemResource extends JsonResource
             'balances' => $this->balances,
             'balances_sum_quantity' => $this->balances->sum('quantity'),
             'productions' => Production::whereRelation('items', 'stock_item_id', $this->id)->get(),
+            'needs_sum' => $this->needs->sum('quantity'),
         ];
     }
 }
