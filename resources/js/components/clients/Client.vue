@@ -295,7 +295,7 @@
                     </div>
                 </div>
                 <div class="tab-pane" :class="{'active': selected.tab == 'projects'}" role="tabpanel">
-                    <p v-if="!client.projects_as_client.length || !client.projects_as_end_client.length">Нет проектов с этим клиентом.</p>
+                    <p v-if="projectsCounter == 0">Нет проектов с этим клиентом.</p>
                     
                     <table v-else class="table">
                         <thead>
