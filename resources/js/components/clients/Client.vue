@@ -25,7 +25,7 @@
                     <a @click="selectTab('general')" class="nav-link" :class="{'active': selected.tab == 'general'}" role="tab">Общая информация</a>
                 </li>
                 <li class="nav-item">
-                    <a @click="selectTab('projects')" class="nav-link" :class="{'active': selected.tab == 'projects'}" role="tab">Проекты <template v-if="client.projects && client.projects.length"><span class="text-muted">({{ client.projects.length }})</span></template></a>
+                    <a @click="selectTab('projects')" class="nav-link" :class="{'active': selected.tab == 'projects'}" role="tab">Проекты <template v-if="projectsCounter > 0"><span class="text-muted">({{ projectsCounter }})</span></template></a>
                 </li>
             </ul>
             <div class="tab-content">
@@ -295,12 +295,26 @@
                     </div>
                 </div>
                 <div class="tab-pane" :class="{'active': selected.tab == 'projects'}" role="tabpanel">
-                    <p v-if="!client.projects.length">Нет проектов с этим клиентом.</p>
+                    <p v-if="!client.projects_as_client.length || !client.projects_as_end_client.length">Нет проектов с этим клиентом.</p>
+                    
                     <table v-else class="table">
+                        <thead>
+                            <tr>
+                                <th>Дата</th>
+                                <th>Название проекта</th>
+                                <th>Роль</th>
+                            </tr>
+                        </thead>
                         <tbody>
-                            <tr v-for="project in client.projects">
+                            <tr v-for="project in client.projects_as_client">
                                 <td>{{ project.created_at |date }}</td>
                                 <td>{{ project.name }}</td>
+                                <td>клиент</td>
+                            </tr>
+                            <tr v-for="project in client.projects_as_end_client">
+                                <td>{{ project.created_at |date }}</td>
+                                <td>{{ project.name }}</td>
+                                <td>конечник</td>
                             </tr>
                         </tbody>
                     </table>
@@ -358,6 +372,21 @@
                     backdrop: false,
                     changePanel: '',
                 }
+            }
+        },
+        computed: {
+            projectsCounter() {
+                let projects_as_client = 0
+                let projects_as_end_client = 0
+
+                if(this.client.projects_as_client) {
+                    projects_as_client = this.client.projects_as_client.length
+                }
+                if(this.client.projects_as_end_client) {
+                    projects_as_end_client = this.client.projects_as_end_client.length
+                }
+
+                return projects_as_client + projects_as_end_client
             }
         },
         created() {

@@ -113,6 +113,7 @@ Route::put('offer/{id}/update', [OfferController::class, 'update']);
 Route::get('projects', [ProjectController::class, 'index']);
 Route::post('projects', [ProjectController::class, 'store']);
 Route::get('project/{id}', [ProjectController::class, 'project']);
+Route::put('project/{id}/update', [ProjectController::class, 'update']);
 
 
 

@@ -36,8 +36,62 @@
             </ul>
             <div class="tab-content">
                 <div class="tab-pane" :class="{'active': selected.tab == 'general'}" role="tabpanel">
-                    <p v-if="project.client"><strong>Клиент:</strong> {{ project.client.name }}</p>
-                    <p><strong>Ответственный:</strong> {{ project.user.name }}</p>
+                    <p class="d-flex align-items-center">
+                        <strong class="me-2">Клиент:</strong>
+
+                        <span>
+                            <template v-if="project.client">
+                                {{ project.client.name }}
+                            </template>
+                            <template v-if="!project.client">
+                                &mdash;
+                            </template>
+                        </span>
+
+                        <small @click="changePanel('client')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                        </small>
+
+                        <ChangeClient v-if="views.changePanel == 'client'" :project="project" />
+                    </p>
+
+                    <p class="d-flex align-items-center">
+                        <strong class="me-2">Конечник:</strong>
+
+                        <span>
+                            <template v-if="project.endclient">
+                                {{ project.endclient.name }}
+                            </template>
+                            <template v-if="!project.endclient">
+                                &mdash;
+                            </template>
+                        </span>
+
+                        <small @click="changePanel('endClient')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                        </small>
+
+                        <ChangeEndClient v-if="views.changePanel == 'endClient'" :project="project" />
+                    </p>
+
+                    <p class="d-flex align-items-center">
+                        <strong class="me-2">Ответственный:</strong>
+
+                        <span>
+                            <template v-if="project.user">
+                                {{ project.user.name }}
+                            </template>
+                            <template v-if="!project.user">
+                                &mdash;
+                            </template>
+                        </span>
+
+                        <small @click="changePanel('user')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                        </small>
+
+                        <ChangeUser v-if="views.changePanel == 'user'" :project="project" />
+                    </p>
                 </div>
                 <div class="tab-pane" :class="{'active': selected.tab == 'calculations'}" role="tabpanel">
                     <ProjectCalculations :calculations="project.calculations"></ProjectCalculations>
@@ -47,6 +101,8 @@
                 </div>
             </div>
         </div>
+
+        <div v-if="views.backdrop" @click="closeOffcanvas()" class="offcanvas-backdrop fade show"></div>
     </div>
 </template>
 
@@ -54,6 +110,8 @@
     import Loader from '../Loader.vue'
     import ProjectCalculations from './ProjectCalculations.vue'
     import ProjectOffers from './ProjectOffers.vue'
+    import ChangeClient from './comps/ChangeClient.vue'
+    import ChangeEndClient from './comps/ChangeEndClient.vue'
 
     export default {
         data() {
@@ -66,6 +124,8 @@
 
                 views: {
                     loading: true,
+                    backdrop: false,
+                    changePanel: '',
                 }
             }
         },
@@ -83,6 +143,14 @@
             selectTab(tab) {
                 this.selected.tab = tab
             },
+            changePanel(panel) {
+                this.views.backdrop = true
+                this.views.changePanel = panel
+            },
+            closeOffcanvas() {
+                this.views.backdrop = false
+                this.views.changePanel = ''
+            },
             toProduction() {
                 this.$router.push({name: 'ProductionCreate', params: {project_id: this.$route.params.id}})
             },
@@ -90,7 +158,9 @@
         components: {
             Loader,
             ProjectCalculations,
-            ProjectOffers
+            ProjectOffers,
+            ChangeClient,
+            ChangeEndClient,
         }
     }
 </script>

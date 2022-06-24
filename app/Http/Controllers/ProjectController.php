@@ -17,7 +17,7 @@ class ProjectController extends Controller
 
     public function project($id)
     {
-        return Project::with('user', 'client', 'calculations.boxes', 'offers', 'production')->find($id);
+        return Project::with('user', 'client', 'endclient', 'calculations.boxes', 'offers', 'production')->find($id);
     }
 
     public function store(Request $request)
@@ -34,5 +34,37 @@ class ProjectController extends Controller
         $calculation->save();
 
         return $project->id;
+    }
+
+    public function update($id, Request $request)
+    {
+        $project = Project::find($id);
+
+        if(isset($request->client_id))
+        {
+            $project->client_id = $request->client_id;
+        }
+
+        if(isset($request->end_client_id))
+        {
+            $project->end_client_id = $request->end_client_id;
+        }
+
+        if(isset($request->user_id))
+        {
+            $project->user_id = $request->user_id;
+        }
+
+        if(isset($request->name))
+        {
+            $project->name = $request->name;
+        }
+        
+        if(isset($request->status))
+        {
+            $project->status = $request->status;
+        }
+
+        $project->save();
     }
 }

@@ -29,6 +29,11 @@ class Project extends Model
         return $this->belongsTo(Client::class);
     }
 
+    public function endclient()
+    {
+        return $this->belongsTo(Client::class, 'end_client_id');
+    }
+
     public function production()
     {
         return $this->hasOne(Production::class);

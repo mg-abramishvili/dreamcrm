@@ -18,7 +18,7 @@ class ClientController extends Controller
 
     public function client($id)
     {
-        return Client::with('projects')->find($id);
+        return Client::with('projectsAsClient', 'projectsAsEndClient')->find($id);
     }
 
     public function store(Request $request)
