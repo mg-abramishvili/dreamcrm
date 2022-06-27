@@ -34,11 +34,11 @@
                         </li>
                     </ul>
 
-                    <div v-if="projects && projects.length">
+                    <div v-if="projects_as_client && projects_as_client.length">
                         <p class="fw-bold text-danger mt-2">Проекты с этим клиентом:</p>
                         
                         <ul class="list-group my-2">
-                            <li v-for="project in projects" :key="project.id" class="list-group-item">
+                            <li v-for="project in projects_as_client" :key="project.id" class="list-group-item">
                                 <strong>{{ project.name }}</strong>
                             </li>
                         </ul>
@@ -79,7 +79,7 @@
         data() {
             return {
                 users: [],
-                projects: [],
+                projects_as_client: [],
 
                 client: {
                     id: '',
@@ -137,8 +137,8 @@
                         this.client.name = response.data.name
                     }
 
-                    if(response.data.projects) {
-                        this.projects = response.data.projects
+                    if(response.data.projects_as_client) {
+                        this.projects_as_client = response.data.projects_as_client
                     }
 
                     if(response.data.id) {
