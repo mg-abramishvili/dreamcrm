@@ -13,7 +13,7 @@ class ClientController extends Controller
             return Client::all();
         }
 
-        return Client::where('inn', $inn)->with('projects')->first();
+        return Client::where('inn', $inn)->with('projectsAsClient', 'projectsAsEndClient')->first();
     }
 
     public function client($id)
