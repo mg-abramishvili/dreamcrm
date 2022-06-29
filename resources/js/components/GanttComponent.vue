@@ -35,11 +35,11 @@
                     label: "Срок завершения",
                     align: "center"
                 },
-                {
-                    name: "duration",
-                    label: "Осталось",
-                    align: "center"
-                }
+                // {
+                //     name: "duration",
+                //     label: "Осталось",
+                //     align: "center"
+                // }
             ]
 
             gantt.templates.task_text=function(start,end,task){
