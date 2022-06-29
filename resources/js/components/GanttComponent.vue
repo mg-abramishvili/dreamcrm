@@ -24,17 +24,20 @@
                     name: "name",
                     label: "Производство",
                     align: "left",
+                    width: 350,
                 },
-                {
-                    name: "start_date",
-                    label: "Дата начала",
-                    align: "center"
-                },
-                {
-                    name: "end_date",
-                    label: "Срок завершения",
-                    align: "center"
-                },
+                // {
+                //     name: "start_date",
+                //     label: "Дата начала",
+                //     align: "center",
+                //     width: 75,
+                // },
+                // {
+                //     name: "end_date",
+                //     label: "Срок",
+                //     align: "center",
+                //     width: 75,
+                // },
                 // {
                 //     name: "duration",
                 //     label: "Осталось",
@@ -62,6 +65,8 @@
             ]
 
             gantt.config.min_column_width = 20
+
+            gantt.i18n.setLocale("ru")
         
             gantt.init(this.$refs.gantt)
             gantt.parse(this.$props.productions)

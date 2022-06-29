@@ -1,6 +1,11 @@
 <template>
     <Loader v-if="views.loading"></Loader>
-    <gantt v-else class="left-container" :productions="productions"></gantt>
+
+    <div v-else class="card flex-fill">
+        <div class="card-body py-4">
+            <gantt class="left-container" :productions="productions"></gantt>
+        </div>
+    </div>
 </template>
 <script>
 import Gantt from './GanttComponent.vue';
@@ -43,5 +48,10 @@ export default {
         overflow: hidden;
         position: relative;
         height: 500px;
+    }
+    .gantt_task_line {
+        background-color: #fd7b38;
+        border-color: #fd7b38;
+        border-radius: 5px;
     }
 </style>
