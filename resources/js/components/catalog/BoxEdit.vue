@@ -17,140 +17,162 @@
             </div>
         </div>
 
-        <div v-if="usd.kurs && usd.kurs > 0 && stockItems && stockItems.length > 0 && box && box.id && box.id > 0" class="card">
-            <div class="card-body">
-                <div v-if="errors && errors.length > 0" class="alert alert-danger">
-                    <div class="alert-message">
-                        <strong v-for="(error, index) in errors" :key="'error_' + index" class="d-block">
-                            {{ error }}
-                        </strong>
+        <Loader v-if="views.loading"></Loader>
+
+        <div v-if="!views.loading" class="tab">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a @click="selectTab('general')" class="nav-link" :class="{'active': selected.tab == 'general'}" role="tab">Общая информация</a>
+                </li>
+                <li class="nav-item">
+                    <a @click="selectTab('type')" class="nav-link" :class="{'active': selected.tab == 'type'}" role="tab">Тип</a>
+                </li>
+                <li class="nav-item">
+                    <a @click="selectTab('stock')" class="nav-link" :class="{'active': selected.tab == 'stock'}" role="tab">Склад</a>
+                </li>
+                <li class="nav-item">
+                    <a @click="selectTab('prices')" class="nav-link" :class="{'active': selected.tab == 'prices'}" role="tab">Стоимость</a>
+                </li>
+                <li class="nav-item">
+                    <a @click="selectTab('photos')" class="nav-link" :class="{'active': selected.tab == 'photos'}" role="tab">Фотки</a>
+                </li>
+                <li class="nav-item">
+                    <a @click="selectTab('schemes')" class="nav-link" :class="{'active': selected.tab == 'schemes'}" role="tab">Чертежи</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane" :class="{'active': selected.tab == 'general'}" role="tabpanel">
+                    <div class="mb-3">
+                        <label>Название</label>
+                        <input v-model="name" type="text" class="form-control">
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-3">
+                            <label>Глубина, мм</label>
+                            <input v-model="length" type="number" min="0" class="form-control">
+                        </div>
+                        <div class="col-3">
+                            <label>Ширина, мм</label>
+                            <input v-model="width" type="number" min="0" class="form-control">
+                        </div>
+                        <div class="col-3">
+                            <label>Высота, мм</label>
+                            <input v-model="height" type="number" min="0" class="form-control">
+                        </div>
+                        <div class="col-3">
+                            <label>Вес, кг</label>
+                            <input v-model="weight" type="number" min="0" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label>Описание</label>
+                        <textarea v-model="description" class="form-control" style="resize: vertical"></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label>Описание для менеджеров</label>
+                        <textarea v-model="manager_description" class="form-control" style="resize: vertical"></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label>Коммент</label>
+                        <textarea v-model="comment" class="form-control" style="resize: vertical"></textarea>
                     </div>
                 </div>
-
-                <div class="mb-3">
-                    <label>Название</label>
-                    <input v-model="name" type="text" class="form-control">
-                </div>
-
-                <div class="row mb-4">
-                    <div class="col-12 col-lg-6">
-                        <div class="d-flex justify-content-between">
-                            <label>Тип</label>
+                <div class="tab-pane" :class="{'active': selected.tab == 'type'}" role="tabpanel">
+                    <div class="d-flex justify-content-between">
+                        <label>Тип</label>
+                    </div>
+                    <input v-model="typeSearchInput" type="text" class="form-control mb-1" placeholder="Поиск по типу...">
+                    <div class="form-control mb-3" style="height: 200px; overflow-y: auto;">
+                        <div v-for="type in typesFiltered" :key="'type_' + type.id" class="form-check">
+                            <input v-model="selected.types" :id="'type_' + type.id" :value="type.id" class="form-check-input" type="checkbox">
+                            <label class="form-check-label" :for="'type_' + type.id">
+                                {{ type.name }}
+                            </label>
                         </div>
-                        <input v-model="typeSearchInput" type="text" class="form-control mb-1" placeholder="Поиск по типу...">
-                        <div class="form-control mb-3" style="height: 150px; overflow-y: auto;">
-                            <div v-for="type in typesFiltered" :key="'type_' + type.id" class="form-check">
-                                <input v-model="selected.types" :id="'type_' + type.id" :value="type.id" class="form-check-input" type="checkbox">
-                                <label class="form-check-label" :for="'type_' + type.id">
-                                    {{ type.name }}
+                    </div>
+                </div>
+                <div class="tab-pane" :class="{'active': selected.tab == 'stock'}" role="tabpanel">
+                    <div class="text-end mb-2">
+                        <button @click="openCopyStockItemsFromAnotherBox()" class="btn btn-sm btn-outline-secondary">Скопировать внутрянку из другого корпуса</button>
+                    </div>
+
+                    <CopyStockItemsFromAnotherBox v-if="views.copyStockItemsFromAnotherBox" />
+                    
+                    <input v-model="stockSearchInput" type="text" class="form-control mb-1" placeholder="Поиск по складу...">
+                    <div class="form-control" style="height: 550px; overflow-y: auto;">
+                        <div v-for="stockItem in stockItemsFiltered" :key="'stock_item_' + stockItem.id" class="form-check form-check-flex">
+                            <div>
+                                <input v-model="selected.stockItems" @change="selectedStockItems(stockItem.id, $event)" :id="'stock_item_' + stockItem.id" :value="stockItem.id" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" :for="'stock_item_' + stockItem.id">
+                                    {{ stockItem.name }} - {{ LatestBalancePrice(stockItem) | currency }} ₽
                                 </label>
                             </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-4">
-                                <label>Сборка дни</label>
-                                <input v-model="sborkaDays" type="number" min="0" class="form-control">
-                            </div>
-                            <div class="col-4">
-                                <label>Сборка люди</label>
-                                <input v-model="sborkaPersons" type="number" min="0" class="form-control">
-                            </div>
-                            <div class="col-4">
-                                <label>Сборка итог</label>
-                                <input v-model="sborka" disabled type="number" class="form-control">
-                            </div>
-                            <div class="col-4">
-                                <label>Маржа</label>
-                                <input v-model="marzha" type="number" min="0" class="form-control">
-                            </div>
-                            <div class="col-4">
-                                <label>Склад</label>
-                                <input v-model="stockItemsPrice" disabled type="number" class="form-control">
-                            </div>
-                            <div class="col-4">
-                                <label>Цена финал</label>
-                                <input v-model="price" disabled type="number" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="row mb-4">
-                            <div class="col-3">
-                                <label>Глубина, мм</label>
-                                <input v-model="length" type="number" min="0" class="form-control">
-                            </div>
-                            <div class="col-3">
-                                <label>Ширина, мм</label>
-                                <input v-model="width" type="number" min="0" class="form-control">
-                            </div>
-                            <div class="col-3">
-                                <label>Высота, мм</label>
-                                <input v-model="height" type="number" min="0" class="form-control">
-                            </div>
-                            <div class="col-3">
-                                <label>Вес, кг</label>
-                                <input v-model="weight" type="number" min="0" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="mb-4">
-                            <label>Описание</label>
-                            <textarea v-model="description" class="form-control" style="resize: vertical"></textarea>
-                        </div>
-                        <div class="mb-4">
-                            <label>Описание для менеджеров</label>
-                            <textarea v-model="manager_description" class="form-control" style="resize: vertical"></textarea>
-                        </div>
-                        <div class="mb-4">
-                            <label>Коммент</label>
-                            <textarea v-model="comment" class="form-control" style="resize: vertical"></textarea>
-                        </div>
-
-                        <div class="mb-4">
-                            <label>Фотки</label>
-                            <file-pond
-                                name="gallery[]"
-                                ref="gallery"
-                                label-idle="Выбрать картинки..."
-                                v-bind:allow-multiple="true"
-                                v-bind:allow-reorder="true"
-                                accepted-file-types="image/jpeg, image/png"
-                                :server="server"
-                                v-bind:files="filepond_gallery_edit"
-                            />
-                        </div>
-
-                        <button @click="save(box.id)" class="btn btn-primary">Сохранить</button>
-                        <button @click="del(box.id)" class="btn btn-outline-danger">Удалить</button>
-                    </div>
-                    <div class="col-12 col-lg-6">
-                        <div class="d-flex justify-content-between">
-                            <label>Склад</label>
-                        </div>
-                        <input v-model="stockSearchInput" type="text" class="form-control mb-1" placeholder="Поиск по складу...">
-                        <div class="form-control" style="height: 740px; overflow-y: auto;">
-                            <div v-for="stockItem in stockItemsFiltered" :key="'stock_item_' + stockItem.id" class="form-check form-check-flex">
-                                <div>
-                                    <input v-model="selected.stockItems" @change="selectedStockItems(stockItem.id, $event)" :id="'stock_item_' + stockItem.id" :value="stockItem.id" class="form-check-input" type="checkbox">
-                                    <label class="form-check-label" :for="'stock_item_' + stockItem.id">
-                                        {{ stockItem.name }} - {{ LatestBalancePrice(stockItem) | currency }} ₽
-                                    </label>
-                                </div>
-                                <div>
-                                    <input v-if="selected.stockItems.includes(stockItem.id)" v-model="selected.stockItemsQty.find(q => q.id == stockItem.id).quantity" type="number" min="0" class="form-control form-control-mini-number">
-                                </div>
+                            <div>
+                                <input v-if="selected.stockItems.includes(stockItem.id)" v-model="selected.stockItemsQty.find(q => q.id == stockItem.id).quantity" type="number" min="0" class="form-control form-control-mini-number">
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="tab-pane" :class="{'active': selected.tab == 'prices'}" role="tabpanel">
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label>Сборка дни</label>
+                            <input v-model="sborkaDays" type="number" min="0" class="form-control">
+                        </div>
+                        <div class="col">
+                            <label>Сборка люди</label>
+                            <input v-model="sborkaPersons" type="number" min="0" class="form-control">
+                        </div>
+                        <div class="col">
+                            <label>Сборка итог</label>
+                            <input v-model="sborka" disabled type="number" class="form-control">
+                        </div>
+                        <div class="col">
+                            <label>Маржа</label>
+                            <input v-model="marzha" type="number" min="0" class="form-control">
+                        </div>
+                        <div class="col">
+                            <label>Склад</label>
+                            <input v-model="stockItemsPrice" disabled type="number" class="form-control">
+                        </div>
+                        <div class="col">
+                            <label>Цена финал</label>
+                            <input v-model="price" disabled type="number" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" :class="{'active': selected.tab == 'photos'}" role="tabpanel">
+                    <div class="mb-4">
+                        <!-- <label>Фотки</label> -->
+                        <file-pond
+                            name="gallery[]"
+                            ref="gallery"
+                            label-idle="Выбрать картинки..."
+                            v-bind:allow-multiple="true"
+                            v-bind:allow-reorder="true"
+                            accepted-file-types="image/jpeg, image/png"
+                            :server="server"
+                            v-bind:files="filepond_gallery_edit"
+                        />
+                    </div>
+                </div>
+                <div class="tab-pane" :class="{'active': selected.tab == 'schemes'}" role="tabpanel">
+                    
+                </div>
             </div>
+
+            <button @click="save(box.id)" class="btn btn-primary mt-2">Сохранить</button>
         </div>
-        <Loader v-else></Loader>
+
+        <div v-if="views.backdrop" @click="closeOffcanvas()" class="offcanvas-backdrop fade show"></div>
     </div>
 </template>
 
 <script>
     import Loader from '../Loader.vue'
+    import CopyStockItemsFromAnotherBox from './comps/CopyFromBox'
 
     import vueFilePond from "vue-filepond";
     import "filepond/dist/filepond.min.css";
@@ -181,6 +203,7 @@
                 gallery: [],
 
                 selected: {
+                    tab: 'general',
                     types: [],
                     stockItems: [],
                     stockItemsQty: [],
@@ -205,7 +228,10 @@
                 stockSearchInput: '',
                 typeSearchInput: '',
 
-                errors: [],
+                views: {
+                    loading: true,
+                    copyStockItemsFromAnotherBox: false,
+                },
 
                 server: {
                     remove(filename, load) {
@@ -359,6 +385,8 @@
                             }
                         })
                     }
+
+                    this.views.loading = false
                 }))
             },
             LatestBalancePrice(stockItem) {
@@ -376,30 +404,57 @@
                     this.selected.stockItemsQty = this.selected.stockItemsQty.filter(qty => qty.id !== id)
                 }
             },
+            selectTab(tab) {
+                this.selected.tab = tab
+            },
+            openCopyStockItemsFromAnotherBox() {
+                this.views.backdrop = true
+                this.views.copyStockItemsFromAnotherBox = true
+            },
+            copyStockItemsFromAnotherBox(box) {
+                this.selected.stockItems = box.stock_items.map(item => item.id)
+                this.selected.stockItemsQty = box.stock_items.map(({id, pivot}) => ({id: id, quantity: pivot.quantity}))
+            },
+            closeOffcanvas() {
+                this.views.backdrop = false
+                this.views.copyStockItemsFromAnotherBox = false
+            },
             save(id) {
-                this.errors = []
-
-                if (!this.name) {
-                    this.errors.push('Укажите название');
+                if(!this.name) {
+                    return this.$swal({
+                        text: 'Укажите название',
+                        icon: 'error',
+                    })
                 }
-                if (!this.selected.types.length) {
-                    this.errors.push('Укажите тип');
+                if(!this.selected.types.length) {
+                    return this.$swal({
+                        text: 'Укажите тип',
+                        icon: 'error',
+                    })
                 }
-                if (!this.length || this.length <= 0) {
-                    this.errors.push('Укажите глубину');
+                if(!this.length || this.length <= 0) {
+                    return this.$swal({
+                        text: 'Укажите глубину',
+                        icon: 'error',
+                    })
                 }
-                if (!this.width || this.width <= 0) {
-                    this.errors.push('Укажите ширину');
+                if(!this.width || this.width <= 0) {
+                    return this.$swal({
+                        text: 'Укажите ширину',
+                        icon: 'error',
+                    })
                 }
                 if (!this.height || this.height <= 0) {
-                    this.errors.push('Укажите высоту');
+                    return this.$swal({
+                        text: 'Укажите высоту',
+                        icon: 'error',
+                    })
                 }
                 if (!this.weight || this.weight <= 0) {
-                    this.errors.push('Укажите вес');
-                }
-
-                if(this.errors && this.errors.length > 0) {
-                    return
+                    return this.$swal({
+                        text: 'Укажите вес',
+                        icon: 'error',
+                    })
                 }
 
                 if(document.getElementsByName("gallery[]")) {
@@ -410,8 +465,6 @@
                         }
                     });
                 }
-
-                console.log(this.gallery)
 
                 axios.put(`/api/catalog/box/${id}/update`,
                 {
@@ -461,7 +514,8 @@
             },
         },
         components: {
-            Loader
+            Loader,
+            CopyStockItemsFromAnotherBox
         }
     }
 </script>
