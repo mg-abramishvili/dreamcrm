@@ -28,6 +28,14 @@ class ProductionController extends Controller
             ->get();
     }
 
+    public function indexGantt()
+    {
+        return Production::query()
+            ->orderBy('id', 'desc')
+            ->whereBetween('end_date', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])
+            ->get();
+    }
+
     public function production($id)
     {
         return Production::with([

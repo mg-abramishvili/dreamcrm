@@ -118,6 +118,7 @@ Route::put('project/{id}/update', [ProjectController::class, 'update']);
 
 
 Route::get('productions', [ProductionController::class, 'index']);
+Route::get('productions-gantt', [ProductionController::class, 'indexGantt']);
 Route::get('production/{id}', [ProductionController::class, 'production']);
 Route::post('productions', [ProductionController::class, 'store']);
 Route::get('productions/redmine-import/{offset}/{limit}', [RedmineController::class, 'import']);

@@ -37,10 +37,16 @@
                 </div>
             </div>
 		</div>
+        <div class="row">
+            <div class="col-12">
+                <Gantt />
+            </div>
+        </div>
     </div>
 </template>
 <script>
     import Loader from './Loader.vue'
+    import Gantt from './Gantt.vue'
 
     export default {
         data() {
@@ -85,7 +91,8 @@
             },
         },
         components: {
-            Loader
+            Loader,
+            Gantt
         }
     }
 </script>
