@@ -65,6 +65,21 @@ class ProjectController extends Controller
             $project->status = $request->status;
         }
 
+        if(isset($request->delivery_address))
+        {
+            $project->delivery_address = $request->delivery_address;
+        }
+
+        if(isset($request->end_date))
+        {
+            $project->end_date = $request->end_date;
+        }
+
+        if(isset($request->comment))
+        {
+            $project->comment = $request->comment;
+        }
+
         $project->save();
     }
 }
