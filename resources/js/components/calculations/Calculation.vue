@@ -16,6 +16,7 @@
                         </h1>    
                     </div>
                     <div class="col-12 col-lg-6 text-end">
+                        <button @click="delConfirm()" class="btn btn-outline-danger">Удалить</button>
                         <template v-if="calculation.project_id">
                             <router-link :to="{name: 'Project', params: {id: calculation.project_id}}" class="btn btn-primary">Перейти к проекту</router-link>
                         </template>
@@ -161,7 +162,33 @@
 
                     this.views.loading = false
                 })
-            }
+            },
+            delConfirm() {
+                this.$swal({
+                    html: '<strong class="d-block mb-3">Точно удалить расчет?</strong>',
+                    showCancelButton: true,
+                    confirmButtonText: 'Да',
+                    cancelButtonText: 'Отмена',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.del()
+                    } else if (result.isDenied) {
+                        return
+                    }
+                })
+            },
+            del() {
+                axios.delete(`/api/calculation/${this.$route.params.id}/delete`)
+                .then(response => {
+                    this.$router.push({name: 'Calculations'})
+                })
+                .catch(error => {
+                    return this.$swal({
+                        text: error.response.data,
+                        icon: 'error',
+                    })
+                })
+            },
         },
         components: {
             Loader

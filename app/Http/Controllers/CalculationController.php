@@ -57,4 +57,20 @@ class CalculationController extends Controller
             'price' =>  $request->delivery['price'],
         ]);
     }
+
+    public function delete($id)
+    {
+        $calculation = Calculation::find($id);
+
+        if($calculation->project)
+        {
+            return response('Расчет нельзя удалить - он используется в проекте', 500);
+        }
+
+        $calculation->boxes()->detach();
+        $calculation->catalogItems()->detach();
+        $calculation->delivery()->detach();
+
+        $calculation->delete();
+    }
 }
