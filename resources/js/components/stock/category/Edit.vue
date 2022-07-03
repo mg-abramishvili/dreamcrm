@@ -66,10 +66,10 @@
             loadCategory() {
                 axios.get(`/api/stock/category/${this.$route.params.category_id}`)
                 .then(response => (
-                    this.category = response.data,
+                    this.category = response.data.data,
 
-                    this.name = response.data.name,
-                    this.slug = response.data.slug
+                    this.name = response.data.data.name,
+                    this.slug = response.data.data.slug
                 ))
             },
             slugify(str) {
@@ -132,13 +132,11 @@
                     .then(response => (
                         this.$router.push({name: 'Stock'})
                     ))
-                    .catch((error) => {
-                        if(error.response) {
-                            this.errors = []
-                            for(var key in error.response.data.errors){
-                                this.errors.push(key)
-                            }
-                        }
+                    .catch(error => {
+                        return this.$swal({
+                            text: error.response.data,
+                            icon: 'error',
+                        })
                     })
                 }
             },

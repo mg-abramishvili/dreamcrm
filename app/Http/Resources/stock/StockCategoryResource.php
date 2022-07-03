@@ -12,6 +12,7 @@ class StockCategoryResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'slug' => $this->slug,
             'items' => StockCategoryItemsResource::collection($this->items),
         ];
     }

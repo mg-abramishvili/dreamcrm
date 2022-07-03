@@ -47,6 +47,11 @@ class StockCategoryController extends Controller
     public function delete($id)
     {
         $category = StockCategory::find($id);
+
+        if(count($category->items))
+        {
+            return response('Раздел нельзя удалить - раздел не пустой', 500);
+        }
         
         foreach($category->items as $item) {
             foreach($item->balances as $balance) {
