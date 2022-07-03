@@ -178,6 +178,7 @@
     import ChangeEndClient from './comps/ChangeEndClient.vue'
     import ChangeDeliveryAddress from './comps/ChangeDeliveryAddress.vue'
     import ChangeEndDate from './comps/ChangeEndDate.vue'
+    import ChangeComment from './comps/ChangeComment.vue'
 
     export default {
         data() {
@@ -229,6 +230,7 @@
             ChangeEndClient,
             ChangeDeliveryAddress,
             ChangeEndDate,
+            ChangeComment,
         }
     }
 </script>
