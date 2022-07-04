@@ -16,6 +16,7 @@
                         </h1>    
                     </div>
                     <div class="col-12 col-lg-6 text-end">
+                        <router-link :to="{name: 'CalculationMaster', params: {id: calculation.id}}" class="btn btn-outline-primary">Правка</router-link>
                         <button @click="delConfirm()" class="btn btn-outline-danger">Удалить</button>
                         <template v-if="calculation.project_id">
                             <router-link :to="{name: 'Project', params: {id: calculation.project_id}}" class="btn btn-primary">Перейти к проекту</router-link>

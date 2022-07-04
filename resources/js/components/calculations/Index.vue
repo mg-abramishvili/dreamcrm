@@ -7,7 +7,7 @@
                         <h1 class="h3 m-0">Расчеты</h1>
                     </div>
                     <div class="col-12 col-lg-6 text-end">
-                        <router-link :to="{name: 'CalculationCreate'}" class="btn btn-primary">Новый расчет</router-link>
+                        <router-link :to="{name: 'CalculationMaster'}" class="btn btn-primary">Новый расчет</router-link>
                     </div>
                 </div>
             </div>
