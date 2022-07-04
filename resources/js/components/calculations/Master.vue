@@ -8,7 +8,7 @@
                 <h1 v-else class="h3 m-0">Новый расчет</h1>
             </div>
         </div>
-        {{selected.catalogItems}}
+        
         <div class="row">
             <div class="col-12 col-lg-5">
                 <div style="position: sticky; top: 20px;">
@@ -20,7 +20,7 @@
 
                             <ChooseCatalog v-show="views.step == 'catalog'" :box_id="selected.box.id" :calculation="calculation"></ChooseCatalog>
                             
-                            <ChooseQuantity v-show="views.step == 'quantity'"></ChooseQuantity>
+                            <ChooseQuantity v-show="views.step == 'quantity'" :calculation="calculation"></ChooseQuantity>
 
                             <ChooseDelivery v-show="views.step == 'delivery'" :box="selected.box" :quantity="quantity" :selectedCatalogItems="selected.catalogItems"></ChooseDelivery>
 
@@ -176,11 +176,6 @@
                 axios.get(`/api/calculation/${this.$route.params.id}`)
                 .then(response => {
                     this.calculation = response.data.data
-
-                    this.selected.delivery.name = response.data.data.delivery.name
-                    this.selected.delivery.price = response.data.data.delivery.price
-
-                    this.quantity = response.data.data.quantity
 
                     this.views.loading = false
                 })

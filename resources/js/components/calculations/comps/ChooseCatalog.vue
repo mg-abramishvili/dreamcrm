@@ -92,6 +92,8 @@
                         this.addCatalogItem(category.slug)
                     })
 
+                    this.firstCategory()
+
                     if(this.calculation && this.calculation.id) {
                         this.calculation.catalog_items.forEach(item => {
                             this.selected.catalogItems[item.category_slug] = []
@@ -103,8 +105,6 @@
                             })
                         })
                     }
-
-                    this.firstCategory()
                 }))
             },
             addCatalogItem(categorySlug) {

@@ -15,6 +15,7 @@
 
 <script>
     export default {
+        props: ['calculation'],
         data() {
             return {
                 quantity: 1,
@@ -25,6 +26,12 @@
                 handler() {
                     this.$parent.quantity = this.quantity
                 }
+            }
+        },
+        created() {
+            if(this.calculation && this.calculation.id) {
+                this.quantity = this.calculation.quantity
+                this.$parent.quantity = this.calculation.quantity
             }
         },
         methods: {
