@@ -20,7 +20,7 @@
     import Loader from '../Loader.vue'
 
     export default {
-        props: ['offer'],
+        props: ['calculation'],
         data() {
             return {
                 discount: '',
@@ -32,14 +32,14 @@
             }
         },
         created() {
-            this.discount = this.offer.discount
+            this.discount = this.calculation.discount
         },
         methods: {
             save() {
                 this.views.loading = true
                 this.views.saveButton = false
 
-                axios.put(`/api/offer/${this.offer.id}/update`, {
+                axios.put(`/api/calculation/${this.calculation.id}/update`, {
                     discount: this.discount
                 })
                 .then(response => {

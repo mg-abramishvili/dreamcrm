@@ -9,6 +9,8 @@
                     <th>№</th>
                     <th>Корпус</th>
                     <th>Стоимость</th>
+                    <th>Скидка</th>
+                    <th>Итого</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,6 +26,17 @@
                     </td>
                     <td class="align-middle">
                         {{ calculation.price | currency }} ₽
+                    </td>
+                    <td class="align-middle">
+                        <template v-if="calculation.discount > 0">
+                            {{ calculation.discount }}%
+                        </template>
+                        <template v-else>
+                            &mdash;
+                        </template>
+                    </td>
+                    <td class="align-middle">
+                        {{ calculation.price_with_discount | currency }} ₽
                     </td>
                 </tr>
             </tbody>
