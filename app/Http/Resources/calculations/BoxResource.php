@@ -10,6 +10,7 @@ class BoxResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'name' => $this->name,
             'pre_rub' => $this->pivot->pre_rub,
             'pre_usd' => $this->pivot->pre_usd,

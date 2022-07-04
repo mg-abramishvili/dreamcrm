@@ -15,7 +15,7 @@ class CalculationResource extends JsonResource
         return [
             'id' => $this->id,
             'created_at' => $this->created_at,
-            'type' => $this->type->name,
+            'type' => $this->type,
             'box' => new BoxResource($this->boxes->first()),
             'catalog_items' => CatalogItemsResource::collection($this->catalogItems),
             'delivery' => new DeliveryResource($this->delivery->first()),
