@@ -16,6 +16,16 @@
                     <div class="col-4 text-end">
                         <strong class="text-primary">{{ selectedBox.price | currency }} ₽</strong>
                     </div>
+                    <div v-if="selectedBox.manager_description" class="col-12 mt-2">
+                        <div class="border border-warning rounded d-flex align-items-center" style="font-size: 14px; padding: 10px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle d-block me-2 text-warning" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+                            </svg>
+
+                            <span>{{ selectedBox.manager_description }}</span>
+						</div>
+                    </div>
                     <div class="col-12">
                         <ul id="calculation-stock-list_box" class="calculation-stock-list">
                             <li v-for="stockItem in selectedBox.stock_items" :key="stockItem.id">
@@ -38,14 +48,14 @@
                         <div class="col-8">
                             <strong>{{ item.name }}</strong>
                             
-                            <button @click="stockListToggle(item.id, index)" class="btn btn-sm btn-default">
+                            <button @click="stockListToggle(item.id, index)" v-if="item.stock_items && item.stock_items.length" class="btn btn-sm btn-default">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                 </svg>
                             </button>
                         </div>
                         <div class="col-4 text-end">
-                            <strong class="text-primary">{{ item.price | currency }} ₽</strong>
+                            <strong v-if="item.price > 0" class="text-primary">{{ item.price | currency }} ₽</strong>
                         </div>
                         <div class="col-12">
                             <ul :id="'calculation-stock-list_' + item.id + '_' + index" class="calculation-stock-list">

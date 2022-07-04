@@ -18,7 +18,7 @@
 
                             <ChooseBox v-show="views.step == 'box'" :type_id="selected.type.id" :calculation="calculation"></ChooseBox>
 
-                            <ChooseCatalog v-show="views.step == 'catalog'" :box_id="selected.box.id"></ChooseCatalog>
+                            <ChooseCatalog v-show="views.step == 'catalog'" :box_id="selected.box.id" :calculation="calculation"></ChooseCatalog>
                             
                             <ChooseQuantity v-show="views.step == 'quantity'"></ChooseQuantity>
 
@@ -57,13 +57,6 @@
                             </div>
 
                             <button v-if="views.saveButton" @click="saveCalculation()" class="btn btn-lg btn-primary w-100">Сохранить расчет</button>
-                        </div>
-                    </div>
-                    
-                    <div v-if="selected.box && selected.box.id" class="card card-bordered mt-3">
-                        <div class="card-body">
-                            <p class="text-primary fw-bold">Примечание:</p>
-                            {{ selected.box.manager_description }}
                         </div>
                     </div>
                 </div>
@@ -183,16 +176,6 @@
                 axios.get(`/api/calculation/${this.$route.params.id}`)
                 .then(response => {
                     this.calculation = response.data.data
-                    
-                    response.data.data.catalog_items.forEach((item) => {
-                        this.selected.catalogItems[item.category_slug] = []
-                        this.selected.catalogItems[item.category_slug].push({
-                            id: item.id,
-                            price: item.price,
-                            pre_rub: item.pre_rub,
-                            pre_usd: item.pre_usd,
-                        })
-                    })
 
                     this.selected.delivery.name = response.data.data.delivery.name
                     this.selected.delivery.price = response.data.data.delivery.price

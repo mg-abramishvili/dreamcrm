@@ -32,7 +32,7 @@
 
 <script>
     export default {
-        props: ['box_id'],
+        props: ['box_id', 'calculation'],
         data() {
             return {
                 categories: [],
@@ -82,8 +82,7 @@
                     return
                 }
 
-                axios
-                .get(`/api/catalog/${this.box_id}/categories`)
+                axios.get(`/api/catalog/${this.box_id}/categories`)
                 .then((response => {
                     this.categories = response.data
                     this.$parent.categories = response.data
@@ -92,6 +91,18 @@
                         this.$set(this.selected.catalogItems, category.slug, [])
                         this.addCatalogItem(category.slug)
                     })
+
+                    if(this.calculation && this.calculation.id) {
+                        this.calculation.catalog_items.forEach(item => {
+                            this.selected.catalogItems[item.category_slug] = []
+                            this.selected.catalogItems[item.category_slug].push({
+                                id: item.id,
+                                price: item.price,
+                                pre_rub: item.pre_rub,
+                                pre_usd: item.pre_usd,
+                            })
+                        })
+                    }
 
                     this.firstCategory()
                 }))
