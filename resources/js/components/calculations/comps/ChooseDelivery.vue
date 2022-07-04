@@ -21,7 +21,7 @@
     import DeliveryPEK from './DeliveryPEK.vue'
 
     export default {
-        props: ['box', 'selectedCatalogItems', 'quantity'],
+        props: ['box', 'selectedCatalogItems', 'quantity', 'calculation'],
         data() {
             return {
                 deliveries: [],
@@ -59,9 +59,18 @@
             loadDeliveries() {
                 axios
                 .get('/api/calculation/deliveries')
-                .then((response => {
+                .then(response => {
                     this.deliveries = response.data
-                }));
+
+                    setTimeout(() => {
+                        if(this.calculation && this.calculation.id) {
+                            this.selected.delivery.id = this.calculation.delivery.id
+                            this.$parent.selected.delivery = this.selected.delivery
+
+                            this.changeDelivery()
+                        }
+                    }, 2000)
+                })
             },
             changeDelivery() {
                 let delivery = this.deliveries.find(delivery => delivery.id === this.selected.delivery.id)
