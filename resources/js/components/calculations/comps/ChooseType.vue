@@ -19,6 +19,7 @@
 
 <script>
     export default {
+        props: ['calculation'],
         data() {
             return {
                 types: [],
@@ -41,6 +42,12 @@
                 .get('/api/catalog/types')
                 .then((response => {
                     this.types = response.data
+
+                    if(this.calculation && this.calculation.id) {
+                        this.selected.type = response.data.find(t => t.id === this.calculation.type.id)
+                        this.$parent.selected.type = this.selected.type
+                    }
+
                     this.views.loading = false
                 }))
             },

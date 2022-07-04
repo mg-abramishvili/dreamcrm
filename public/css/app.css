@@ -274,6 +274,10 @@ table.dataTable {
     border-color: #fd7b38;
     color: #fd7b38;
 }
+.btn-default:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
 .bg-primary {
     background-color: #fd7b38 !important;
 }
@@ -449,6 +453,7 @@ body.dark_mode strong {
     margin: 0;
     list-style: none;
     font-size: 12px;
+    display: none;
 }
 .calculation-stock-list li::before {
     content: '-';

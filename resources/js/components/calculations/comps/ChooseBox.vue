@@ -23,7 +23,7 @@
 
 <script>
     export default {
-        props: ['type_id'],
+        props: ['type_id', 'calculation'],
         data() {
             return {
                 boxes: [],
@@ -52,6 +52,12 @@
                 .get(`/api/catalog/boxes/type/${this.type_id}`)
                 .then((response => {
                     this.boxes = response.data
+
+                    if(this.calculation && this.calculation.id) {
+                        this.selected.box = response.data.find(b => b.id === this.calculation.box.id)
+                        this.$parent.selected.box = this.selected.box
+                    }
+
                     this.views.loading = false
                 }))
             },

@@ -1,20 +1,22 @@
 <template>
-    <div class="calculations-page">
+    <Loader v-if="views.loading" />
+
+    <div v-else class="calculations-page">
         <div class="card card-bordered">
             <div class="card-body">
                 <h1 v-if="calculation.id" class="h3 m-0">Расчет №{{ calculation.id }}</h1>
                 <h1 v-else class="h3 m-0">Новый расчет</h1>
             </div>
         </div>
-        
+        {{selected.catalogItems}}
         <div class="row">
             <div class="col-12 col-lg-5">
                 <div style="position: sticky; top: 20px;">
                     <div class="card card-bordered">
                         <div class="card-body">
-                            <ChooseType v-show="views.step == 'type'"></ChooseType>
+                            <ChooseType v-show="views.step == 'type'" :calculation="calculation"></ChooseType>
 
-                            <ChooseBox v-show="views.step == 'box'" :type_id="selected.type.id"></ChooseBox>
+                            <ChooseBox v-show="views.step == 'box'" :type_id="selected.type.id" :calculation="calculation"></ChooseBox>
 
                             <ChooseCatalog v-show="views.step == 'catalog'" :box_id="selected.box.id"></ChooseCatalog>
                             
@@ -77,31 +79,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="card card-bordered mb-2">
-                    <div class="card-body py-2 px-3">
-                        <small style="color: rgb(136, 136, 136);">Корпус</small>
-                        <div v-if="selected.box && selected.box.id > 0" class="row align-items-center">
-                            <div class="col-8">
-                                <strong class="d-block">{{ selected.box.name }}</strong>
-                            </div>
-                            <div class="col-4 text-end">
-                                <strong class="text-primary">{{ selected.box.price | currency }} ₽</strong>
-                            </div>
-                            <div class="col-12">
-                                <ul class="calculation-stock-list">
-                                    <li v-for="stockItem in selected.box.stock_items" :key="stockItem.id">
-                                        <template v-if="stockItem.pivot.quantity > 1">
-                                            {{ stockItem.pivot.quantity }} &times; 
-                                        </template>
-                                        {{ stockItem.name }}
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 
-                <ChosenList :categories="categories" :selectedCatalogItems="selected.catalogItems"></ChosenList>
+                <ChosenList :categories="categories" :selectedBox="selected.box" :selectedCatalogItems="selected.catalogItems"></ChosenList>
             </div>
         </div>
 
@@ -143,6 +122,7 @@
                 quantity: 1,
 
                 views: {
+                    loading: true,
                     step: 'type',
                     saveButton: false,
                 },
@@ -192,28 +172,32 @@
             },
         },
         created() {
-            this.loadCalculation()
+            if(this.$route.params.id) {
+                this.loadCalculation()
+            } else {
+                this.views.loading = false
+            }
         },
         methods: {
             loadCalculation() {
                 axios.get(`/api/calculation/${this.$route.params.id}`)
                 .then(response => {
                     this.calculation = response.data.data
-
-                    // this.selected.type = response.data.data.type
-                    // this.selected.box = response.data.data.box
                     
-                    // response.data.data.catalog_items.forEach((item) => {
-                    //     this.selected.catalogItems[item.category_slug] = []
-                    //     this.selected.catalogItems[item.category_slug].push({
-                    //         id: item.id
-                    //     })
-                    // })
+                    response.data.data.catalog_items.forEach((item) => {
+                        this.selected.catalogItems[item.category_slug] = []
+                        this.selected.catalogItems[item.category_slug].push({
+                            id: item.id,
+                            price: item.price,
+                            pre_rub: item.pre_rub,
+                            pre_usd: item.pre_usd,
+                        })
+                    })
 
-                    // this.selected.delivery.name = response.data.data.delivery.name
-                    // this.selected.delivery.price = response.data.data.delivery.price
+                    this.selected.delivery.name = response.data.data.delivery.name
+                    this.selected.delivery.price = response.data.data.delivery.price
 
-                    // this.quantity = response.data.data.quantity
+                    this.quantity = response.data.data.quantity
 
                     this.views.loading = false
                 })
