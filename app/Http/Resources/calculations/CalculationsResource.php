@@ -12,7 +12,9 @@ class CalculationsResource extends JsonResource
             'id' => $this->id,
             'box' => $this->boxes->first()->name,
             'author' => $this->user->name,
+            'price' => $this->price + $this->delivery->first()->price,
             'created_at' => $this->created_at,
+            'project_id' => $this->project_id,
         ];
     }
 }

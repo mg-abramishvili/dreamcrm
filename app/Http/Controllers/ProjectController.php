@@ -5,19 +5,21 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use App\Models\Client;
 use App\Models\Calculation;
-use App\Http\Resources\ProjectResource;
+use App\Http\Resources\projects\ProjectsResource;
+use App\Http\Resources\projects\ProjectResource;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
     public function index()
     {
-        return ProjectResource::collection(Project::orderBy('created_at', 'desc')->get());
+        return ProjectsResource::collection(Project::orderBy('created_at', 'desc')->get());
     }
 
     public function project($id)
     {
-        return Project::with('user', 'client', 'endclient', 'calculations.boxes', 'offers', 'production')->find($id);
+        // return Project::with('user', 'client', 'endclient', 'calculations.boxes', 'offers', 'production')->find($id);
+        return new ProjectResource(Project::findOrFail($id));
     }
 
     public function store(Request $request)

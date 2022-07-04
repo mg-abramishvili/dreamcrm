@@ -166,11 +166,13 @@
 
         <div class="box-images">
             @foreach($offer->project->calculations as $calculation)
-                @foreach($calculation->boxes as $box)
-                    @foreach(array_slice($box->gallery, 0, 3) as $galleryItem)
-                        <img src="{{ public_path($galleryItem) }}" />
+                @if($loop->first)
+                    @foreach($calculation->boxes as $box)
+                        @foreach(array_slice($box->gallery, 0, 3) as $galleryItem)
+                            <img src="{{ public_path($galleryItem) }}" />
+                        @endforeach
                     @endforeach
-                @endforeach
+                @endif
             @endforeach
         </div>
 
@@ -185,6 +187,7 @@
             </thead>
             <tbody>
                 @foreach($offer->project->calculations as $calculation)
+                    @if($loop->first)
                     <td>
                         @foreach($calculation->boxes as $box)
                             <span style="font-weight: bold">Корпус:</span>
@@ -222,6 +225,7 @@
                         @endphp
                         ₽
                     </td>
+                    @endif
                 @endforeach
             </tbody>
         </table>

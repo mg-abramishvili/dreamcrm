@@ -158,7 +158,7 @@
                     </p>
                 </div>
                 <div class="tab-pane" :class="{'active': selected.tab == 'calculations'}" role="tabpanel">
-                    <ProjectCalculations :calculations="project.calculations"></ProjectCalculations>
+                    <ProjectCalculations :project="project"></ProjectCalculations>
                 </div>
                 <div class="tab-pane" :class="{'active': selected.tab == 'offers'}" role="tabpanel">
                     <ProjectOffers :project_id="project.id" :offers="project.offers"></ProjectOffers>
@@ -203,7 +203,7 @@
             loadProject() {
                 axios.get(`/api/project/${this.$route.params.id}`)
                 .then(response => (
-                    this.project = response.data,
+                    this.project = response.data.data,
                     this.views.loading = false
                 ))
             },

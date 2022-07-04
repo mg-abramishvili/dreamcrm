@@ -19,7 +19,7 @@ class CalculationResource extends JsonResource
             'box' => new BoxResource($this->boxes->first()),
             'catalog_items' => CatalogItemsResource::collection($this->catalogItems),
             'delivery' => new DeliveryResource($this->delivery->first()),
-            'project_id' => isset($this->project->id),
+            'project_id' => isset($this->project->id) ? $this->project->id : null,
             'user' => $this->user->name,
             'quantity' => $this->quantity,
         ];

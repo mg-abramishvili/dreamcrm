@@ -37,8 +37,8 @@
                 .then(response => {
                     this.clients = response.data
 
-                    if(this.project.client_id) {
-                        this.selected.client = this.project.client_id
+                    if(this.project.client) {
+                        this.selected.client = this.project.client.id
                     }
                 })
             },

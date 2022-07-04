@@ -98,6 +98,7 @@ Route::get('calculation/deliveries', [CalculationDeliveryController::class, 'ind
 
 Route::get('calculations', [CalculationController::class, 'index']);
 Route::get('calculation/{id}', [CalculationController::class, 'calculation']);
+Route::put('calculation/{id}/update', [CalculationController::class, 'update']);
 Route::post('calculations', [CalculationController::class, 'store']);
 Route::delete('calculation/{id}/delete', [CalculationController::class, 'delete']);
 

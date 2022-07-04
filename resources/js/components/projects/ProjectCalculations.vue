@@ -1,5 +1,7 @@
 <template>
     <div>
+        <button @click="addCalculation()" class="btn btn-sm btn-outline-primary">Добавить расчет</button>
+        
         <table class="table table-hover dataTable">
             <thead>
                 <tr>
@@ -10,7 +12,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr @click="goTo(calculation.id)" v-for="calculation in calculations" :key="calculation.id">
+                <tr @click="goTo(calculation.id)" v-for="calculation in project.calculations" :key="calculation.id">
                     <td class="align-middle">
                         {{ calculation.created_at | date }}
                     </td>
@@ -18,9 +20,7 @@
                         Расчет №{{ calculation.id }}
                     </td>
                     <td class="align-middle">
-                        <template v-for="box in calculation.boxes">
-                            {{ box.name }}
-                        </template>
+                        {{ calculation.box }}
                     </td>
                     <td class="align-middle">
                         {{ calculation.price | currency }} ₽
@@ -28,15 +28,25 @@
                 </tr>
             </tbody>
         </table>
+
+        <AddCalculation v-if="views.addCalculation" :project="project" />
+
+        <div v-if="views.backdrop" @click="closeOffcanvas()" class="offcanvas-backdrop fade show"></div>
     </div>
 </template>
 
 <script>
+    import Loader from './../Loader.vue'
+    import AddCalculation from './comps/AddCalculation.vue'
+
     export default {
-        props: ['calculations'],
+        props: ['project'],
         data() {
             return {
-                //
+                views: {
+                    backdrop: false,
+                    addCalculation: false,
+                }
             }
         },
         created() {
@@ -45,7 +55,19 @@
         methods: {
             goTo(id) {
                 this.$router.push({ name: 'Calculation', params: { id: id } });
-            }
+            },
+            addCalculation() {
+                this.views.backdrop = true
+                this.views.addCalculation = true
+            },
+            closeOffcanvas() {
+                this.views.backdrop = false
+                this.views.addCalculation = false
+            },
         },
+        components: {
+            Loader,
+            AddCalculation
+        }
     }
 </script>

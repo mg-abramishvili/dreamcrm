@@ -58,6 +58,17 @@ class CalculationController extends Controller
         ]);
     }
 
+    public function update($id, Request $request)
+    {
+        $calculation = Calculation::find($id);
+        
+        if(isset($request->project_id)) {
+            $calculation->project_id = $request->project_id;
+        }
+
+        $calculation->save();
+    }
+
     public function delete($id)
     {
         $calculation = Calculation::find($id);
