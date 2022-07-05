@@ -14,7 +14,7 @@ class CalculationsResource extends JsonResource
             'author' => $this->user->name,
             'price' => $this->price + $this->delivery->first()->price,
             'discount' => $this->discount,
-            'price_with_discount' => $this->price + $this->delivery->first()->price - ($this->price / 100 * $this->discount),
+            'price_with_discount' => round(($this->price + $this->delivery->first()->price) * ((100-$this->discount) / 100), 2),
             'created_at' => $this->created_at,
             'project_id' => $this->project_id,
         ];
