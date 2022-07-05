@@ -65,6 +65,9 @@ class CalculationController extends Controller
         if(isset($request->project_id)) {
             $calculation->project_id = $request->project_id;
         }
+        if(isset($request->discount)) {
+            $calculation->discount = $request->discount;
+        }
 
         $calculation->save();
     }

@@ -17,7 +17,7 @@
 </template>
 
 <script>
-    import Loader from '../Loader.vue'
+    import Loader from '../../Loader.vue'
 
     export default {
         props: ['calculation'],
@@ -33,6 +33,8 @@
         },
         created() {
             this.discount = this.calculation.discount
+
+            console.log(this.calculation.id)
         },
         methods: {
             save() {

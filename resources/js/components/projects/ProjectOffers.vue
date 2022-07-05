@@ -27,8 +27,6 @@
             <p>Нет коммерческих предложений.</p>
             <button @click="createOffer()" class="btn btn-primary" :disabled="views.createOfferButton == false">Создать КП</button>
         </div>
-
-        <div v-if="views.backdrop" @click="closeOffcanvas()" class="offcanvas-backdrop fade show"></div>
     </div>
 </template>
 
@@ -40,8 +38,6 @@
                 views: {
                     createOfferButton: true,
                     recreatePdfButton: true,
-                    backdrop: false,
-                    changePanel: '',
                 }
             }
         },
@@ -74,14 +70,6 @@
                     }
                     console.log(error.response)
                 })
-            },
-            changePanel(panel) {
-                this.views.backdrop = true
-                this.views.changePanel = panel
-            },
-            closeOffcanvas() {
-                this.views.backdrop = false
-                this.views.changePanel = ''
             },
         },
     }
