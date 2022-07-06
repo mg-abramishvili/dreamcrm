@@ -14,22 +14,23 @@ class DollarController extends Controller
 
     public function update()
     {
-        $kurs = 0;
+        $cb = 0;
         $date = '';
         
         $currencies = simplexml_load_file("http://www.cbr.ru/scripts/XML_daily.asp");
         
         foreach ($currencies->Valute as $currency) {
             if ($currency["ID"] == 'R01235') {
-                $kurs = round(str_replace(',','.',$currency->Value), 2);
+                $cb = round(str_replace(',','.',$currency->Value), 2);
             }
         }
 
         $date = date("Y-m-d", strtotime($currencies["Date"]));
 
-        if($kurs && $kurs > 0) {
+        if($cb && $cb > 0) {
             $dollar = Dollar::find(1);
-            $dollar->kurs = round(str_replace(',','.',$kurs + ($kurs / 100 * 10)), 2);
+            $dollar->cb = $cb;
+            $dollar->kurs = round(str_replace(',','.',$cb + ($cb / 100 * $dollar->additional)), 2);
             $dollar->date = $date;
             $dollar->save();
         }

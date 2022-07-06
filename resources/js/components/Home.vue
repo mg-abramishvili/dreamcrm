@@ -1,7 +1,7 @@
 <template>
     <div class="home-page">
         <div class="row">
-            <div class="col-12 col-sm-6 col-xxl-3 d-flex">
+            <div class="col-12 col-sm-4 col-xxl-3 d-flex">
                 <div class="card flex-fill">
                     <div class="card-body py-4">
                         <div class="d-flex align-items-center">
@@ -16,14 +16,16 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-sm-6 col-xxl-3 d-flex">
+            <div class="col-12 col-sm-4 col-xxl-3 d-flex">
                 <div class="card flex-fill">
                     <div class="card-body py-4">
                         <div class="d-flex align-items-center">
                             <div class="flex-grow-1">
                                 <template v-if="usd.date && usd.kurs">
                                     <p class="mb-3 lh-1">Курс доллара ({{ usd.date | dateMini }})</p>
-                                    <h3 class="mb-0 lh-1 illustration-text">{{ usd.kurs }} ₽</h3>
+                                    <h3 class="mb-0 lh-1 illustration-text">
+                                        {{ usd.cb }}₽ &rarr; {{ usd.kurs }}₽ <span class="text-muted fw-normal">(+{{ usd.additional }}%)</span>
+                                    </h3>
                                 </template>
                                 <Loader v-else></Loader>
                             </div>
@@ -56,6 +58,8 @@
 
                 usd: {
                     kurs: '',
+                    cb: '',
+                    additional: '',
                     date: '',
                 },
 
@@ -81,10 +85,12 @@
             loadUsd() {
                 axios
                 .get('/api/usd')
-                .then((response => {
-                    this.usd.kurs = response.data.kurs,
+                .then(response => {
+                    this.usd.cb = response.data.cb
+                    this.usd.additional = response.data.additional
+                    this.usd.kurs = response.data.kurs
                     this.usd.date = response.data.date
-                }))
+                })
             },
             timeCurrent:function() {
                 this.time = moment(this.time).add(1, 'seconds')
