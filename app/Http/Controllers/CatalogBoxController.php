@@ -156,25 +156,23 @@ class CatalogBoxController extends Controller
 
             foreach($box->stockItems as $stockItem)
             {
-                $lastBalance = $stockItem->balances->sortBy(['date', 'desc'])->first();
-                
-                $boxPrice += $lastBalance->pre_rub * $lastBalance->quantity;
+                $boxPrice += $stockItem->latestBalance->pre_rub * $stockItem->pivot->quantity;
 
-                if($kurs > $lastBalance->usd_kurs) {
-                    $boxPrice += ($lastBalance->pre_usd * $lastBalance->quantity) * $kurs;
+                if($kurs > $stockItem->latestBalance->usd_kurs) {
+                    $boxPrice += ($stockItem->latestBalance->pre_usd * $stockItem->pivot->quantity) * $kurs;
                 } else {
-                    $boxPrice += ($lastBalance->pre_usd * $lastBalance->quantity) * $lastBalance->usd_kurs;
+                    $boxPrice += ($stockItem->latestBalance->pre_usd * $stockItem->pivot->quantity) * $stockItem->latestBalance->usd_kurs;
                 }
             }
 
-            $boxPrice = ceil(($boxPrice) / 50) * 50;
+            $box->price = ceil(($boxPrice) / 50) * 50;
 
-            $sborkaTarif = CatalogSborka::find(1);
-            $sborka = $box->sborka_days * ($box->sborka_persons * $sborkaTarif->person + $sborkaTarif->arenda);
+            // $sborkaTarif = CatalogSborka::find(1);
+            // $sborka = $box->sborka_days * ($box->sborka_persons * $sborkaTarif->person + $sborkaTarif->arenda);
             
-            $marzha = $box->marzha;
+            // $marzha = $box->marzha;
             
-            $box->price = ceil(($boxPrice + $sborka + $marzha) / 50) * 50;
+            // $box->price = ceil(($boxPrice + $sborka + $marzha) / 50) * 50;
 
             $box->save();
         }       
