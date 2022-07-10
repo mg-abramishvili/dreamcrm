@@ -147,24 +147,34 @@ class CatalogBoxController extends Controller
     {
         $kurs = Dollar::find(1)->kurs;
 
-        if(!$kurs) {
-            return;
-        }
+        if(!$kurs) { return; }
 
         $boxes = CatalogBox::all();
 
         foreach ($boxes as $box) {
-            $rub = $box->pre_rub;
-            $usd = $box->pre_usd * $kurs;
+            $boxPrice = 0;
 
-            $stockItemsPrice = ceil(($usd + $rub) / 50) * 50;
+            foreach($box->stockItems as $stockItem)
+            {
+                $lastBalance = $stockItem->balances->sortBy(['date', 'desc'])->first();
+                
+                $boxPrice += $lastBalance->pre_rub * $lastBalance->quantity;
+
+                if($kurs > $lastBalance->usd_kurs) {
+                    $boxPrice += ($lastBalance->pre_usd * $lastBalance->quantity) * $kurs;
+                } else {
+                    $boxPrice += ($lastBalance->pre_usd * $lastBalance->quantity) * $lastBalance->usd_kurs;
+                }
+            }
+
+            $boxPrice = ceil(($boxPrice) / 50) * 50;
 
             $sborkaTarif = CatalogSborka::find(1);
             $sborka = $box->sborka_days * ($box->sborka_persons * $sborkaTarif->person + $sborkaTarif->arenda);
             
             $marzha = $box->marzha;
             
-            $box->price = ceil(($stockItemsPrice + $sborka + $marzha) / 50) * 50;
+            $box->price = ceil(($boxPrice + $sborka + $marzha) / 50) * 50;
 
             $box->save();
         }       

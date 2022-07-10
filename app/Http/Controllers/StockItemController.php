@@ -13,6 +13,11 @@ class StockItemController extends Controller
         return StockItem::with('balances')->orderBy('name', 'asc')->get();
     }
 
+    public function indexWithLatestBalancesOnly()
+    {
+        return StockItem::with('latestBalance')->get();
+    }
+
     public function stockNeeds()
     {
         return StockItem::where('needs_quantity', '>', 0)->get();

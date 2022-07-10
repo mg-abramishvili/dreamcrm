@@ -18,7 +18,7 @@
         </div>
 
         <Loader v-if="views.loading"></Loader>
-
+<pre>{{ selected.stockItems }}</pre>
         <div v-if="!views.loading" class="tab">
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
@@ -104,13 +104,13 @@
                     <div class="form-control" style="height: 550px; overflow-y: auto;">
                         <div v-for="stockItem in stockItemsFiltered" :key="'stock_item_' + stockItem.id" class="form-check form-check-flex">
                             <div>
-                                <input v-model="selected.stockItems" @change="selectedStockItems(stockItem.id, $event)" :id="'stock_item_' + stockItem.id" :value="stockItem.id" class="form-check-input" type="checkbox">
+                                <input @change="toggleStockItems(stockItem.id, $event)" :checked="ifChecked(stockItem.id)" :id="'stock_item_' + stockItem.id" class="form-check-input" type="checkbox">
                                 <label class="form-check-label" :for="'stock_item_' + stockItem.id">
-                                    {{ stockItem.name }} - {{ LatestBalancePrice(stockItem) | currency }} ₽
+                                    {{ stockItem.name }} - {{ latestBalancePrice(stockItem) | currency }} ₽
                                 </label>
                             </div>
-                            <div>
-                                <input v-if="selected.stockItems.includes(stockItem.id)" v-model="selected.stockItemsQty.find(q => q.id == stockItem.id).quantity" type="number" min="0" class="form-control form-control-mini-number">
+                            <div v-if="selected.stockItems.find(i => i.id == stockItem.id)">
+                                <input v-model.number="selected.stockItems.find(i => i.id == stockItem.id).quantity" type="number" min="1" class="form-control form-control-mini-number">
                             </div>
                         </div>
                     </div>
@@ -187,6 +187,9 @@
     export default {
         data() {
             return {
+                types: [],
+                stockItems: [],
+
                 box: {},
 
                 name: '',
@@ -206,11 +209,7 @@
                     tab: 'general',
                     types: [],
                     stockItems: [],
-                    stockItemsQty: [],
                 },
-                
-                types: [],
-                stockItems: [],
 
                 sborkaTarif: {
                     arenda: 0,
@@ -219,7 +218,6 @@
 
                 usd: {
                     kurs: '',
-                    date: '',
                 },
 
                 filepond_gallery: [],
@@ -283,25 +281,48 @@
             },
             stockItemsFiltered() {
                 let filtered = this.stockItems.filter(stockItem => {
-                    if(stockItem.balances && stockItem.balances.length > 0) {
+                    if(stockItem.latest_balance) {
                         return stockItem.name.toLowerCase().includes(this.stockSearchInput.toLowerCase())
                     }
                 })
-
-                return filtered.filter(stockItem => this.selected.stockItems.includes(stockItem.id)).concat(filtered.filter(stockItem => !this.selected.stockItems.includes(stockItem.id)))
+                
+                return filtered.filter(stockItem => this.selected.stockItems.find(i => i.id == stockItem.id)).concat(filtered.filter(stockItem => !this.selected.stockItems.find(i => i.id == stockItem.id)))
             },
             priceRub() {
-                let selectedStockItems = this.stockItems.filter(stockItem => this.selected.stockItems.includes(stockItem.id))
+                let priceRub = []
 
-                return selectedStockItems.map(stockItem => stockItem.balances[stockItem.balances.length - 1].pre_rub * this.selected.stockItemsQty.find(q => q.id == stockItem.id).quantity).reduce((a, b) => parseInt(a) + parseInt(b), 0)
+                this.selected.stockItems.forEach(item => {
+                    let stockItem = this.stockItems.find(i => i.id === item.id)
+                    if(stockItem.latest_balance && item.quantity) {
+                        priceRub.push(stockItem.latest_balance.pre_rub * item.quantity)
+                    }
+                })
+
+                return priceRub.reduce((a, b) => a + b, 0)
             },
             priceUsd() {
-                let selectedStockItems = this.stockItems.filter(stockItem => this.selected.stockItems.includes(stockItem.id))
+                let priceUsd = []
 
-                return selectedStockItems.map(stockItem => stockItem.balances[stockItem.balances.length - 1].pre_usd * this.selected.stockItemsQty.find(q => q.id == stockItem.id).quantity).reduce((a, b) => parseInt(a) + parseInt(b), 0)
+                this.selected.stockItems.forEach(item => {
+                    let stockItem = this.stockItems.find(i => i.id === item.id)
+
+                    if(stockItem.latest_balance && item.quantity) {
+                        let usdKurs = 0
+
+                        if(this.usd.kurs > stockItem.latest_balance.usd_kurs) {
+                            usdKurs = this.usd.kurs
+                        } else {
+                            usdKurs = stockItem.latest_balance.usd_kurs
+                        }
+
+                        priceUsd.push((Math.ceil((stockItem.latest_balance.pre_usd * usdKurs) / 50) * 50) * item.quantity)
+                    }
+                })
+
+                return priceUsd.reduce((a, b) => a + b, 0)
             },
             stockItemsPrice() {
-                return Math.ceil((this.priceRub + (this.priceUsd * this.usd.kurs)) / 50) * 50
+                return this.priceRub + this.priceUsd
             },
             sborka() {
                 return this.sborkaDays * (this.sborkaPersons * parseInt(this.sborkaTarif.person) + parseInt(this.sborkaTarif.arenda))
@@ -311,11 +332,7 @@
                     this.marzha = 0
                 }
 
-                const stockItemsPrice = parseInt(this.stockItemsPrice)
-                const sborka = parseInt(this.sborka)
-                const marzha = parseInt(this.marzha)
-
-                return Math.ceil((stockItemsPrice + sborka + marzha) / 50) * 50
+                return this.stockItemsPrice + this.sborka + this.marzha
             }
         },
         created() {        
@@ -333,10 +350,10 @@
                     ))
             },
             loadStockItems() {
-                axios.get(`/api/stock/items`)
-                    .then(response => (
-                        this.stockItems = response.data
-                    ))
+                axios.get(`/api/stock/items-with-latest-balances-only`)
+                .then(response => {
+                    this.stockItems = response.data
+                })
             },
             loadSborkaTarif() {
                 axios.get(`/api/catalog/sborka`)
@@ -348,10 +365,9 @@
             loadUsd() {
                 axios
                 .get('/api/usd')
-                .then((response => {
-                    this.usd.kurs = response.data.kurs,
-                    this.usd.date = response.data.updated_at
-                }))
+                .then(response => {
+                    this.usd.kurs = response.data.kurs
+                })
             },
             loadBox() {
                 axios
@@ -370,8 +386,8 @@
                     this.manager_description = response.data.manager_description
                     this.comment = response.data.comment
                     this.selected.types = response.data.types.map(type => type.id)
-                    this.selected.stockItems = response.data.stock_items.map(item => item.id)
-                    this.selected.stockItemsQty = response.data.stock_items.map(({id, pivot}) => ({id: id, quantity: pivot.quantity}))
+                    
+                    this.selected.stockItems = response.data.stock_items.map(({id, pivot}) => ({id: id, quantity: pivot.quantity}))
 
                     if(response.data.gallery) {
                         this.filepond_gallery_edit = response.data.gallery.map(function(element){
@@ -389,23 +405,40 @@
                     this.views.loading = false
                 }))
             },
-            LatestBalancePrice(stockItem) {
-                if(stockItem.balances && stockItem.balances.length > 0) {
-                    let rub = parseInt(stockItem.balances[stockItem.balances.length - 1].pre_rub)
-                    let usd = parseInt(stockItem.balances[stockItem.balances.length - 1].pre_usd) * this.usd.kurs
+            latestBalancePrice(stockItem) {
+                if(stockItem.latest_balance) {
+                    let usdKurs = 0
+
+                    if(this.usd.kurs > stockItem.latest_balance.usd_kurs) {
+                        usdKurs = this.usd.kurs
+                    } else {
+                        usdKurs = stockItem.latest_balance.usd_kurs
+                    }
+
+                    let rub = parseInt(stockItem.latest_balance.pre_rub)
+                    let usd = parseInt(stockItem.latest_balance.pre_usd) * usdKurs
                     
                     return Math.ceil((rub + usd) / 50) * 50
                 }
             },
-            selectedStockItems(id) {
-                if(event.target.checked) {
-                    this.selected.stockItemsQty.push({id: id, quantity: 1})
-                } else {
-                    this.selected.stockItemsQty = this.selected.stockItemsQty.filter(qty => qty.id !== id)
-                }
-            },
             selectTab(tab) {
                 this.selected.tab = tab
+            },
+            toggleStockItems(id) {
+                if(this.selected.stockItems.find(i => i.id === id)) {
+                    return this.selected.stockItems = this.selected.stockItems.filter(item => {
+                        return item.id !== id;
+                    })
+                }
+
+                if(!this.selected.stockItems.find(i => i.id === id)) {
+                    return this.selected.stockItems.push({id: id, quantity: 1})
+                }
+            },
+            ifChecked(id) {
+                if(this.selected.stockItems.find(item => item.id === id)) {
+                    return true
+                }
             },
             openCopyStockItemsFromAnotherBox() {
                 this.views.backdrop = true
@@ -413,7 +446,6 @@
             },
             copyStockItemsFromAnotherBox(box) {
                 this.selected.stockItems = box.stock_items.map(item => item.id)
-                this.selected.stockItemsQty = box.stock_items.map(({id, pivot}) => ({id: id, quantity: pivot.quantity}))
             },
             closeOffcanvas() {
                 this.views.backdrop = false

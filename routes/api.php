@@ -156,6 +156,7 @@ Route::get('stock/category/{id}', [StockCategoryController::class, 'category'])-
 Route::put('stock/category/{id}/update', [StockCategoryController::class, 'update'])->middleware('auth:sanctum');
 Route::delete('stock/category/{id}/delete', [StockCategoryController::class, 'delete'])->middleware('auth:sanctum');
 Route::get('stock/items', [StockItemController::class, 'index'])->middleware('auth:sanctum');
+Route::get('stock/items-with-latest-balances-only', [StockItemController::class, 'indexWithLatestBalancesOnly'])->middleware('auth:sanctum');
 Route::post('stock/items', [StockItemController::class, 'store'])->middleware('auth:sanctum');
 Route::get('stock/item/{id}', [StockItemController::class, 'item'])->middleware('auth:sanctum');
 Route::put('stock/item/{id}/update', [StockItemController::class, 'update'])->middleware('auth:sanctum');
