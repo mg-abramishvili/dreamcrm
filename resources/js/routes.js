@@ -10,8 +10,7 @@ import CatalogCategoryEdit from './components/catalog/CategoryEdit.vue';
 import CatalogItemCreate from './components/catalog/ItemCreate.vue';
 import CatalogItemEdit from './components/catalog/ItemEdit.vue';
 import CatalogBoxes from './components/catalog/Boxes.vue';
-import CatalogBoxCreate from './components/catalog/BoxCreate.vue';
-import CatalogBoxEdit from './components/catalog/BoxEdit.vue';
+import CatalogBoxMaster from './components/catalog/BoxMaster.vue';
 import CatalogSearch from './components/catalog/Search.vue';
 
 import Calculations from './components/calculations/Index.vue';
@@ -106,14 +105,9 @@ export const routes = [
         component: CatalogBoxes
     },
     {
-        path: '/catalog/boxes/create',
-        name: 'CatalogBoxCreate',
-        component: CatalogBoxCreate
-    },
-    {
-        path: '/catalog/box/:id/edit',
-        name: 'CatalogBoxEdit',
-        component: CatalogBoxEdit
+        path: '/catalog/boxes/master/:id?',
+        name: 'CatalogBoxMaster',
+        component: CatalogBoxMaster
     },
     {
         path: '/catalog/search',

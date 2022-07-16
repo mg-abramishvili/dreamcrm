@@ -18,7 +18,7 @@
         </div>
 
         <Loader v-if="views.loading"></Loader>
-<pre>{{ selected.stockItems }}</pre>
+
         <div v-if="!views.loading" class="tab">
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
@@ -370,8 +370,7 @@
                 })
             },
             loadBox() {
-                axios
-                .get(`/api/catalog/box/${this.$route.params.id}`)
+                axios.get(`/api/catalog/box/${this.$route.params.id}`)
                 .then((response => {
                     this.box = response.data
                     this.name = response.data.name

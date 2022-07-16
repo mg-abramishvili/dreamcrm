@@ -159,20 +159,18 @@ class CatalogBoxController extends Controller
                 $boxPrice += $stockItem->latestBalance->pre_rub * $stockItem->pivot->quantity;
 
                 if($kurs > $stockItem->latestBalance->usd_kurs) {
-                    $boxPrice += ($stockItem->latestBalance->pre_usd * $stockItem->pivot->quantity) * $kurs;
+                    $boxPrice += (ceil(($stockItem->latestBalance->pre_usd * $kurs) / 50) * 50) * $stockItem->pivot->quantity;
                 } else {
-                    $boxPrice += ($stockItem->latestBalance->pre_usd * $stockItem->pivot->quantity) * $stockItem->latestBalance->usd_kurs;
+                    $boxPrice += (ceil(($stockItem->latestBalance->pre_usd * $stockItem->latestBalance->usd_kurs) / 50) * 50) * $stockItem->pivot->quantity;
                 }
             }
 
-            $box->price = ceil(($boxPrice) / 50) * 50;
-
-            // $sborkaTarif = CatalogSborka::find(1);
-            // $sborka = $box->sborka_days * ($box->sborka_persons * $sborkaTarif->person + $sborkaTarif->arenda);
+            $sborkaTarif = CatalogSborka::find(1);
+            $sborka = $box->sborka_days * ($box->sborka_persons * $sborkaTarif->person + $sborkaTarif->arenda);
             
-            // $marzha = $box->marzha;
+            $marzha = $box->marzha;
             
-            // $box->price = ceil(($boxPrice + $sborka + $marzha) / 50) * 50;
+            $box->price = $boxPrice + $sborka + $marzha;
 
             $box->save();
         }       

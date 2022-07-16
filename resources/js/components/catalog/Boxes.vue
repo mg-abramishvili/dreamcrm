@@ -99,7 +99,7 @@
                 this.gridApi.sizeColumnsToFit()
             },
             goTo(event) {
-                this.$router.push({name: 'CatalogBoxEdit', params: {id: event.data.id}})
+                this.$router.push({name: 'CatalogBoxMaster', params: {id: event.data.id}})
             },
             currencyFormatter(params) {
                 return this.$options.filters.currency(params.value) + ' ₽';
