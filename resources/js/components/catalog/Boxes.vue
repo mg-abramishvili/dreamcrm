@@ -14,7 +14,7 @@
                         </h1>
                     </div>
                     <div class="col-12 col-lg-6 text-end">
-                        <router-link :to="{name: 'CatalogBoxCreate'}" class="btn btn-primary">Добавить</router-link>
+                        <router-link :to="{name: 'CatalogBoxMaster'}" class="btn btn-primary">Добавить</router-link>
                     </div>
                 </div>
             </div>
