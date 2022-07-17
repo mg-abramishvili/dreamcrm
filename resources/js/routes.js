@@ -7,8 +7,7 @@ import CatalogTypeEdit from './components/catalog/TypeEdit.vue';
 import CatalogCategory from './components/catalog/Category.vue';
 import CatalogCategoryCreate from './components/catalog/CategoryCreate.vue';
 import CatalogCategoryEdit from './components/catalog/CategoryEdit.vue';
-import CatalogItemCreate from './components/catalog/ItemCreate.vue';
-import CatalogItemEdit from './components/catalog/ItemEdit.vue';
+import CatalogItemMaster from './components/catalog/ItemMaster.vue';
 import CatalogBoxes from './components/catalog/Boxes.vue';
 import CatalogBoxMaster from './components/catalog/BoxMaster.vue';
 import CatalogSearch from './components/catalog/Search.vue';
@@ -90,14 +89,9 @@ export const routes = [
     },
     
     {
-        path: '/catalog/:category_id?/item/create',
-        name: 'CatalogItemCreate',
-        component: CatalogItemCreate
-    },
-    {
-        path: '/catalog/item/:id/edit',
-        name: 'CatalogItemEdit',
-        component: CatalogItemEdit
+        path: '/catalog/:category_id?/item/master/:id?',
+        name: 'CatalogItemMaster',
+        component: CatalogItemMaster
     },
     {
         path: '/catalog/boxes',
