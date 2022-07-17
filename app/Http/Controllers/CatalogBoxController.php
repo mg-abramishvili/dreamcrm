@@ -123,6 +123,9 @@ class CatalogBoxController extends Controller
         
         $stockItems = [];
         foreach($request->stock_items as $stockItem) {
+            $stockItems[] = $stockItem['id'];
+        }
+        foreach($request->stock_items as $stockItem) {
             $stockItems[$stockItem['id']] = ['quantity' => $stockItem['quantity']];
         }
         $box->stockItems()->sync($stockItems);

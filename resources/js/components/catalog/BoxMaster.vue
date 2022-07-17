@@ -511,7 +511,7 @@
                     pre_rub: this.priceRub,
                     pre_usd: this.priceUsd,
                     types: this.selected.types,
-                    stock_items: this.selected.stockItemsQty,
+                    stock_items: this.selected.stockItems,
                     length: this.length,
                     width: this.width,
                     height: this.height,

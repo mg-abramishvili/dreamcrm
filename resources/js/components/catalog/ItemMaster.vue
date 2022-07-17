@@ -17,16 +17,9 @@
             </div>
         </div>
 
-        <div v-if="categories.length > 0 && boxes.length > 0 && stockItems.length && item.id" class="card">
-            <div class="card-body">
-                <div v-if="errors && errors.length > 0" class="alert alert-danger">
-                    <div class="alert-message">
-                        <strong v-for="(error, index) in errors" :key="'error_' + index" class="d-block">
-                            {{ error }}
-                        </strong>
-                    </div>
-                </div>
+        <Loader v-if="views.loading"></Loader>
 
+        <div v-if="!views.loading" class="card">
                 <label>Название</label>
                 <input v-model="name" type="text" class="form-control mb-3">
 
@@ -81,7 +74,6 @@
                 <button @click="del(item.id)" class="btn btn-outline-danger">Удалить</button>
             </div>
         </div>
-        <Loader v-else></Loader>
     </div>
 </template>
 
@@ -114,7 +106,10 @@
                     date: '',
                 },
 
-                errors: [],
+                views: {
+                    loading: true,
+                    copyStockItemsFromAnotherBox: false,
+                },
             }
         },
         computed: {
@@ -181,17 +176,23 @@
                     ))
             },
             loadItem() {
+                if(!this.$route.params.id) {
+                    return this.views.loading = false
+                }
+
                 axios.get(`/api/catalog/item/${this.$route.params.id}`)
-                    .then((response => {
-                        this.item = response.data
+                .then(response => {
+                    this.item = response.data
 
-                        this.name = response.data.name
-                        this.selected.category = response.data.category_id
+                    this.name = response.data.name
+                    this.selected.category = response.data.category_id
 
-                        this.selected.boxes = response.data.boxes.map(box => box.id)
-                        this.selected.stockItems = response.data.stock_items.map(item => item.id)
-                        this.selected.stockItemsQty = response.data.stock_items.map(({id, pivot}) => ({id: id, quantity: pivot.quantity}))
-                    }))
+                    this.selected.boxes = response.data.boxes.map(box => box.id)
+                    this.selected.stockItems = response.data.stock_items.map(item => item.id)
+                    this.selected.stockItemsQty = response.data.stock_items.map(({id, pivot}) => ({id: id, quantity: pivot.quantity}))
+
+                    this.views.loading = false
+                })
             },
             selectAllBoxes() {
                 this.selected.boxes = this.boxesFiltered.map(box => box.id)
@@ -215,8 +216,6 @@
                 }
             },
             save(id) {
-                this.errors = []
-
                 if (!this.name) {
                     this.errors.push('Укажите название');
                 }

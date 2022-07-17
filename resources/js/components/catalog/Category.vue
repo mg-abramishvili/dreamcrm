@@ -17,7 +17,7 @@
                         </h1>
                     </div>
                     <div class="col-12 col-lg-6 text-end">
-                        <router-link :to="{name: 'CatalogItemCreate', params: {category_id: category.id}}" class="btn btn-primary">Добавить</router-link>
+                        <router-link :to="{name: 'CatalogItemMaster', params: {category_id: category.id}}" class="btn btn-primary">Добавить</router-link>
                     </div>
                 </div>
             </div>
@@ -102,7 +102,7 @@
                 this.gridApi.sizeColumnsToFit()
             },
             goTo(event) {
-                this.$router.push({name: 'CatalogItemEdit', params: {id: event.data.id}})
+                this.$router.push({name: 'CatalogItemMaster', params: {id: event.data.id}})
             },
             currencyFormatter(params) {
                 return this.$options.filters.currency(params.value) + ' ₽';
