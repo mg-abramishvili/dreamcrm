@@ -504,8 +504,7 @@
                     });
                 }
 
-                axios.put(`/api/catalog/box/${id}/update`,
-                {
+                let data = {
                     name: this.name,
                     sborka_days: this.sborkaDays,
                     sborka_persons: this.sborkaPersons,
@@ -524,17 +523,33 @@
                     manager_description: this.manager_description,
                     comment: this.comment,
                     gallery: this.gallery,
-                })
-                .then(response => (
-                    this.$router.push({name: 'CatalogBoxes'})
-                ))
-                .catch((error) => {
-                    if(error.response) {
-                        for(var key in error.response.data.errors){
-                            console.log(key)
+                }
+
+                if(this.$route.params.id) {
+                    axios.put(`/api/catalog/box/${id}/update`, data)
+                    .then(response => {
+                        this.$router.push({name: 'CatalogBoxes'})
+                    })
+                    .catch((error) => {
+                        if(error.response) {
+                            for(var key in error.response.data.errors){
+                                console.log(key)
+                            }
                         }
-                    }
-                })
+                    })
+                } else {
+                    axios.post(`/api/catalog/boxes`, data)
+                    .then(response => {
+                        this.$router.push({name: 'CatalogBoxes'})
+                    })
+                    .catch((error) => {
+                        if(error.response) {
+                            for(var key in error.response.data.errors){
+                                console.log(key)
+                            }
+                        }
+                    })
+                }
             },
             del(id) {
                 if (confirm("Точно удалить?")) {

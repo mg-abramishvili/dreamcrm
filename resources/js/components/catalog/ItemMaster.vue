@@ -329,9 +329,9 @@
                     }
                 })
             },
-            del(id) {
+            del() {
                 if (confirm("Точно удалить?")) {
-                    axios.delete(`/api/catalog/item/${id}/delete`)
+                    axios.delete(`/api/catalog/item/${this.$route.params.id}/delete`)
                     .then(response => (
                         this.$router.push({name: 'CatalogCategory', params: {id: this.item.category_id}}) 
                     ))
