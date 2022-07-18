@@ -3,15 +3,23 @@
         <div class="card card-bordered">
             <div class="card-body">
                 <div class="row align-items-center">
-                    <div class="col-12 col-lg-6">
+                    <div class="col-12 col-lg-8">
                         <h1 class="h3 m-0">
-                            <router-link :to="{name: 'CatalogCategory', params: {id: item.category_id}}">
+                            <router-link v-if="$route.params.category_id" :to="{name: 'CatalogCategory', params: {id: $route.params.category_id}}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left align-middle me-2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                             </router-link>
-                            <strong>
-                                {{ item.name }}
-                            </strong>
+                            <router-link v-else :to="{name: 'Catalog'}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left align-middle me-2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                            </router-link>
+                            <strong v-if="$route.params.id">{{ item.name }}</strong>
+                            <strong v-else>Новый элемент каталога</strong>
                         </h1>
+                    </div>
+                    <div class="col-12 col-lg-4 text-end">
+                        <button v-if="!$route.params.id" @click="save()" class="btn btn-primary">Сохранить</button>
+                        
+                        <button v-if="$route.params.id" @click="update()" class="btn btn-primary">Сохранить</button>
+                        <button v-if="$route.params.id" @click="del()" class="btn btn-outline-danger">Удалить</button>
                     </div>
                 </div>
             </div>
@@ -19,59 +27,81 @@
 
         <Loader v-if="views.loading"></Loader>
 
-        <div v-if="!views.loading" class="card">
-                <label>Название</label>
-                <input v-model="name" type="text" class="form-control mb-3">
-
-                <label>Категория</label>
-                <select v-model="selected.category" class="form-select mb-3">
-                    <option v-for="category in categories" :key="'key_' + category.id" :value="category.id">{{ category.name }}</option>
-                </select>
-
-                <div class="row">
-                    <div class="col-12 col-lg-6">
-                        <div class="d-flex justify-content-between">
-                            <label>Совместимость</label>
-                            <div>
-                                <button @click="selectAllBoxes()" class="btn btn-sm">выбрать все</button>
-                                <button @click="uncheckAllBoxes()" class="btn btn-sm">снять все</button>
-                            </div>
-                        </div>
-                        <input v-model="boxSearchInput" type="text" class="form-control mb-1" placeholder="Поиск по корпусам...">
-                        <div class="form-control" style="height: 180px; overflow-y: auto;">
-                            <div v-for="box in boxesFiltered" :key="'box_' + box.id" class="form-check">
-                                <input v-model="selected.boxes" :id="'box_' + box.id" :value="box.id" class="form-check-input" type="checkbox">
-                                <label class="form-check-label" :for="'box_' + box.id">
-                                    {{ box.name }}
-                                </label>
-                            </div>
-                        </div>
+        <div v-if="!views.loading" class="tab">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a @click="selectTab('general')" class="nav-link" :class="{'active': selected.tab == 'general'}" role="tab">Общая информация</a>
+                </li>
+                <li class="nav-item">
+                    <a @click="selectTab('compatibility')" class="nav-link" :class="{'active': selected.tab == 'compatibility'}" role="tab">Совместимость</a>
+                </li>
+                <li class="nav-item">
+                    <a @click="selectTab('stock')" class="nav-link" :class="{'active': selected.tab == 'stock'}" role="tab">Склад</a>
+                </li>
+                <li class="nav-item">
+                    <a @click="selectTab('prices')" class="nav-link" :class="{'active': selected.tab == 'prices'}" role="tab">Стоимость</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane" :class="{'active': selected.tab == 'general'}" role="tabpanel">
+                    <div class="mb-3">
+                        <label>Название</label>
+                        <input v-model="name" type="text" class="form-control mb-3">
                     </div>
-                    <div class="col-12 col-lg-6">
-                        <div class="d-flex justify-content-between">
-                            <label>Склад</label>
-                        </div>
-                        <input v-model="stockSearchInput" type="text" class="form-control mb-1" placeholder="Поиск по складу...">
-                        <div class="form-control" style="height: 180px; overflow-y: auto;">
-                            <div v-for="stockItem in stockItemsFiltered" :key="'stock_item_' + stockItem.id" class="form-check form-check-flex">
-                                <div>
-                                    <input v-model="selected.stockItems" @change="selectedStockItems(stockItem.id, $event)" :id="'stock_item_' + stockItem.id" :value="stockItem.id" class="form-check-input" type="checkbox">
-                                    <label class="form-check-label" :for="'stock_item_' + stockItem.id">
-                                        {{ stockItem.name }} - {{ LatestBalancePrice(stockItem) | currency }} ₽
-                                    </label>
-                                </div>
-                                <div>
-                                    <input v-if="selected.stockItems.includes(stockItem.id)" v-model="selected.stockItemsQty.find(q => q.id == stockItem.id).quantity" type="number" min="0" class="form-control form-control-mini-number">
-                                </div>
-                            </div>
-                        </div>
-                        <label>Цена (финальная)</label>
-                        <input v-model="price" disabled type="number" class="form-control">
+
+                    <div class="mb-3">
+                        <label>Категория</label>
+                        <select v-model="selected.category" class="form-select mb-3">
+                            <option v-for="category in categories" :key="'key_' + category.id" :value="category.id">{{ category.name }}</option>
+                        </select>
                     </div>
                 </div>
-
-                <button @click="save(item.id)" class="btn btn-primary">Сохранить</button>
-                <button @click="del(item.id)" class="btn btn-outline-danger">Удалить</button>
+                <div class="tab-pane" :class="{'active': selected.tab == 'compatibility'}" role="tabpanel">
+                    <div class="d-flex justify-content-between">
+                        <label>Совместимость</label>
+                        <div>
+                            <button @click="selectAllBoxes()" class="btn btn-sm">выбрать все</button>
+                            <button @click="uncheckAllBoxes()" class="btn btn-sm">снять все</button>
+                        </div>
+                    </div>
+                    <input v-model="boxSearchInput" type="text" class="form-control mb-1" placeholder="Поиск по корпусам...">
+                    <div class="form-control" style="height: 180px; overflow-y: auto;">
+                        <div v-for="box in boxesFiltered" :key="'box_' + box.id" class="form-check">
+                            <input v-model="selected.boxes" :id="'box_' + box.id" :value="box.id" class="form-check-input" type="checkbox">
+                            <label class="form-check-label" :for="'box_' + box.id">
+                                {{ box.name }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" :class="{'active': selected.tab == 'stock'}" role="tabpanel">
+                    <input v-model="stockSearchInput" type="text" class="form-control mb-1" placeholder="Поиск по складу...">
+                    <div class="form-control" style="height: 550px; overflow-y: auto;">
+                        <div v-for="stockItem in stockItemsFiltered" :key="'stock_item_' + stockItem.id" class="form-check form-check-flex">
+                            <div>
+                                <input @change="toggleStockItems(stockItem.id, $event)" :checked="ifChecked(stockItem.id)" :id="'stock_item_' + stockItem.id" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" :for="'stock_item_' + stockItem.id">
+                                    {{ stockItem.name }} - {{ latestBalancePrice(stockItem) | currency }} ₽
+                                </label>
+                            </div>
+                            <div v-if="selected.stockItems.find(i => i.id == stockItem.id)">
+                                <input v-model.number="selected.stockItems.find(i => i.id == stockItem.id).quantity" type="number" min="1" class="form-control form-control-mini-number">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" :class="{'active': selected.tab == 'prices'}" role="tabpanel">
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label>Склад</label>
+                            <input v-model="stockItemsPrice" disabled type="number" class="form-control">
+                        </div>
+                        <div class="col">
+                            <label>Цена финал</label>
+                            <input v-model="price" disabled type="number" class="form-control">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -88,10 +118,10 @@
                 name: '',
 
                 selected: {
+                    tab: 'general',
                     category: '',
                     boxes: [],
                     stockItems: [],
-                    stockItemsQty: [],
                 },
                 
                 categories: [],
@@ -103,7 +133,6 @@
 
                 usd: {
                     kurs: '',
-                    date: '',
                 },
 
                 views: {
@@ -120,26 +149,52 @@
             },
             stockItemsFiltered() {
                 let filtered = this.stockItems.filter(stockItem => {
-                    if(stockItem.balances && stockItem.balances.length > 0) {
+                    if(stockItem.latest_balance) {
                         return stockItem.name.toLowerCase().includes(this.stockSearchInput.toLowerCase())
                     }
                 })
-
-                return filtered.filter(stockItem => this.selected.stockItems.includes(stockItem.id)).concat(filtered.filter(stockItem => !this.selected.stockItems.includes(stockItem.id)))
+                
+                return filtered.filter(stockItem => this.selected.stockItems.find(i => i.id == stockItem.id)).concat(filtered.filter(stockItem => !this.selected.stockItems.find(i => i.id == stockItem.id)))
             },
             priceRub() {
-                let selectedStockItems = this.stockItems.filter(stockItem => this.selected.stockItems.includes(stockItem.id))
+                let priceRub = []
 
-                return selectedStockItems.map(stockItem => stockItem.balances[stockItem.balances.length - 1].pre_rub * this.selected.stockItemsQty.find(q => q.id == stockItem.id).quantity).reduce((a, b) => parseInt(a) + parseInt(b), 0)
+                this.selected.stockItems.forEach(item => {
+                    let stockItem = this.stockItems.find(i => i.id === item.id)
+                    if(stockItem.latest_balance && item.quantity) {
+                        priceRub.push(stockItem.latest_balance.pre_rub * item.quantity)
+                    }
+                })
+
+                return priceRub.reduce((a, b) => a + b, 0)
             },
             priceUsd() {
-                let selectedStockItems = this.stockItems.filter(stockItem => this.selected.stockItems.includes(stockItem.id))
+                let priceUsd = []
 
-                return selectedStockItems.map(stockItem => stockItem.balances[stockItem.balances.length - 1].pre_usd * this.selected.stockItemsQty.find(q => q.id == stockItem.id).quantity).reduce((a, b) => parseInt(a) + parseInt(b), 0)
+                this.selected.stockItems.forEach(item => {
+                    let stockItem = this.stockItems.find(i => i.id === item.id)
+
+                    if(stockItem.latest_balance && item.quantity) {
+                        let usdKurs = 0
+
+                        if(this.usd.kurs > stockItem.latest_balance.usd_kurs) {
+                            usdKurs = this.usd.kurs
+                        } else {
+                            usdKurs = stockItem.latest_balance.usd_kurs
+                        }
+
+                        priceUsd.push((Math.ceil((stockItem.latest_balance.pre_usd * usdKurs) / 50) * 50) * item.quantity)
+                    }
+                })
+
+                return priceUsd.reduce((a, b) => a + b, 0)
+            },
+            stockItemsPrice() {
+                return this.priceRub + this.priceUsd
             },
             price() {
-                return Math.ceil((this.priceRub + (this.priceUsd * this.usd.kurs)) / 50) * 50
-            },
+                return this.stockItemsPrice
+            }
         },
         created() {
             this.loadUsd()
@@ -152,15 +207,18 @@
             loadUsd() {
                 axios
                 .get('/api/usd')
-                .then((response => {
-                    this.usd.kurs = response.data.kurs,
-                    this.usd.date = response.data.date
-                }))
+                .then(response => {
+                    this.usd.kurs = response.data.kurs
+                })
             },
             loadCategories() {
                 axios.get('/api/catalog/categories')
                     .then((response => {
                         this.categories = response.data
+
+                        if(this.$route.params.category_id) {
+                            this.selected.category = this.$route.params.category_id
+                        }
                     }))
             },
             loadBoxes() {
@@ -170,10 +228,10 @@
                     ))
             },
             loadStockItems() {
-                axios.get(`/api/stock/items`)
-                    .then(response => (
-                        this.stockItems = response.data
-                    ))
+                axios.get(`/api/stock/items-with-latest-balances-only`)
+                .then(response => {
+                    this.stockItems = response.data
+                })
             },
             loadItem() {
                 if(!this.$route.params.id) {
@@ -188,8 +246,8 @@
                     this.selected.category = response.data.category_id
 
                     this.selected.boxes = response.data.boxes.map(box => box.id)
-                    this.selected.stockItems = response.data.stock_items.map(item => item.id)
-                    this.selected.stockItemsQty = response.data.stock_items.map(({id, pivot}) => ({id: id, quantity: pivot.quantity}))
+                    
+                    this.selected.stockItems = response.data.stock_items.map(({id, pivot}) => ({id: id, quantity: pivot.quantity}))
 
                     this.views.loading = false
                 })
@@ -200,19 +258,39 @@
             uncheckAllBoxes() {
                 this.selected.boxes = []
             },
-            LatestBalancePrice(stockItem) {
-                if(stockItem.balances && stockItem.balances.length > 0) {
-                    let rub = parseInt(stockItem.balances[stockItem.balances.length - 1].pre_rub)
-                    let usd = parseInt(stockItem.balances[stockItem.balances.length - 1].pre_usd) * this.usd.kurs
+            latestBalancePrice(stockItem) {
+                if(stockItem.latest_balance) {
+                    let usdKurs = 0
+
+                    if(this.usd.kurs > stockItem.latest_balance.usd_kurs) {
+                        usdKurs = this.usd.kurs
+                    } else {
+                        usdKurs = stockItem.latest_balance.usd_kurs
+                    }
+
+                    let rub = parseInt(stockItem.latest_balance.pre_rub)
+                    let usd = parseInt(stockItem.latest_balance.pre_usd) * usdKurs
                     
                     return Math.ceil((rub + usd) / 50) * 50
                 }
             },
-            selectedStockItems(id) {
-                if(event.target.checked) {
-                    this.selected.stockItemsQty.push({id: id, quantity: 1})
-                } else {
-                    this.selected.stockItemsQty = this.selected.stockItemsQty.filter(qty => qty.id !== id)
+            selectTab(tab) {
+                this.selected.tab = tab
+            },
+            toggleStockItems(id) {
+                if(this.selected.stockItems.find(i => i.id === id)) {
+                    return this.selected.stockItems = this.selected.stockItems.filter(item => {
+                        return item.id !== id;
+                    })
+                }
+
+                if(!this.selected.stockItems.find(i => i.id === id)) {
+                    return this.selected.stockItems.push({id: id, quantity: 1})
+                }
+            },
+            ifChecked(id) {
+                if(this.selected.stockItems.find(item => item.id === id)) {
+                    return true
                 }
             },
             save(id) {
