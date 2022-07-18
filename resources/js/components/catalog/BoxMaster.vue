@@ -447,7 +447,11 @@
                 this.views.copyStockItemsFromAnotherBox = true
             },
             copyStockItemsFromAnotherBox(box) {
-                this.selected.stockItems = box.stock_items.map(item => item.id)
+                this.sborkaDays = box.sborka_days
+                this.sborkaPersons = box.sborka_persons
+                this.marzha = box.marzha
+                this.selected.types = box.types.map(type => type.id)
+                this.selected.stockItems = box.stock_items.map(({id, pivot}) => ({id: id, quantity: pivot.quantity}))
             },
             closeOffcanvas() {
                 this.views.backdrop = false
