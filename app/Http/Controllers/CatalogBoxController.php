@@ -141,6 +141,7 @@ class CatalogBoxController extends Controller
         }
 
         $box->types()->detach();
+        $box->items()->detach();
         $box->stockItems()->detach();
         
         $box->delete();

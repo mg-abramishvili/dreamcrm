@@ -3,7 +3,7 @@
         <div class="card card-bordered">
             <div class="card-body">
                 <div class="row align-items-center">
-                    <div class="col-12 col-lg-6">
+                    <div class="col-12 col-lg-8">
                         <h1 class="h3 m-0">
                             <router-link :to="{name: 'CatalogBoxes'}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left align-middle me-2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
@@ -11,6 +11,10 @@
                             <strong v-if="box.name">{{ box.name }}</strong>
                             <strong v-else>Новый корпус</strong>
                         </h1>
+                    </div>
+                    <div class="col-12 col-lg-4 text-end">
+                        <button @click="save()" class="btn btn-primary">Сохранить</button>
+                        <button v-if="$route.params.id" @click="del()" class="btn btn-outline-danger">Удалить</button>
                     </div>
                 </div>
             </div>
@@ -161,8 +165,6 @@
                     
                 </div>
             </div>
-
-            <button @click="save(box.id)" class="btn btn-primary mt-2">Сохранить</button>
         </div>
 
         <div v-if="views.backdrop" @click="closeOffcanvas()" class="offcanvas-backdrop fade show"></div>
@@ -457,7 +459,7 @@
                 this.views.backdrop = false
                 this.views.copyStockItemsFromAnotherBox = false
             },
-            save(id) {
+            save() {
                 if(!this.name) {
                     return this.$swal({
                         text: 'Укажите название',
@@ -526,7 +528,7 @@
                 }
 
                 if(this.$route.params.id) {
-                    axios.put(`/api/catalog/box/${id}/update`, data)
+                    axios.put(`/api/catalog/box/${this.$route.params.id}/update`, data)
                     .then(response => {
                         this.$router.push({name: 'CatalogBoxes'})
                     })
@@ -551,9 +553,9 @@
                     })
                 }
             },
-            del(id) {
+            del() {
                 if (confirm("Точно удалить?")) {
-                    axios.delete(`/api/catalog/box/${id}/delete`)
+                    axios.delete(`/api/catalog/box/${this.$route.params.id}/delete`)
                     .then(response => (
                         this.$router.push({name: 'CatalogBoxes'})
                     ))
