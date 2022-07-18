@@ -71,6 +71,9 @@ class CatalogBoxController extends Controller
         
         $stockItems = [];
         foreach($request->stock_items as $stockItem) {
+            $stockItems[] = $stockItem['id'];
+        }
+        foreach($request->stock_items as $stockItem) {
             $stockItems[$stockItem['id']] = ['quantity' => $stockItem['quantity']];
         }
         $box->stockItems()->sync($stockItems);
@@ -160,12 +163,14 @@ class CatalogBoxController extends Controller
 
             foreach($box->stockItems as $stockItem)
             {
-                $boxPrice += $stockItem->latestBalance->pre_rub * $stockItem->pivot->quantity;
+                if($stockItem->latestBalance) {
+                    $boxPrice += $stockItem->latestBalance->pre_rub * $stockItem->pivot->quantity;
 
-                if($kurs > $stockItem->latestBalance->usd_kurs) {
-                    $boxPrice += (ceil(($stockItem->latestBalance->pre_usd * $kurs) / 50) * 50) * $stockItem->pivot->quantity;
-                } else {
-                    $boxPrice += (ceil(($stockItem->latestBalance->pre_usd * $stockItem->latestBalance->usd_kurs) / 50) * 50) * $stockItem->pivot->quantity;
+                    if($kurs > $stockItem->latestBalance->usd_kurs) {
+                        $boxPrice += (ceil(($stockItem->latestBalance->pre_usd * $kurs) / 50) * 50) * $stockItem->pivot->quantity;
+                    } else {
+                        $boxPrice += (ceil(($stockItem->latestBalance->pre_usd * $stockItem->latestBalance->usd_kurs) / 50) * 50) * $stockItem->pivot->quantity;
+                    }
                 }
             }
 

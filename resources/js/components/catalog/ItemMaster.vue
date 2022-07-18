@@ -4,21 +4,24 @@
             <div class="card-body">
                 <div class="row align-items-center">
                     <div class="col-12 col-lg-8">
-                        <h1 class="h3 m-0">
+                        <h1 v-if="!$route.params.id" class="h3 m-0">
                             <router-link v-if="$route.params.category_id" :to="{name: 'CatalogCategory', params: {id: $route.params.category_id}}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left align-middle me-2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                             </router-link>
                             <router-link v-else :to="{name: 'Catalog'}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left align-middle me-2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                             </router-link>
-                            <strong v-if="$route.params.id">{{ item.name }}</strong>
-                            <strong v-else>Новый элемент каталога</strong>
+                            <strong>Новый элемент каталога</strong>
+                        </h1>
+                        <h1 v-if="$route.params.id" class="h3 m-0">
+                            <router-link :to="{name: 'CatalogCategory', params: {id: item.category_id}}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left align-middle me-2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                            </router-link>
+                            <strong>{{ item.name }}</strong>
                         </h1>
                     </div>
                     <div class="col-12 col-lg-4 text-end">
-                        <button v-if="!$route.params.id" @click="save()" class="btn btn-primary">Сохранить</button>
-                        
-                        <button v-if="$route.params.id" @click="update()" class="btn btn-primary">Сохранить</button>
+                        <button @click="save()" class="btn btn-primary">Сохранить</button>
                         <button v-if="$route.params.id" @click="del()" class="btn btn-outline-danger">Удалить</button>
                     </div>
                 </div>
@@ -137,7 +140,6 @@
 
                 views: {
                     loading: true,
-                    copyStockItemsFromAnotherBox: false,
                 },
             }
         },
@@ -293,47 +295,67 @@
                     return true
                 }
             },
-            save(id) {
-                if (!this.name) {
-                    this.errors.push('Укажите название');
+            save() {
+                if(!this.name) {
+                    return this.$swal({
+                        text: 'Укажите название',
+                        icon: 'error',
+                    })
                 }
                 if (!this.selected.category) {
-                    this.errors.push('Укажите категорию');
+                    return this.$swal({
+                        text: 'Укажите категорию',
+                        icon: 'error',
+                    })
                 }
                 if (!this.selected.boxes.length) {
-                    this.errors.push('Укажите совместимость');
+                    return this.$swal({
+                        text: 'Укажите совместимость',
+                        icon: 'error',
+                    })
                 }
 
-                if(this.errors && this.errors.length > 0) {
-                    return
-                }
-
-                axios.put(`/api/catalog/item/${id}/update`,
-                {
+                let data = {
                     name: this.name,
                     price: this.price,
                     pre_rub: this.priceRub,
                     pre_usd: this.priceUsd,
                     category_id: this.selected.category,
-                    stock_items: this.selected.stockItemsQty,
+                    stock_items: this.selected.stockItems,
                     boxes: this.selected.boxes,
-                })
-                .then(response => (
-                    this.$router.push({name: 'CatalogCategory', params: {id: this.item.category_id}}) 
-                ))
-                .catch((error) => {
-                    if(error.response) {
-                        for(var key in error.response.data.errors){
-                            console.log(key)
+                }
+
+                if(this.$route.params.id) {
+                    axios.put(`/api/catalog/item/${this.$route.params.id}/update`, data)
+                    .then(response => (
+                        this.$router.push({name: 'CatalogCategory', params: {id: this.selected.category}}) 
+                    ))
+                    .catch((error) => {
+                        if(error.response) {
+                            for(var key in error.response.data.errors){
+                                console.log(key)
+                            }
                         }
-                    }
-                })
+                    })
+                } else {
+                    axios.post(`/api/catalog/items`, data)
+                    .then(response => (
+                        this.$router.push({name: 'CatalogCategory', params: {id: this.selected.category}}) 
+                    ))
+                    .catch((error) => {
+                        if(error.response) {
+                            for(var key in error.response.data.errors){
+                                console.log(key)
+                            }
+                        }
+                    })
+                }
             },
             del() {
                 if (confirm("Точно удалить?")) {
                     axios.delete(`/api/catalog/item/${this.$route.params.id}/delete`)
                     .then(response => (
-                        this.$router.push({name: 'CatalogCategory', params: {id: this.item.category_id}}) 
+                        this.$router.push({name: 'CatalogCategory', params: {id: this.selected.category}}) 
                     ))
                     .catch(error => {
                         return this.$swal({

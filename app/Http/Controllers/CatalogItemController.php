@@ -43,8 +43,11 @@ class CatalogItemController extends Controller
         $item->save();
 
         $item->boxes()->sync($request->boxes);
-        
+
         $stockItems = [];
+        foreach($request->stock_items as $stockItem) {
+            $stockItems[] = $stockItem['id'];
+        }
         foreach($request->stock_items as $stockItem) {
             $stockItems[$stockItem['id']] = ['quantity' => $stockItem['quantity']];
         }
@@ -74,6 +77,9 @@ class CatalogItemController extends Controller
         
         $stockItems = [];
         foreach($request->stock_items as $stockItem) {
+            $stockItems[] = $stockItem['id'];
+        }
+        foreach($request->stock_items as $stockItem) {
             $stockItems[$stockItem['id']] = ['quantity' => $stockItem['quantity']];
         }
         $item->stockItems()->sync($stockItems);
@@ -98,19 +104,29 @@ class CatalogItemController extends Controller
     {
         $kurs = Dollar::find(1)->kurs;
 
-        if(!$kurs) {
-            return;
-        }
+        if(!$kurs) { return; }
 
         $items = CatalogItem::all();
 
         foreach ($items as $item) {
-            $rub = $item->pre_rub;
-            $usd = $item->pre_usd * $kurs;
+            $itemPrice = 0;
 
-            $item->price = ceil(($usd + $rub) / 50) * 50;
+            foreach($item->stockItems as $stockItem)
+            {
+                if($stockItem->latestBalance) {
+                    $itemPrice += $stockItem->latestBalance->pre_rub * $stockItem->pivot->quantity;
+
+                    if($kurs > $stockItem->latestBalance->usd_kurs) {
+                        $itemPrice += (ceil(($stockItem->latestBalance->pre_usd * $kurs) / 50) * 50) * $stockItem->pivot->quantity;
+                    } else {
+                        $itemPrice += (ceil(($stockItem->latestBalance->pre_usd * $stockItem->latestBalance->usd_kurs) / 50) * 50) * $stockItem->pivot->quantity;
+                    }
+                }
+            }
             
+            $item->price = $itemPrice;
+
             $item->save();
-        }       
+        }  
     }
 }
