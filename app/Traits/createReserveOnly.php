@@ -24,16 +24,21 @@ trait createReserveOnly
                 $reserve->price_total = $balance->price * $stockNeed->quantity;
                 
                 $this->updateStockBalance($balance, $stockNeed->quantity);
+                
+                $reserve->save();
+
+                $stockNeed->delete();
             } else {
                 $reserve->quantity = $balance->quantity;
                 $reserve->price_total = $balance->price * $balance->quantity;
                 
                 $this->updateStockBalance($balance, $balance->quantity);
-            }            
-            
-            $reserve->save();
 
-            $stockNeed->delete();
+                $reserve->save();
+
+                $stockNeed->quantity = $stockNeed->quantity - $balance->quantity;
+                $stockNeed->save();
+            }
         }
     }
 

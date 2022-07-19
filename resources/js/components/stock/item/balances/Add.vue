@@ -92,10 +92,10 @@
                     date: this.date,
                     usd_kurs: this.usd.kurs
                 })
-                .then(response => (
-                    this.$parent.views.addBalance = false,
+                .then(response => {
+                    this.$parent.views.addBalance = false
                     this.$parent.loadStockItem()
-                ))
+                })
                 .catch((error) => {
                     if(error.response) {
                         for(var key in error.response.data.errors){
