@@ -294,7 +294,7 @@
 
                 this.selected.stockItems.forEach(item => {
                     let stockItem = this.stockItems.find(i => i.id === item.id)
-                    if(stockItem && stockItem.latest_balance && item.quantity) {
+                    if(stockItem.latest_balance && item.quantity) {
                         priceRub.push(stockItem.latest_balance.pre_rub * item.quantity)
                     }
                 })
@@ -307,7 +307,7 @@
                 this.selected.stockItems.forEach(item => {
                     let stockItem = this.stockItems.find(i => i.id === item.id)
 
-                    if(stockItem && stockItem.latest_balance && item.quantity) {
+                    if(stockItem.latest_balance && item.quantity) {
                         let usdKurs = 0
 
                         if(this.usd.kurs > stockItem.latest_balance.usd_kurs) {
@@ -323,7 +323,7 @@
                 return priceUsd.reduce((a, b) => a + b, 0)
             },
             stockItemsPrice() {
-                return this.priceRub
+                return this.priceRub + this.priceUsd
             },
             sborka() {
                 return this.sborkaDays * (this.sborkaPersons * parseInt(this.sborkaTarif.person) + parseInt(this.sborkaTarif.arenda))
