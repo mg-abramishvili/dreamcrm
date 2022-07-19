@@ -32,9 +32,21 @@ class StockBalanceController extends Controller
 
         $balance->save();
 
-        $this->updateCatalogItemPrice($balance);
+        if(count($balance->stockItem->catalogBoxes))
+        {
+            foreach($balance->stockItem->catalogBoxes as $box)
+            {
+                $this->updateCatalogBoxPrice($box);
+            }
+        }
 
-        $this->updateCatalogBoxPrice($balance);
+        if(count($balance->stockItem->catalogItems))
+        {
+            foreach($balance->stockItem->catalogItems as $item)
+            {
+                $this->updateCatalogItemPrice($item);
+            }
+        }
 
         // check if stockNeeds exists
         $stockNeeds = StockNeed::where('stock_item_id', $balance->stock_item_id)->get();
