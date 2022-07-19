@@ -185,6 +185,8 @@
                             usdKurs = stockItem.latest_balance.usd_kurs
                         }
 
+                        console.log(usdKurs)
+
                         priceUsd.push((Math.ceil((stockItem.latest_balance.pre_usd * usdKurs) / 50) * 50) * item.quantity)
                     }
                 })
@@ -269,8 +271,6 @@
                     } else {
                         usdKurs = stockItem.latest_balance.usd_kurs
                     }
-
-                    console.log(usdKurs)
 
                     let rub = parseInt(stockItem.latest_balance.pre_rub)
                     let usd = parseInt(stockItem.latest_balance.pre_usd) * usdKurs
