@@ -367,7 +367,7 @@
                 axios
                 .get('/api/usd')
                 .then(response => {
-                    this.usd.kurs = response.data.kurs
+                    this.usd.kurs = parseInt(response.data.kurs)
                 })
             },
             loadBox() {
