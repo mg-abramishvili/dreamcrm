@@ -29,11 +29,8 @@ class ProductionItemController extends Controller
 
     public function delete($id)
     {
-        $item = Production::find($id);
+        $item = ProductionItem::find($id);
         
-        $this->deleteReserves($item);
-        $this->deleteStockNeeds($item);
-
-        $item->delete();
+        $this->deleteProductionItem($item);
     }
 }

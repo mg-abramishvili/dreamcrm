@@ -12,6 +12,10 @@ trait deleteProductionItem
 
     public function deleteProductionItem($item)
     {
+        if(!$item) {
+            return;
+        }
+        
         $reserves = Reserve::where('production_item_id', $item->id)->get();
         $stockNeeds = StockNeed::where('production_item_id', $item->id)->get();
 

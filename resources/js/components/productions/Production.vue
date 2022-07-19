@@ -341,8 +341,8 @@
                                     </ul>
                                 </td>
                                 <td style="width: 15%; text-align: right;">
-                                    <button @click="changeProductionItem(item)" class="btn btn-sm btn-outline-secondary">заменить</button>
-                                    <!-- <button @click="delItem(item.id)">удалить</button> -->
+                                    <!-- <button @click="changeProductionItem(item)" class="btn btn-sm btn-outline-secondary">заменить</button> -->
+                                    <button @click="delItem(item.id)" class="btn btn-sm btn-outline-danger">удалить</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -409,7 +409,7 @@
                 this.selected.tab = tab
             },
             delItem(id) {
-                axios.delete(`/api/production-item/${id}`)
+                axios.delete(`/api/production-item/${id}/delete`)
                 .then(response => {
                     this.loadProduction()
                 })
