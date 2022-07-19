@@ -323,7 +323,7 @@
                 return priceUsd.reduce((a, b) => a + b, 0)
             },
             stockItemsPrice() {
-                return this.priceRub + this.priceUsd
+                return this.priceRub
             },
             sborka() {
                 return this.sborkaDays * (this.sborkaPersons * parseInt(this.sborkaTarif.person) + parseInt(this.sborkaTarif.arenda))
