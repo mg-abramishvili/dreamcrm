@@ -342,7 +342,7 @@
                                 </td>
                                 <td style="width: 15%; text-align: right;">
                                     <!-- <button @click="changeProductionItem(item)" class="btn btn-sm btn-outline-secondary">заменить</button> -->
-                                    <!-- <button @click="delItem(item.id)" class="btn btn-sm btn-outline-danger">удалить</button> -->
+                                    <button @click="delItem(item.id)" class="btn btn-sm btn-outline-danger">удалить</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -412,6 +412,10 @@
                 axios.delete(`/api/production-item/${id}/delete`)
                 .then(response => {
                     this.loadProduction()
+
+                    if(response.data && response.data > 0) {
+                        this.$router.push({name: 'StockNeedsDetector', params: {stock_item_id: response.data }})
+                    }
                 })
             },
             changePanel(panel) {

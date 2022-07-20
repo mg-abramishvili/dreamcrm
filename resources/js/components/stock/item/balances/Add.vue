@@ -92,7 +92,7 @@
                 .then(response => {
                     this.$parent.closeOffcanvas()
                     this.$parent.loadStockItem()
-console.log(response)
+
                     if(response.data == 'detector') {
                         this.$router.push({name: 'StockNeedsDetector', params: {stock_item_id: this.item.id }})
                     }

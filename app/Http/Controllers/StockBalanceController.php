@@ -50,7 +50,7 @@ class StockBalanceController extends Controller
 
         $stockNeeds = StockNeed::where('stock_item_id', $balance->stock_item_id)->get();
 
-        if($stockNeeds->count() > 0)
+        if($stockNeeds->count() > 0 && $balance->quantity > 0)
         {
             return 'detector';
         }
@@ -69,9 +69,29 @@ class StockBalanceController extends Controller
 
         $balance->save();
 
-        $this->updateCatalogItemPrice($balance);
+        if(count($balance->stockItem->catalogBoxes))
+        {
+            foreach($balance->stockItem->catalogBoxes as $box)
+            {
+                $this->updateCatalogBoxPrice($box);
+            }
+        }
 
-        $this->updateCatalogBoxPrice($balance);
+        if(count($balance->stockItem->catalogItems))
+        {
+            foreach($balance->stockItem->catalogItems as $item)
+            {
+                $this->updateCatalogItemPrice($item);
+            }
+        }
+
+        $stockNeeds = StockNeed::where('stock_item_id', $balance->stock_item_id)->get();
+
+        if($stockNeeds->count() > 0 && $balance->quantity > 0)
+        {
+            return 'detector';
+        }
+
     }
 
     public function delete($id)
@@ -87,8 +107,27 @@ class StockBalanceController extends Controller
 
         $balance->delete();
 
-        $this->updateCatalogItemPrice($tempBalance);
+        if(count($tempBalance->stockItem->catalogBoxes))
+        {
+            foreach($tempBalance->stockItem->catalogBoxes as $box)
+            {
+                $this->updateCatalogBoxPrice($box);
+            }
+        }
 
-        $this->updateCatalogBoxPrice($tempBalance);
+        if(count($tempBalance->stockItem->catalogItems))
+        {
+            foreach($tempBalance->stockItem->catalogItems as $item)
+            {
+                $this->updateCatalogItemPrice($item);
+            }
+        }
+
+        $stockNeeds = StockNeed::where('stock_item_id', $tempBalance->stock_item_id)->get();
+
+        if($stockNeeds->count() > 0)
+        {
+            return 'detector';
+        }
     }
 }

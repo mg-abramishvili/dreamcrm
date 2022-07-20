@@ -37,7 +37,7 @@
                 </li>
             </ul>
 
-            <button @click="save()" class="btn btn-lg btn-primary mt-2 mb-4">Применить</button>
+            <button @click="save()" class="btn btn-lg btn-primary mt-4 mb-4">Применить</button>
         </div>
     </div>
 </template>
@@ -100,7 +100,7 @@ export default {
                 need.quantity = parseInt(event.target.value)
             }
 
-            if(this.balancesQuantityLeft > 0) {
+            if(this.balancesQuantityLeft > 0 && this.needs.find(n => n.id === id).quantity >= parseInt(event.target.value)) {
                 need.quantity = parseInt(event.target.value)
             }
 
