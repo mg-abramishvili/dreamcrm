@@ -48,15 +48,11 @@ class StockBalanceController extends Controller
             }
         }
 
-        // check if stockNeeds exists
         $stockNeeds = StockNeed::where('stock_item_id', $balance->stock_item_id)->get();
 
         if($stockNeeds->count() > 0)
         {
-            foreach($stockNeeds as $stockNeed)
-            {
-                $this->createReserveOnly($stockNeed, $balance);
-            }
+            return 'detector';
         }
     }
 
