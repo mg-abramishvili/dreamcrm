@@ -6,12 +6,11 @@ use App\Models\StockBalance;
 use App\Models\StockNeed;
 use App\Traits\updateCatalogItemPrice;
 use App\Traits\updateCatalogBoxPrice;
-use App\Traits\createReserveOnly;
 use Illuminate\Http\Request;
 
 class StockBalanceController extends Controller
 {
-    use updateCatalogItemPrice, updateCatalogBoxPrice, createReserveOnly;
+    use updateCatalogItemPrice, updateCatalogBoxPrice;
 
     public function index()
     {
