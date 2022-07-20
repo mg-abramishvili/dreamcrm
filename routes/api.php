@@ -175,6 +175,7 @@ Route::get('stock/needs', [StockNeedController::class, 'index'])->middleware('au
 
 // RESERVES
 Route::get('reserves', [ReserveController::class, 'index'])->middleware('auth:sanctum');
+Route::get('reserves-by-balance/{stock_balance_id}', [ReserveController::class, 'indexByBalance'])->middleware('auth:sanctum');
 
 
 

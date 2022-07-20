@@ -342,7 +342,7 @@
                                 </td>
                                 <td style="width: 15%; text-align: right;">
                                     <!-- <button @click="changeProductionItem(item)" class="btn btn-sm btn-outline-secondary">заменить</button> -->
-                                    <button @click="delItem(item.id)" class="btn btn-sm btn-outline-danger">удалить</button>
+                                    <!-- <button @click="delItem(item.id)" class="btn btn-sm btn-outline-danger">удалить</button> -->
                                 </td>
                             </tr>
                         </tbody>

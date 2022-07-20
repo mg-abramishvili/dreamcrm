@@ -1,34 +1,38 @@
 <template>
-    <div class="card bg-light w-50 m-0 m-auto mb-4">
-        <div class="card-body">            
+    <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasRight" role="dialog">
+        <div class="offcanvas-header">
+            <h4 id="offcanvasRightLabel" class="m-0">Добавление остатка</h4>
+            <button @click="$parent.closeOffcanvas()" type="button" class="btn-close text-reset"></button>
+        </div>
+        <div class="offcanvas-body">
             <div class="row align-items-center">
-                <div class="col-6 mb-4">
+                <div class="col-4 mb-4">
                     <label class="form-label">Кол-во</label>
                     <input v-model="quantity" type="number" min="0" class="form-control">
                 </div>
-                <div class="col-6 mb-4">
+                <div class="col-8 mb-4">
                     <label class="form-label">Дата</label>
                     <input v-model="date" type="date" class="form-control">
                 </div>
-                <div class="col-3 mb-4">
+                <div class="col-6 mb-4">
                     <label class="form-label">Цена RUB</label>
                     <input v-model="pre_rub" type="number" min="0" class="form-control">
                 </div>
-                <div class="col-3 mb-4">
+                <div class="col-6 mb-4">
                     <label class="form-label">Цена USD</label>
                     <input v-model="pre_usd" type="number" min="0" class="form-control">
                 </div>
-                <div class="col-3 mb-4">
+                <div class="col-6 mb-4">
                     <label class="form-label">Цена итог</label>
                     <input v-model="price" type="number" class="form-control" disabled>
                 </div>
-                <div class="col-3 mb-4">
+                <div class="col-6 mb-4">
                     <label class="form-label">Курс USD</label>
-                    <input v-model="usd.kurs" type="number" class="form-control">
+                    <input v-model="usd_kurs" type="number" class="form-control">
                 </div>
             </div>
             <button @click="save()" class="btn btn-primary">Сохранить</button>
-            <button @click="$parent.views.addBalance = false" class="btn btn-outline-secondary">Отмена</button>
+            <button @click="$parent.closeOffcanvas()" class="btn btn-outline-secondary">Отмена</button>
         </div>
     </div>
 </template>
@@ -41,14 +45,8 @@
                 quantity: 0,
                 pre_rub: 0,
                 pre_usd: 0,
+                usd_kurs: 0,
                 date: moment().format('YYYY-MM-DD'),
-
-                usd: {
-                    kurs: '',
-                    date: '',
-                },
-
-                errors: [],
             }
         },
         computed: {
@@ -60,7 +58,7 @@
                     this.pre_usd = 0
                 }
 
-                return Math.ceil((parseFloat(this.pre_rub) + (parseFloat(this.usd.kurs) * parseFloat(this.pre_usd))) / 50) * 50
+                return Math.ceil((parseFloat(this.pre_rub) + (parseFloat(this.usd_kurs) * parseFloat(this.pre_usd))) / 50) * 50
             }
         },
         created() {        
@@ -71,8 +69,7 @@
                 axios
                 .get('/api/usd')
                 .then((response => {
-                    this.usd.kurs = response.data.kurs,
-                    this.usd.date = response.data.date
+                    this.usd_kurs = response.data.kurs
                 }))
             },
             save() {
@@ -90,10 +87,10 @@
                     pre_usd: this.pre_usd,
                     price: this.price,
                     date: this.date,
-                    usd_kurs: this.usd.kurs
+                    usd_kurs: this.usd_kurs
                 })
                 .then(response => {
-                    this.$parent.views.addBalance = false
+                    this.$parent.closeOffcanvas()
                     this.$parent.loadStockItem()
                 })
                 .catch((error) => {

@@ -12,4 +12,9 @@ class ReserveController extends Controller
     {
         return ReserveResource::collection(Reserve::all());
     }
+
+    public function indexByBalance($stock_balance_id)
+    {
+        return ReserveResource::collection(Reserve::where('stock_balance_id', $stock_balance_id)->get());
+    }
 }
