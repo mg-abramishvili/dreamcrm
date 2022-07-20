@@ -10,6 +10,7 @@ class StockNeedsResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'stock_item_id' => $this->stockItem->id,
             'name' => $this->stockItem->name,
             'production' => $this->productionItem->production->name,
             'quantity' => $this->quantity,

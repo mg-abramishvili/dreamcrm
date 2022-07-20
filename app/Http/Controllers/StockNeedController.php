@@ -12,4 +12,9 @@ class StockNeedController extends Controller
     {
         return StockNeedsResource::collection(StockNeed::all());
     }
+
+    public function indexByStockItem($stock_item_id)
+    {
+        return StockNeedsResource::collection(StockNeed::where('stock_item_id', $stock_item_id)->get());
+    }
 }
