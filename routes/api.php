@@ -171,6 +171,7 @@ Route::delete('stock/balance/{id}/delete', [StockBalanceController::class, 'dele
 // STOCK NEEDS
 Route::get('stock/needs', [StockNeedController::class, 'index'])->middleware('auth:sanctum');
 Route::get('stock/needs-by-stock-item/{stock_item_id}', [StockNeedController::class, 'indexByStockItem'])->middleware('auth:sanctum');
+Route::post('stock/needs-detector', [StockNeedController::class, 'detector'])->middleware('auth:sanctum');
 
 
 

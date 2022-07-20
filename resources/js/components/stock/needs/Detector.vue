@@ -37,7 +37,7 @@
                 </li>
             </ul>
 
-            <button class="btn btn-lg btn-primary mt-2 mb-4">Применить</button>
+            <button @click="save()" class="btn btn-lg btn-primary mt-2 mb-4">Применить</button>
         </div>
     </div>
 </template>
@@ -105,6 +105,17 @@ export default {
             }
 
             event.target.value = need.quantity
+        },
+        save() {
+            this.views.loading = true
+            
+            axios.post(`/api/stock/needs-detector/`, {
+                needs: this.selected.needs
+            })
+            .then(response => {
+                this.loadStockItem()
+                this.loadNeeds()
+            })
         },
     },
 }
