@@ -93,10 +93,14 @@
                     date: this.date,
                     usd_kurs: this.usd_kurs
                 })
-                .then(response => (
-                    this.$parent.closeOffcanvas(),
+                .then(response => {
+                    this.$parent.closeOffcanvas()
                     this.$parent.loadStockItem()
-                ))
+
+                    if(response.data == 'detector') {
+                        this.$router.push({name: 'StockNeedsDetector', params: {stock_item_id: this.item.id }})
+                    }
+                })
                 .catch((error) => {
                     if(error.response) {
                         for(var key in error.response.data.errors){
