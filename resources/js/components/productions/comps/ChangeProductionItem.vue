@@ -33,13 +33,11 @@ export default {
     },
     methods: {
         loadStockItems() {
-            axios.get('/api/stock/items')
+            axios.get(`/api/stock/category/${this.productionItem.stock_item.category_id}`)
             .then(response => {
                 this.stockItems = response.data
 
-                if(this.productionItem) {
-                    this.selected.stock_item = this.productionItem.stock_item_id
-                }
+                this.selected.stock_item = this.productionItem.stock_item_id
             })
         },
         save() {
