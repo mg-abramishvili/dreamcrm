@@ -10,7 +10,7 @@
                     <option v-for="item in stockItems" :value="item.id">{{ item.name }}</option>
                 </select>
 
-                <button @click="save()" class="btn btn-primary">Сохранить</button>
+                <button @click="save()" v-if="views.saveButton" class="btn btn-primary">Сохранить</button>
             </div>
         </div>
     </div>
@@ -25,7 +25,11 @@ export default {
 
             selected: {
                 stock_item: '',
-            }
+            },
+
+            views: {
+                saveButton: true,
+            },
         }
     },
     created() {
@@ -35,12 +39,14 @@ export default {
         loadStockItems() {
             axios.get(`/api/stock/category/${this.productionItem.stock_item.category_id}`)
             .then(response => {
-                this.stockItems = response.data
+                this.stockItems = response.data.data.items
 
                 this.selected.stock_item = this.productionItem.stock_item_id
             })
         },
         save() {
+            this.views.saveButton = false
+
             axios.post(`/api/production-item/${this.productionItem.id}/replace`, {
                 stock_item: this.selected.stock_item
             })
@@ -48,6 +54,9 @@ export default {
                 console.log(response.data)
                 this.$parent.loadProduction()
                 this.$parent.closeOffcanvas()
+            })
+            .catch(errors => {
+                this.views.saveButton = true
             })
         },
     }
