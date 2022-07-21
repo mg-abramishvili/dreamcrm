@@ -51,9 +51,12 @@ export default {
                 stock_item: this.selected.stock_item
             })
             .then(response => {
-                console.log(response.data)
                 this.$parent.loadProduction()
                 this.$parent.closeOffcanvas()
+                
+                if(response.data && response.data > 0) {
+                    this.$router.push({name: 'StockNeedsDetector', params: {stock_item_id: response.data }})
+                }
             })
             .catch(errors => {
                 this.views.saveButton = true
