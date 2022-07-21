@@ -109,7 +109,7 @@ export default {
         save() {
             this.views.loading = true
             
-            axios.post(`/api/stock/needs-detector/`, {
+            axios.post(`/api/stock/needs-detector`, {
                 needs: this.selected.needs
             })
             .then(response => {
