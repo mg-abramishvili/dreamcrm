@@ -19,6 +19,8 @@ class ProductionItemController extends Controller
     {
         $item = ProductionItem::withSum('reserves', 'quantity')->withSum('stockNeeds', 'quantity')->find($id);
 
+        $stockNeeds = StockNeed::where('stock_item_id', $item->stock_item_id)->get();
+
         $productionID = $item->production_id;
         $stockItemID = $request->stock_item;
         $quantity = $item->reserves_sum_quantity + $item->stock_needs_sum_quantity;
@@ -26,6 +28,11 @@ class ProductionItemController extends Controller
         $this->deleteProductionItem($item);
 
         $this->createProductionItem($productionID, $stockItemID, $quantity);
+
+        if($stockNeeds->count() > 0)
+        {
+            return $item->stock_item_id;
+        }
     }
 
     public function delete($id)
