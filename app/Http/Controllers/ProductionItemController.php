@@ -39,13 +39,6 @@ class ProductionItemController extends Controller
     {
         $item = ProductionItem::find($id);
 
-        $stockNeeds = StockNeed::where('stock_item_id', $item->stock_item_id)->get();
-        
         $this->deleteProductionItem($item);
-
-        if($stockNeeds->count() > 0)
-        {
-            return $item->stock_item_id;
-        }
     }
 }
