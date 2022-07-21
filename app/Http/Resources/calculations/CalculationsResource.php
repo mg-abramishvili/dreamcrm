@@ -11,6 +11,7 @@ class CalculationsResource extends JsonResource
         return [
             'id' => $this->id,
             'box' => $this->boxes->first()->name,
+            'quantity' => $this->quantity,
             'author' => $this->user->name,
             'price' => $this->price + $this->delivery->first()->price,
             'discount' => $this->discount,

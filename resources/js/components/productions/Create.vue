@@ -119,6 +119,8 @@
     export default {
         data() {
             return {
+                project: {},
+
                 name: '',
                 priority: 'normal',
                 payment_type: '',
@@ -138,7 +140,24 @@
                 }
             }
         },
+        created() {
+            this.loadProject()
+        },
         methods: {
+            loadProject() {
+                axios.get(`/api/project/${this.$route.params.project_id}`)
+                .then(response => {
+                    this.project = response.data.data
+
+                    let name = []
+
+                    response.data.data.calculations.forEach(calculation => {
+                        name.push(calculation.box + ' ' + calculation.quantity + 'шт')
+                    })
+
+                    this.name = name.join(' - ') + ' - ' + response.data.data.client.name
+                })
+            },
             save() {
                 if(!this.name) {
                     return this.$swal({
