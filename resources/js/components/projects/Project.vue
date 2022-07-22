@@ -28,10 +28,10 @@
                     <a @click="selectTab('general')" class="nav-link" :class="{'active': selected.tab == 'general'}" role="tab">Общая информация</a>
                 </li>
                 <li class="nav-item">
-                    <a @click="selectTab('calculations')" class="nav-link" :class="{'active': selected.tab == 'calculations'}" role="tab">Расчеты</a>
+                    <a @click="selectTab('calculations')" class="nav-link" :class="{'active': selected.tab == 'calculations'}" role="tab">Расчеты <template v-if="project.calculations.length">({{ project.calculations.length }})</template></a>
                 </li>
                 <li class="nav-item">
-                    <a @click="selectTab('offers')" class="nav-link" :class="{'active': selected.tab == 'offers'}" role="tab">КП</a>
+                    <a @click="selectTab('offers')" class="nav-link" :class="{'active': selected.tab == 'offers'}" role="tab">КП <template v-if="project.offers.length">({{ project.offers.length }})</template></a>
                 </li>
             </ul>
             <div class="tab-content">
