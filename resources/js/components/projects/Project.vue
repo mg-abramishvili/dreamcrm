@@ -36,111 +36,101 @@
             </ul>
             <div class="tab-content">
                 <div class="tab-pane" :class="{'active': selected.tab == 'general'}" role="tabpanel">
-                    <div class="row">
-                        <div class="col-12 col-lg-6">
-                            <div class="row align-items-center">
-                                <div class="col-4 text-end">
-                                    <strong class="me-2">Клиент:</strong>
-                                </div>
-                                <div class="col-8">
-                                    <span>
-                                        <template v-if="project.client">
-                                            {{ project.client.name }} (ИНН {{ project.client.inn }})
-                                        </template>
-                                        <template v-if="!project.client">
-                                            &mdash;
-                                        </template>
-                                    </span>
 
-                                    <small @click="changePanel('client')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                                    </small>
+                    <p class="d-flex align-items-center">
+                        <strong class="me-2">Клиент:</strong>
 
-                                    <ChangeClient v-if="views.changePanel == 'client'" :project="project" />
-                                </div>
-                            </div>
+                        <span>
+                            <template v-if="project.client">
+                                {{ project.client.name }} (ИНН {{ project.client.inn }})
+                            </template>
+                            <template v-if="!project.client">
+                                &mdash;
+                            </template>
+                        </span>
 
-                            <div class="row align-items-center">
-                                <div class="col-4 text-end">
-                                    <strong class="me-2">Конечник:</strong>
-                                </div>
-                                <div class="col-8">
-                                    <span>
-                                        <template v-if="project.endclient">
-                                            {{ project.endclient.name }} (ИНН {{ project.endclient.inn }})
-                                        </template>
-                                        <template v-if="!project.endclient">
-                                            &mdash;
-                                        </template>
-                                    </span>
+                        <small @click="changePanel('client')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                        </small>
 
-                                    <small @click="changePanel('endClient')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                                    </small>
+                        <ChangeClient v-if="views.changePanel == 'client'" :project="project" />
+                    </p>
 
-                                    <ChangeEndClient v-if="views.changePanel == 'endClient'" :project="project" />
-                                </div>
-                            </div>
+                    <p class="d-flex align-items-center">
+                        <strong class="me-2">Конечник:</strong>
 
-                            <p class="d-flex align-items-center">
-                                <strong class="me-2">Ответственный:</strong>
+                        <span>
+                            <template v-if="project.endclient">
+                                {{ project.endclient.name }} (ИНН {{ project.endclient.inn }})
+                            </template>
+                            <template v-if="!project.endclient">
+                                &mdash;
+                            </template>
+                        </span>
 
-                                <span>
-                                    <template v-if="project.user">
-                                        {{ project.user.name }}
-                                    </template>
-                                    <template v-if="!project.user">
-                                        &mdash;
-                                    </template>
-                                </span>
+                        <small @click="changePanel('endClient')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                        </small>
 
-                                <small @click="changePanel('user')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                                </small>
+                        <ChangeEndClient v-if="views.changePanel == 'endClient'" :project="project" />
+                    </p>
 
-                                <ChangeUser v-if="views.changePanel == 'user'" :project="project" />
-                            </p>
-                        </div>
-                        <div class="col-12 col-lg-6">
-                            <p class="d-flex align-items-center">
-                                <strong class="me-2">Адрес установки:</strong>
+                    <p class="d-flex align-items-center">
+                        <strong class="me-2">Ответственный:</strong>
 
-                                <span>
-                                    <template v-if="project.delivery_address">
-                                        {{ project.delivery_address }}
-                                    </template>
-                                    <template v-if="!project.delivery_address">
-                                        &mdash;
-                                    </template>
-                                </span>
+                        <span>
+                            <template v-if="project.user">
+                                {{ project.user.name }}
+                            </template>
+                            <template v-if="!project.user">
+                                &mdash;
+                            </template>
+                        </span>
 
-                                <small @click="changePanel('deliveryAddress')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                                </small>
+                        <small @click="changePanel('user')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                        </small>
 
-                                <ChangeDeliveryAddress v-if="views.changePanel == 'deliveryAddress'" :project="project" />
-                            </p>
+                        <ChangeUser v-if="views.changePanel == 'user'" :project="project" />
+                    </p>
 
-                            <p class="d-flex align-items-center">
-                                <strong class="me-2">Срок реализации:</strong>
+                    <p class="d-flex align-items-center">
+                        <strong class="me-2">Адрес установки:</strong>
 
-                                <span>
-                                    <template v-if="project.end_date">
-                                        {{ project.end_date }}
-                                    </template>
-                                    <template v-if="!project.end_date">
-                                        &mdash;
-                                    </template>
-                                </span>
+                        <span>
+                            <template v-if="project.delivery_address">
+                                {{ project.delivery_address }}
+                            </template>
+                            <template v-if="!project.delivery_address">
+                                &mdash;
+                            </template>
+                        </span>
 
-                                <small @click="changePanel('endDate')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                                </small>
+                        <small @click="changePanel('deliveryAddress')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                        </small>
 
-                                <ChangeEndDate v-if="views.changePanel == 'endDate'" :project="project" />
-                            </p>
-                        </div>
-                    </div>
+                        <ChangeDeliveryAddress v-if="views.changePanel == 'deliveryAddress'" :project="project" />
+                    </p>
+
+                    <p class="d-flex align-items-center">
+                        <strong class="me-2">Срок реализации:</strong>
+
+                        <span>
+                            <template v-if="project.end_date">
+                                {{ project.end_date }}
+                            </template>
+                            <template v-if="!project.end_date">
+                                &mdash;
+                            </template>
+                        </span>
+
+                        <small @click="changePanel('endDate')" class="cursor-pointer text-muted fw-normal ms-2" style="opacity: 50%;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                        </small>
+
+                        <ChangeEndDate v-if="views.changePanel == 'endDate'" :project="project" />
+                    </p>
 
                     <hr>
 
