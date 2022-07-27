@@ -90,6 +90,7 @@
                         sortingOrder: ['asc', 'desc'],
                         floatingFilter: true,
                         suppressMovable: true,
+                        resizable: true,
                     },
                 },
 
