@@ -65,8 +65,15 @@
                             suppressMenu: true,
                         },
                         {
-                            field: "client",
-                            headerName: 'Клиент',
+                            field: "endclient",
+                            headerName: 'Конечник',
+                            sortable: true,
+                            filter: true,
+                            suppressMenu: true,
+                        },
+                        {
+                            field: "endclient_inn",
+                            headerName: 'ИНН конечника',
                             sortable: true,
                             filter: true,
                             suppressMenu: true,
@@ -107,7 +114,7 @@
                 this.gridApi = params.api
                 this.gridColumnApi = params.gridColumnApi
                 
-                this.gridApi.sizeColumnsToFit()
+                // this.gridApi.sizeColumnsToFit()
             },
             goTo(event) {
                 this.$router.push({ name: 'Project', params: { id: event.data.id } })
