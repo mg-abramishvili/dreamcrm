@@ -13,6 +13,7 @@ class ProjectsResource extends JsonResource
             'name' => $this->name,
             'box' => $this->calculations->first()->boxes->first()->name,
             'client' => $this->client->name,
+            'endclient_inn' => isset($this->endclient->inn) ? $this->endclient->inn : null,
             'author' => $this->user->name,
             'created_at' => $this->created_at,
         ];
