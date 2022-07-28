@@ -12,7 +12,7 @@
                     </template>
                 </select>
 
-                <input v-model="quantity" type="number" class="form-control mb-2">
+                <input v-model="quantity" type="number" min="1" class="form-control mb-2">
 
                 <button @click="save()" v-if="views.saveButton" class="btn btn-primary">Сохранить</button>
             </div>
@@ -48,6 +48,8 @@ export default {
                 this.stockItems = response.data.data.items
 
                 this.selected.stock_item = this.productionItem.stock_item_id
+
+                this.quantity = this.productionItem.reserves.reduce((acc, reserve) => { return acc + reserve.quantity }, 0) + this.productionItem.stock_needs.reduce((acc, need) => { return acc + need.quantity }, 0)
             })
         },
         save() {
