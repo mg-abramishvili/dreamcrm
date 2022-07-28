@@ -51,7 +51,7 @@ export default {
 
                 this.selected.stock_item = this.productionItem.stock_item_id
 
-                this.quantity = this.productionItem.reserves.reduce((acc, reserve) => { return acc + reserve.quantity }, 0) + this.productionItem.stock_needs.reduce((acc, need) => { return acc + need.quantity }, 0)
+                this.quantity = parseInt(this.productionItem.reserves.reduce((acc, reserve) => { return acc + reserve.quantity }, 0)) + parseInt(this.productionItem.stock_needs.reduce((acc, need) => { return acc + need.quantity }, 0))
             })
         },
         save() {
