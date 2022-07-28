@@ -10,6 +10,8 @@
                     <option v-for="item in stockItems" :value="item.id">{{ item.name }}</option>
                 </select>
 
+                <input v-model="quantity" type="number" class="form-control">
+
                 <button @click="save()" v-if="views.saveButton" class="btn btn-primary">Сохранить</button>
             </div>
         </div>
@@ -26,6 +28,8 @@ export default {
             selected: {
                 stock_item: '',
             },
+
+            quantity: 0,
 
             views: {
                 saveButton: true,
@@ -48,7 +52,8 @@ export default {
             this.views.saveButton = false
 
             axios.post(`/api/production-item/${this.productionItem.id}/replace`, {
-                stock_item: this.selected.stock_item
+                stock_item: this.selected.stock_item,
+                quantity: this.quantity
             })
             .then(response => {
                 this.$parent.loadProduction()
