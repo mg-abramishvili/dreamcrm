@@ -7,10 +7,12 @@
         <div class="offcanvas-body">
             <div>
                 <select v-model="selected.stock_item" class="form-select mb-2">
-                    <option v-for="item in stockItems" :value="item.id">{{ item.name }}</option>
+                    <template v-for="item in stockItems">
+                        <option v-if="item.id !== productionItem.stock_item.id" :value="item.id">{{ item.name }}</option>
+                    </template>
                 </select>
 
-                <input v-model="quantity" type="number" class="form-control">
+                <input v-model="quantity" type="number" class="form-control mb-2">
 
                 <button @click="save()" v-if="views.saveButton" class="btn btn-primary">Сохранить</button>
             </div>
