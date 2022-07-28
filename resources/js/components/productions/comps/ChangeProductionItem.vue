@@ -6,6 +6,8 @@
         </div>
         <div class="offcanvas-body">
             <div>
+                <input :value="stockItems.find(item => item.id === productionItem.stock_item.id).name" type="text" disabled class="form-control mb-2">
+
                 <select v-model="selected.stock_item" class="form-select mb-2">
                     <template v-for="item in stockItems">
                         <option v-if="item.id !== productionItem.stock_item.id" :value="item.id">{{ item.name }}</option>
