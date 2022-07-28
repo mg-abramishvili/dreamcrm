@@ -10,7 +10,7 @@ class ReserveController extends Controller
 {
     public function index()
     {
-        return ReserveResource::collection(Reserve::all());
+        return ReserveResource::collection(Reserve::whereRelation('productionItem.production', 'status', '!=', 'waiting_for_feedback')->get());
     }
 
     public function indexByBalance($stock_balance_id)
